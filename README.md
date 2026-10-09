@@ -54,12 +54,12 @@ The notebooks walk through a complete study comparing a **diabetes (study) cohor
 
 | Notebook | What it does |
 |---|---|
-| `00. load_environment_variables` | Sets up the environment and loads datasets from the workspace bucket |
-| `01. diabetes_control_cohort` | Extracts demographic, survey, and measurement data for the control cohort (no diabetes) |
-| `01.5 diabetes_ckd_surv_cohort` | Extracts condition and visit data for CKD survival analysis |
-| `02. diabetes_study_cohort` | Extracts demographic, survey, and measurement data for the study cohort (diabetes) |
-| `03. clean_join_cohorts_survey_measurements` | Imports, cleans, and joins the cohort datasets |
-| `04. Statistical_data_analysis_for_clinical_research` | Table One (chi-square, t-tests), logistic and linear regression, and survival analysis (hazard ratios, Kaplan–Meier) |
+| `0.0 load_environment_variables` | Sets up the environment and loads datasets from the workspace bucket |
+| `1.1 diabetes_control_cohort` | Extracts demographic, survey, and measurement data for the control cohort (no diabetes) |
+| `1.2 diabetes_ckd_surv_cohort` | Extracts condition and visit data for CKD survival analysis |
+| `1.3 diabetes_study_cohort` | Extracts demographic, survey, and measurement data for the study cohort (diabetes) |
+| `2.0 clean_join_cohorts_survey_measurements` | Imports, cleans, and joins the cohort datasets |
+| `3.0 Statistical_data_analysis_for_clinical_research` | Table One (chi-square, t-tests), logistic and linear regression, and survival analysis (hazard ratios, Kaplan–Meier) |
 
 **Variables used:** age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.
 
@@ -69,10 +69,13 @@ The notebooks only run **inside an *All of Us* workspace**. They query the *All 
 
 1. Create a workspace on the [Researcher Workbench](https://workbench.verily.com/) and add an *All of Us* data collection.
 2. Build your cohorts and datasets with Data Explorer.
-3. Launch an R analysis app (e.g., JupyterLab with an R kernel) and upload the notebooks.
-4. Run the notebooks in order, `00` → `04`.
+3. Get the notebooks into your workspace, either way:
+   - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward.
+   - **Download and upload:** download the `.ipynb` files from GitHub and upload them to your app.
+4. Launch an R analysis app (e.g., AoU Jupyter with an R kernel).
+5. Run the notebooks in order: `0.0` → `1.1`–`1.3` → `2.0` → `3.0`.
 
-The SQL queries in notebooks `01`–`02` were generated from specific cohort and dataset definitions. If you build your own cohorts, replace them with the queries Data Explorer generates for you.
+> **Note:** Notebooks `1.1`–`1.3` still use SQL queries from the classic Researcher Workbench (1.0), generated for Controlled Tier Dataset v8. They won't run as-is in Workbench 2.0. Build your cohorts with Data Explorer and replace these queries with the ones it generates for you. Updated versions are planned.
 
 **R packages:** `tidyverse`, `bigrquery`, `dplyr`, `lubridate`, `stringr`, `tidyr`, `purrr`, `broom`, `survival`, `survminer`
 

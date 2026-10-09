@@ -72,3 +72,21 @@ $presentation-font-size-root: 32px;
 .reveal .annotated p {
   margin: 0;
 }
+
+.reveal .green-box {
+  position: absolute;
+  border: 4px solid #1B9E3E;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.reveal .annotated.short img {
+  max-height: 330px;
+}
+
+.reveal .green-circle {
+  position: absolute;
+  border: 4px solid #1B9E3E;
+  border-radius: 50%;
+  pointer-events: none;
+}
