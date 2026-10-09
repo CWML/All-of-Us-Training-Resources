@@ -251,6 +251,31 @@ Maximilian Wegener, MPH
 <li>Manage storage and costs</li>
 </ul>
 </section>
+<section id="our-example-workspace" class="slide level2">
+<h2>Our Example Workspace</h2>
+<p>Throughout this training we build and use one workspace:</p>
+<div style="text-align: center; font-size: 1.6em; margin: 0.6em 0;">
+<p><strong><code>intro-to-AoU</code></strong></p>
+</div>
+<ul>
+<li>You’ll see it <strong>created step by step</strong> in <em>Setting Up a Workspace</em></li>
+<li>It’s for <strong>instruction only</strong>, not research. Our Research Use Statement answers say so.</li>
+<li>Some later screenshots come from another training workspace, <strong><code>CWML_AoU_training</code></strong>. The steps are the same.</li>
+</ul>
+<aside class="notes">
+<p>Reminder for the presenter: use the intro-to-AoU workspace for live demos. Create it (or check it exists) and confirm its billing pod before class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="course-progression" class="slide level2">
 <h2>Course Progression</h2>
 
@@ -934,10 +959,10 @@ Maximilian Wegener, MPH
 <li><strong>Instantly Accessible:</strong> access is granted right away (PRESCO, Baseline Limited)</li>
 </ul></li>
 <li><strong>Free</strong> badge: no charge for the data itself. Collections without it may cost money or need approval.</li>
-<li><strong>Explore cohorts:</strong> preview a collection’s cohorts in Data Explorer before adding it</li>
+<li><strong>Explore cohorts:</strong> shown on each collection, but not available for the All of Us collections</li>
 </ul>
 <aside class="notes">
-<p>The non-All of Us collections come from Verily and its partners. Their terms are separate from the All of Us Data User Code of Conduct. An All of Us workspace can hold one All of Us tier (Registered or Controlled) plus GTEx Open Access; the other collections can’t be added to it. TODO: confirm what Explore cohorts does; it was grayed out in the screenshots.</p>
+<p>The non-All of Us collections come from Verily and its partners. Their terms are separate from the All of Us Data User Code of Conduct. An All of Us workspace can hold one All of Us tier (Registered or Controlled) plus GTEx Open Access; the other collections can’t be added to it. Explore cohorts is grayed out and can’t be clicked for the All of Us collections (checked October 2026). For other collections it is meant to preview cohorts in Data Explorer before adding the collection.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1687,12 +1712,12 @@ Maximilian Wegener, MPH
 <tr class="odd">
 <td><code>C2025Q4R6</code></td>
 <td>BigQuery</td>
-<td>The main CDR: OMOP tables (EHR, surveys, measurements…)</td>
+<td><strong>The main CDR v9</strong>: OMOP tables (EHR, surveys, measurements…); data through Jan 1, 2025</td>
 </tr>
 <tr class="even">
 <td><code>prep_C2025Q4R6</code></td>
 <td>BigQuery</td>
-<td>Prep tables that support the CDR tools</td>
+<td>Supporting tables for the CDR (no description given)</td>
 </tr>
 <tr class="odd">
 <td><code>C_V9_R3_aou_biospecimen</code>, <code>C_v9_R6_aou_biospecimen</code></td>
@@ -1707,7 +1732,7 @@ Maximilian Wegener, MPH
 <tr class="odd">
 <td><code>C_V9_R6_offcycle_nlp</code></td>
 <td>BigQuery</td>
-<td>NLP-derived data from clinical notes</td>
+<td><strong>New in v9:</strong> concepts extracted from <strong>clinical notes</strong> with NLP (&gt; 99,000 participants)</td>
 </tr>
 <tr class="even">
 <td><code>v9-genomics-folder</code></td>
@@ -1722,12 +1747,12 @@ Maximilian Wegener, MPH
 <tr class="even">
 <td><code>vwb-aou-datasets-controlled-v9</code></td>
 <td>Cloud Storage</td>
-<td>Controlled Tier dataset files</td>
+<td>Controlled Tier dataset files. ⚠️ <strong>Requester pays</strong>: reading it is billed to your pod</td>
 </tr>
 </tbody>
 </table>
 <aside class="notes">
-<p>Some descriptions are inferred from the resource names. TODO: confirm prep_, offcycle_nlp, and vwb-aou-datasets-controlled-v9 against the All of Us docs.</p>
+<p>Source: All of Us “Curated Data Repository (CDR) version 9 Release Notes” (Controlled Tier C2025Q4R6, Registered Tier R2025Q4R6, participant data cutoff January 1, 2025; first release of clinical notes with NLP concept extraction). The resources’ Description fields in the Workbench are empty, so the prep_ and vwb-aou-datasets-controlled-v9 descriptions are based on their names. All are referenced resources in project wb-silky-artichoke-2408 (version-bound to cdrv9). The vwb-aou-datasets-controlled-v9 bucket has Requester Pays enabled.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2587,7 +2612,7 @@ Maximilian Wegener, MPH
 <p>👉 Handy for checking that an export arrived, or finding a file’s path</p>
 </div>
 <aside class="notes">
-<p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Verily’s docs also describe a Browse button on the Resources tab, but “for workspaces enrolled in a perimeter, bucket browsing is only available if your perimeter administrator has enabled it”, so in All of Us workspaces use the console route instead.</p>
+<p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; TODO: test Browse on your own bucket.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2704,14 +2729,14 @@ Maximilian Wegener, MPH
 </div><div class="column side" style="width:45%;">
 <p><strong>Step 1:</strong> pick the <strong>data collection</strong> your workspace already has, e.g., <strong>All of Us Controlled Tier</strong></p>
 <ul>
-<li>Choose the <strong>Version</strong>: <strong>CDR v9</strong> (labeled <em>v8r9</em> here)</li>
+<li>Choose the <strong>Version</strong>: pick the <strong>newest</strong> (CDR v9 = <code>C2025Q4R6</code>)</li>
 <li>The other tier shows <strong>Policy conflict</strong>: one tier per workspace</li>
 </ul>
 <p>Click <strong>Next</strong></p>
 <p><strong>Step 2: No new policies.</strong> Your workspace already has this collection’s policies. Click <strong>Next</strong>.</p>
 </div></div>
 <aside class="notes">
-<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. The version label in this dialog (v8r9) is CDR v9. Its exported queries read from dataset C2024Q3R9, while the data collection’s resource list shows C2025Q4R6; students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
+<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. The version selected in this screenshot (v8r9) produced queries that read dataset C2024Q3R9, which has the 2024 Q3 data cutoff of the CDR v8 generation; CDR v9 is C2025Q4R6 (release notes). TODO: check the Version dropdown for a v9 option. Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3777,7 +3802,7 @@ Maximilian Wegener, MPH
 <li><strong>Practice with synthetic data:</strong> learn SQL on fake patients</li>
 <li><strong>Add a file from a URL:</strong> pull a public file into your bucket</li>
 <li><strong>GitHub:</strong> back up and share your code</li>
-<li><strong>AI coding assistants:</strong> Claude Code and Gemini CLI, and the All of Us rules for AI</li>
+<li><strong>AI tools:</strong> why to use them <strong>outside</strong> the Workbench</li>
 </ul>
 <aside class="notes">
 <p>More extras will be added here over time.</p>
@@ -3827,9 +3852,25 @@ Maximilian Wegener, MPH
 <section id="add-a-file-from-a-url" class="slide level2">
 <h2>Add a File from a URL</h2>
 <p>Copy a <strong>public</strong> file from the web straight into your bucket. No download or upload needed.</p>
+<div class="columns">
+<div class="column" style="width:52%;">
+<div class="annotated">
+<p><img data-src="images/res_add_file_url.png"></p>
+<div class="green-box" style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;">
+
+</div>
+<div class="green-box" style="left: 3.0%; top: 55.0%; width: 94.2%; height: 17.4%;">
+
+</div>
+<div class="red-circle" style="left: 69.0%; top: 81.6%; width: 28.6%; height: 15.0%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:48%;">
 <ol type="1">
 <li><strong>Resources</strong> tab → select your bucket → <strong>Add file via URL</strong></li>
-<li>Enter the <strong>source URL</strong> and the <strong>destination path</strong> in the bucket (you can add new folders in the path)</li>
+<li><strong>URL:</strong> a <strong>public</strong> or <strong>signed</strong> link to the file</li>
+<li><strong>File name:</strong> what to call it in the bucket (the default is <code>import-</code> + date and time)</li>
 <li>Click <strong>Add file to bucket</strong> and wait for it to finish</li>
 </ol>
 <div class="fragment">
@@ -3838,8 +3879,9 @@ Maximilian Wegener, MPH
 <li>Handy for public reference files: code lists, lookup tables, published data</li>
 </ul>
 </div>
+</div></div>
 <aside class="notes">
-<p>Source: Verily, “Add files to Cloud Storage via URL”. The transfer runs while you wait, so keep the page open. The URL must be publicly reachable. In a Controlled Tier workspace, the perimeter may limit outside access; TODO: test this in an All of Us workspace.</p>
+<p>Source: Verily, “Add files to Cloud Storage via URL”, and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. TODO: test an actual transfer in a Controlled Tier workspace; the perimeter may block some outside URLs.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3928,138 +3970,20 @@ Maximilian Wegener, MPH
           display:block!important;
       }</style></aside>
 </section>
-<section id="ai-coding-assistants" class="slide level2">
-<h2>AI Coding Assistants</h2>
-<p>Two AI assistants you run from the app’s <strong>terminal</strong>. Verily includes them in apps created after April 2026; in All of Us apps you <strong>may have to install them</strong>.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Tool</th>
-<th>Start it with</th>
-<th>You need</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Claude Code</strong> (Anthropic)</td>
-<td><code>claude</code></td>
-<td>A Claude Pro, Team, or Enterprise plan, or API credits</td>
-</tr>
-<tr class="even">
-<td><strong>Gemini CLI</strong> (Google)</td>
-<td><code>gemini</code></td>
-<td>A Gemini subscription, Gemini API access, or Vertex AI</td>
-</tr>
-</tbody>
-</table>
-<p>The first time, follow the sign-in prompts in the terminal.</p>
-<div class="fragment">
-<p>⚠️ Both tools send what they read to an <strong>outside service</strong> (Anthropic or Google). Never let them open participant-level data: no data files, query results, or notebook outputs. See the next slides.</p>
-</div>
-<aside class="notes">
-<p>Source: Verily, “Use Claude and Gemini”. In an All of Us AoU Jupyter app (October 2026), Claude Code was not preinstalled and had to be installed. Verily’s page doesn’t say whether these tools work inside a Controlled Tier perimeter. TODO: check whether Yale-provided AI accounts can be used here.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="ai-tools-and-all-of-us-policy" class="slide level2">
-<h2>AI Tools and All of Us Policy</h2>
-<p>AI and machine learning are <strong>allowed</strong>, as long as you follow the <strong>Data User Code of Conduct</strong> and the <strong>Data and Statistics Dissemination Policy</strong></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>✅ Allowed</th>
-<th>❌ Not allowed</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>AI/ML tools that run <strong>entirely inside</strong> the Workbench (e.g., R or Python packages on your app)</td>
-<td>Sending <strong>participant-level data</strong> to any outside AI service, even if it isn’t stored</td>
-</tr>
-<tr class="even">
-<td>Sending <strong>summary statistics</strong> that follow the dissemination rules (no counts under 20)</td>
-<td>Downloading or sharing a <strong>model trained</strong> on All of Us data</td>
-</tr>
-<tr class="odd">
-<td>Asking an AI assistant for help with <strong>code</strong></td>
-<td>Uploading data to a public AI tool (that counts as <strong>publishing</strong> it)</td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
-<p>👉 <strong>Check before you install</strong> any AI tool: read its documentation to make sure it doesn’t call an outside API with your data. You’re responsible for the tools you use.</p>
-</div>
-<aside class="notes">
-<p>Source: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460). Their example: you may not send individual-level data to the ChatGPT API to summarize participants’ medical histories, but aggregated statistics that would be allowed to export can be sent, as long as they follow the dissemination policy. “Transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” All of Us recommends using preinstalled tools where possible. Questions go to the Researcher Workbench support team.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="using-an-ai-assistant-safely" class="slide level2">
-<h2>Using an AI Assistant Safely</h2>
-<p>Coding assistants don’t just read what you paste. They can <strong>open files and run commands on their own</strong>, and everything they see goes to the outside service.</p>
-<p>In an All of Us app, your data is one folder away (<code>~/workspace/…</code>). A simple request like <em>“fix my notebook”</em> could make the assistant:</p>
+<section id="ai-tools-use-them-outside-the-workbench" class="slide level2">
+<h2>AI Tools: Use Them Outside the Workbench</h2>
+<p>Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? <strong>Use it outside the Workbench</strong>, for <strong>coding help only</strong>.</p>
+<p><strong>Why not inside the Workbench?</strong></p>
 <ul>
-<li>open a CSV from <code>bq_exports/</code> or <code>data/</code></li>
-<li>read a notebook that still has <strong>outputs</strong></li>
-<li>run code that <strong>prints participant rows</strong></li>
+<li>All of Us does <strong>not allow participant-level data to leave the Workbench</strong>, and that includes sending it to an AI service</li>
+<li>AI coding assistants like <strong>Claude Code</strong> can <strong>open files and run code on their own</strong>. It’s easy for them to read <strong>data files</strong>, <strong>query results</strong>, or <strong>notebook outputs</strong> that contain participant-level data.</li>
+<li>Even one accidental read counts as a <strong>Data User Code of Conduct violation</strong>, even if nothing is stored</li>
 </ul>
 <div class="fragment">
-<p>Any of these sends <strong>participant-level data</strong> out of the Workbench, which is a <strong>DUCC violation</strong> even if nothing is stored.</p>
-</div>
-</section>
-<section id="safer-ways-to-get-ai-help" class="slide level2">
-<h2>Safer Ways to Get AI Help</h2>
-<div class="columns">
-<div class="column side" style="width:45%;">
-<p><strong>✅ Safest: use AI outside the Workbench</strong></p>
-<p>Work on <strong>code only</strong>:</p>
-<ol type="1">
-<li>Get the code from GitHub (no outputs, no data)</li>
-<li>Ask the AI on your own computer</li>
-<li>Bring the fixed code back into your workspace</li>
-</ol>
-<p>The AI never has access to the data.</p>
-</div><div class="column side" style="width:55%;">
-<p><strong>⚠️ If you use it in the Workbench</strong></p>
-<ul>
-<li>Start it in a folder with <strong>no data</strong> (e.g., your repo in <code>~</code>), <strong>never</strong> in <code>~/workspace/…</code></li>
-<li><strong>Clear notebook outputs</strong> before it opens a notebook</li>
-<li><strong>Read every command</strong> before you approve it. Don’t let it run queries or notebooks.</li>
-<li>Describe data only in <strong>summary</strong> terms that follow the dissemination rules</li>
-</ul>
-</div></div>
-<div class="fragment">
-<p>❓ <strong>Not sure?</strong> Ask Researcher Workbench support <strong>before</strong> you start. If participant data may have been sent, <strong>contact All of Us support</strong>.</p>
+<p>👉 <strong>How:</strong> get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace</p>
 </div>
 <aside class="notes">
-<p>Based on the All of Us FAQ on AI/ML tools: tools must run “only within the RW environment … with no interaction with an outgoing API via the installed tool” when used on participant data, and users are responsible for the tools they install. Installing a tool is not itself prohibited; the risk is what it can read and send. Claude Code and Gemini CLI both call outside APIs (Anthropic, Google).</p>
+<p>Source: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4086,7 +4010,7 @@ Maximilian Wegener, MPH
 <li>Connect GitHub with your Workbench <strong>SSH key</strong> (see <em>Optional Extras</em>)</li>
 <li>⚠️ <strong>Code only:</strong> clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.</li>
 </ul></li>
-<li><strong>AI tools: help with code, never data.</strong> Don’t let an AI assistant open data files or outputs (see <em>Optional Extras</em>).</li>
+<li><strong>AI tools: use them outside the Workbench</strong>, for code only (see <em>Optional Extras</em>)</li>
 <li><strong>Stop apps</strong> when you’re not using them</li>
 <li><strong>Keep your description up to date</strong>, along with your Research Use Statement</li>
 </ul>
