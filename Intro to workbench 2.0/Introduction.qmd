@@ -202,10 +202,11 @@ Source: Verily, "Verily Workbench overview" (support.workbench.verily.com/docs/g
 | Workspace has CDR version + tier | Workspace + **data collection** added from the catalog |
 | Cloud Analysis Environment | **Apps** (e.g., JupyterLab, RStudio) |
 | Jupyter Notebook | **JupyterLab** |
-| Workspace bucket | Workspace **Resources** (cloud storage) |
+| Workspace bucket (created for you) | A **Cloud Storage bucket you create** on the **Resources** tab |
+| Code snippets to copy files | Buckets **mounted as folders** in every app |
 
 ::: notes
-Based on the All of Us "Researcher Workbench 2.0 Glossary of Terms and Comparison Guide". TODO: check the last row and any renamed terms against the guide.
+Based on the All of Us "Researcher Workbench 2.0 Glossary of Terms and Comparison Guide" and what we confirmed in the Workbench: new 2.0 workspaces have no bucket until you create one (migrated workspaces get an rw-migration-… bucket), and the Snippets menu is gone.
 :::
 
 # Getting Access
@@ -220,7 +221,7 @@ Based on the All of Us "Researcher Workbench 2.0 Glossary of Terms and Compariso
 3.  For Controlled Tier data, complete the **Controlled Tier training**
 
 ::: notes
-TODO: add screenshots of the registration pages.
+Students who already have Workbench access can skip this slide. Registration happens on the All of Us Research Hub before Workbench access; screenshots aren't included because the pages are only shown to new users.
 :::
 
 ## Logging In
@@ -1531,7 +1532,7 @@ The details panel also shows the workspace **ID**, **default region**, **pod**, 
 :::
 
 ::: notes
-This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab's trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; TODO: test Browse on your own bucket.
+This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab's trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.
 :::
 
 # Data Explorer
@@ -1574,20 +1575,20 @@ The definitions come from the "Add cohort to workspace" dialog.
 ::: {.annotated}
 ![](images/dx_add_1_collection.png)
 
-::: {.red-box style="left: 1.4%; top: 43.4%; width: 97.8%; height: 7.6%;"}
+::: {.red-box style="left: 1.4%; top: 43.6%; width: 97.8%; height: 7.4%;"}
 :::
 
-::: {.green-box style="left: 68.4%; top: 44.8%; width: 18.4%; height: 4.8%;"}
+::: {.green-box style="left: 68.8%; top: 45.2%; width: 19.0%; height: 4.4%;"}
 :::
 
-::: {.red-circle style="left: 92.0%; top: 93.0%; width: 8.0%; height: 6.4%;"}
+::: {.red-circle style="left: 92.2%; top: 93.4%; width: 7.6%; height: 5.8%;"}
 :::
 :::
 :::
 ::: {.column .side width="45%"}
 **Step 1:** pick the **data collection** your workspace already has, e.g., **All of Us Controlled Tier**
 
-- Choose the **Version**: pick the **newest** (CDR v9 = `C2025Q4R6`)
+- Choose the **Version**: the newest, **cdrv9**
 - The other tier shows **Policy conflict**: one tier per workspace
 
 Click **Next**
@@ -1597,7 +1598,7 @@ Click **Next**
 ::::
 
 ::: notes
-The screenshot's "Last modified … by" column showed a staff email; it has been painted out. The version selected in this screenshot (v8r9) produced queries that read dataset C2024Q3R9, which has the 2024 Q3 data cutoff of the CDR v8 generation; CDR v9 is C2025Q4R6 (release notes). TODO: check the Version dropdown for a v9 option. Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.
+The screenshot's "Last modified … by" column showed a staff email; it has been painted out. An earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.
 :::
 
 ## Add a Cohort: Cohort Details
@@ -1607,13 +1608,13 @@ The screenshot's "Last modified … by" column showed a staff email; it has been
 ::: {.annotated}
 ![](images/dx_add_3_details.png)
 
-::: {.green-box style="left: 1.0%; top: 17.0%; width: 98.4%; height: 16.6%;"}
+::: {.green-box style="left: 1.0%; top: 17.2%; width: 98.2%; height: 16.8%;"}
 :::
 
-::: {.green-box style="left: 1.0%; top: 40.4%; width: 48.4%; height: 9.4%;"}
+::: {.green-box style="left: 1.0%; top: 40.4%; width: 48.6%; height: 9.6%;"}
 :::
 
-::: {.red-circle style="left: 79.2%; top: 93.4%; width: 20.6%; height: 6.2%;"}
+::: {.red-circle style="left: 79.0%; top: 93.4%; width: 20.2%; height: 5.8%;"}
 :::
 :::
 :::
@@ -1635,20 +1636,56 @@ Use a name that says what the cohort is (e.g., diabetes_age50plus), not test nam
 
 ## Building a Cohort
 
-- Select your study population with inclusion/exclusion criteria (AND/OR)
-- Demographics, conditions, measurements, medications, procedures, surveys
+::: {.annotated .short}
+![](images/dx_cohort_view.png)
 
-::: fragment
-**Example criteria:**
-
-- Sex → Woman
-- Age → 65 or older
-- Condition → Breast cancer
-- Medication → Tamoxifen
+::: {.green-box style="left: 0.4%; top: 10.0%; width: 40.8%; height: 77.0%;"}
 :::
 
+::: {.red-circle style="left: 1.6%; top: 47.6%; width: 7.8%; height: 6.6%;"}
+:::
+
+::: {.red-circle style="left: 87.0%; top: 0.8%; width: 10.8%; height: 6.8%;"}
+:::
+:::
+
+:::: {.columns}
+::: {.column .side width="50%"}
+**Cohort filter** (left): each **group** is **Included** or **Excluded** and must **meet any** (OR) or **all** (AND) of its criteria. Groups combine with **AND**. **Add criteria** → **Apply**; the participant count updates.
+:::
+::: {.column .side width="50%"}
+**Cohort visualizations** (right): charts by gender, race, sex at birth, and age. When you're done, click **Save data snapshot**.
+
+⚠️ **Review individuals** shows participant-level rows: never screenshot or share it
+:::
+::::
+
 ::: notes
-Time-based criteria (e.g., within X days of an event) are supported. TODO: screenshot of the cohort builder in Data Explorer.
+Example: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identity = Man or Woman (730,256 participants). Only large counts are shown on these slides. Time-based criteria (e.g., within X days of an event) are supported.
+:::
+
+## Adding Criteria
+
+::: {.annotated .short}
+![](images/dx_criteria.png)
+
+::: {.green-box style="left: 1.2%; top: 5.6%; width: 98.4%; height: 5.6%;"}
+:::
+:::
+
+:::: {.columns}
+::: {.column .side width="50%"}
+**Add criteria** opens the full list: **domains** (conditions, drugs, labs, visits…), **source codes** (ICD-9/10, CPT-4), **demographics**, **wearables** (Fitbit), **genomics**, **physical measurements**, and **surveys**
+:::
+::: {.column .side width="50%"}
+- **+** adds a criterion directly (e.g., *Has EHR Data*, *Current Age*)
+- **🔍** lets you **explore** a category and pick specific concepts
+- Or **search** by code or description (top)
+:::
+::::
+
+::: notes
+Example study population: Sex → Woman; Age → 65 or older; Condition → Breast cancer; Medication → Tamoxifen.
 :::
 
 ## Concepts and Domains
@@ -1763,19 +1800,19 @@ Click **Next**
 :::
 :::
 
-**Existing bucket:** pick its **Resource ID**
+**Existing bucket:** pick its **Resource ID** (grayed out if the workspace has no bucket yet)
 :::
 ::: {.column width="28%"}
 ::: {.annotated}
 ![](images/dx_snap_3_newbucket.png)
 
-::: {.green-box style="left: 2.6%; top: 33.0%; width: 95.0%; height: 8.4%;"}
+::: {.green-box style="left: 2.4%; top: 31.2%; width: 95.4%; height: 8.6%;"}
 :::
 
-::: {.green-box style="left: 2.6%; top: 77.6%; width: 95.0%; height: 6.0%;"}
+::: {.green-box style="left: 2.4%; top: 76.8%; width: 95.4%; height: 6.4%;"}
 :::
 
-::: {.red-circle style="left: 84.6%; top: 93.4%; width: 14.0%; height: 5.2%;"}
+::: {.red-circle style="left: 84.4%; top: 93.4%; width: 14.2%; height: 5.4%;"}
 :::
 :::
 :::
@@ -1793,7 +1830,7 @@ Click **Save**
 ::::
 
 ::: notes
-Example of a generated name: Resource ID cwml_test_cohort became bucket name cwml-test-cohort-wb-swift-eggplant-8983 (underscores turn into dashes). Bucket names are public, so the Resource ID shouldn't contain personal details.
+Example of a generated name: Resource ID intro_aou_genetics became bucket name intro-aou-genetics-wb-swift-bean-2622 (underscores turn into dashes). In a workspace with no bucket yet, "Add to existing bucket" is grayed out. Bucket names are public, so the Resource ID shouldn't contain personal details.
 :::
 
 ## Inside the Exported R Notebook

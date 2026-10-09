@@ -613,13 +613,17 @@ Maximilian Wegener, MPH
 <td><strong>JupyterLab</strong></td>
 </tr>
 <tr class="odd">
-<td>Workspace bucket</td>
-<td>Workspace <strong>Resources</strong> (cloud storage)</td>
+<td>Workspace bucket (created for you)</td>
+<td>A <strong>Cloud Storage bucket you create</strong> on the <strong>Resources</strong> tab</td>
+</tr>
+<tr class="even">
+<td>Code snippets to copy files</td>
+<td>Buckets <strong>mounted as folders</strong> in every app</td>
 </tr>
 </tbody>
 </table>
 <aside class="notes">
-<p>Based on the All of Us “Researcher Workbench 2.0 Glossary of Terms and Comparison Guide”. TODO: check the last row and any renamed terms against the guide.</p>
+<p>Based on the All of Us “Researcher Workbench 2.0 Glossary of Terms and Comparison Guide” and what we confirmed in the Workbench: new 2.0 workspaces have no bucket until you create one (migrated workspaces get an rw-migration-… bucket), and the Snippets menu is gone.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -650,7 +654,7 @@ Maximilian Wegener, MPH
 <li>For Controlled Tier data, complete the <strong>Controlled Tier training</strong></li>
 </ol>
 <aside class="notes">
-<p>TODO: add screenshots of the registration pages.</p>
+<p>Students who already have Workbench access can skip this slide. Registration happens on the All of Us Research Hub before Workbench access; screenshots aren’t included because the pages are only shown to new users.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2612,7 +2616,7 @@ Maximilian Wegener, MPH
 <p>👉 Handy for checking that an export arrived, or finding a file’s path</p>
 </div>
 <aside class="notes">
-<p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; TODO: test Browse on your own bucket.</p>
+<p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2716,27 +2720,27 @@ Maximilian Wegener, MPH
 <div class="column" style="width:55%;">
 <div class="annotated">
 <p><img data-src="images/dx_add_1_collection.png"></p>
-<div class="red-box" style="left: 1.4%; top: 43.4%; width: 97.8%; height: 7.6%;">
+<div class="red-box" style="left: 1.4%; top: 43.6%; width: 97.8%; height: 7.4%;">
 
 </div>
-<div class="green-box" style="left: 68.4%; top: 44.8%; width: 18.4%; height: 4.8%;">
+<div class="green-box" style="left: 68.8%; top: 45.2%; width: 19.0%; height: 4.4%;">
 
 </div>
-<div class="red-circle" style="left: 92.0%; top: 93.0%; width: 8.0%; height: 6.4%;">
+<div class="red-circle" style="left: 92.2%; top: 93.4%; width: 7.6%; height: 5.8%;">
 
 </div>
 </div>
 </div><div class="column side" style="width:45%;">
 <p><strong>Step 1:</strong> pick the <strong>data collection</strong> your workspace already has, e.g., <strong>All of Us Controlled Tier</strong></p>
 <ul>
-<li>Choose the <strong>Version</strong>: pick the <strong>newest</strong> (CDR v9 = <code>C2025Q4R6</code>)</li>
+<li>Choose the <strong>Version</strong>: the newest, <strong>cdrv9</strong></li>
 <li>The other tier shows <strong>Policy conflict</strong>: one tier per workspace</li>
 </ul>
 <p>Click <strong>Next</strong></p>
 <p><strong>Step 2: No new policies.</strong> Your workspace already has this collection’s policies. Click <strong>Next</strong>.</p>
 </div></div>
 <aside class="notes">
-<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. The version selected in this screenshot (v8r9) produced queries that read dataset C2024Q3R9, which has the 2024 Q3 data cutoff of the CDR v8 generation; CDR v9 is C2025Q4R6 (release notes). TODO: check the Version dropdown for a v9 option. Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
+<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. An earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2755,13 +2759,13 @@ Maximilian Wegener, MPH
 <div class="column" style="width:55%;">
 <div class="annotated">
 <p><img data-src="images/dx_add_3_details.png"></p>
-<div class="green-box" style="left: 1.0%; top: 17.0%; width: 98.4%; height: 16.6%;">
+<div class="green-box" style="left: 1.0%; top: 17.2%; width: 98.2%; height: 16.8%;">
 
 </div>
-<div class="green-box" style="left: 1.0%; top: 40.4%; width: 48.4%; height: 9.4%;">
+<div class="green-box" style="left: 1.0%; top: 40.4%; width: 48.6%; height: 9.6%;">
 
 </div>
-<div class="red-circle" style="left: 79.2%; top: 93.4%; width: 20.6%; height: 6.2%;">
+<div class="red-circle" style="left: 79.0%; top: 93.4%; width: 20.2%; height: 5.8%;">
 
 </div>
 </div>
@@ -2793,21 +2797,59 @@ Maximilian Wegener, MPH
 </section>
 <section id="building-a-cohort" class="slide level2">
 <h2>Building a Cohort</h2>
-<ul>
-<li>Select your study population with inclusion/exclusion criteria (AND/OR)</li>
-<li>Demographics, conditions, measurements, medications, procedures, surveys</li>
-</ul>
-<div class="fragment">
-<p><strong>Example criteria:</strong></p>
-<ul>
-<li>Sex → Woman</li>
-<li>Age → 65 or older</li>
-<li>Condition → Breast cancer</li>
-<li>Medication → Tamoxifen</li>
-</ul>
+<div class="annotated short">
+<p><img data-src="images/dx_cohort_view.png"></p>
+<div class="green-box" style="left: 0.4%; top: 10.0%; width: 40.8%; height: 77.0%;">
+
 </div>
+<div class="red-circle" style="left: 1.6%; top: 47.6%; width: 7.8%; height: 6.6%;">
+
+</div>
+<div class="red-circle" style="left: 87.0%; top: 0.8%; width: 10.8%; height: 6.8%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Cohort filter</strong> (left): each <strong>group</strong> is <strong>Included</strong> or <strong>Excluded</strong> and must <strong>meet any</strong> (OR) or <strong>all</strong> (AND) of its criteria. Groups combine with <strong>AND</strong>. <strong>Add criteria</strong> → <strong>Apply</strong>; the participant count updates.</p>
+</div><div class="column side" style="width:50%;">
+<p><strong>Cohort visualizations</strong> (right): charts by gender, race, sex at birth, and age. When you’re done, click <strong>Save data snapshot</strong>.</p>
+<p>⚠️ <strong>Review individuals</strong> shows participant-level rows: never screenshot or share it</p>
+</div></div>
 <aside class="notes">
-<p>Time-based criteria (e.g., within X days of an event) are supported. TODO: screenshot of the cohort builder in Data Explorer.</p>
+<p>Example: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identity = Man or Woman (730,256 participants). Only large counts are shown on these slides. Time-based criteria (e.g., within X days of an event) are supported.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-criteria" class="slide level2">
+<h2>Adding Criteria</h2>
+<div class="annotated short">
+<p><img data-src="images/dx_criteria.png"></p>
+<div class="green-box" style="left: 1.2%; top: 5.6%; width: 98.4%; height: 5.6%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Add criteria</strong> opens the full list: <strong>domains</strong> (conditions, drugs, labs, visits…), <strong>source codes</strong> (ICD-9/10, CPT-4), <strong>demographics</strong>, <strong>wearables</strong> (Fitbit), <strong>genomics</strong>, <strong>physical measurements</strong>, and <strong>surveys</strong></p>
+</div><div class="column side" style="width:50%;">
+<ul>
+<li><strong>+</strong> adds a criterion directly (e.g., <em>Has EHR Data</em>, <em>Current Age</em>)</li>
+<li><strong>🔍</strong> lets you <strong>explore</strong> a category and pick specific concepts</li>
+<li>Or <strong>search</strong> by code or description (top)</li>
+</ul>
+</div></div>
+<aside class="notes">
+<p>Example study population: Sex → Woman; Age → 65 or older; Condition → Breast cancer; Medication → Tamoxifen.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2970,17 +3012,17 @@ Maximilian Wegener, MPH
 
 </div>
 </div>
-<p><strong>Existing bucket:</strong> pick its <strong>Resource ID</strong></p>
+<p><strong>Existing bucket:</strong> pick its <strong>Resource ID</strong> (grayed out if the workspace has no bucket yet)</p>
 </div><div class="column" style="width:28%;">
 <div class="annotated">
 <p><img data-src="images/dx_snap_3_newbucket.png"></p>
-<div class="green-box" style="left: 2.6%; top: 33.0%; width: 95.0%; height: 8.4%;">
+<div class="green-box" style="left: 2.4%; top: 31.2%; width: 95.4%; height: 8.6%;">
 
 </div>
-<div class="green-box" style="left: 2.6%; top: 77.6%; width: 95.0%; height: 6.0%;">
+<div class="green-box" style="left: 2.4%; top: 76.8%; width: 95.4%; height: 6.4%;">
 
 </div>
-<div class="red-circle" style="left: 84.6%; top: 93.4%; width: 14.0%; height: 5.2%;">
+<div class="red-circle" style="left: 84.4%; top: 93.4%; width: 14.2%; height: 5.4%;">
 
 </div>
 </div>
@@ -2993,7 +3035,7 @@ Maximilian Wegener, MPH
 </div>
 </div></div>
 <aside class="notes">
-<p>Example of a generated name: Resource ID cwml_test_cohort became bucket name cwml-test-cohort-wb-swift-eggplant-8983 (underscores turn into dashes). Bucket names are public, so the Resource ID shouldn’t contain personal details.</p>
+<p>Example of a generated name: Resource ID intro_aou_genetics became bucket name intro-aou-genetics-wb-swift-bean-2622 (underscores turn into dashes). In a workspace with no bucket yet, “Add to existing bucket” is grayed out. Bucket names are public, so the Resource ID shouldn’t contain personal details.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
