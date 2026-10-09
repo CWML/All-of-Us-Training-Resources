@@ -1108,7 +1108,7 @@ Maximilian Wegener, MPH
 <ul>
 <li>Applied automatically to compute costs</li>
 <li><strong>Expire 365 days</strong> after you first get Workbench access</li>
-<li><strong>Check your balance:</strong> open a workspace and look at the <strong>details panel on the right</strong></li>
+<li>Tied to your personal pod, <strong><code>user-pod-firstname-lastname-####</code></strong>. A workspace’s <strong>Workspace details</strong> panel (right side, under <strong>Pod</strong>) shows which pod pays for it.</li>
 </ul></li>
 <li>When credits run out or expire:
 <ul>
@@ -1138,7 +1138,7 @@ Maximilian Wegener, MPH
 </ul>
 </div>
 <aside class="notes">
-<p>Initial credits show in each workspace’s details panel (right side). Optional: add a screenshot of that panel or of the Pods page.</p>
+<p>Initial credits are linked to the personal user pod. Check a workspace’s Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2704,14 +2704,14 @@ Maximilian Wegener, MPH
 </div><div class="column side" style="width:45%;">
 <p><strong>Step 1:</strong> pick the <strong>data collection</strong> your workspace already has, e.g., <strong>All of Us Controlled Tier</strong></p>
 <ul>
-<li>Choose the <strong>Version</strong> (here: <em>v8r9</em>)</li>
+<li>Choose the <strong>Version</strong>: <strong>CDR v9</strong> (labeled <em>v8r9</em> here)</li>
 <li>The other tier shows <strong>Policy conflict</strong>: one tier per workspace</li>
 </ul>
 <p>Click <strong>Next</strong></p>
 <p><strong>Step 2: No new policies.</strong> Your workspace already has this collection’s policies. Click <strong>Next</strong>.</p>
 </div></div>
 <aside class="notes">
-<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out.</p>
+<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. The version label in this dialog (v8r9) is CDR v9. Its exported queries read from dataset C2024Q3R9, while the data collection’s resource list shows C2025Q4R6; students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4086,6 +4086,7 @@ Maximilian Wegener, MPH
 <li>Connect GitHub with your Workbench <strong>SSH key</strong> (see <em>Optional Extras</em>)</li>
 <li>⚠️ <strong>Code only:</strong> clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.</li>
 </ul></li>
+<li><strong>AI tools: help with code, never data.</strong> Don’t let an AI assistant open data files or outputs (see <em>Optional Extras</em>).</li>
 <li><strong>Stop apps</strong> when you’re not using them</li>
 <li><strong>Keep your description up to date</strong>, along with your Research Use Statement</li>
 </ul>

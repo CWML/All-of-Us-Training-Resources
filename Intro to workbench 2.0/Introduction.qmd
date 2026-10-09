@@ -420,7 +420,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
 - **\$300 in initial credits** per registered researcher
   - Applied automatically to compute costs
   - **Expire 365 days** after you first get Workbench access
-  - **Check your balance:** open a workspace and look at the **details panel on the right**
+  - Tied to your personal pod, **`user-pod-firstname-lastname-####`**. A workspace's **Workspace details** panel (right side, under **Pod**) shows which pod pays for it.
 - When credits run out or expire:
   - You can't launch or open analysis environments
   - Stored resources (buckets, disks) **may be deleted**
@@ -443,7 +443,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
 :::
 
 ::: notes
-Initial credits show in each workspace's details panel (right side). Optional: add a screenshot of that panel or of the Pods page.
+Initial credits are linked to the personal user pod. Check a workspace's Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.
 :::
 
 ## Getting a Billing Account at Yale
@@ -1571,7 +1571,7 @@ The definitions come from the "Add cohort to workspace" dialog.
 ::: {.column .side width="45%"}
 **Step 1:** pick the **data collection** your workspace already has, e.g., **All of Us Controlled Tier**
 
-- Choose the **Version** (here: *v8r9*)
+- Choose the **Version**: **CDR v9** (labeled *v8r9* here)
 - The other tier shows **Policy conflict**: one tier per workspace
 
 Click **Next**
@@ -1581,7 +1581,7 @@ Click **Next**
 ::::
 
 ::: notes
-The screenshot's "Last modified … by" column showed a staff email; it has been painted out.
+The screenshot's "Last modified … by" column showed a staff email; it has been painted out. The version label in this dialog (v8r9) is CDR v9. Its exported queries read from dataset C2024Q3R9, while the data collection's resource list shows C2025Q4R6; students should copy dataset paths from their own Data Explorer query instead of typing them.
 :::
 
 ## Add a Cohort: Cohort Details
@@ -2481,6 +2481,7 @@ Based on the All of Us FAQ on AI/ML tools: tools must run "only within the RW en
 - **Use GitHub** for your code, and **push every day**. It's your backup if an app fails.
   - Connect GitHub with your Workbench **SSH key** (see *Optional Extras*)
   - ⚠️ **Code only:** clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.
+- **AI tools: help with code, never data.** Don't let an AI assistant open data files or outputs (see *Optional Extras*).
 - **Stop apps** when you're not using them
 - **Keep your description up to date**, along with your Research Use Statement
 
