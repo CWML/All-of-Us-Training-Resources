@@ -1,0 +1,8 @@
+---
+title: "Storage & Costs"
+description: "Saving files, workspace variables, storage, and saving money"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: saving files, workspace variables, storage, and saving money.
+:::

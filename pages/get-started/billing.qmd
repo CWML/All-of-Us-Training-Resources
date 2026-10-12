@@ -1,0 +1,52 @@
+---
+title: "Billing"
+description: "Initial credits, billing pods, and getting a billing account at Yale"
+---
+
+Everything you run in the Workbench (apps, queries, storage) costs money. It's paid for through a **pod**.
+
+## Initial credits
+
+- **\$300 in initial credits** per registered researcher
+  - Applied automatically to compute costs
+  - **Expire 365 days** after you first get Workbench access
+  - Tied to your personal pod, **`user-pod-firstname-lastname-####`**. A workspace's **Workspace details** panel (right side, under **Pod**) shows which pod pays for it.
+- When credits run out or expire:
+  - You can't launch or open analysis environments
+  - Stored resources (buckets, disks) **may be deleted**
+
+::: {.callout-important}
+Set up a **Google Cloud billing account** and **billing pod** *before* your credits run out or expire.
+:::
+
+## Billing pods
+
+- A **pod** connects your workspaces to a Google Cloud billing account
+  - Workspace costs are charged to the pod
+  - Think of the pod as your billing account inside the Workbench
+- One pod can pay for **many workspaces**
+- You can **invite other users** to your pod (e.g., lab members)
+- All of Us researchers have the **Pod Manager** role, so you can create your own pod
+
+::: {.callout-warning title="Watch out"}
+- A pod links to only **one** billing account
+- A workspace's pod **can't be changed** later. To switch pods, you have to duplicate the workspace.
+:::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Initial credits are linked to the personal user pod. Check a workspace's Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.
+:::
+
+## Getting a billing account at Yale
+
+Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us billing account"** and include:
+
+- Your All of Us Workbench email (e.g., `yourname@researchallofus.org`)
+- Your **COA** number
+- Whether this is an **NIH-funded** project
+
+Yale Cloud Support will send the next steps for linking the billing account and creating your **pod**.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Yale Cloud Support may give additional or different guidance.
+:::

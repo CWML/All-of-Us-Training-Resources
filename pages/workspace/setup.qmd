@@ -1,0 +1,8 @@
+---
+title: "Setting Up a Workspace"
+description: "Creating a workspace and adding a data collection"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: creating a workspace and adding a data collection.
+:::

@@ -1,0 +1,8 @@
+---
+title: "Research Use Statement"
+description: "The eight Research Use Statement questions, with example answers"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: the eight Research Use Statement questions, with example answers.
+:::

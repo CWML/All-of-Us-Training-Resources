@@ -1,0 +1,29 @@
+/* Screenshot annotations: red = click here, green = options.
+   Wrap an image in ::: {.annotated} and place boxes with % positions. */
+.annotated {
+  position: relative;
+  margin: 0.5rem 0 1rem;
+}
+.annotated p {
+  margin: 0;
+}
+.annotated img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+.red-circle, .red-box, .green-box, .green-circle {
+  position: absolute;
+  pointer-events: none;
+}
+.red-circle   { border: 3px solid #E00000; border-radius: 50%; }
+.red-box      { border: 3px solid #E00000; border-radius: 8px; }
+.green-box    { border: 3px solid #1B9E3E; border-radius: 8px; }
+.green-circle { border: 3px solid #1B9E3E; border-radius: 50%; }
+
+/* Smaller screenshots for wide, short images */
+.annotated.narrow {
+  max-width: 720px;
+}

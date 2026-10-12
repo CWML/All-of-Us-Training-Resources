@@ -1,0 +1,8 @@
+---
+title: "Data Explorer"
+description: "Adding a cohort, building it, saving a data snapshot, and the exported notebook"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: adding a cohort, building it, saving a data snapshot, and the exported notebook.
+:::

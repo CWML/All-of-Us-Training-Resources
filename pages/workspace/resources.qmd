@@ -1,0 +1,8 @@
+---
+title: "Overview and Resources Tabs"
+description: "Workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud.
+:::

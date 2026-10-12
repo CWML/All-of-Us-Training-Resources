@@ -1,0 +1,8 @@
+---
+title: "Workflows"
+description: "The Workflows tab, Cromwell, Nextflow, batch jobs, and dsub"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: the Workflows tab, Cromwell, Nextflow, batch jobs, and dsub.
+:::

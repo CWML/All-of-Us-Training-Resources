@@ -1,0 +1,8 @@
+---
+title: "Workspaces"
+description: "What workspaces are for, the Workspaces page, access levels, and sharing"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: what workspaces are for, the Workspaces page, access levels, and sharing.
+:::

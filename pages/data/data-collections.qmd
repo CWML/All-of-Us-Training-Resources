@@ -1,0 +1,8 @@
+---
+title: "Data Collections"
+description: "Data collections, the Data Exchange, and access levels"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: data collections, the Data Exchange, and access levels.
+:::

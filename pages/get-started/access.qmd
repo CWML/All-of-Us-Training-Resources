@@ -1,0 +1,8 @@
+---
+title: "Getting Access"
+description: "Creating your account, logging in, the home page, and getting around"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: creating your account, logging in, the home page, and getting around.
+:::

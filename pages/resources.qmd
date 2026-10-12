@@ -1,0 +1,8 @@
+---
+title: "Resources"
+description: "Good habits, helpful links, and contact"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: good habits, helpful links, and contact.
+:::

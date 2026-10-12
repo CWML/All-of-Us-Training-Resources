@@ -1,0 +1,77 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - "pages/**/*.qmd"
+
+website:
+  title: "All of Us Workbench 2.0 Training"
+  description: "Training materials from the Yale Cushing/Whitney Medical Library for the All of Us Researcher Workbench 2.0"
+  site-url: https://cwml.github.io/All-of-Us-Training-Resources/
+  repo-url: https://github.com/CWML/All-of-Us-Training-Resources
+  search: true
+  page-navigation: true
+
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Get Started"
+        href: pages/get-started/about.qmd
+      - text: "Your Workspace"
+        href: pages/workspace/workspaces.qmd
+      - text: "Data"
+        href: pages/data/data-collections.qmd
+      - text: "Learn by Example"
+        href: pages/examples/tutorial-workspaces.qmd
+      - text: "Optional Extras"
+        href: pages/extras/extras.qmd
+      - text: "Resources"
+        href: pages/resources.qmd
+    right:
+      - icon: github
+        href: https://github.com/CWML/All-of-Us-Training-Resources
+
+  sidebar:
+    style: docked
+    background: light
+    contents:
+      - section: "Get Started"
+        contents:
+          - pages/get-started/about.qmd
+          - pages/get-started/whats-new.qmd
+          - pages/get-started/access.qmd
+          - pages/get-started/billing.qmd
+      - section: "Your Workspace"
+        contents:
+          - pages/workspace/workspaces.qmd
+          - pages/workspace/setup.qmd
+          - pages/workspace/research-use-statement.qmd
+          - pages/workspace/resources.qmd
+          - pages/workspace/apps.qmd
+          - pages/workspace/workflows.qmd
+          - pages/workspace/storage-costs.qmd
+      - section: "Data"
+        contents:
+          - pages/data/data-collections.qmd
+          - pages/data/data-explorer.qmd
+      - section: "Learn by Example"
+        contents:
+          - pages/examples/tutorial-workspaces.qmd
+          - pages/examples/notebooks.qmd
+      - section: "Optional Extras"
+        contents:
+          - pages/extras/extras.qmd
+      - pages/resources.qmd
+
+  page-footer:
+    left: "Cushing/Whitney Medical Library, Yale School of Medicine"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-title: "On this page"

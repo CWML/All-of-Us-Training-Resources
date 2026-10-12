@@ -1,0 +1,372 @@
+[
+  {
+    "objectID": "pages/workspace/workspaces.html",
+    "href": "pages/workspace/workspaces.html",
+    "title": "Workspaces",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: what workspaces are for, the Workspaces page, access levels, and sharing.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html",
+    "href": "pages/workspace/storage-costs.html",
+    "title": "Storage & Costs",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: saving files, workspace variables, storage, and saving money.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html",
+    "href": "pages/workspace/resources.html",
+    "title": "Overview and Resources Tabs",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html",
+    "href": "pages/workspace/apps.html",
+    "title": "Apps",
+    "section": "",
+    "text": "Apps are where you run your analysis: JupyterLab, R, SAS, and more. This page walks through creating an AoU Jupyter app.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#the-apps-tab",
+    "href": "pages/workspace/apps.html#the-apps-tab",
+    "title": "Apps",
+    "section": "The Apps tab",
+    "text": "The Apps tab\n\n\n\n\n\n\n\n\n\n\n\nWhat’s here:\n\nYour apps: the analysis environments in this workspace, with their status (Running, Stopped…)\nGit repositories: code linked to the workspace (see Optional Extras)\n\n\n\nTo start an app: click + New app instance, then:\n\nSelect app\nChoose config\nCompute options\nReview details → Create app\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYou need Writer or Owner access to create apps. Our example uses AoU Jupyter.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#what-is-an-app",
+    "href": "pages/workspace/apps.html#what-is-an-app",
+    "title": "Apps",
+    "section": "What is an app?",
+    "text": "What is an app?\n\nA virtual computer in the cloud with its own disk and software already installed (JupyterLab, R, Python, SAS…)\nYour buckets are mounted as folders, so your files are right there\nYou pay for computing while it runs and for the disk until you delete it\n\n\n\n\n\nRunning\nStopped\nDeleted\n\n\n\n\nCompute charged\n✅\n❌\n❌\n\n\nDisk charged\n✅\n✅\n❌\n\n\nFiles on the app’s disk\nkept\nkept\nlost\n\n\nFiles in your bucket\nkept\nkept\nkept\n\n\n\nApps auto-stop after 4 hours idle by default. You can set 1 hour to 14 days.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-1-select-app",
+    "href": "pages/workspace/apps.html#step-1-select-app",
+    "title": "Apps",
+    "section": "Step 1: Select app",
+    "text": "Step 1: Select app\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApp\nUse it for\n\n\n\n\nJupyterLab Spark cluster\nLarge-scale and genomic analysis (Dataproc cluster)\n\n\nR Analysis Environment\nR / RStudio\n\n\nAoU Jupyter\nStandard JupyterLab: Python or R notebooks\n\n\nAoU SAS\nSAS\n\n\nJupyterLab (NVIDIA NeMo)\nLLMs, multimodal, and speech AI (GPU)\n\n\nJupyterLab (NVIDIA Parabricks + CUDA-X)\nGPU-accelerated genomics\n\n\n\nOur example: AoU Jupyter. Select it and click Next.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nHover the ⓘ next to an app name for details. “Some apps are unavailable due to restrictions or policy settings”: the All of Us app policy only allows approved apps in this workspace.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-2-choose-config",
+    "href": "pages/workspace/apps.html#step-2-choose-config",
+    "title": "Apps",
+    "section": "Step 2: Choose config",
+    "text": "Step 2: Choose config\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault configuration (AoU Jupyter):\n\nMachine n1-highmem-4: 4 CPUs, 26 GB memory\n500 GB data disk\n\nCost estimate panel:\n\nCost while running: $0.27/hour, or $194.32/month if left on 24/7\nDisk cost (continuous): $21.60/month, even when stopped\nHow do we calculate? and GCP’s pricing calculator links\nCost note: an optional reminder saved with the config\n\nClick Next\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSaved configurations you or a collaborator created also appear here as options. Prices are estimates and vary by region.\n\n\n\n\nReading the cost estimate\nExample: default AoU Jupyter, used 20 hours in a month\n\n\n\nComputing: 20 hours × $0.27\n$5.40\n\n\nDisk: the whole month, running or stopped\n$21.60\n\n\nTotal\n≈ $27\n\n\n\n\n\n\n\n\n\nNoteFor light use, the disk costs more than the computing\n\n\n\n\nDelete an app you’re done with (save to your bucket first)\nA smaller data disk costs less (step 3)\n\nNot included: BigQuery query costs, bucket storage, and data transfer.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n“Per month” assumes the app runs 24/7 (about 730 hours). For comparison, the default JupyterLab Spark cluster is about $0.64/hour ($465/month if left on) plus $37.60/month for disks.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-3-compute-options",
+    "href": "pages/workspace/apps.html#step-3-compute-options",
+    "title": "Apps",
+    "section": "Step 3: Compute options",
+    "text": "Step 3: Compute options\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLocation: keep Region (recommended). It picks a zone with free capacity for you. The region comes from the workspace.\nGeneral or GPUs: General is fine for most analysis. GPUs cost much more and can’t be added later.\nMachine type: CPUs + memory. More is faster but costs more; the estimate updates as you change it.\nScroll down for data disk size (50 GB–64 TB; default 500 GB) and autostop (default 4 hours idle)\n\nClick Next\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nLeave “Use a specific reservation” unchecked; it’s for reserved cloud capacity. This training workspace was created in us-central1, so that’s the region shown. You can change the machine type and disk later, but only while the app is stopped.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-4-review-details",
+    "href": "pages/workspace/apps.html#step-4-review-details",
+    "title": "Apps",
+    "section": "Step 4: Review details",
+    "text": "Step 4: Review details\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConfig: shows Custom if you changed anything in step 3\nWorkbench ID: the app’s name in Workbench and the CLI (letters, numbers, -, _)\nInstance name: the cloud machine’s name (lowercase, numbers, -). Can’t be changed later.\nDescription (optional)\n\nClick Create app. The status goes Creating → Provisioning → Starting → Running. Then click the app’s name to open it.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#managing-your-app",
+    "href": "pages/workspace/apps.html#managing-your-app",
+    "title": "Apps",
+    "section": "Managing your app",
+    "text": "Managing your app\nOn the Apps tab:\n\n\n\n\n\n\n\nAction\nWhat happens\n\n\n\n\nOpen\nClick the app’s name (when it’s Running)\n\n\nStop\nStops it right away, with no confirmation. Computing charges stop; disk charges continue.\n\n\nStart\nRestarts a stopped app in about a minute\n\n\nEdit\nName, description, and autostop: any time. Machine type and disk: only when stopped.\n\n\nDelete\nRemoves the app and its disk. ⚠️ Anything not saved in a bucket is lost.\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYou can’t change an app’s image (app type) or instance name; create a new app instead. Apps that are Starting or Stopping can’t be changed until they finish. If someone loses Writer access to the workspace, their apps are stopped (“abandoned”); an Owner can restore the access or delete the app.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#sources",
+    "href": "pages/workspace/apps.html#sources",
+    "title": "Apps",
+    "section": "Sources",
+    "text": "Sources\n\nVerily Workbench: Cloud apps overview\nVerily Workbench: Basic cloud app operations\nVerily Workbench: Cloud app cost estimates",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/whats-new.html",
+    "href": "pages/get-started/whats-new.html",
+    "title": "What’s New in Workbench 2.0",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: researcher Workbench 2.0, what Verily Workbench is, and classic vs 2.0.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "What's New in Workbench 2.0"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/access.html",
+    "href": "pages/get-started/access.html",
+    "title": "Getting Access",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: creating your account, logging in, the home page, and getting around.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "Getting Access"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html",
+    "href": "pages/extras/extras.html",
+    "title": "Optional Extras",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: practice with synthetic data, adding a file from a URL, GitHub, and AI tools.",
+    "crumbs": [
+      "Home",
+      "Optional Extras",
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html",
+    "href": "pages/examples/notebooks.html",
+    "title": "Example Notebooks",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: our example R notebooks (diabetes and CKD cohorts), view-only, with downloads.",
+    "crumbs": [
+      "Home",
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html",
+    "href": "pages/data/data-collections.html",
+    "title": "Data Collections",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: data collections, the Data Exchange, and access levels.",
+    "crumbs": [
+      "Home",
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "",
+    "text": "These pages walk you through the All of Us Researcher Workbench 2.0 (powered by Verily), from logging in to running an analysis. They’re the reference version of our introductory training session."
+  },
+  {
+    "objectID": "index.html#start-here",
+    "href": "index.html#start-here",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Start here",
+    "text": "Start here\n\nAbout All of Us: the program, its data, and the access tiers\nGetting Access and Billing: what to set up before you begin\nSetting Up a Workspace: create a workspace and add an All of Us data collection\nData Explorer: build a cohort and save a data snapshot\nApps: launch an analysis app and work with your data\n\nThroughout, we use an example workspace called intro-to-AoU, set up for instruction only."
+  },
+  {
+    "objectID": "index.html#how-to-read-the-screenshots",
+    "href": "index.html#how-to-read-the-screenshots",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "How to read the screenshots",
+    "text": "How to read the screenshots\nScreenshots are marked up to show you what to do:\n\nRed circle or box: click here\nGreen box: your options\n\n\n\n\n\n\n\nTipInstructor tips\n\n\n\nBoxes like this one hold extra details from the training session. Click them to expand."
+  },
+  {
+    "objectID": "index.html#data-use",
+    "href": "index.html#data-use",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Data use",
+    "text": "Data use\n\n\n\n\n\n\nWarningKeep All of Us data in the Workbench\n\n\n\n\nDon’t download, screenshot, or share participant-level data\nDon’t publish participant counts of 1 to 20, or numbers they could be calculated from\nFollow the All of Us Data User Code of Conduct and the Data and Statistics Dissemination Policy"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Contact",
+    "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine"
+  },
+  {
+    "objectID": "pages/data/data-explorer.html",
+    "href": "pages/data/data-explorer.html",
+    "title": "Data Explorer",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: adding a cohort, building it, saving a data snapshot, and the exported notebook.",
+    "crumbs": [
+      "Home",
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html",
+    "href": "pages/examples/tutorial-workspaces.html",
+    "title": "Tutorial Workspaces",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: the All of Us tutorial workspaces and workspace migration.",
+    "crumbs": [
+      "Home",
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html",
+    "href": "pages/get-started/about.html",
+    "title": "About All of Us",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: background, vision and goals, data sources, the CDR, CDR v9 counts, and data access tiers.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html",
+    "href": "pages/get-started/billing.html",
+    "title": "Billing",
+    "section": "",
+    "text": "Everything you run in the Workbench (apps, queries, storage) costs money. It’s paid for through a pod.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html#initial-credits",
+    "href": "pages/get-started/billing.html#initial-credits",
+    "title": "Billing",
+    "section": "Initial credits",
+    "text": "Initial credits\n\n$300 in initial credits per registered researcher\n\nApplied automatically to compute costs\nExpire 365 days after you first get Workbench access\nTied to your personal pod, user-pod-firstname-lastname-####. A workspace’s Workspace details panel (right side, under Pod) shows which pod pays for it.\n\nWhen credits run out or expire:\n\nYou can’t launch or open analysis environments\nStored resources (buckets, disks) may be deleted\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSet up a Google Cloud billing account and billing pod before your credits run out or expire.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html#billing-pods",
+    "href": "pages/get-started/billing.html#billing-pods",
+    "title": "Billing",
+    "section": "Billing pods",
+    "text": "Billing pods\n\nA pod connects your workspaces to a Google Cloud billing account\n\nWorkspace costs are charged to the pod\nThink of the pod as your billing account inside the Workbench\n\nOne pod can pay for many workspaces\nYou can invite other users to your pod (e.g., lab members)\nAll of Us researchers have the Pod Manager role, so you can create your own pod\n\n\n\n\n\n\n\nWarningWatch out\n\n\n\n\nA pod links to only one billing account\nA workspace’s pod can’t be changed later. To switch pods, you have to duplicate the workspace.\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nInitial credits are linked to the personal user pod. Check a workspace’s Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
+    "href": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
+    "title": "Billing",
+    "section": "Getting a billing account at Yale",
+    "text": "Getting a billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.",
+    "crumbs": [
+      "Home",
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/resources.html",
+    "href": "pages/resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: good habits, helpful links, and contact.",
+    "crumbs": [
+      "Home",
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html",
+    "href": "pages/workspace/research-use-statement.html",
+    "title": "Research Use Statement",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: the eight Research Use Statement questions, with example answers.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html",
+    "href": "pages/workspace/setup.html",
+    "title": "Setting Up a Workspace",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: creating a workspace and adding a data collection.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html",
+    "href": "pages/workspace/workflows.html",
+    "title": "Workflows",
+    "section": "",
+    "text": "NoteComing soon\n\n\n\nThis page is being converted from the training slides. It will cover: the Workflows tab, Cromwell, Nextflow, batch jobs, and dsub.",
+    "crumbs": [
+      "Home",
+      "Your Workspace",
+      "Workflows"
+    ]
+  }
+]

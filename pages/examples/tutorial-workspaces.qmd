@@ -1,0 +1,8 @@
+---
+title: "Tutorial Workspaces"
+description: "The All of Us tutorial workspaces and workspace migration"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: the All of Us tutorial workspaces and workspace migration.
+:::

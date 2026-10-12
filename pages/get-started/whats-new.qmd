@@ -1,0 +1,8 @@
+---
+title: "What's New in Workbench 2.0"
+description: "Researcher Workbench 2.0, what Verily Workbench is, and classic vs 2.0"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: researcher Workbench 2.0, what Verily Workbench is, and classic vs 2.0.
+:::

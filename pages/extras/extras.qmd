@@ -1,0 +1,8 @@
+---
+title: "Optional Extras"
+description: "Practice with synthetic data, adding a file from a URL, GitHub, and AI tools"
+---
+
+::: {.callout-note title="Coming soon"}
+This page is being converted from the training slides. It will cover: practice with synthetic data, adding a file from a URL, GitHub, and AI tools.
+:::
