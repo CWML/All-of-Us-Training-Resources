@@ -992,29 +992,73 @@
     "href": "pages/examples/notebooks.html",
     "title": "Example Notebooks",
     "section": "",
-    "text": "These R notebooks walk through a complete study comparing people with and without diabetes, including time to chronic kidney disease (CKD). Each notebook does one thing, so each can be taught as its own short class.\nVariables used: age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.",
+    "text": "Short R notebooks that walk through a complete study comparing people with and without diabetes, including time to chronic kidney disease (CKD). Each notebook does one thing, so each can be taught as its own short class. They run in the All of Us Researcher Workbench 2.0.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
     ]
   },
   {
-    "objectID": "pages/examples/notebooks.html#how-they-fit-together",
-    "href": "pages/examples/notebooks.html#how-they-fit-together",
+    "objectID": "pages/examples/notebooks.html#the-notebooks",
+    "href": "pages/examples/notebooks.html#the-notebooks",
     "title": "Example Notebooks",
-    "section": "How they fit together",
-    "text": "How they fit together\naou_setup.R        settings + helpers, loaded by every notebook\n     │\n1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv\n1.2 survival_data ──► survival_conditions.csv, last_visits.csv\n     │\n2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv\n     │\n3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival\nThe queries in 1.1 and 1.2 run once and save their results to your bucket. Every later notebook reads those files, so a class can start at any notebook once the data is saved.",
+    "section": "The notebooks",
+    "text": "The notebooks\n\n\n\nNotebook\nWhat it does\nClass\n\n\n\n\naou_setup.R\nSettings you edit once (bucket and dataset) and shared helper functions\n\n\n\n0.0 setup\nChecks your settings and the connection to the data\nAny\n\n\n0.1 use_saved_data\nOptional: converts files saved by the earlier notebooks, so you can skip 1.1 and 1.2\n\n\n\n1.1 build_cohorts\nSQL for the study population: demographics, PTSD survey answers, and measurements\n1\n\n\n1.2 survival_data\nDiabetes and CKD diagnosis dates, and last visits\n1 or 5\n\n\n2.0 clean_and_join\nCleans, reshapes, and joins the data into one analysis table\n2\n\n\n3.1 table_one\nDescriptive statistics, chi-square and t-tests, and a small-count check\n3\n\n\n3.2 logistic_regression\nUnivariable and multivariable models for the odds of diabetes\n4\n\n\n3.3 linear_regression\nModels for systolic blood pressure, compared by fit\n4\n\n\n3.4 survival_analysis\nKaplan–Meier curves and a Cox model with baseline predictors\n5\n\n\n\nVariables used: age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.\n\nHow they fit together\naou_setup.R          settings + helpers, loaded by every notebook\n     │\n1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv\n1.2 survival_data ──► survival_conditions.csv, last_visits.csv\n   (or 0.1 use_saved_data: makes the same five files from older saved data)\n     │\n2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv\n     │\n3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival\nThe queries in 1.1 and 1.2 run once and save their results to your bucket’s data/ folder. Every later notebook reads those files, so a class can start at any notebook once the data is saved.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
     ]
   },
   {
-    "objectID": "pages/examples/notebooks.html#getting-the-notebooks-into-your-workspace",
-    "href": "pages/examples/notebooks.html#getting-the-notebooks-into-your-workspace",
+    "objectID": "pages/examples/notebooks.html#getting-started",
+    "href": "pages/examples/notebooks.html#getting-started",
     "title": "Example Notebooks",
-    "section": "Getting the notebooks into your workspace",
-    "text": "Getting the notebooks into your workspace\nThe notebooks only run inside an All of Us workspace (Workbench 2.0): they query the All of Us data with BigQuery and save files in your bucket. You’ll need the Controlled Tier data collection and a bucket (see Overview and Resources Tabs).\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward. See the GitHub Guide.\nDownload and upload: download the files above, including aou_setup.R, and upload them to one folder in your app.\n\nThen launch an R app (e.g., AoU Jupyter with an R kernel; see Apps) and start with 0.0 setup: it has you edit two lines in aou_setup.R.\nR packages: tidyverse, lubridate, bigrquery, broom, survival, survminer\n\n\n\n\n\n\nImportantCode only\n\n\n\nThis repository contains code only, no All of Us data. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20. Notebook 3.1 includes a check for small counts.\n\n\nThe earlier versions of these notebooks (classic Workbench) are kept in notebooks/archive for reference.",
+    "section": "Getting started",
+    "text": "Getting started\nYou need an All of Us workspace with the Controlled Tier data collection and a bucket (Resources tab → + New resource → Cloud Storage bucket).\n\nGet the notebooks into your workspace, either way:\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward.\nDownload and upload: download the notebook files and aou_setup.R and upload them to one folder in your app.\n\nLaunch an R app, e.g. AoU Jupyter with an R kernel.\nOpen 0.0 setup and follow it. It has you edit two lines in aou_setup.R:\n\nBUCKET_NAME: your bucket’s folder name\nCURRENT_DATASET: the dataset, copied from the FROM line of any Data Explorer query (Controlled Tier CDR v9 is C2025Q4R6)\n\nRun the notebooks in order: 1.1 → 1.2 → 2.0 → 3.1 to 3.4.\n\nR packages: tidyverse, lubridate, bigrquery, broom, survival, survminer",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html#the-study-population",
+    "href": "pages/examples/notebooks.html#the-study-population",
+    "title": "Example Notebooks",
+    "section": "The study population",
+    "text": "The study population\nBoth groups are defined once, in aou_setup.R:\n\nAge 25 to 50, and alive\nRace: White, Black or African American, or Asian\nEthnicity: Hispanic or Latino or Not Hispanic or Latino\nGender: Man or Woman\nStudy group: has a diagnosis of diabetes mellitus (any type). Control group: doesn’t.",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html#build-the-cohorts-in-data-explorer",
+    "href": "pages/examples/notebooks.html#build-the-cohorts-in-data-explorer",
+    "title": "Example Notebooks",
+    "section": "Build the cohorts in Data Explorer",
+    "text": "Build the cohorts in Data Explorer\nPrefer point-and-click? You can build the same two groups in Data Explorer instead of running the SQL in notebook 1.1. You’ll make two cohorts (study and control) and save a data snapshot of each.\n\n1. Add a cohort\nResources tab → + New resource → Cohort:\n\nSelect collection: All of Us Controlled Tier, version cdrv9 → Next\nNo new policies → Next\nCohort name: diabetes_study (and later diabetes_control) → Add to your workspace\n\n\n\n2. Add the criteria\nIn the cohort view, use Add criteria to build these groups. Within a group, choose Meet all criteria. Groups combine with AND.\n\n\n\n\n\n\n\n\nGroup\nIncluded / Excluded\nCriteria (Add criteria → …)\n\n\n\n\n1. Demographics\nIncluded, meet all\nDemographics → Current Age: 25 to 50 · Race: White, Black or African American, Asian · Ethnicity: Hispanic or Latino, Not Hispanic or Latino · Gender identity: Man, Woman\n\n\n2. Diabetes\nStudy cohort: Included / Control cohort: Excluded\nDomains → Condition → 🔍 search diabetes mellitus → select Diabetes mellitus\n\n\n3. Alive\nExcluded\nDemographics → Deceased\n\n\n\nClick Apply. The participant count updates.\n\n\n3. Save a data snapshot\nSave data snapshot (top right), then:\n\nSelect data:\n\nDemographics\n+ Browse more data → Surveys → the two PTSD questions: “Are you still seeing a doctor or health care provider for post-traumatic stress disorder (PTSD)?” and “Are you currently prescribed medications and/or receiving treatment for post-traumatic stress disorder (PTSD)?”\n+ Browse more data → Labs and Measurements → BMI, systolic blood pressure, LDL cholesterol, HbA1c\n\nFile format: Queries for the cohort (IPYNB) with R Notebook\nDestination bucket: your bucket → Save\n\nRepeat steps 1 to 3 for the control cohort (group 2 set to Excluded).\n\n\n4. Use the exports with these notebooks\nRun each exported notebook once: it saves CSV files to your bucket under bq_exports/. Then follow “Alternative: use a Data Explorer export instead” at the end of notebook 1.1: it combines the two cohorts, adds the diabetes flag, and renames the columns so notebooks 2.0 to 3.4 work unchanged.\n\nTo confirm in the Workbench: where the PTSD questions and the four measurements appear under + Browse more data, and that Deceased can be used as an exclusion. Menus may differ slightly.\nCounts won’t exactly match the SQL version. Data Explorer and the SQL in aou_setup.R calculate age and match diagnosis codes in slightly different ways. Both are fine for learning; just use one method consistently.",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html#already-have-data-from-the-earlier-notebooks",
+    "href": "pages/examples/notebooks.html#already-have-data-from-the-earlier-notebooks",
+    "title": "Example Notebooks",
+    "section": "Already have data from the earlier notebooks?",
+    "text": "Already have data from the earlier notebooks?\nIf you ran the earlier (classic Workbench) versions of these notebooks and still have their CSV files, open 0.1 use_saved_data. It converts them into the new format so you can skip 1.1 and 1.2. Your old final_analysis.csv works with notebooks 3.1 to 3.3 as it is.\nThose files come from the older dataset (CDR v8), so results won’t match a fresh CDR v9 run. The earlier notebooks themselves are in archive/.",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html#data-use",
+    "href": "pages/examples/notebooks.html#data-use",
+    "title": "Example Notebooks",
+    "section": "Data use",
+    "text": "Data use\nThis repository contains code only, no All of Us data.\n\nDon’t download, screenshot, or share participant-level data\nDon’t share counts of 1 to 20, or numbers they could be calculated from (notebook 3.1 checks for these)\nClear notebook outputs before you share or commit a notebook",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"

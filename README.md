@@ -89,6 +89,7 @@ Short R notebooks that walk through a complete study comparing people **with** a
 |---|---|---|
 | `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions | |
 | `0.0 setup` | Checks your settings and the connection to the data | Any |
+| `0.1 use_saved_data` | *Optional:* converts files saved by the earlier notebooks, so you can skip 1.1 and 1.2 | |
 | `1.1 build_cohorts` | SQL for the study population: demographics, PTSD survey answers, and measurements. Also shows how to use a Data Explorer export instead. | 1 |
 | `1.2 survival_data` | Diabetes and CKD diagnosis dates, and last visits | 1 or 5 |
 | `2.0 clean_and_join` | Cleans, reshapes, and joins the data into one analysis table | 2 |
@@ -98,6 +99,8 @@ Short R notebooks that walk through a complete study comparing people **with** a
 | `3.4 survival_analysis` | Kaplan–Meier curves and a Cox model with baseline predictors | 5 |
 
 **Variables used:** age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.
+
+**Full instructions**, including how to build the same cohorts in **Data Explorer**, are in [`notebooks/README.md`](notebooks/README.md).
 
 The earlier versions of the notebooks (classic Workbench) are in `notebooks/archive/`.
 
