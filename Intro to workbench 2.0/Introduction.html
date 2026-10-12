@@ -3941,15 +3941,15 @@ Maximilian Wegener, MPH
 <li><strong>File name:</strong> what to call it in the bucket (the default is <code>import-</code> + date and time)</li>
 <li>Click <strong>Add file to bucket</strong> and wait for it to finish</li>
 </ol>
-<div class="fragment">
 <ul>
-<li>Files up to <strong>100 MB</strong>. For bigger files, use <code>gcloud storage</code> / <code>gsutil</code> in an app.</li>
-<li>Handy for public reference files: code lists, lookup tables, published data</li>
+<li>Files up to <strong>100 MB</strong></li>
 </ul>
+<div class="fragment">
+<p>⚠️ <strong>In a Controlled Tier workspace this may fail</strong> (“Couldn’t add that file”): the perimeter blocks many outside downloads. Instead, <strong>upload</strong> the file in JupyterLab, or keep it in a <strong>GitHub repo</strong> and clone it.</p>
 </div>
 </div></div>
 <aside class="notes">
-<p>Source: Verily, “Add files to Cloud Storage via URL”, and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. TODO: test an actual transfer in a Controlled Tier workspace; the perimeter may block some outside URLs.</p>
+<p>Source: Verily, “Add files to Cloud Storage via URL”, and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. Tested October 2026 in the intro-to-AoU Controlled Tier workspace: a public GitHub raw URL (reachable from outside, HTTP 200) failed with “Couldn’t add that file. Try again later, or contact support for help.” Most likely the perimeter blocks the transfer. It should work in workspaces without a perimeter (e.g., a practice workspace with no All of Us data). GitHub over git/SSH does work inside the perimeter.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
