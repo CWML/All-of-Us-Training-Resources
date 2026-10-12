@@ -34,8 +34,74 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="Introduction_files/libs/revealjs/dist/theme/quarto-9d53016273e43798e8cced1daeddf950.css">
+  <link rel="stylesheet" href="Introduction_files/libs/revealjs/dist/theme/quarto-b5ecd3db38e3c5f0c6b2c7312db9171d.css">
   <link href="Introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="Introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="Introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -150,6 +216,8 @@ Maximilian Wegener, MPH
 </section>
 <section id="agenda" class="slide level2">
 <h2>Agenda</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ol type="1">
 <li>About All of Us</li>
 <li>What’s new in Workbench 2.0</li>
@@ -157,11 +225,19 @@ Maximilian Wegener, MPH
 <li>Data collections</li>
 <li>Workspaces</li>
 <li>Billing</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<ol start="7" type="1">
+<li>Tutorial workspaces</li>
 <li>Setting up a workspace</li>
+<li>Inside your workspace</li>
 <li>Data Explorer (cohorts + datasets)</li>
 <li>Apps</li>
+<li>Workflows</li>
 <li>Storage and costs</li>
+<li>Optional extras</li>
 </ol>
+</div></div>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
@@ -174,6 +250,31 @@ Maximilian Wegener, MPH
 <li>Launch an analysis app and find your exported data</li>
 <li>Manage storage and costs</li>
 </ul>
+</section>
+<section id="our-example-workspace" class="slide level2">
+<h2>Our Example Workspace</h2>
+<p>Throughout this training we build and use one workspace:</p>
+<div style="text-align: center; font-size: 1.6em; margin: 0.6em 0;">
+<p><strong><code>intro-to-AoU</code></strong></p>
+</div>
+<ul>
+<li>You’ll see it <strong>created step by step</strong> in <em>Setting Up a Workspace</em></li>
+<li>It’s for <strong>instruction only</strong>, not research. Our Research Use Statement answers say so.</li>
+<li>Some later screenshots come from another training workspace, <strong><code>CWML_AoU_training</code></strong>. The steps are the same.</li>
+</ul>
+<aside class="notes">
+<p>Reminder for the presenter: use the intro-to-AoU workspace for live demos. Create it (or check it exists) and confirm its billing pod before class.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="course-progression" class="slide level2">
 <h2>Course Progression</h2>
@@ -230,7 +331,7 @@ Maximilian Wegener, MPH
 <li><strong>Scalability and innovation:</strong> complex analyses, AI and machine learning</li>
 </ul>
 </section>
-<section id="data-sources" class="slide level2">
+<section id="data-sources" class="slide level2 scrollable">
 <h2>Data Sources</h2>
 <table class="caption-top">
 <colgroup>
@@ -290,7 +391,100 @@ Maximilian Wegener, MPH
 </ul></li>
 </ul>
 <aside class="notes">
-<p>CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace). TODO: add CDRv9 participant counts.</p>
+<p>CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="whats-in-cdr-v9" class="slide level2">
+<h2>What’s in CDR v9?</h2>
+<p><strong>More than 747,000 participants</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Data type</th>
+<th style="text-align: right;">Participants</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Surveys</td>
+<td style="text-align: right;">&gt; 747,000</td>
+</tr>
+<tr class="even">
+<td>Physical measurements</td>
+<td style="text-align: right;">&gt; 600,000</td>
+</tr>
+<tr class="odd">
+<td>Whole genome sequencing</td>
+<td style="text-align: right;">&gt; 535,000</td>
+</tr>
+<tr class="even">
+<td>EHR</td>
+<td style="text-align: right;">&gt; 481,000</td>
+</tr>
+<tr class="odd">
+<td>Exploring the Mind</td>
+<td style="text-align: right;">&gt; 97,000</td>
+</tr>
+<tr class="even">
+<td>Fitbit</td>
+<td style="text-align: right;">&gt; 68,000</td>
+</tr>
+<tr class="odd">
+<td>Long-read genomes</td>
+<td style="text-align: right;">&gt; 14,000</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Genomics and multi-omics</th>
+<th style="text-align: right;">Participants</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Genotyping arrays</td>
+<td style="text-align: right;">553,949</td>
+</tr>
+<tr class="even">
+<td>Short-read WGS (SNPs/indels)</td>
+<td style="text-align: right;">535,662</td>
+</tr>
+<tr class="odd">
+<td>Structural variants</td>
+<td style="text-align: right;">96,405</td>
+</tr>
+<tr class="even">
+<td>Long-read WGS</td>
+<td style="text-align: right;">14,521</td>
+</tr>
+<tr class="odd">
+<td>Proteomics</td>
+<td style="text-align: right;">9,969</td>
+</tr>
+<tr class="even">
+<td>RNA-seq</td>
+<td style="text-align: right;">8,980</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<aside class="notes">
+<p>Not every participant has every data type: e.g., about two-thirds have EHR data, and Fitbit data covers fewer than 1 in 10. Check the data type you need before planning a study. Genomic data is Controlled Tier only.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -333,6 +527,61 @@ Maximilian Wegener, MPH
 </ul></li>
 </ul>
 </section>
+<section id="what-is-verily-workbench" class="slide level2">
+<h2>What Is Verily Workbench?</h2>
+<p>A <strong>secure research environment</strong> for governing and analyzing biomedical data, built on Verily’s experience supporting All of Us</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What it does</th>
+<th>Where you’ll see it today</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Organizes data</strong> of many types: clinical, omics, imaging</td>
+<td>Data collections and the <strong>Resources</strong> tab</td>
+</tr>
+<tr class="even">
+<td><strong>Explores data without code</strong>: point-and-click cohorts with visualizations</td>
+<td><strong>Data Explorer</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Analyzes at scale</strong> with cloud computing</td>
+<td><strong>Apps</strong> (JupyterLab, R, SAS, Spark) and <strong>Workflows</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Governs and secures</strong> data</td>
+<td><strong>Policies</strong>, <strong>perimeters</strong>, and group policies</td>
+</tr>
+<tr class="odd">
+<td>Supports <strong>secure collaboration</strong></td>
+<td><strong>Sharing</strong> roles: Owner, Writer, Reader</td>
+</tr>
+<tr class="even">
+<td>Offers <strong>interfaces for every skill level</strong></td>
+<td>Web interface, Data Explorer, command line (<code>wb</code>), cloud console</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Source: Verily, “Verily Workbench overview” (support.workbench.verily.com/docs/getting_started/overview/). Data types it supports include omics (BAM, CRAM, VCF), clinical (CSV/TSV, PDF, OMOP, CDISC), and imaging (DICOM, JPG). Compliance: ISO 27001/SOC 2, GDPR, HIPAA. An activity monitor tracks data access and lineage. Policies can limit access by group membership and geography, and perimeters prevent data from being moved out.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="classic-workbench-workbench-2.0" class="slide level2">
 <h2>Classic Workbench → Workbench 2.0</h2>
 <table class="caption-top">
@@ -364,13 +613,17 @@ Maximilian Wegener, MPH
 <td><strong>JupyterLab</strong></td>
 </tr>
 <tr class="odd">
-<td>Workspace bucket</td>
-<td>Workspace <strong>Resources</strong> (cloud storage)</td>
+<td>Workspace bucket (created for you)</td>
+<td>A <strong>Cloud Storage bucket you create</strong> on the <strong>Resources</strong> tab</td>
+</tr>
+<tr class="even">
+<td>Code snippets to copy files</td>
+<td>Buckets <strong>mounted as folders</strong> in every app</td>
 </tr>
 </tbody>
 </table>
 <aside class="notes">
-<p>Based on the All of Us “Researcher Workbench 2.0 Glossary of Terms and Comparison Guide”. TODO: check the last row and any renamed terms against the guide.</p>
+<p>Based on the All of Us “Researcher Workbench 2.0 Glossary of Terms and Comparison Guide” and what we confirmed in the Workbench: new 2.0 workspaces have no bucket until you create one (migrated workspaces get an rw-migration-… bucket), and the Snippets menu is gone.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -401,7 +654,7 @@ Maximilian Wegener, MPH
 <li>For Controlled Tier data, complete the <strong>Controlled Tier training</strong></li>
 </ol>
 <aside class="notes">
-<p>TODO: add screenshots of the registration pages.</p>
+<p>Students who already have Workbench access can skip this slide. Registration happens on the All of Us Research Hub before Workbench access; screenshots aren’t included because the pages are only shown to new users.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -493,7 +746,7 @@ Maximilian Wegener, MPH
 </ul>
 </div></div>
 <aside class="notes">
-<p>TODO: confirm what “Organizations” (under Admin) means for All of Us users.</p>
+<p>Admin → Organizations shows the organization your account belongs to: for All of Us users, “aou-prod” (the All of Us production organization), with its terms of service and activity logs. Nothing to change there.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -600,6 +853,7 @@ Maximilian Wegener, MPH
 <li>Both are <strong>free</strong> to add (you pay only for compute and storage)</li>
 <li><strong>Add to workspace</strong> straight from the Exchange, or from a workspace’s <strong>Resources</strong> tab</li>
 <li>Pick the <strong>smallest tier you need</strong>. You can’t have both tiers in one workspace.</li>
+<li>The only other collection you can add alongside: <strong>GTEx Open Access</strong></li>
 </ul>
 <aside class="notes">
 <p>The Exchange lists 10 collections in total. Show the others in the live demo.</p>
@@ -709,10 +963,10 @@ Maximilian Wegener, MPH
 <li><strong>Instantly Accessible:</strong> access is granted right away (PRESCO, Baseline Limited)</li>
 </ul></li>
 <li><strong>Free</strong> badge: no charge for the data itself. Collections without it may cost money or need approval.</li>
-<li><strong>Explore cohorts:</strong> preview a collection’s cohorts in Data Explorer before adding it</li>
+<li><strong>Explore cohorts:</strong> shown on each collection, but not available for the All of Us collections</li>
 </ul>
 <aside class="notes">
-<p>The non-All of Us collections come from Verily and its partners. Their terms are separate from the All of Us Data User Code of Conduct. TODO: check whether non-AoU collections can be added to a workspace with an All of Us data collection (perimeter policies may block it). TODO: confirm what Explore cohorts does; it was grayed out in the screenshots.</p>
+<p>The non-All of Us collections come from Verily and its partners. Their terms are separate from the All of Us Data User Code of Conduct. An All of Us workspace can hold one All of Us tier (Registered or Controlled) plus GTEx Open Access; the other collections can’t be added to it. Explore cohorts is grayed out and can’t be clicked for the All of Us collections (checked October 2026). For other collections it is meant to preview cohorts in Data Explorer before adding the collection.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -784,11 +1038,81 @@ Maximilian Wegener, MPH
 <li>Filter by favorite, cloud, creator, or access level; ⭐ favorites to pin them</li>
 <li><strong>Recent workspaces</strong> panel on the right</li>
 </ul></li>
-<li><strong>Owner:</strong> you created it (or were made owner); you can edit, share, and delete it</li>
-<li><strong>Reader:</strong> view only. Featured tutorial workspaces are Reader, so <strong>duplicate</strong> them to run the code (the “(Copy)” workspace)</li>
 </ul>
+<p><strong>Your access level</strong> decides what you can do:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th style="text-align: center;">Change things (resources, apps, details)</th>
+<th style="text-align: center;">Share</th>
+<th style="text-align: center;">Delete</th>
+<th style="text-align: center;">Duplicate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Owner</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td><strong>Writer</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td><strong>Reader</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<p>Featured tutorial workspaces are <strong>Reader</strong>, so <strong>duplicate</strong> them to run the code (the “(Copy)” workspace).</p>
 <aside class="notes">
-<p>Featured tutorial workspaces shown: “Getting Started with Controlled Tier Data (v9)” and “All by All (v8)”. The greyed-out row shows a workspace being deleted; deleting unused workspaces stops their charges.</p>
+<p>Featured tutorial workspaces shown: “Getting Started with Controlled Tier Data (v9)” and “All by All (v8)”. The greyed-out row shows a workspace being deleted; deleting unused workspaces stops their charges. Source for roles: Verily, “Access control and sharing”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sharing-a-workspace" class="slide level2">
+<h2>Sharing a Workspace</h2>
+<p><strong>Only Owners can share.</strong> In the workspace, click <strong>Share</strong> (top right), then:</p>
+<ol type="1">
+<li>Enter your collaborator’s <strong>email</strong>: the one linked to their Workbench account</li>
+<li>Choose their role: <strong>Owner</strong>, <strong>Writer</strong>, or <strong>Reader</strong></li>
+</ol>
+<div class="fragment">
+<ul>
+<li>They must <strong>already have a Workbench account</strong>. You can’t invite someone who hasn’t registered yet.</li>
+<li>They get access to the resources <strong>you created</strong> in the workspace (buckets, datasets), at their role’s level</li>
+<li><strong>References</strong> to outside data are <strong>not</strong> shared automatically. The data’s owner has to grant access.</li>
+<li>With a <strong>group policy</strong>, only group members can open it. You won’t be warned if you share with someone outside the group.</li>
+</ul>
+</div>
+<aside class="notes">
+<p>For All of Us workspaces, collaborators also need their own All of Us data access (Registered or Controlled Tier) to see the data collection. Verily recommends sharing with Workbench groups rather than individuals for larger teams; that’s beyond what students need here.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -813,6 +1137,7 @@ Maximilian Wegener, MPH
 <ul>
 <li>Applied automatically to compute costs</li>
 <li><strong>Expire 365 days</strong> after you first get Workbench access</li>
+<li>Tied to your personal pod, <strong><code>user-pod-firstname-lastname-####</code></strong>. A workspace’s <strong>Workspace details</strong> panel (right side, under <strong>Pod</strong>) shows which pod pays for it.</li>
 </ul></li>
 <li>When credits run out or expire:
 <ul>
@@ -842,7 +1167,7 @@ Maximilian Wegener, MPH
 </ul>
 </div>
 <aside class="notes">
-<p>TODO: confirm how initial credits appear in 2.0 (e.g., as a default pod) and add a screenshot of the Pods page.</p>
+<p>Initial credits are linked to the personal user pod. Check a workspace’s Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -866,6 +1191,284 @@ Maximilian Wegener, MPH
 <p>Yale Cloud Support will send the next steps for linking the billing account and creating your <strong>pod</strong>.</p>
 <aside class="notes">
 <p>Yale Cloud Support may give additional or different guidance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="all-of-us-tutorial-workspaces" class="title-slide slide level1 center">
+<h1>All of Us Tutorial Workspaces</h1>
+
+</section>
+<section id="tutorial-workspaces" class="slide level2">
+<h2>Tutorial Workspaces</h2>
+<ul>
+<li>Ready-made workspaces from the <strong>All of Us Data and Research Center</strong> with example notebooks and data already set up</li>
+<li>Find them on the <strong>Workspaces</strong> page (or the <strong>Recent workspaces</strong> list on the Home page)</li>
+<li>You have <strong>Reader</strong> access: you can browse, but not run anything
+<ul>
+<li><strong>Duplicate</strong> the workspace to get your own copy you can run</li>
+<li>Your copy is billed to the <strong>pod</strong> you choose</li>
+</ul></li>
+</ul>
+<p><strong>Two to start with:</strong></p>
+<ol type="1">
+<li><strong>Workspace Migration Controlled Tier</strong></li>
+<li><strong>Getting Started with Controlled Tier Data (v9)</strong></li>
+</ol>
+</section>
+<section id="workspace-migration-controlled-tier" class="slide level2">
+<h2>Workspace Migration Controlled Tier</h2>
+<p>For researchers moving workspaces from the <strong>Legacy Workbench (1.0)</strong> to <strong>Workbench 2.0</strong>. It covers:</p>
+<ul>
+<li>Setting up a workspace in Workbench 2.0</li>
+<li>Setting up environments and packages</li>
+<li>Updating SQL queries from the Legacy Workbench</li>
+<li>Table differences between the two Workbenches</li>
+<li>Changes to genomic data and advanced tools</li>
+</ul>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Data collection:</strong> Controlled Tier <strong>v8</strong> (<code>C2024Q3R8</code>). The same steps work for CDR v7.</p>
+</div><div class="column side" style="width:50%;">
+<p><strong>Featured notebooks:</strong></p>
+<ul>
+<li><code>04_Migrated_Workspaces_for_CT_(Python).ipynb</code></li>
+<li><code>04_Migrated_Workspaces_for_CT_(R).ipynb</code></li>
+</ul>
+</div></div>
+<aside class="notes">
+<p>Most useful for students who had workspaces in the classic Workbench. New users can start with Getting Started with Controlled Tier Data (v9) instead. See the User Support Hub article on workspace migration for more detail.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="migration-what-carries-over" class="slide level2">
+<h2>Migration: What Carries Over</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Migrated from 1.0:</strong></p>
+<ul>
+<li>Files and notebooks in your <strong>workspace bucket</strong></li>
+<li>They’re in a new bucket named like <code>rw-migration-aou-rw-…</code></li>
+</ul>
+<p><strong>Not migrated:</strong></p>
+<ul>
+<li>Cohorts, datasets, and concept sets. Rebuild them in <strong>Data Explorer</strong>.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Watch out:</strong></p>
+<ul>
+<li><strong>Re-syncing</strong> a migration can overwrite your 2.0 work</li>
+<li>Only <strong>workspace owners</strong> can sync</li>
+<li>You pay storage in <strong>both</strong> Workbenches, so delete the 1.0 workspace once you’ve checked everything moved</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p>💾 Save new files to your <strong>bucket</strong> (<code>workspace/&lt;bucket name&gt;</code>). Files left on the app are lost when the app is deleted.</p>
+</div>
+</section>
+<section id="setting-up-your-environment-r" class="slide level2">
+<h2>Setting Up Your Environment (R)</h2>
+<p>The tutorial’s setup script defines your workspace variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-label="1"></a><span class="fu">source</span>(<span class="st">"/home/jupyter/workspace/aou-tutorial-notebooks/Setting_Env_Variables_p2.R"</span>)</span>
+<span id="cb1-2"><a href="" aria-label="2"></a></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="fu">library</span>(bigrquery)</span>
+<span id="cb1-4"><a href="" aria-label="4"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"WORKSPACE_CDR"</span>)   <span class="co"># the CDR in this workspace</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a></span>
+<span id="cb1-8"><a href="" aria-label="8"></a>download_data <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>  tb <span class="ot">&lt;-</span> <span class="fu">bq_project_query</span>(<span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_PROJECT"</span>), query)</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>  <span class="fu">bq_table_download</span>(tb)</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The script sets <code>WORKSPACE_BUCKET</code> and <code>WORKSPACE_CDR</code>. <strong>Without it, they don’t exist</strong> (see <em>Workspace Variables</em> in the Apps section).</li>
+<li>The All of Us app image in 2.0 is <strong>smaller</strong>, so you may need to install packages</li>
+<li>In a migrated workspace, set <code>WORKSPACE_BUCKET</code> to your <strong>migration bucket</strong> (<code>gs://rw-migration-…</code>)</li>
+</ul>
+</section>
+<section id="updating-sql-queries" class="slide level2">
+<h2>Updating SQL Queries</h2>
+<p>Replace hard-coded 1.0 dataset paths with <code>CURRENT_DATASET</code>:</p>
+<p><strong>1.0: won’t run</strong> ❌</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(<span class="st">"SELECT * FROM `fc-aou-cdr-prod-ct.C2024Q3R8.condition_occurrence` LIMIT 5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>2.0: runs</strong> ✅</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(<span class="st">"SELECT * FROM `{CURRENT_DATASET}.condition_occurrence` LIMIT 5"</span>)</span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">download_data</span>(query)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>The standard OMOP tables (<code>condition_occurrence</code>, <code>person</code>, <code>measurement</code>…) keep their names. Only the path changes.</p>
+</div>
+</section>
+<section id="cohort-builder-tables-have-changed" class="slide level2">
+<h2>Cohort Builder Tables Have Changed</h2>
+<p>Data Explorer uses new <strong>index tables</strong> with different table and column names:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>1.0 (Cohort/Dataset Builder)</th>
+<th>2.0 (Data Explorer)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cb_search_person</code></td>
+<td><code>T_ENT_person</code></td>
+</tr>
+<tr class="even">
+<td><code>ds_survey</code></td>
+<td><code>T_ENT_surveyOccurrence</code></td>
+</tr>
+<tr class="odd">
+<td><code>condition_occurrence</code> (in builder queries)</td>
+<td><code>T_ENT_conditionOccurrence</code>, <code>T_ESA_conditionOccurrence_person_id</code></td>
+</tr>
+<tr class="even">
+<td><code>cb_criteria</code> (concept hierarchy)</td>
+<td><code>T_HAD_conditionConcept_default</code></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Recommendation:</strong> don’t edit old Cohort/Dataset Builder queries by hand. <strong>Rebuild your cohort in Data Explorer</strong> and use the queries it generates.</p>
+</div>
+<aside class="notes">
+<p>The index tables live in a dataset named like C2024Q3R8_index_111825, inside the data collection’s BigQuery project (wb-silky-artichoke-2408). The same project appears in Data Explorer queries from other workspaces, so it belongs to the data collection, not to your workspace; your own project is only used for billing. Genomic data and workflow tools (dsub, Cromwell, Nextflow, Docker): see notebooks 05_How_to_use_workflow_tools and 06_Getting_Started_with_Genomic_Data in the Getting Started with Controlled Tier Data tutorial workspace.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="getting-started-with-controlled-tier-data-v9" class="slide level2">
+<h2>Getting Started with Controlled Tier Data (v9)</h2>
+<p>For researchers <strong>new to Workbench 2.0</strong>: how to set up a workspace in Verily Workbench and access the <strong>All of Us Controlled Tier v9</strong> data.</p>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Data collection:</strong> Controlled Tier <strong>v9</strong> (<code>C2025Q4R6</code>), the same version used in this presentation</p>
+</div><div class="column side" style="width:50%;">
+<p><strong>Featured tutorials:</strong></p>
+<ul>
+<li>Getting Started with Verily Workbench</li>
+<li>How to Get Started with Controlled Tier Data</li>
+<li>How to Use Workflow Tools</li>
+<li>Getting Started with Genomic Data</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p>👉 <strong>Start here</strong> if you’re new to All of Us. Use the Migration workspace only if you’re moving work from the classic Workbench.</p>
+</div>
+<aside class="notes">
+<p>The workflow tools and genomic data tutorials are the ones the Migration workspace points to for dsub, Cromwell, Nextflow, and Docker. Questions: AoU Researcher Workbench Support Hub or support@researchallofus.org.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="inside-the-getting-started-workspace" class="slide level2">
+<h2>Inside the Getting Started Workspace</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Folder</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Setting_Env_Variables_…</code></td>
+<td>Set up workspace variables (versions for JupyterLab, RStudio, SAS)</td>
+</tr>
+<tr class="even">
+<td><code>01_Getting Started with Verily Workbench</code></td>
+<td>The <code>wb</code> command line, buckets, and accessing the CDR (R or Python)</td>
+</tr>
+<tr class="odd">
+<td><code>02_How to Get Started with Controlled Tier Data</code></td>
+<td><strong>Data 101:</strong> what’s in the Controlled vs.&nbsp;Registered Tier, with example queries (R or Python)</td>
+</tr>
+<tr class="even">
+<td><code>03_Getting_Started_with_Genomic_Data</code></td>
+<td>Short- and long-read WGS, arrays, Hail, PLINK, GWAS, extracting genomic data</td>
+</tr>
+<tr class="odd">
+<td><code>04_Getting_Started_with_Multiomics_Data</code></td>
+<td>RNA-seq, proteomics, and combining them</td>
+</tr>
+<tr class="even">
+<td><code>05_How_to_use_workflow_tools</code></td>
+<td>dsub, Cromwell, Nextflow</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>👉 Start with <strong><code>Readme.ipynb</code></strong>, then folders <strong>01 → 02</strong>. Most notebooks come in <strong>R</strong> and <strong>Python</strong> versions.</p>
+</div>
+<aside class="notes">
+<p>The genomic (Hail) notebooks need a Spark (Dataproc) app; PLINK and bcftools steps use a standard app. Some text in folder 01 still mentions CDR v8.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="using-a-tutorial-workspace" class="slide level2">
+<h2>Using a Tutorial Workspace</h2>
+<ol type="1">
+<li><strong>Check your billing pod first:</strong> your All of Us initial credits, or your own pod linked to a Google Cloud billing account</li>
+<li>Open the workspace → <strong>⋮</strong> (next to <strong>Share</strong>) → <strong>Duplicate</strong></li>
+<li>In your copy, create a <strong>JupyterLab</strong> app (Compute Engine). <strong>Apps aren’t copied</strong> when you duplicate; resources are.</li>
+<li>In JupyterLab, open the <strong><code>aou-tutorial-notebooks</code></strong> folder</li>
+<li>Open <strong><code>Readme.ipynb</code></strong> for an overview of the tutorials, then work through the folders in order</li>
+</ol>
+<div class="fragment">
+<p>⚠️ Running the notebooks uses compute, so it’s billed to your pod. Stop the app when you’re done.</p>
+</div>
+<aside class="notes">
+<p>Same steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support@researchallofus.org.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -914,12 +1517,12 @@ Maximilian Wegener, MPH
 </div><div class="column side" style="width:45%;">
 <p><strong>You fill in:</strong></p>
 <ul>
-<li><strong>Workspace name:</strong> only visible to people with access</li>
+<li><strong>Workspace name:</strong> only visible to people with access; you can change it later</li>
 <li><strong>Summary:</strong> a short description (up to 140 characters)</li>
 </ul>
 <p><strong>Filled in automatically:</strong></p>
 <ul>
-<li><strong>Workspace ID:</strong> made from the name; used by the CLI</li>
+<li><strong>Workspace ID:</strong> made from the name; used by the CLI. Changing it later <strong>breaks links</strong> to the workspace.</li>
 <li><strong>Pod:</strong> your default billing pod</li>
 </ul>
 <p>Click <strong>Next</strong></p>
@@ -954,8 +1557,8 @@ Maximilian Wegener, MPH
 </ul>
 <p><strong>Region:</strong></p>
 <ul>
-<li>Where your apps and cloud resources are kept</li>
-<li>Pick the one <strong>closest to you</strong>. At Yale: <strong>us-east4 (Virginia)</strong></li>
+<li>Where your apps and resources are kept. Pick the one <strong>closest to you</strong> (Yale: <strong>us-east4</strong>).</li>
+<li>Can be changed later; only <strong>new</strong> resources use it</li>
 </ul>
 <p>Click <strong>Next</strong></p>
 <div class="fragment">
@@ -963,7 +1566,7 @@ Maximilian Wegener, MPH
 </div>
 </div></div>
 <aside class="notes">
-<p>Group policies also carry over to duplicates of the workspace. Access still has to be granted separately; a group policy only limits who can be given access. Region also affects cost: Verily notes prices can vary by about 25% between regions. TODO: check which region the All of Us data lives in, since moving data across regions can add transfer costs.</p>
+<p>Group policies also carry over to duplicates of the workspace. Access still has to be granted separately; a group policy only limits who can be given access. Region also affects cost: Verily notes prices can vary by about 25% between regions. Yale is on the East Coast, so us-east4 (Virginia) is the closest region.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1113,12 +1716,12 @@ Maximilian Wegener, MPH
 <tr class="odd">
 <td><code>C2025Q4R6</code></td>
 <td>BigQuery</td>
-<td>The main CDR: OMOP tables (EHR, surveys, measurements…)</td>
+<td><strong>The main CDR v9</strong>: OMOP tables (EHR, surveys, measurements…); data through Jan 1, 2025</td>
 </tr>
 <tr class="even">
 <td><code>prep_C2025Q4R6</code></td>
 <td>BigQuery</td>
-<td>Prep tables that support the CDR tools</td>
+<td>Supporting tables for the CDR (no description given)</td>
 </tr>
 <tr class="odd">
 <td><code>C_V9_R3_aou_biospecimen</code>, <code>C_v9_R6_aou_biospecimen</code></td>
@@ -1133,7 +1736,7 @@ Maximilian Wegener, MPH
 <tr class="odd">
 <td><code>C_V9_R6_offcycle_nlp</code></td>
 <td>BigQuery</td>
-<td>NLP-derived data from clinical notes</td>
+<td><strong>New in v9:</strong> concepts extracted from <strong>clinical notes</strong> with NLP (&gt; 99,000 participants)</td>
 </tr>
 <tr class="even">
 <td><code>v9-genomics-folder</code></td>
@@ -1148,12 +1751,12 @@ Maximilian Wegener, MPH
 <tr class="even">
 <td><code>vwb-aou-datasets-controlled-v9</code></td>
 <td>Cloud Storage</td>
-<td>Controlled Tier dataset files</td>
+<td>Controlled Tier dataset files. ⚠️ <strong>Requester pays</strong>: reading it is billed to your pod</td>
 </tr>
 </tbody>
 </table>
 <aside class="notes">
-<p>Some descriptions are inferred from the resource names. TODO: confirm prep_, offcycle_nlp, and vwb-aou-datasets-controlled-v9 against the All of Us docs.</p>
+<p>Source: All of Us “Curated Data Repository (CDR) version 9 Release Notes” (Controlled Tier C2025Q4R6, Registered Tier R2025Q4R6, participant data cutoff January 1, 2025; first release of clinical notes with NLP concept extraction). The resources’ Description fields in the Workbench are empty, so the prep_ and vwb-aou-datasets-controlled-v9 descriptions are based on their names. All are referenced resources in project wb-silky-artichoke-2408 (version-bound to cdrv9). The vwb-aou-datasets-controlled-v9 bucket has Requester Pays enabled.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1404,6 +2007,18 @@ Maximilian Wegener, MPH
 </section>
 <section id="research-use-statement-question-7" class="slide level2">
 <h2>Research Use Statement: Question 7</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="annotated">
+<p><img data-src="images/rus_q7.png"></p>
+<div class="green-box" style="left: 3.0%; top: 40.0%; width: 95.0%; height: 10.0%;">
+
+</div>
+<div class="red-box" style="left: 3.0%; top: 46.2%; width: 95.0%; height: 4.4%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:42%;">
 <p><strong>Request a review of your research purpose?</strong></p>
 <ul>
 <li>Research using <strong>demographic variables</strong> can unintentionally produce findings that <strong>stigmatize</strong> participants or communities</li>
@@ -1416,6 +2031,7 @@ Maximilian Wegener, MPH
 <div class="fragment">
 <p>Our example: <strong>No</strong> concerns. The RAB is available any time via the <strong>User Support Hub</strong>.</p>
 </div>
+</div></div>
 <aside class="notes">
 <p>See the All of Us Stigmatizing Research Policy for more detail. If students are unsure, encourage them to request the review; it’s a precaution, not a penalty.</p>
 <style type="text/css">
@@ -1432,6 +2048,18 @@ Maximilian Wegener, MPH
 </section>
 <section id="research-use-statement-page-8" class="slide level2">
 <h2>Research Use Statement: Page 8</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="annotated">
+<p><img data-src="images/rus_q8.png"></p>
+<div class="green-box" style="left: 3.0%; top: 17.6%; width: 46.0%; height: 10.6%;">
+
+</div>
+<div class="red-circle" style="left: 89.6%; top: 93.6%; width: 9.8%; height: 5.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:42%;">
 <p><strong>Review and confirm</strong></p>
 <p>These answers are <strong>publicly displayed</strong> to inform All of Us participants:</p>
 <ul>
@@ -1444,8 +2072,9 @@ Maximilian Wegener, MPH
 <div class="fragment">
 <p>You can go <strong>Back</strong> to change answers now, or edit them later after the workspace is created</p>
 </div>
+</div></div>
 <aside class="notes">
-<p>Q3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displayed publicly. TODO: add screenshots for Q7 and page 8 (save as images/rus_q7.png and images/rus_q8.png).</p>
+<p>Q3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displayed publicly.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1533,6 +2162,500 @@ Maximilian Wegener, MPH
 </ul>
 </section></section>
 <section>
+<section id="inside-your-workspace" class="title-slide slide level1 center">
+<h1>Inside Your Workspace</h1>
+
+</section>
+<section id="workspace-layout" class="slide level2">
+<h2>Workspace Layout</h2>
+<p>Every workspace page has the same layout:</p>
+<ul>
+<li><strong>Header:</strong> cloud (GCP), dates, <strong>Policies</strong> (e.g., <em>6 active</em>; click to view them), and your <strong>Access</strong> level</li>
+<li><strong>Perimeter banner:</strong> shown when the workspace holds restricted data (e.g., Controlled Tier). Services outside the perimeter may not work.</li>
+<li><strong>Four tabs:</strong></li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Tab</th>
+<th>What’s there</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Overview</strong></td>
+<td>The workspace description</td>
+</tr>
+<tr class="even">
+<td><strong>Resources</strong></td>
+<td>Your data and storage</td>
+</tr>
+<tr class="odd">
+<td><strong>Apps</strong></td>
+<td>Analysis environments (JupyterLab, RStudio, SAS…)</td>
+</tr>
+<tr class="even">
+<td><strong>Workflows</strong></td>
+<td>Batch jobs and pipelines</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="overview-tab" class="slide level2">
+<h2>Overview Tab</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="annotated">
+<p><img data-src="images/ws_tabs.png"></p>
+<div class="red-circle" style="left: 1.2%; top: 25.2%; width: 9.0%; height: 7.4%;">
+
+</div>
+<div class="red-box" style="left: 11.4%; top: 34.6%; width: 13.2%; height: 5.8%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:42%;">
+<ul>
+<li>The first thing you see when you open a workspace</li>
+<li>Shows the <strong>description</strong>: what the project is about, e.g., its scientific questions, approaches, and anticipated findings</li>
+<li>Helps collaborators (and you, later) understand the workspace at a glance</li>
+</ul>
+<p><strong>To update it:</strong> click <strong>Edit description</strong>, make your changes, and save. Update it as your project changes.</p>
+<div class="fragment">
+<p>⚠️ The description is <strong>publicly accessible</strong>, so keep it accurate and leave out sensitive details.</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>Good practice: keep the description in sync with your Research Use Statement answers, which are also public.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="resources-tab" class="slide level2">
+<h2>Resources Tab</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="annotated">
+<p><img data-src="images/ws_tabs.png"></p>
+<div class="red-circle" style="left: 10.0%; top: 25.2%; width: 7.4%; height: 7.4%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:42%;">
+<p>Where your workspace’s <strong>data and storage</strong> live:</p>
+<ul>
+<li><strong>Data collections</strong> you’ve added (e.g., the All of Us Controlled Tier resources)</li>
+<li><strong>Buckets</strong> you create to save files</li>
+<li>Other cloud resources</li>
+</ul>
+<p>Add more with <strong>+ New resource</strong> or <strong>+ Data from catalog</strong></p>
+</div></div>
+<aside class="notes">
+<p>More detail on each resource type follows.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-new-resources" class="slide level2">
+<h2>Adding New Resources</h2>
+<p><strong>Resources</strong> tab → <strong>+ New resource</strong> opens a menu of resource types:</p>
+<div class="annotated short">
+<p><img data-src="images/res_new_menu.png"></p>
+<div class="red-circle" style="left: 7.8%; top: 1.0%; width: 9.0%; height: 11.6%;">
+
+</div>
+<div class="red-circle" style="left: 66.8%; top: 14.6%; width: 15%; height: 12.4%;">
+
+</div>
+<div class="green-box" style="left: 67.2%; top: 25.0%; width: 23.4%; height: 69.6%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Create new</strong> (folder, bucket, BigQuery dataset, cohort)</p>
+<ul>
+<li>Lives <strong>in your workspace</strong>, shared with collaborators</li>
+<li>Deleted if the workspace is deleted</li>
+</ul>
+</div><div class="column side" style="width:50%;">
+<p><strong>Reference existing</strong> (bucket, object, BigQuery dataset or table)</p>
+<ul>
+<li>A <strong>pointer</strong> to data that lives elsewhere; nothing is copied</li>
+<li>Access is managed by the data’s owner</li>
+</ul>
+</div></div>
+<aside class="notes">
+<p>Verily calls these “controlled” and “referenced” resources. The data collection resources you added from the catalog are referenced resources too.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="which-resource-do-i-need" class="slide level2">
+<h2>Which Resource Do I Need?</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>What it is</th>
+<th>Use it when you want to…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Folder</strong></td>
+<td>A label for grouping resources on the Resources tab</td>
+<td>Keep a busy workspace organized (e.g., <em>Data</em>, <em>Results</em>)</td>
+</tr>
+<tr class="even">
+<td><strong>Cloud Storage bucket</strong></td>
+<td>Your own storage for files</td>
+<td>Save CSVs, notebooks, plots, and cleaned data so they outlast your app</td>
+</tr>
+<tr class="odd">
+<td><strong>BigQuery dataset</strong></td>
+<td>Your own database for tables</td>
+<td>Save large query results as tables you can query again with SQL</td>
+</tr>
+<tr class="even">
+<td><strong>Reference</strong> a bucket, object, dataset, or table</td>
+<td>A pointer to data that lives elsewhere</td>
+<td>Use data you already have access to without copying it</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>👉 Most students need just <strong>one bucket</strong>. The others are optional.</p>
+</div>
+<aside class="notes">
+<p>New Cohort is covered in the Data Explorer section.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="new-folder" class="slide level2">
+<h2>New Folder</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="annotated">
+<p><img data-src="images/res_folder.png"></p>
+<div class="red-circle" style="left: 77.4%; top: 84.0%; width: 21.6%; height: 13.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:45%;">
+<p><strong>Why:</strong> organize resources on the Resources tab, your way</p>
+<ul>
+<li><strong>Folder name</strong> (required)</li>
+<li><strong>Folder path:</strong> where the folder goes; the workspace itself by default</li>
+<li><strong>Description</strong> (optional)</li>
+</ul>
+<p>Click <strong>Create folder</strong></p>
+<p>To put an existing resource in a folder: select it → <strong>Move</strong> (in its details pane)</p>
+<div class="fragment">
+<p>Folders don’t change a resource’s <strong>cloud path</strong> (<code>gs://…</code>), but they <strong>do</strong> appear in the app’s mounted path: <code>~/workspace/&lt;folder&gt;/&lt;bucket&gt;</code></p>
+</div>
+</div></div>
+<aside class="notes">
+<p>Avoid spaces in folder names: they have to be quoted in file paths in code.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="new-cloud-storage-bucket" class="slide level2">
+<h2>New Cloud Storage Bucket</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="annotated">
+<p><img data-src="images/res_bucket.png"></p>
+<div class="red-circle" style="left: 73.6%; top: 90.0%; width: 24.4%; height: 8.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:50%;">
+<p><strong>Why:</strong> new workspaces have <strong>no bucket</strong>, and you need one to save your work</p>
+<ul>
+<li><strong>Resource ID:</strong> the name inside Workbench (letters, numbers, <code>-</code>, <code>_</code>). The tutorials use <code>workspace-bucket</code>.</li>
+<li><strong>Folder path</strong> and <strong>Description</strong></li>
+<li><strong>Bucket name:</strong> the name in Google Cloud. It must be <strong>globally unique</strong>, so keep the generated one: your Resource ID + the workspace’s project ID (↻ makes a new one).</li>
+</ul>
+<p>Click <strong>Create bucket</strong>. You can use it right away; collaborators may wait <strong>up to 15 min</strong>.</p>
+</div></div>
+<aside class="notes">
+<p>Controlled resources like this bucket are shared with workspace collaborators and deleted when the workspace is deleted. Apps that were already running won’t see a new bucket until you restart the app or run wb resource mount. Mounted folders cache file info for about a minute, so two people writing at once may not see each other’s changes right away. Migrated 1.0 workspaces already have a bucket: rw-migration-aou-rw-…</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bucket-names-good-practice" class="slide level2">
+<h2>Bucket Names: Good Practice</h2>
+<ul>
+<li><strong>Lowercase</strong> letters, numbers, <code>-</code>, <code>_</code>, 3–63 characters, no spaces, no “google”</li>
+<li>Bucket names are <strong>public</strong>: anyone can check whether a name exists
+<ul>
+<li>⚠️ No names, emails, NetIDs, or project details</li>
+</ul></li>
+<li>A bucket name <strong>can’t be changed</strong> (the resource’s name and description can). To rename, create a new bucket and copy the files over.</li>
+<li>Deleting a bucket frees its name for <strong>anyone</strong> to reuse</li>
+</ul>
+<div class="fragment">
+<p>👉 Easiest: accept the <strong>generated name</strong>. It’s built from your <strong>Resource ID</strong> + the workspace’s project ID, so keep the Resource ID free of personal details too.</p>
+</div>
+<aside class="notes">
+<p>Source: Google Cloud, “About Cloud Storage buckets” and “Create a bucket”. Files (objects) also can’t be renamed in place; renaming copies and deletes them. Avoid putting sensitive information in file names too.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="new-bigquery-dataset" class="slide level2">
+<h2>New BigQuery Dataset</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="annotated">
+<p><img data-src="images/res_bq_dataset.png"></p>
+<div class="red-circle" style="left: 72.6%; top: 90.0%; width: 24.8%; height: 8.4%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:50%;">
+<p><strong>Why:</strong> save large query results as <strong>tables</strong>, then query them again with SQL instead of re-running long queries or loading big CSVs</p>
+<ul>
+<li><strong>Resource ID</strong>, <strong>Folder path</strong>, <strong>Description</strong></li>
+<li><strong>Dataset ID:</strong> the name in Google Cloud. Unique within your project; letters, numbers, <code>_</code> only. Keep the generated one or choose your own. <strong>Can’t be changed later.</strong></li>
+</ul>
+<p>Click <strong>Create dataset</strong>. Collaborators may wait <strong>up to 15 min</strong>.</p>
+</div></div>
+<aside class="notes">
+<p>Optional for most class projects; a bucket with CSV files is usually enough. BigQuery storage and queries are billed to your pod.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="referencing-existing-data" class="slide level2">
+<h2>Referencing Existing Data</h2>
+<p>A <strong>reference</strong> points to data that already exists elsewhere. Nothing is copied.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>You’ll need</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cloud Storage bucket</strong></td>
+<td>The bucket name</td>
+</tr>
+<tr class="even">
+<td><strong>Cloud Storage object</strong> (one file)</td>
+<td>Its URL, e.g., <code>gs://bucket-name/path/file.csv</code></td>
+</tr>
+<tr class="odd">
+<td><strong>BigQuery dataset</strong></td>
+<td>Project ID + Dataset ID</td>
+</tr>
+<tr class="even">
+<td><strong>BigQuery table</strong></td>
+<td>Project ID + Dataset ID + Table ID</td>
+</tr>
+</tbody>
+</table>
+<p>Every reference also has a <strong>Resource ID</strong>, <strong>Folder path</strong>, and <strong>Description</strong>. Then click <strong>Add to resources</strong>.</p>
+<div class="fragment">
+<p>⚠️ <strong>Access isn’t shared automatically.</strong> The data’s owner controls it. In a Controlled Tier workspace, the <strong>perimeter</strong> may also block data from outside it.</p>
+</div>
+<aside class="notes">
+<p>Example uses: point to a collaborator’s bucket, or to a shared file without copying it. The All of Us data collection resources you added earlier are references too. Deleting a reference removes the pointer, not the data. You can edit a reference’s name and description, but not the bucket name, project ID, dataset ID, or table ID; to fix those, delete the reference and add it again. Some outside buckets are “Requester Pays”: reading or browsing them is billed to your pod, and mounting them when an app starts can cost money too. The Workbench shows a warning when you add one.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reference-bucket-or-object" class="slide level2">
+<h2>Reference: Bucket or Object</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="annotated">
+<p><img data-src="images/res_ref_bucket.png"></p>
+<div class="red-box" style="left: 2.6%; top: 62.6%; width: 94.8%; height: 8.4%;">
+
+</div>
+</div>
+<p><strong>Bucket:</strong> enter the <strong>bucket name</strong></p>
+</div><div class="column" style="width:50%;">
+<div class="annotated">
+<p><img data-src="images/res_ref_object.png"></p>
+<div class="red-box" style="left: 2.4%; top: 63.4%; width: 94.4%; height: 9.0%;">
+
+</div>
+</div>
+<p><strong>Object:</strong> enter its <strong><code>gs://</code> URL</strong></p>
+</div></div>
+</section>
+<section id="reference-bigquery-dataset-or-table" class="slide level2">
+<h2>Reference: BigQuery Dataset or Table</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="annotated">
+<p><img data-src="images/res_ref_bq_dataset.png"></p>
+<div class="red-box" style="left: 2.6%; top: 62.4%; width: 94.8%; height: 25.4%;">
+
+</div>
+</div>
+<p><strong>Dataset:</strong> Project ID + Dataset ID</p>
+</div><div class="column" style="width:50%;">
+<div class="annotated">
+<p><img data-src="images/res_ref_bq_table.png"></p>
+<div class="red-box" style="left: 2.4%; top: 54.8%; width: 94.8%; height: 32.4%;">
+
+</div>
+</div>
+<p><strong>Table:</strong> same, <strong>+ Table ID</strong></p>
+</div></div>
+</section>
+<section id="viewing-your-bucket-in-google-cloud" class="slide level2">
+<h2>Viewing Your Bucket in Google Cloud</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="annotated">
+<p><img data-src="images/gcp_1_ws_details.png"></p>
+<div class="red-box" style="left: 3.0%; top: 86.0%; width: 47.0%; height: 9.4%;">
+
+</div>
+</div>
+</div><div class="column" style="width:28%;">
+<div class="annotated">
+<p><img data-src="images/gcp_2_console_menu.png"></p>
+<div class="red-box" style="left: 0.4%; top: 93.4%; width: 60.0%; height: 6.4%;">
+
+</div>
+<div class="red-box" style="left: 60.6%; top: 57.2%; width: 39.0%; height: 5.0%;">
+
+</div>
+</div>
+</div><div class="column" style="width:3%;">
+
+</div><div class="column side" style="width:39%;">
+<ol type="1">
+<li>In your workspace, find <strong>Workspace details</strong> (right side) and click the <strong>Google Project</strong> link</li>
+<li>The <strong>Google Cloud console</strong> opens: menu → <strong>Cloud Storage</strong> → <strong>Buckets</strong></li>
+<li>Click the bucket your files are in</li>
+</ol>
+<p>The details panel also shows the workspace <strong>ID</strong>, <strong>default region</strong>, <strong>pod</strong>, and <strong>UUID</strong>.</p>
+</div></div>
+</section>
+<section id="what-you-can-see-and-cant" class="slide level2">
+<h2>What You Can See (and Can’t)</h2>
+<div class="annotated short">
+<p><img data-src="images/gcp_3_bucket.png"></p>
+<div class="green-box" style="left: 37.4%; top: 57.0%; width: 62.4%; height: 38.6%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p>✅ <strong>You can see</strong> folder and file <strong>names</strong>, sizes, and types, e.g., <code>notebooks/</code>, <code>data/</code>, and the <code>bq_exports/</code> folder from a data snapshot</p>
+</div><div class="column side" style="width:50%;">
+<p>❌ <strong>You can’t open or download</strong> the files. The perimeter blocks it. Open them from an <strong>app</strong> in the workspace instead.</p>
+</div></div>
+<div class="fragment">
+<p>👉 Handy for checking that an export arrived, or finding a file’s path</p>
+</div>
+<aside class="notes">
+<p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
 <section id="data-explorer" class="title-slide slide level1 center">
 <h1>Data Explorer</h1>
 
@@ -1542,31 +2665,217 @@ Maximilian Wegener, MPH
 <ul>
 <li>A point-and-click tool for building datasets from All of Us data collections</li>
 <li>Replaces the classic <strong>Cohort Builder</strong>, <strong>Concept Selector</strong>, and <strong>Dataset Builder</strong></li>
-<li>Lets you:
+<li>Answers questions <strong>without code</strong>, e.g., <em>“Who has this diagnosis, this treatment, <strong>and</strong> genomic data?”</em>
 <ul>
-<li>Explore the data visually</li>
-<li>Design custom cohorts</li>
-<li>Export datasets directly to your workspace</li>
+<li><strong>Explore</strong> the data with visualizations</li>
+<li><strong>Build cohorts</strong> with Boolean logic (<strong>AND</strong>, <strong>OR</strong>, <strong>NOT</strong>)</li>
+<li><strong>Export</strong> a ready-to-use dataset to your workspace</li>
 </ul></li>
+<li>What you can see depends on your <strong>access level</strong> (Registered or Controlled Tier)</li>
 </ul>
+<aside class="notes">
+<p>Source: Verily, “Verily Workbench overview”, Data exploration section.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="building-a-cohort" class="slide level2">
-<h2>Building a Cohort</h2>
-<ul>
-<li>Select your study population with inclusion/exclusion criteria (AND/OR)</li>
-<li>Demographics, conditions, measurements, medications, procedures, surveys</li>
-</ul>
+<section id="from-cohort-to-data" class="slide level2">
+<h2>From Cohort to Data</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Where</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Add a cohort</strong></td>
+<td><strong>Resources</strong> tab → <strong>+ New resource</strong> → cohort</td>
+<td>A cohort resource in your workspace</td>
+</tr>
+<tr class="even">
+<td><strong>2. Build it</strong></td>
+<td><strong>Data Explorer</strong></td>
+<td>Your study population: inclusion and exclusion criteria</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Save a data snapshot</strong></td>
+<td><strong>Data Explorer</strong> → save data snapshot</td>
+<td>CSV files and/or a notebook with the queries, saved to <strong>your bucket</strong></td>
+</tr>
+</tbody>
+</table>
 <div class="fragment">
-<p><strong>Example criteria:</strong></p>
 <ul>
-<li>Sex → Woman</li>
-<li>Age → 65 or older</li>
-<li>Condition → Breast cancer</li>
-<li>Medication → Tamoxifen</li>
+<li>A <strong>cohort</strong> is a <strong>controlled resource</strong>: it lives in your workspace and collaborators can see it</li>
+<li>A <strong>data snapshot</strong> captures the data <strong>at that point in time</strong>, so your analysis stays reproducible</li>
 </ul>
 </div>
 <aside class="notes">
-<p>TODO: screenshot of the cohort builder in Data Explorer. Check whether temporal criteria are still supported.</p>
+<p>The definitions come from the “Add cohort to workspace” dialog.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="add-a-cohort-select-collection" class="slide level2">
+<h2>Add a Cohort: Select Collection</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="annotated">
+<p><img data-src="images/dx_add_1_collection.png"></p>
+<div class="red-box" style="left: 1.4%; top: 43.6%; width: 97.8%; height: 7.4%;">
+
+</div>
+<div class="green-box" style="left: 68.8%; top: 45.2%; width: 19.0%; height: 4.4%;">
+
+</div>
+<div class="red-circle" style="left: 92.2%; top: 93.4%; width: 7.6%; height: 5.8%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:45%;">
+<p><strong>Step 1:</strong> pick the <strong>data collection</strong> your workspace already has, e.g., <strong>All of Us Controlled Tier</strong></p>
+<ul>
+<li>Choose the <strong>Version</strong>: the newest, <strong>cdrv9</strong></li>
+<li>The other tier shows <strong>Policy conflict</strong>: one tier per workspace</li>
+</ul>
+<p>Click <strong>Next</strong></p>
+<p><strong>Step 2: No new policies.</strong> Your workspace already has this collection’s policies. Click <strong>Next</strong>.</p>
+</div></div>
+<aside class="notes">
+<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. An earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="add-a-cohort-cohort-details" class="slide level2">
+<h2>Add a Cohort: Cohort Details</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="annotated">
+<p><img data-src="images/dx_add_3_details.png"></p>
+<div class="green-box" style="left: 1.0%; top: 17.2%; width: 98.2%; height: 16.8%;">
+
+</div>
+<div class="green-box" style="left: 1.0%; top: 40.4%; width: 48.6%; height: 9.6%;">
+
+</div>
+<div class="red-circle" style="left: 79.0%; top: 93.4%; width: 20.2%; height: 5.8%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:45%;">
+<p><strong>Step 3: Enter cohort details</strong></p>
+<ul>
+<li><strong>Cohort name</strong> (required) and <strong>Description</strong></li>
+<li>Where to put it:
+<ul>
+<li><strong>Add to an existing folder</strong> (pick the folder path; the workspace itself is the top level), or</li>
+<li><strong>Create a new folder</strong> (name, path, description)</li>
+</ul></li>
+</ul>
+<p>Click <strong>Add to your workspace</strong>. Then build your cohort in <strong>Data Explorer</strong>.</p>
+</div></div>
+<aside class="notes">
+<p>Use a name that says what the cohort is (e.g., diabetes_age50plus), not test names, so collaborators can tell cohorts apart. The cohort shows up on the Resources tab.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="building-a-cohort" class="slide level2">
+<h2>Building a Cohort</h2>
+<div class="annotated short">
+<p><img data-src="images/dx_cohort_view.png"></p>
+<div class="green-box" style="left: 0.4%; top: 10.0%; width: 40.8%; height: 77.0%;">
+
+</div>
+<div class="red-circle" style="left: 1.6%; top: 47.6%; width: 7.8%; height: 6.6%;">
+
+</div>
+<div class="red-circle" style="left: 87.0%; top: 0.8%; width: 10.8%; height: 6.8%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Cohort filter</strong> (left): each <strong>group</strong> is <strong>Included</strong> or <strong>Excluded</strong> and must <strong>meet any</strong> (OR) or <strong>all</strong> (AND) of its criteria. Groups combine with <strong>AND</strong>. <strong>Add criteria</strong> → <strong>Apply</strong>; the participant count updates.</p>
+</div><div class="column side" style="width:50%;">
+<p><strong>Cohort visualizations</strong> (right): charts by gender, race, sex at birth, and age. When you’re done, click <strong>Save data snapshot</strong>.</p>
+<p>⚠️ <strong>Review individuals</strong> shows participant-level rows: never screenshot or share it</p>
+</div></div>
+<aside class="notes">
+<p>Example: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identity = Man or Woman (730,256 participants). Only large counts are shown on these slides. Time-based criteria (e.g., within X days of an event) are supported.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-criteria" class="slide level2">
+<h2>Adding Criteria</h2>
+<div class="annotated short">
+<p><img data-src="images/dx_criteria.png"></p>
+<div class="green-box" style="left: 1.2%; top: 5.6%; width: 98.4%; height: 5.6%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Add criteria</strong> opens the full list: <strong>domains</strong> (conditions, drugs, labs, visits…), <strong>source codes</strong> (ICD-9/10, CPT-4), <strong>demographics</strong>, <strong>wearables</strong> (Fitbit), <strong>genomics</strong>, <strong>physical measurements</strong>, and <strong>surveys</strong></p>
+</div><div class="column side" style="width:50%;">
+<ul>
+<li><strong>+</strong> adds a criterion directly (e.g., <em>Has EHR Data</em>, <em>Current Age</em>)</li>
+<li><strong>🔍</strong> lets you <strong>explore</strong> a category and pick specific concepts</li>
+<li>Or <strong>search</strong> by code or description (top)</li>
+</ul>
+</div></div>
+<aside class="notes">
+<p>Example study population: Sex → Woman; Age → 65 or older; Condition → Breast cancer; Medication → Tamoxifen.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1640,21 +2949,151 @@ Maximilian Wegener, MPH
 <li>Explore the vocabularies at <a href="https://athena.ohdsi.org/">Athena</a></li>
 </ul>
 </section>
-<section id="data-snapshot-and-export" class="slide level2">
-<h2>Data Snapshot and Export</h2>
-<ul>
-<li>After saving a cohort, create a <strong>data snapshot</strong>
-<ul>
-<li>Add concept criteria to build your dataset</li>
-</ul></li>
-<li>Export to your workspace as:
-<ul>
-<li><code>.csv</code> files (zipped or unzipped)</li>
-<li>Notebooks (<code>.ipynb</code>) with the SQL queries, in <strong>R</strong> or <strong>Python</strong></li>
-</ul></li>
-</ul>
+<section id="save-a-data-snapshot-select-data" class="slide level2">
+<h2>Save a Data Snapshot: Select Data</h2>
+<div class="annotated">
+<p><img data-src="images/dx_snap_1_select.png"></p>
+<div class="green-box" style="left: 1.0%; top: 26.0%; width: 18.4%; height: 20.4%;">
+
+</div>
+<div class="green-box" style="left: 20.6%; top: 12.4%; width: 30.8%; height: 5.6%;">
+
+</div>
+<div class="red-circle" style="left: 95.2%; top: 18.6%; width: 4.8%; height: 5.6%;">
+
+</div>
+<div class="red-circle" style="left: 95.8%; top: 93.0%; width: 4.2%; height: 6.4%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Left:</strong> pick the data (<strong>Demographics</strong>, <strong>+ Browse more data</strong>…) → <strong>Apply</strong></p>
+</div><div class="column side" style="width:50%;">
+<p><strong>Tabs:</strong> tables, <strong>SQL</strong> (<strong>Copy</strong> it), <strong>Summary</strong> → <strong>Next</strong></p>
+</div></div>
+</section>
+<section id="check-the-summary" class="slide level2">
+<h2>Check the Summary</h2>
+<div class="annotated short">
+<p><img data-src="images/dx_snap_1_summary.png"></p>
+<div class="red-box" style="left: 46.0%; top: 12.4%; width: 5.8%; height: 6.0%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Left: your cohort’s criteria</strong>, e.g., <em>Has EHR data</em> <strong>and</strong> <em>Gender identity: Man, Woman</em> <strong>and</strong> <em>Current age: 50–125</em></p>
+</div><div class="column side" style="width:50%;">
+<p><strong>Right: what’s in the snapshot</strong>, e.g., the <strong>person</strong> table with 12 demographic columns</p>
+</div></div>
 <aside class="notes">
-<p>TODO: screenshots of the snapshot and export dialog.</p>
+<p>Check this before saving: it’s the plain-language version of the SQL. The example cohort is deliberately broad, so no small counts appear anywhere.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="save-a-data-snapshot-file-format" class="slide level2">
+<h2>Save a Data Snapshot: File Format</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="annotated">
+<p><img data-src="images/dx_snap_2_format.png"></p>
+<div class="green-box" style="left: 3.2%; top: 58.4%; width: 74.0%; height: 36.4%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:45%;">
+<p>Pick one or more:</p>
+<ul>
+<li><strong>Tables (CSV file):</strong> the data itself, <strong>zipped</strong> or not</li>
+<li><strong>R Notebook</strong> (<code>.ipynb</code>): R code with the queries</li>
+<li><strong>Jupyter Notebook</strong> (<code>.ipynb</code>): the Python version</li>
+</ul>
+<p><strong>Copy code</strong> puts the code on your clipboard instead</p>
+<p>Click <strong>Next</strong></p>
+</div></div>
+<div class="fragment">
+<p>👉 <strong>Choose a notebook.</strong> You can re-run and change the queries, and you learn how the data is pulled. CSVs are a fixed copy.</p>
+</div>
+</section>
+<section id="save-a-data-snapshot-destination-bucket" class="slide level2">
+<h2>Save a Data Snapshot: Destination Bucket</h2>
+<div class="columns">
+<div class="column side" style="width:34%;">
+<div class="annotated short">
+<p><img data-src="images/dx_snap_3_bucket.png"></p>
+<div class="green-box" style="left: 3.4%; top: 58.4%; width: 93.4%; height: 14.2%;">
+
+</div>
+<div class="red-box" style="left: 3.4%; top: 74.6%; width: 93.4%; height: 9.6%;">
+
+</div>
+</div>
+<p><strong>Existing bucket:</strong> pick its <strong>Resource ID</strong> (grayed out if the workspace has no bucket yet)</p>
+</div><div class="column" style="width:28%;">
+<div class="annotated">
+<p><img data-src="images/dx_snap_3_newbucket.png"></p>
+<div class="green-box" style="left: 2.4%; top: 31.2%; width: 95.4%; height: 8.6%;">
+
+</div>
+<div class="green-box" style="left: 2.4%; top: 76.8%; width: 95.4%; height: 6.4%;">
+
+</div>
+<div class="red-circle" style="left: 84.4%; top: 93.4%; width: 14.2%; height: 5.4%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:38%;">
+<p><strong>Step 3:</strong> where should the files go?</p>
+<p><strong>New bucket:</strong> the same fields as <em>New Cloud Storage Bucket</em>. The generated <strong>bucket name</strong> is your <strong>Resource ID + your workspace’s project ID</strong>.</p>
+<p>Click <strong>Save</strong></p>
+<div class="fragment">
+<p>🔒 The files can only be opened from <strong>apps in this workspace</strong>, not from the Google Cloud console. That’s the perimeter at work.</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>Example of a generated name: Resource ID intro_aou_genetics became bucket name intro-aou-genetics-wb-swift-bean-2622 (underscores turn into dashes). In a workspace with no bucket yet, “Add to existing bucket” is grayed out. Bucket names are public, so the Resource ID shouldn’t contain personal details.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="inside-the-exported-r-notebook" class="slide level2">
+<h2>Inside the Exported R Notebook</h2>
+<p>The notebook has the <strong>SQL</strong> for each table, plus code to run it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">EXPORT_BUCKET =</span> <span class="st">"gs://&lt;your-bucket-name&gt;"</span>)   <span class="co"># ⚠️ not set for you</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bq_table_save</span>(                                  <span class="co"># run the query (billed to your project)...</span></span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bq_dataset_query</span>(<span class="st">"&lt;data project&gt;.&lt;index dataset&gt;"</span>, person_sql,</span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>                   <span class="at">billing =</span> <span class="st">"&lt;your workspace project&gt;"</span>),</span>
+<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>  person_path, <span class="at">destination_format =</span> <span class="st">"CSV"</span>)      <span class="co"># ...and save it as CSVs in your bucket</span></span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a>person_df <span class="ot">&lt;-</span> <span class="fu">read_bq_export_from_workspace_bucket</span>(person_path)   <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<ul>
+<li><strong>Set <code>EXPORT_BUCKET</code> first</strong>, using the bucket name from the <strong>Resources</strong> tab</li>
+<li><strong>Run the export once.</strong> Next time, just read the CSVs; re-running the query costs money.</li>
+<li>Exporting again <strong>on the same day overwrites</strong> the files; a new day makes a new folder</li>
+</ul>
+</div>
+<aside class="notes">
+<p>From an exported R notebook (cohort “cwml_aou_test_cohort”, October 2026). The SQL reads OMOP tables from the data collection’s BigQuery project (here wb-silky-artichoke-2408.C2024Q3R9) and the cohort from an index dataset (C2024Q3R9_index_022426.T_ENT_person); billing goes to your workspace project (GOOGLE_CLOUD_PROJECT). The notebook reads the CSVs back with gsutil. You can also read them from the mounted bucket folder (~/workspace/<bucket>/bq_exports/…) with read_csv. Don’t run the notebook while screen-sharing: head(person_df) prints participant-level rows.</bucket></p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1672,27 +3111,124 @@ Maximilian Wegener, MPH
 <h1>Apps</h1>
 
 </section>
-<section id="launching-an-app" class="slide level2">
-<h2>Launching an App</h2>
+<section id="apps-tab" class="slide level2">
+<h2>Apps Tab</h2>
+<div class="annotated short">
+<p><img data-src="images/app_0_tab.png"></p>
+<div class="red-circle" style="left: 18.2%; top: 60.0%; width: 6.6%; height: 16.0%;">
+
+</div>
+<div class="green-circle" style="left: 81.0%; top: 81.0%; width: 17.4%; height: 18.6%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>What’s here:</strong></p>
 <ul>
-<li>Apps are the analysis environments in 2.0</li>
-<li>In the workspace: <strong>Apps</strong> → <strong>New app instance</strong></li>
-<li>Four steps:
-<ol type="1">
-<li><strong>Select app</strong></li>
-<li><strong>Choose config</strong></li>
-<li><strong>Compute options</strong></li>
-<li><strong>Review details</strong> → <strong>Create app</strong></li>
-</ol></li>
-<li>Once it’s created, click the app’s name to open it</li>
+<li><strong>Your apps:</strong> the analysis environments in this workspace, with their status (<em>Running</em>, <em>Stopped</em>…)</li>
+<li><strong>Git repositories:</strong> code linked to the workspace (see <em>Optional Extras</em>)</li>
 </ul>
+</div><div class="column side" style="width:50%;">
+<p><strong>To start an app:</strong> click <strong>+ New app instance</strong>, then:</p>
+<ol type="1">
+<li>Select app</li>
+<li>Choose config</li>
+<li>Compute options</li>
+<li>Review details → <strong>Create app</strong></li>
+</ol>
+</div></div>
+<aside class="notes">
+<p>You need Writer or Owner access to create apps. Our example uses AoU Jupyter.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-an-app" class="slide level2">
+<h2>What Is an App?</h2>
+<ul>
+<li>A <strong>virtual computer in the cloud</strong> with its own <strong>disk</strong> and software already installed (JupyterLab, R, Python, SAS…)</li>
+<li>Your buckets are <strong>mounted</strong> as folders, so your files are right there</li>
+<li>You pay for <strong>computing while it runs</strong> and for the <strong>disk until you delete it</strong></li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Running</th>
+<th style="text-align: center;">Stopped</th>
+<th style="text-align: center;">Deleted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Compute</strong> charged</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="even">
+<td><strong>Disk</strong> charged</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="odd">
+<td>Files on the <strong>app’s disk</strong></td>
+<td style="text-align: center;">kept</td>
+<td style="text-align: center;">kept</td>
+<td style="text-align: center;"><strong>lost</strong></td>
+</tr>
+<tr class="even">
+<td>Files in your <strong>bucket</strong></td>
+<td style="text-align: center;">kept</td>
+<td style="text-align: center;">kept</td>
+<td style="text-align: center;">kept</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>👉 Apps <strong>auto-stop</strong> after <strong>4 hours</strong> idle by default. You can set 1 hour to 14 days.</p>
+</div>
+<aside class="notes">
+<p>Source: Verily, “Cloud apps overview” and “Basic cloud app operations”. The disk is a persistent disk: it survives Stop/Start, but is deleted with the app.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="step-1-select-app" class="slide level2">
 <h2>Step 1: Select App</h2>
 <div class="columns">
-<div class="column" style="width:45%;">
+<div class="column" style="width:52%;">
+<div class="annotated">
 <p><img data-src="images/app_1_select.png"></p>
-</div><div class="column small" style="width:55%;">
+<div class="green-box" style="left: 1.0%; top: 17.2%; width: 98.6%; height: 61.6%;">
+
+</div>
+<div class="red-box" style="left: 1.8%; top: 38.4%; width: 97.0%; height: 8.8%;">
+
+</div>
+<div class="red-circle" style="left: 91.4%; top: 93.0%; width: 8.4%; height: 6.6%;">
+
+</div>
+</div>
+</div><div class="column small" style="width:48%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1707,7 +3243,7 @@ Maximilian Wegener, MPH
 <tbody>
 <tr class="odd">
 <td><strong>JupyterLab Spark cluster</strong></td>
-<td>Large-scale and genomic analysis on a Dataproc cluster</td>
+<td>Large-scale and genomic analysis (Dataproc cluster)</td>
 </tr>
 <tr class="even">
 <td><strong>R Analysis Environment</strong></td>
@@ -1715,7 +3251,7 @@ Maximilian Wegener, MPH
 </tr>
 <tr class="odd">
 <td><strong>AoU Jupyter</strong></td>
-<td>Standard JupyterLab (Python or R notebooks)</td>
+<td>Standard JupyterLab: Python or R notebooks</td>
 </tr>
 <tr class="even">
 <td><strong>AoU SAS</strong></td>
@@ -1731,25 +3267,98 @@ Maximilian Wegener, MPH
 </tr>
 </tbody>
 </table>
+<p>👉 <strong>Our example: AoU Jupyter.</strong> Select it and click <strong>Next</strong>.</p>
 </div></div>
-<div style="font-size: 0.6em;">
-<p>Some apps may be disabled by your workspace’s network or security policies.</p>
-</div>
+<aside class="notes">
+<p>Hover the ⓘ next to an app name for details. “Some apps are unavailable due to restrictions or policy settings”: the All of Us app policy only allows approved apps in this workspace.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="step-2-choose-config" class="slide level2">
 <h2>Step 2: Choose Config</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:55%;">
+<div class="annotated">
 <p><img data-src="images/app_2_config.png"></p>
-</div><div class="column" style="width:40%;">
+<div class="red-box" style="left: 1.4%; top: 20.0%; width: 70.0%; height: 10.6%;">
+
+</div>
+<div class="green-box" style="left: 72.2%; top: 13.0%; width: 27.4%; height: 66.4%;">
+
+</div>
+<div class="red-circle" style="left: 92.0%; top: 93.0%; width: 7.8%; height: 6.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:45%;">
+<p><strong>Default configuration</strong> (AoU Jupyter):</p>
 <ul>
-<li>Start from the <strong>Default configuration</strong>…</li>
-<li>…or from a <strong>saved configuration</strong> that you or a collaborator shared</li>
-<li>The <strong>Cost estimate</strong> panel appears on the right</li>
+<li>Machine <strong>n1-highmem-4</strong>: 4 CPUs, 26 GB memory</li>
+<li><strong>500 GB</strong> data disk</li>
 </ul>
+<p><strong>Cost estimate</strong> panel:</p>
+<ul>
+<li><strong>Cost while running:</strong> $0.27/hour, or $194.32/month if left on 24/7</li>
+<li><strong>Disk cost (continuous):</strong> $21.60/month, <strong>even when stopped</strong></li>
+<li><strong>How do we calculate?</strong> and <strong>GCP’s pricing calculator</strong> links</li>
+<li><strong>Cost note:</strong> an optional reminder saved with the config</li>
+</ul>
+<p>Click <strong>Next</strong></p>
 </div></div>
 <aside class="notes">
-<p>This screenshot shows the presenter’s email under the shared config. Crop or blur it if needed.</p>
+<p>Saved configurations you or a collaborator created also appear here as options. Prices are estimates and vary by region.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="reading-the-cost-estimate" class="slide level2">
+<h2>Reading the Cost Estimate</h2>
+<p><strong>Example:</strong> default AoU Jupyter, used <strong>20 hours</strong> in a month</p>
+<table class="caption-top">
+<tbody>
+<tr class="odd">
+<td>Computing: 20 hours × $0.27</td>
+<td style="text-align: right;">$5.40</td>
+</tr>
+<tr class="even">
+<td>Disk: the whole month, running or stopped</td>
+<td style="text-align: right;">$21.60</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>≈ $27</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>👉 For light use, the <strong>disk costs more than the computing</strong>.</p>
+<ul>
+<li><strong>Delete</strong> an app you’re done with (save to your bucket first)</li>
+<li>A <strong>smaller data disk</strong> costs less (step 3)</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Not included:</strong> BigQuery query costs, bucket storage, and data transfer</p>
+</div>
+<aside class="notes">
+<p>“Per month” assumes the app runs 24/7 (about 730 hours). For comparison, the default JupyterLab Spark cluster is about $0.64/hour ($465/month if left on) plus $37.60/month for disks. Source: Verily, “Cloud app cost estimates”. This replaces the My AoU Cost Estimator app from Session 1.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1765,21 +3374,33 @@ Maximilian Wegener, MPH
 <section id="step-3-compute-options" class="slide level2">
 <h2>Step 3: Compute Options</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:52%;">
+<div class="annotated">
 <p><img data-src="images/app_3_compute.png"></p>
-</div><div class="column" style="width:40%;">
+<div class="green-box" style="left: 1.2%; top: 36.6%; width: 23.4%; height: 4.2%;">
+
+</div>
+<div class="green-box" style="left: 1.2%; top: 63.4%; width: 18.6%; height: 5.0%;">
+
+</div>
+<div class="green-box" style="left: 1.2%; top: 80.4%; width: 70.0%; height: 6.4%;">
+
+</div>
+<div class="red-circle" style="left: 91.8%; top: 93.0%; width: 7.8%; height: 6.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:48%;">
 <ul>
-<li>Customize the app’s resources:
-<ul>
-<li>Machine type (CPUs + memory)</li>
-<li>Disk size</li>
-<li>For Spark clusters: cluster type, number of workers, autoscaling</li>
-</ul></li>
-<li>The cost estimate <strong>updates as you change settings</strong></li>
+<li><strong>Location:</strong> keep <strong>Region</strong> (recommended). It picks a zone with free capacity for you. The region comes from the workspace.</li>
+<li><strong>General</strong> or <strong>GPUs:</strong> General is fine for most analysis. GPUs cost much more and <strong>can’t be added later</strong>.</li>
+<li><strong>Machine type:</strong> CPUs + memory. More is faster but costs more; the estimate updates as you change it.</li>
+<li><strong>Scroll down</strong> for <strong>data disk size</strong> (50 GB–64 TB; default 500 GB) and <strong>autostop</strong> (default 4 hours idle)</li>
 </ul>
+<p>Click <strong>Next</strong></p>
 </div></div>
 <aside class="notes">
-<p>Spark cluster options: Standard (1 master, N workers) or Single node (1 master, 0 workers). Single node is useful for testing.</p>
+<p>Leave “Use a specific reservation” unchecked; it’s for reserved cloud capacity. This training workspace was created in us-central1, so that’s the region shown. You can change the machine type and disk later, but only while the app is stopped.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1795,16 +3416,92 @@ Maximilian Wegener, MPH
 <section id="step-4-review-details" class="slide level2">
 <h2>Step 4: Review Details</h2>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:52%;">
+<div class="annotated">
 <p><img data-src="images/app_4_review.png"></p>
-</div><div class="column" style="width:40%;">
+<div class="green-box" style="left: 1.2%; top: 39.4%; width: 97.6%; height: 25.4%;">
+
+</div>
+<div class="red-circle" style="left: 87.0%; top: 93.0%; width: 12.8%; height: 6.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:48%;">
 <ul>
-<li><strong>Workbench ID:</strong> letters, numbers, dashes, underscores</li>
-<li><strong>Instance name:</strong> lowercase letters, numbers, dashes</li>
-<li>Add an optional <strong>Description</strong></li>
-<li>Click <strong>Create app</strong></li>
+<li><strong>Config:</strong> shows <strong>Custom</strong> if you changed anything in step 3</li>
+<li><strong>Workbench ID:</strong> the app’s name in Workbench and the CLI (letters, numbers, <code>-</code>, <code>_</code>)</li>
+<li><strong>Instance name:</strong> the cloud machine’s name (lowercase, numbers, <code>-</code>). <strong>Can’t be changed later.</strong></li>
+<li><strong>Description</strong> (optional)</li>
 </ul>
+<p>Click <strong>Create app</strong></p>
+<div class="fragment">
+<p>Status: <em>Creating</em> → <em>Provisioning</em> → <em>Starting</em> → <strong>Running</strong>. Then click the app’s name to open it.</p>
+</div>
 </div></div>
+<aside class="notes">
+<p>The generated names include the app type and date, which is fine to keep. Give the app a description if you’ll have several.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="managing-your-app" class="slide level2">
+<h2>Managing Your App</h2>
+<p>On the <strong>Apps</strong> tab:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Action</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Open</strong></td>
+<td>Click the app’s name (when it’s <strong>Running</strong>)</td>
+</tr>
+<tr class="even">
+<td><strong>Stop</strong></td>
+<td>Stops it right away, with no confirmation. Computing charges stop; disk charges continue.</td>
+</tr>
+<tr class="odd">
+<td><strong>Start</strong></td>
+<td>Restarts a stopped app in about a minute</td>
+</tr>
+<tr class="even">
+<td><strong>Edit</strong></td>
+<td>Name, description, and autostop: any time. Machine type and disk: only when <strong>stopped</strong>.</td>
+</tr>
+<tr class="odd">
+<td><strong>Delete</strong></td>
+<td>Removes the app <strong>and its disk</strong>. ⚠️ Anything not saved in a bucket is <strong>lost</strong>.</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>You can’t change an app’s image (app type) or instance name; create a new app instead. Apps that are Starting or Stopping can’t be changed until they finish. If someone loses Writer access to the workspace, their apps are stopped (“abandoned”); an Owner can restore the access or delete the app.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="working-in-your-app" class="slide level2">
 <h2>Working in Your App</h2>
@@ -1813,6 +3510,302 @@ Maximilian Wegener, MPH
 <li>Write your own code to clean and manipulate the data</li>
 <li><strong>Save cleaned data to workspace storage</strong> so you don’t re-run the queries every session</li>
 </ul>
+</section>
+<section id="snippets-are-gone-use-your-bucket-folder" class="slide level2">
+<h2>Snippets Are Gone: Use Your Bucket Folder</h2>
+<p><strong>Classic Workbench:</strong> copy files to and from the workspace bucket with <strong>code snippets</strong> (e.g., <code>copy_file_from_workspace_bucket.R</code>) that ran <code>gsutil</code></p>
+<p><strong>Workbench 2.0:</strong> no Snippets menu. Your buckets are <strong>automatically mounted as folders</strong> in every app:</p>
+<pre><code>/home/jupyter/workspace/&lt;bucket name&gt;/     standard apps (JupyterLab, R, SAS)
+/home/dataproc/workspace/&lt;bucket name&gt;/    Spark (Dataproc) apps</code></pre>
+<p>So you save and read files with <strong>regular</strong> R or Python functions, as if the bucket were a local folder. (No bucket yet? See <em>New Cloud Storage Bucket</em>.)</p>
+<div class="fragment">
+<ul>
+<li><strong>Your own buckets:</strong> read <strong>and</strong> write</li>
+<li><strong>References</strong>, including data collection buckets (e.g., <code>v9-genomics-folder</code>): <strong>read-only</strong>. Don’t save outputs there.</li>
+</ul>
+</div>
+<aside class="notes">
+<p>If you put a resource inside a folder on the Resources tab, the folder becomes part of the path (use quotes if the folder name has spaces). Mounts don’t update on their own: a bucket you add (or rename) after the app starts won’t show up until you restart the app or run wb resource mount (or wb resource mount –id=<resource> for one). A folder ending in _NO_ACCESS, _NOT_FOUND, or _MOUNT_FAILED means that mount failed. Duplicated workspaces keep their mounts. Source: Verily, “Access workspace files and folders”.</resource></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="saving-and-reading-files" class="slide level2">
+<h2>Saving and Reading Files</h2>
+<p><strong>R</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(clean_df, <span class="fu">file.path</span>(bucket, <span class="st">"clean_data.csv"</span>))   <span class="co"># save</span></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(bucket, <span class="st">"clean_data.csv"</span>))  <span class="co"># read</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Python</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)</span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df.to_csv(<span class="ss">f"</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/clean_data.csv"</span>, index<span class="op">=</span><span class="va">False</span>)   <span class="co"># save</span></span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/clean_data.csv"</span>)         <span class="co"># read</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Replace workspace-bucket with your bucket’s name as shown in the Resources tab. HOME / ~ points to /home/jupyter or /home/dataproc depending on the app, so this code works in both. The folder tree under ~/workspace matches the folders in the Resources tab. Apps use a standard disk, so files saved anywhere else on the app (e.g., the home directory) are lost if the app crashes or is deleted.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="workspace-variables" class="slide level2">
+<h2>Workspace Variables</h2>
+<p>Some settings are <strong>already defined</strong> in every app. Others you define yourself.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Set for you?</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>GOOGLE_CLOUD_PROJECT</code> (also <code>GOOGLE_PROJECT</code>)</td>
+<td style="text-align: center;">✅</td>
+<td>Your workspace’s Google Cloud project; BigQuery bills queries to it</td>
+</tr>
+<tr class="even">
+<td><code>PET_SA_EMAIL</code></td>
+<td style="text-align: center;">✅</td>
+<td>Your workspace service account (used by dsub)</td>
+</tr>
+<tr class="odd">
+<td><code>WORKSPACE_BUCKET</code></td>
+<td style="text-align: center;">❌</td>
+<td>Classic Workbench only. Use your bucket’s folder instead.</td>
+</tr>
+<tr class="even">
+<td><code>WORKSPACE_CDR</code></td>
+<td style="text-align: center;">❌</td>
+<td>Classic Workbench only. Define the dataset path yourself.</td>
+</tr>
+<tr class="odd">
+<td><code>EXPORT_BUCKET</code></td>
+<td style="text-align: center;">❌</td>
+<td>Used by Data Explorer’s exported notebooks. Set it yourself.</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>project <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>)                              <span class="co"># set for you</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket  <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"&lt;project-id&gt;.&lt;dataset-id&gt;"</span>   <span class="co"># copy from a Data Explorer query (FROM line)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Checked in a new Workbench 2.0 workspace with env | grep -E ‘WORKSPACE|GOOGLE|PET_SA’. The tutorial workspaces define WORKSPACE_BUCKET and WORKSPACE_CDR in their setup scripts, so code copied from classic Workbench notebooks will find them empty (““) elsewhere. The CDR dataset path is in the queries Data Explorer generates (the FROM clause), and in the data collection’s BigQuery resources on the Resources tab.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="workflows" class="title-slide slide level1 center">
+<h1>Workflows</h1>
+
+</section>
+<section id="workflows-tab" class="slide level2">
+<h2>Workflows Tab</h2>
+<div class="annotated short">
+<p><img data-src="images/wf_tab.png"></p>
+<div class="red-circle" style="left: 16.4%; top: 3.0%; width: 8.0%; height: 36.0%;">
+
+</div>
+<div class="green-box" style="left: 0.2%; top: 36.0%; width: 11.2%; height: 23.0%;">
+
+</div>
+<div class="green-circle" style="left: 88.2%; top: 63.0%; width: 11.6%; height: 33.0%;">
+
+</div>
+</div>
+<div class="columns">
+<div class="column side" style="width:50%;">
+<p><strong>Two sub-tabs:</strong></p>
+<ul>
+<li><strong>Setup:</strong> the workflows added to this workspace. Start new jobs here.</li>
+<li><strong>Job status:</strong> follow your jobs and their tasks, and find logs and outputs</li>
+</ul>
+</div><div class="column side" style="width:50%;">
+<p><strong>To start:</strong> click <strong>+ Add workflow</strong></p>
+<p>A new workspace starts with <strong>no workflows</strong>. Add one before you can run a job.</p>
+</div></div>
+</section>
+<section id="what-is-a-workflow" class="slide level2">
+<h2>What Is a Workflow?</h2>
+<p>A <strong>pipeline</strong> that runs analysis steps for you, in order or in parallel, <strong>without an app running</strong>. Each step runs in its own container on a temporary cloud machine.</p>
+<p><strong>Use it when you need to:</strong> run the same analysis on many files or samples (e.g., genomics), or make it easy to reproduce and share</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Language</th>
+<th>Where you run it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cromwell</strong></td>
+<td>WDL</td>
+<td><strong>Workflows</strong> tab (or CLI)</td>
+</tr>
+<tr class="even">
+<td><strong>Nextflow</strong></td>
+<td>Nextflow (<code>.nf</code>)</td>
+<td><strong>Workflows</strong> tab (or CLI)</td>
+</tr>
+<tr class="odd">
+<td><strong>dsub</strong></td>
+<td>Shell commands, one step</td>
+<td>An app’s <strong>terminal</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>👉 Most class projects <strong>don’t need workflows</strong>: an app is enough. Ready-made workflows: <a href="https://dockstore.org">Dockstore</a></p>
+</div>
+<aside class="notes">
+<p>Source: Verily, “Workflows overview” and “Workflow engines”. All three tools use the Google Batch API to run tasks, and read and write files in buckets (gs:// paths). Tasks run with the workspace’s service account, which can access every bucket in the workspace. Costs (task machines and storage) are billed to the workspace’s pod and are not shown in the app cost estimator.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adding-a-workflow" class="slide level2">
+<h2>Adding a Workflow</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<div class="annotated">
+<p><img data-src="images/wf_add.png"></p>
+<div class="green-box" style="left: 1.2%; top: 16.4%; width: 98.4%; height: 9.8%;">
+
+</div>
+<div class="red-box" style="left: 1.2%; top: 27.0%; width: 98.4%; height: 6.6%;">
+
+</div>
+<div class="red-circle" style="left: 91.8%; top: 93.0%; width: 8.2%; height: 6.6%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:48%;">
+<p><strong>Step 1: Provide source.</strong> Where’s the workflow file?</p>
+<ul>
+<li><strong>Workspace bucket:</strong> pick the bucket. Workbench lists the workflow files it finds there (search by name).</li>
+<li><strong>Git repository:</strong> a repo with the workflow (see <em>Optional Extras: GitHub</em>)</li>
+</ul>
+<p>Select the workflow → <strong>Next</strong></p>
+<p><strong>Step 2: Review details</strong> → add it</p>
+<div class="fragment">
+<p>Upload the workflow file (<code>.wdl</code> or <code>.nf</code>) to your bucket <strong>first</strong>. Until there’s one to select, <strong>Next</strong> stays grey.</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="running-a-workflow" class="slide level2">
+<h2>Running a Workflow</h2>
+<p><strong>Setup</strong> tab → select the workflow → <strong>+ New job</strong></p>
+<ol type="1">
+<li>Fill in the <strong>inputs</strong>. Workbench builds the form from the workflow file.</li>
+<li>Choose an <strong>output bucket</strong> for the results</li>
+<li>Start the job, then follow it on <strong>Job status</strong>: each task’s progress, logs, and outputs</li>
+</ol>
+<div class="fragment">
+<p><strong>Batch jobs:</strong> run one WDL workflow <strong>many times in parallel</strong>, e.g., once per sample</p>
+<ul>
+<li>Choose <em>Run a batch job with inputs defined by an input table</em></li>
+<li>Upload a <strong>CSV</strong> (one row per run), then match its columns to the workflow’s inputs</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dsub-jobs-from-an-app" class="slide level2">
+<h2>dsub: Jobs from an App</h2>
+<p>For <strong>one-step</strong> jobs, e.g., run a command on many files. It comes with apps created after <strong>June 2025</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub_activate</span>                        <span class="co"># turn on dsub in the terminal</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="dt">\</span></span>
+<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
+<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">${PET_SA_EMAIL}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
+<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
+<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
+<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="op">&lt;</span>container image with samtools<span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
+<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>👉 More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
+</div>
+<aside class="notes">
+<p>Source: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="storage-costs" class="title-slide slide level1 center">
@@ -1822,11 +3815,11 @@ Maximilian Wegener, MPH
 <section id="storage" class="slide level2">
 <h2>Storage</h2>
 <ul>
-<li><strong>Workspace cloud storage (bucket):</strong> shared, permanent, and the cheapest option for long-term storage. Recommended.</li>
-<li><strong>App disk:</strong> attached to an app instance; charged while it exists</li>
+<li><strong>Workspace bucket:</strong> shared, permanent, and the cheapest option for long-term storage. Recommended. (You create it; see <em>New Cloud Storage Bucket</em>.)</li>
+<li><strong>App disk:</strong> attached to an app. Charged <strong>until the app is deleted</strong>, even when stopped. Files on it survive <em>Stop</em> but are <strong>lost</strong> on <em>Delete</em>.</li>
 </ul>
 <aside class="notes">
-<p>TODO: confirm how app disks behave in 2.0 when an app is stopped or deleted.</p>
+<p>See <em>What Is an App?</em> and <em>Reading the Cost Estimate</em> in the Apps section.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1843,33 +3836,222 @@ Maximilian Wegener, MPH
 <h2>Saving Money</h2>
 <ul>
 <li>Save your data to workspace storage</li>
-<li><strong>Stop or delete apps</strong> you aren’t using</li>
+<li><strong>Stop or delete apps</strong> you aren’t using; keep <strong>autostop</strong> on</li>
 <li>Your notebooks and data in workspace storage stay intact</li>
 <li>Start a new app any time to pick up where you left off</li>
 <li>Delete workspaces you no longer need</li>
 </ul>
-</section>
-<section id="built-in-app-cost-estimates" class="slide level2">
-<h2>Built-in App Cost Estimates</h2>
-<p>The <strong>Cost estimate</strong> panel (steps 2–3 of creating an app) shows:</p>
-<ul>
-<li><strong>Cost while running:</strong> per hour and per month</li>
-<li><strong>Disk cost (continuous):</strong> per month, charged <strong>even when the app is stopped</strong></li>
-<li>A link to <strong>GCP’s pricing calculator</strong></li>
-<li>An optional <strong>cost note</strong> you can save with the config</li>
-</ul>
 <div class="fragment">
-<p><strong>Example:</strong> default JupyterLab Spark cluster</p>
-<ul>
-<li>$0.64/hour running → about <strong>$465/month</strong> if left on</li>
-<li>Plus <strong>$37.60/month</strong> for disks until the app is deleted</li>
-</ul>
-</div>
-<div class="fragment">
-<p><strong>Not included:</strong> BigQuery query costs, workspace bucket storage, and data transfer</p>
+<p>⚠️ Deleting a workspace <strong>permanently deletes</strong> everything created in it, <strong>including your bucket and its files</strong>. It can’t be undone. Copy anything you need first.</p>
 </div>
 <aside class="notes">
-<p>Source: Verily, “Cloud app cost estimates”. This replaces the My AoU Cost Estimator app from Session 1.</p>
+<p>Only Owners can delete a workspace. References (e.g., the All of Us data collection) are only pointers, so the underlying data isn’t affected.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="optional-extras" class="title-slide slide level1 center">
+<h1>Optional Extras</h1>
+
+</section>
+<section id="whats-in-this-section" class="slide level2">
+<h2>What’s in This Section</h2>
+<p>Useful tools you <strong>don’t need</strong> for the basics:</p>
+<ul>
+<li><strong>Practice with synthetic data:</strong> learn SQL on fake patients</li>
+<li><strong>Add a file from a URL:</strong> pull a public file into your bucket</li>
+<li><strong>GitHub:</strong> back up and share your code</li>
+<li><strong>AI tools:</strong> why to use them <strong>outside</strong> the Workbench</li>
+</ul>
+<aside class="notes">
+<p>More extras will be added here over time.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="try-it-practice-with-synthetic-data" class="slide level2">
+<h2>Try It: Practice with Synthetic Data</h2>
+<p>Google hosts a free, <strong>synthetic</strong> (fake) OMOP dataset: <strong>CMS SynPUF</strong>. It has the same table layout as the All of Us CDR, with <strong>no real participants</strong>.</p>
+<p>Add it as a <strong>BigQuery dataset reference</strong>:</p>
+<ul>
+<li><strong>Project ID:</strong> <code>bigquery-public-data</code></li>
+<li><strong>Dataset ID:</strong> <code>cms_synthetic_patient_data_omop</code></li>
+</ul>
+<p>Then query it from an app:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">"SELECT gender_concept_id, COUNT(*) AS n</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">          FROM `bigquery-public-data.cms_synthetic_patient_data_omop.person`</span></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">          GROUP BY gender_concept_id"</span></span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(<span class="fu">bq_project_query</span>(<span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>), query))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>👉 Use a <strong>separate practice workspace</strong> with no All of Us data. Controlled Tier perimeters may block outside data.</p>
+</div>
+<aside class="notes">
+<p>Source: Verily, “Work with OMOP data in BigQuery” (their example uses Python). Example notebooks: github.com/verily-src/workbench-examples. Because it’s synthetic, students can share results and screenshots freely, unlike All of Us data. Queries are billed to your pod (BigQuery charges by data scanned; small queries like this cost very little). GOOGLE_CLOUD_PROJECT and GOOGLE_PROJECT are both set in Workbench apps, with the same value.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="add-a-file-from-a-url" class="slide level2">
+<h2>Add a File from a URL</h2>
+<p>Copy a <strong>public</strong> file from the web straight into your bucket. No download or upload needed.</p>
+<div class="columns">
+<div class="column" style="width:52%;">
+<div class="annotated">
+<p><img data-src="images/res_add_file_url.png"></p>
+<div class="green-box" style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;">
+
+</div>
+<div class="green-box" style="left: 3.0%; top: 55.0%; width: 94.2%; height: 17.4%;">
+
+</div>
+<div class="red-circle" style="left: 69.0%; top: 81.6%; width: 28.6%; height: 15.0%;">
+
+</div>
+</div>
+</div><div class="column side" style="width:48%;">
+<ol type="1">
+<li><strong>Resources</strong> tab → select your bucket → <strong>Add file via URL</strong></li>
+<li><strong>URL:</strong> a <strong>public</strong> or <strong>signed</strong> link to the file</li>
+<li><strong>File name:</strong> what to call it in the bucket (the default is <code>import-</code> + date and time)</li>
+<li>Click <strong>Add file to bucket</strong> and wait for it to finish</li>
+</ol>
+<ul>
+<li>Files up to <strong>100 MB</strong></li>
+</ul>
+<div class="fragment">
+<p>⚠️ <strong>In a Controlled Tier workspace this may fail</strong> (“Couldn’t add that file”): the perimeter blocks many outside downloads. Instead, <strong>upload</strong> the file in JupyterLab, or keep it in a <strong>GitHub repo</strong> and clone it.</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>Source: Verily, “Add files to Cloud Storage via URL”, and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. Tested October 2026 in the intro-to-AoU Controlled Tier workspace: a public GitHub raw URL (reachable from outside, HTTP 200) failed with “Couldn’t add that file. Try again later, or contact support for help.” Most likely the perimeter blocks the transfer. It should work in workspaces without a perimeter (e.g., a practice workspace with no All of Us data). GitHub over git/SSH does work inside the perimeter.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="connect-github" class="slide level2">
+<h2>Connect GitHub</h2>
+<p><strong>Why:</strong> back up your code, track changes, and share it with collaborators</p>
+<p><strong>Add your Workbench SSH key to GitHub</strong> (once):</p>
+<ol type="1">
+<li><strong>Profile icon</strong> (top right) → <strong>Manage your profile</strong> → <strong>Groups &amp; keys</strong> tab</li>
+<li>Copy your <strong>public SSH key</strong>. Workbench creates one for you.</li>
+<li>In GitHub: <strong>Settings</strong> → <strong>SSH and GPG keys</strong> → <strong>New SSH key</strong>. Paste it and give it a clear name, e.g., <em>Workbench SSH key</em>.</li>
+<li>If your GitHub <strong>organization</strong> uses single sign-on (SSO), <strong>authorize</strong> the key for it</li>
+</ol>
+<aside class="notes">
+<p>Source: Verily, “Git integrations with cloud apps”. CLI alternatives: wb security ssh-key get (show the key) and wb security ssh-key generate (make a new one). The key is needed to push to any repo and to clone private ones; cloning a public repo over https works without it. GitHub is reachable from inside an All of Us (Controlled Tier) workspace: tested with ssh -T git@github.com, clone, and push. Source for the testing: the CWML guide “Sharing Your All of Us Workbench Code on GitHub”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="add-a-repository" class="slide level2">
+<h2>Add a Repository</h2>
+<p><strong>Apps</strong> tab → <strong>Git repositories</strong> → <strong>+ Add repository</strong></p>
+<ul>
+<li><strong>Public repo:</strong> use the <code>https://github.com/…</code> URL (no key needed)</li>
+<li><strong>Private repo:</strong> use the <code>git@github.com:…</code> URL (needs your SSH key)</li>
+<li>It’s <strong>cloned automatically</strong> into apps you create <strong>afterward</strong>. For an app you already have, run this in its terminal:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> git clone <span class="at">--resource</span><span class="op">=&lt;</span>repo resource name<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then work as usual: <code>git add</code> → <code>git commit</code> → <code>git push</code></p>
+<div class="fragment">
+<p>⚠️ <strong>Commit code only.</strong> Clear notebook outputs first, e.g., <code>jupyter nbconvert --clear-output --inplace *.ipynb</code>. Never commit data files or results.</p>
+</div>
+<aside class="notes">
+<p>This repository (CWML All-of-Us-Training-Resources) is a public example students could add. Outputs can contain participant-level data or small counts, which must not leave the Workbench.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="github-things-to-know" class="slide level2">
+<h2>GitHub: Things to Know</h2>
+<ul>
+<li><strong>Test the connection:</strong> <code>ssh -T git@github.com</code>. <em>“Hi username! You’ve successfully authenticated…”</em> means it works.</li>
+<li><strong>Set your name and email</strong> once per app: <code>git config --global user.name</code> / <code>user.email</code>. For a public repo, use your GitHub <strong>noreply</strong> email.</li>
+<li><strong>Clone into your home folder (<code>~</code>), not <code>~/workspace/…</code>.</strong> That’s a mounted bucket, and Git doesn’t work well there.</li>
+<li><strong>The clone lives on the app’s disk.</strong> Push before you delete the app.</li>
+</ul>
+<div class="fragment">
+<p>⚠️ <strong>Before every push:</strong> clear outputs, leave out data files (<code>.csv</code>, <code>.vcf</code>…), check for passwords or tokens, and read <code>git status</code>. Pushed data by mistake? Deleting it in a new commit <strong>doesn’t</strong> remove it from Git history. Make the repo private and contact All of Us support.</p>
+</div>
+<aside class="notes">
+<p>From the CWML guide “Sharing Your All of Us Workbench Code on GitHub” (to become the GitHub page on the website). It covers adding work to an existing repo (branch and pull request), creating a new repo, keeping in sync, and troubleshooting. Two copies of a notebook drift apart: work from the repo copy, not the copy in ~/workspace.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ai-tools-use-them-outside-the-workbench" class="slide level2">
+<h2>AI Tools: Use Them Outside the Workbench</h2>
+<p>Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? <strong>Use it outside the Workbench</strong>, for <strong>coding help only</strong>.</p>
+<p><strong>Why not inside the Workbench?</strong></p>
+<ul>
+<li>All of Us does <strong>not allow participant-level data to leave the Workbench</strong>, and that includes sending it to an AI service</li>
+<li>AI coding assistants like <strong>Claude Code</strong> can <strong>open files and run code on their own</strong>. It’s easy for them to read <strong>data files</strong>, <strong>query results</strong>, or <strong>notebook outputs</strong> that contain participant-level data.</li>
+<li>Even one accidental read counts as a <strong>Data User Code of Conduct violation</strong>, even if nothing is stored</li>
+</ul>
+<div class="fragment">
+<p>👉 <strong>How:</strong> get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace</p>
+</div>
+<aside class="notes">
+<p>Source: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1886,6 +4068,33 @@ Maximilian Wegener, MPH
 <section id="wrap-up" class="title-slide slide level1 center">
 <h1>Wrap-up</h1>
 
+</section>
+<section id="good-habits" class="slide level2">
+<h2>Good Habits</h2>
+<ul>
+<li><strong>Save everything to your bucket</strong>: notebooks, cleaned data, plots, logs. Files left on the app’s disk are lost if the app crashes or is deleted.</li>
+<li><strong>Use GitHub</strong> for your code, and <strong>push every day</strong>. It’s your backup if an app fails.
+<ul>
+<li>Connect GitHub with your Workbench <strong>SSH key</strong> (see <em>Optional Extras</em>)</li>
+<li>⚠️ <strong>Code only:</strong> clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.</li>
+</ul></li>
+<li><strong>AI tools: use them outside the Workbench</strong>, for code only (see <em>Optional Extras</em>)</li>
+<li><strong>Stop apps</strong> when you’re not using them</li>
+<li><strong>Keep your description up to date</strong>, along with your Research Use Statement</li>
+</ul>
+<aside class="notes">
+<p>Source: Verily, “Workbench best practices”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="helpful-resources" class="slide level2">
 <h2>Helpful Resources</h2>
