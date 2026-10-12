@@ -1,0 +1,92 @@
+---
+title: "Data Collections"
+description: "Data collections, the Data Exchange, and access levels"
+---
+
+## What Is a Data Collection?
+
+- A **curated dataset** published for researchers, e.g., the All of Us Registered Tier
+- Comes with:
+  - **Versions** (e.g., cdrv9)
+  - **Policies** on how the data can be accessed and used
+  - **Access levels** (Reader, Discover, …)
+- You **don't copy** the data. Adding a collection to a workspace creates **references** to data that stays in the provider's cloud project.
+- The workspace **inherits the collection's policies**, permanently
+
+**Think of it as:** *data collection* = the data source; *workspace* = where you analyze it
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Verily calls these "referenced resources". Because the data isn't copied, adding it is free; you pay for the queries and compute you run on it.
+:::
+
+## The Data Exchange
+
+![](<../../Intro to workbench 2.0/images/exchange.png>){fig-align="center"}
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Open from the left sidebar: Exchange. Search by name, tag, or keyword; sort and filter.
+:::
+
+## All of Us Data Collections
+
+|   | **Registered Tier** | **Controlled Tier** |
+|------------------------|------------------------|------------------------|
+| **Contains** | EHR, surveys, social determinants of health, lab results, wearables (sensors), physical measurements | Everything in the Registered Tier **plus genomics**: WGS, exome, RNA-seq, single-cell, microarray |
+| **Use it for** | Clinical, survey, and lifestyle research: phenotypes, outcomes, health disparities | Genetic association studies (e.g., GWAS), variant analysis, and anything that needs genomic data |
+| **Access** | Registered Tier training | **Controlled Tier** training |
+| **Version** | Select from the version drop-down (current: **cdrv9**) | Same |
+
+- Both are **free** to add (you pay only for compute and storage)
+- **Add to workspace** straight from the Exchange, or from a workspace's **Resources** tab
+- Pick the **smallest tier you need**. You can't have both tiers in one workspace.
+- The only other collection you can add alongside: **GTEx Open Access**
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The Exchange lists 10 collections in total.
+:::
+
+## Other Collections on the Exchange
+
+| Collection | Provider | What it is | Data types |
+|------------------|------------------|------------------|------------------|
+| **GTEx Open Access** | Verily | Gene expression and its link to genetic variation | Genomics |
+| **GP2 Tier 2** | Global Parkinson's Genetics Program | Parkinson's genetics, 70,000+ people | Genomics, surveys |
+| **ASAP CRN Harmonized** | Aligning Science Across Parkinson's | Harmonized Parkinson's omics | Transcriptomics |
+| **Project Baseline (Full)** | Verily | Deep health profiling study | EHR, genomics, imaging, eCRF, labs, sensors |
+| **Project Baseline (Limited)** | Verily | Free subset of the full study | Imaging, surveys, eCRF, labs |
+| **PRESCO Immune Profiler** | Verily | COVID-19 immune profiling, Long COVID (PASC) | Genomics, proteomics, labs |
+| **Sightline Wastewater** | Verily | Community pathogen monitoring | Microbiomics |
+| **Cervical Cancer: SDOH Screening** | Morehouse School of Medicine | Researcher-published collection | Immunology |
+
+
+## Access Levels on the Exchange
+
+- **Reader → Add to workspace:** you can add it right away
+  - All of Us Registered and Controlled Tiers, GTEx Open Access
+- **Discover → Get access:** you can see the description but have to **request access** first
+  - **Instantly Accessible:** access is granted right away (PRESCO, Baseline Limited)
+- **Free** badge: no charge for the data itself. Collections without it may cost money or need approval.
+- **Explore cohorts:** shown on each collection, but not available for the All of Us collections
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The non-All of Us collections come from Verily and its partners. Their terms are separate from the All of Us Data User Code of Conduct. An All of Us workspace can hold one All of Us tier (Registered or Controlled) plus GTEx Open Access; the other collections can't be added to it. Explore cohorts is grayed out and can't be clicked for the All of Us collections (checked October 2026). For other collections it is meant to preview cohorts in Data Explorer before adding the collection.
+:::
+
+## Your Data Collections Page
+
+![](<../../Intro to workbench 2.0/images/data_collections.png>){fig-align="center"}
+
+## Using the Data Collections Page
+
+- **Left sidebar → Data collections** lists every collection you have access to
+  - Name, cloud (GCP), last modified, created by, and your **access level**
+  - Filter by favorite, cloud, creator, or access level; ⭐ favorites to pin them
+- **Reader** = you can view and use the data, but not change the collection
+- The **Recent data collections** panel lists the ones you've opened lately
+- **+ New data collection:** researchers can publish their own collections (e.g., the Morehouse collection on the Exchange)
+
+**Exchange** = find and get access to collections · **Data collections** = the ones you already have
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Collections only appear here after you have access: the All of Us tiers via your account access, GTEx because it's open. Creating a collection is beyond this intro.
+:::

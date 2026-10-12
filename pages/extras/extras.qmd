@@ -1,0 +1,132 @@
+---
+title: "Optional Extras"
+description: "Practice with synthetic data, adding a file from a URL, GitHub, and AI tools"
+---
+
+Useful tools you **don't need** for the basics.
+
+## Try It: Practice with Synthetic Data
+
+Google hosts a free, **synthetic** (fake) OMOP dataset: **CMS SynPUF**. It has the same table layout as the All of Us CDR, with **no real participants**.
+
+Add it as a **BigQuery dataset reference**:
+
+- **Project ID:** `bigquery-public-data`
+- **Dataset ID:** `cms_synthetic_patient_data_omop`
+
+Then query it from an app:
+
+```{.r code-line-numbers="false"}
+library(bigrquery)
+query <- "SELECT gender_concept_id, COUNT(*) AS n
+          FROM `bigquery-public-data.cms_synthetic_patient_data_omop.person`
+          GROUP BY gender_concept_id"
+df <- bq_table_download(bq_project_query(Sys.getenv("GOOGLE_CLOUD_PROJECT"), query))
+```
+
+👉 Use a **separate practice workspace** with no All of Us data. Controlled Tier perimeters may block outside data.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Work with OMOP data in BigQuery" (their example uses Python). Example notebooks: github.com/verily-src/workbench-examples. Because it's synthetic, students can share results and screenshots freely, unlike All of Us data. Queries are billed to your pod (BigQuery charges by data scanned; small queries like this cost very little). GOOGLE_CLOUD_PROJECT and GOOGLE_PROJECT are both set in Workbench apps, with the same value.
+:::
+
+## Add a File from a URL
+
+Copy a **public** file from the web straight into your bucket. No download or upload needed.
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_add_file_url.png>)
+
+::: {.green-box style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;"}
+:::
+
+::: {.green-box style="left: 3.0%; top: 55.0%; width: 94.2%; height: 17.4%;"}
+:::
+
+::: {.red-circle style="left: 69.0%; top: 81.6%; width: 28.6%; height: 15.0%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+1. **Resources** tab → select your bucket → **Add file via URL**
+2. **URL:** a **public** or **signed** link to the file
+3. **File name:** what to call it in the bucket (the default is `import-` + date and time)
+4. Click **Add file to bucket** and wait for it to finish
+
+- Files up to **100 MB**
+
+⚠️ **In a Controlled Tier workspace this may fail** ("Couldn't add that file"): the perimeter blocks many outside downloads. Instead, **upload** the file in JupyterLab, or keep it in a **GitHub repo** and clone it.
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Add files to Cloud Storage via URL", and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. Tested October 2026 in the intro-to-AoU Controlled Tier workspace: a public GitHub raw URL (reachable from outside, HTTP 200) failed with "Couldn't add that file. Try again later, or contact support for help." Most likely the perimeter blocks the transfer. It should work in workspaces without a perimeter (e.g., a practice workspace with no All of Us data). GitHub over git/SSH does work inside the perimeter.
+:::
+
+## Connect GitHub
+
+**Why:** back up your code, track changes, and share it with collaborators
+
+**Add your Workbench SSH key to GitHub** (once):
+
+1. **Profile icon** (top right) → **Manage your profile** → **Groups & keys** tab
+2. Copy your **public SSH key**. Workbench creates one for you.
+3. In GitHub: **Settings** → **SSH and GPG keys** → **New SSH key**. Paste it and give it a clear name, e.g., *Workbench SSH key*.
+4. If your GitHub **organization** uses single sign-on (SSO), **authorize** the key for it
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Git integrations with cloud apps". CLI alternatives: wb security ssh-key get (show the key) and wb security ssh-key generate (make a new one). The key is needed to push to any repo and to clone private ones; cloning a public repo over https works without it. GitHub is reachable from inside an All of Us (Controlled Tier) workspace: tested with ssh -T git@github.com, clone, and push. Source for the testing: the CWML guide "Sharing Your All of Us Workbench Code on GitHub".
+:::
+
+**Full step-by-step instructions**, including troubleshooting: [GitHub Guide](github-guide.qmd)
+
+## Add a Repository
+
+**Apps** tab → **Git repositories** → **+ Add repository**
+
+- **Public repo:** use the `https://github.com/…` URL (no key needed)
+- **Private repo:** use the `git@github.com:…` URL (needs your SSH key)
+- It's **cloned automatically** into apps you create **afterward**. For an app you already have, run this in its terminal:
+
+```{.bash code-line-numbers="false"}
+wb git clone --resource=<repo resource name>
+```
+
+Then work as usual: `git add` → `git commit` → `git push`
+
+⚠️ **Commit code only.** Clear notebook outputs first, e.g., `jupyter nbconvert --clear-output --inplace *.ipynb`. Never commit data files or results.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+This repository (CWML All-of-Us-Training-Resources) is a public example students could add. Outputs can contain participant-level data or small counts, which must not leave the Workbench.
+:::
+
+## GitHub: Things to Know
+
+- **Test the connection:** `ssh -T git@github.com`. *"Hi username! You've successfully authenticated…"* means it works.
+- **Set your name and email** once per app: `git config --global user.name` / `user.email`. For a public repo, use your GitHub **noreply** email.
+- **Clone into your home folder (`~`), not `~/workspace/…`.** That's a mounted bucket, and Git doesn't work well there.
+- **The clone lives on the app's disk.** Push before you delete the app.
+
+⚠️ **Before every push:** clear outputs, leave out data files (`.csv`, `.vcf`…), check for passwords or tokens, and read `git status`. Pushed data by mistake? Deleting it in a new commit **doesn't** remove it from Git history. Make the repo private and contact All of Us support.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+From the CWML guide "Sharing Your All of Us Workbench Code on GitHub". It covers adding work to an existing repo (branch and pull request), creating a new repo, keeping in sync, and troubleshooting. Two copies of a notebook drift apart: work from the repo copy, not the copy in ~/workspace.
+:::
+
+## AI Tools: Use Them Outside the Workbench
+
+Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? **Use it outside the Workbench**, for **coding help only**.
+
+**Why not inside the Workbench?**
+
+- All of Us does **not allow participant-level data to leave the Workbench**, and that includes sending it to an AI service
+- AI coding assistants like **Claude Code** can **open files and run code on their own**. It's easy for them to read **data files**, **query results**, or **notebook outputs** that contain participant-level data.
+- Even one accidental read counts as a **Data User Code of Conduct violation**, even if nothing is stored
+
+👉 **How:** get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: All of Us User Support Hub, "Frequently Asked Questions" (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; "transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used." Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.
+:::

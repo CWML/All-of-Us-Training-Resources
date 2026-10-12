@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Create a workspace and add an All of Us data collection">
+
+<title>Setting Up a Workspace – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../pages/workspace/research-use-statement.html" rel="next">
+<link href="../../pages/workspace/workspaces.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../pages/workspace/workspaces.html" aria-current="page"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/extras/extras.html"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/setup.html">Setting Up a Workspace</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/workspaces.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workspaces</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/setup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Setting Up a Workspace</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/research-use-statement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Research Use Statement</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview and Resources Tabs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/apps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apps</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/storage-costs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Storage &amp; Costs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workflows</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#creating-a-workspace" id="toc-creating-a-workspace" class="nav-link active" data-scroll-target="#creating-a-workspace">Creating a Workspace</a></li>
+  <li><a href="#step-1-enter-details" id="toc-step-1-enter-details" class="nav-link" data-scroll-target="#step-1-enter-details">Step 1: Enter Details</a></li>
+  <li><a href="#step-2-set-policies" id="toc-step-2-set-policies" class="nav-link" data-scroll-target="#step-2-set-policies">Step 2: Set Policies</a></li>
+  <li><a href="#step-3-add-description" id="toc-step-3-add-description" class="nav-link" data-scroll-target="#step-3-add-description">Step 3: Add Description</a></li>
+  <li><a href="#your-new-workspace" id="toc-your-new-workspace" class="nav-link" data-scroll-target="#your-new-workspace">Your New Workspace</a></li>
+  <li><a href="#adding-a-data-collection" id="toc-adding-a-data-collection" class="nav-link" data-scroll-target="#adding-a-data-collection">Adding a Data Collection</a></li>
+  <li><a href="#step-1-select-collection" id="toc-step-1-select-collection" class="nav-link" data-scroll-target="#step-1-select-collection">Step 1: Select Collection</a></li>
+  <li><a href="#step-2-select-resources" id="toc-step-2-select-resources" class="nav-link" data-scroll-target="#step-2-select-resources">Step 2: Select Resources</a></li>
+  <li><a href="#whats-in-cdrv9-controlled-tier" id="toc-whats-in-cdrv9-controlled-tier" class="nav-link" data-scroll-target="#whats-in-cdrv9-controlled-tier">What’s in cdrv9 (Controlled Tier)?</a></li>
+  <li><a href="#step-3-review-policies" id="toc-step-3-review-policies" class="nav-link" data-scroll-target="#step-3-review-policies">Step 3: Review Policies</a></li>
+  <li><a href="#answer-the-research-use-statement" id="toc-answer-the-research-use-statement" class="nav-link" data-scroll-target="#answer-the-research-use-statement">Answer the Research Use Statement</a></li>
+  <li><a href="#step-3-confirm-policies" id="toc-step-3-confirm-policies" class="nav-link" data-scroll-target="#step-3-confirm-policies">Step 3: Confirm Policies</a></li>
+  <li><a href="#step-4-review-selection" id="toc-step-4-review-selection" class="nav-link" data-scroll-target="#step-4-review-selection">Step 4: Review Selection</a></li>
+  <li><a href="#data-collection-rules" id="toc-data-collection-rules" class="nav-link" data-scroll-target="#data-collection-rules">Data Collection Rules</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Setting Up a Workspace</h1>
+</div>
+
+<div>
+  <div class="description">
+    Create a workspace and add an All of Us data collection
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This page uses our example workspace, <strong><code>intro-to-AoU</code></strong>, created for instruction only.</p>
+<section id="creating-a-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-workspace">Creating a Workspace</h2>
+<p><strong>Left sidebar → Workspaces → + New workspace</strong></p>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/workspaces.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 66.2%; top: 0.6%; width: 11.6%; height: 7.6%;">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Three steps: Enter details → Set policies → Add description.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-1-enter-details" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-enter-details">Step 1: Enter Details</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<p><img src="../../Intro to workbench 2.0/images/ws_create_1_details.png" class="img-fluid"></p>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>You fill in:</strong></p>
+<ul>
+<li><strong>Workspace name:</strong> only visible to people with access; you can change it later</li>
+<li><strong>Summary:</strong> a short description (up to 140 characters)</li>
+</ul>
+<p><strong>Filled in automatically:</strong></p>
+<ul>
+<li><strong>Workspace ID:</strong> made from the name; used by the CLI. Changing it later <strong>breaks links</strong> to the workspace.</li>
+<li><strong>Pod:</strong> your default billing pod</li>
+</ul>
+<p>Click <strong>Next</strong></p>
+<p>⚠️ The pod <strong>can’t be changed</strong> after the workspace is created</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The auto-selected pod is your personal user pod (user-pod-firstname-lastname-####). If you’ve set up a Yale billing pod, choose it here from the drop-down.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-set-policies" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-set-policies">Step 2: Set Policies</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<p><img src="../../Intro to workbench 2.0/images/ws_create_2_policies.png" class="img-fluid"></p>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>Sharing (group policy):</strong></p>
+<ul>
+<li><strong>No, don’t apply policy:</strong> the default; fine for most projects</li>
+<li><strong>Limit discoverability:</strong> only members of the selected groups can see the workspace</li>
+</ul>
+<p><strong>Region:</strong></p>
+<ul>
+<li>Where your apps and resources are kept. Pick the one <strong>closest to you</strong> (Yale: <strong>us-east4</strong>).</li>
+<li>Can be changed later; only <strong>new</strong> resources use it</li>
+</ul>
+<p>Click <strong>Next</strong></p>
+<p>⚠️ Group policies <strong>can’t be removed</strong> once applied</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Group policies also carry over to duplicates of the workspace. Access still has to be granted separately; a group policy only limits who can be given access. Region also affects cost: Verily notes prices can vary by about 25% between regions. Yale is on the East Coast, so us-east4 (Virginia) is the closest region.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-add-description" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-add-description">Step 3: Add Description</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<p><img src="../../Intro to workbench 2.0/images/ws_create_3_description.png" class="img-fluid"></p>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>Description:</strong></p>
+<ul>
+<li>What the workspace is for: its purpose, data, and tools</li>
+<li>Helps you and your collaborators</li>
+<li>You can <strong>edit it any time</strong></li>
+</ul>
+<p>Click <strong>Create workspace</strong></p>
+<p>⚠️ The description is <strong>publicly accessible</strong>. Anyone can see it, so don’t put sensitive details in it.</p>
+</div>
+</div>
+</section>
+<section id="your-new-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="your-new-workspace">Your New Workspace</h2>
+<p>Go to the <strong>Resources</strong> tab → <strong>+ Data from catalog</strong></p>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/ws_resources.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 6.4%; top: 13.4%; width: 7.4%; height: 6.2%;">
+
+</div>
+<div class="red-circle" style="left: 86.0%; top: 19.2%; width: 13.8%; height: 8%;">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Workspace tabs: Overview, Resources (data and cloud storage), Apps (JupyterLab, RStudio, SAS…), Workflows. Edit and Share are at the top right. A new workspace starts with 0 resources and 0 active policies; the policies come in when you add a data collection.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-a-data-collection" class="level2">
+<h2 class="anchored" data-anchor-id="adding-a-data-collection">Adding a Data Collection</h2>
+<p>A new workspace has <strong>no data</strong> until you add a data collection.</p>
+<p><strong>Resources</strong> tab → <strong>+ Data from catalog</strong> (or <strong>Add to workspace</strong> on the Exchange), then:</p>
+<ol type="1">
+<li><strong>Select collection:</strong> All of Us Registered Tier or Controlled Tier</li>
+<li><strong>Select resource:</strong> e.g., the CDR version</li>
+<li><strong>Review policies:</strong> answer the <strong>Researcher Use Statement</strong> questions</li>
+<li><strong>Review selection</strong> → <strong>Add to your workspace</strong></li>
+</ol>
+</section>
+<section id="step-1-select-collection" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-select-collection">Step 1: Select Collection</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dc_add_1_collection.png" class="img-fluid"></p>
+<div class="red-box" style="left: 1.2%; top: 43.6%; width: 97.6%; height: 7%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<ul>
+<li>Pick the collection you need. Here: <strong>All of Us Controlled Tier</strong></li>
+<li>You add <strong>references</strong>: pointers to the existing data
+<ul>
+<li>No copying or data migration</li>
+<li>The source data isn’t affected</li>
+</ul></li>
+<li><strong>Status</strong> column:
+<ul>
+<li><strong>Perimeter required:</strong> adding it puts a security perimeter on your workspace</li>
+<li>✅ No extra policy needed (e.g., GTEx)</li>
+</ul></li>
+</ul>
+<p>Click <strong>Next</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Only collections you have access to appear here (the same list as your Data collections page). The GCP filter is on by default.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-select-resources" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-select-resources">Step 2: Select Resources</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dc_add_2_resources.png" class="img-fluid"></p>
+<div class="red-box" style="left: 1.0%; top: 16.9%; width: 18%; height: 5.8%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<ul>
+<li>The collection version (<strong>cdrv9</strong>) holds <strong>9 resources</strong></li>
+<li>Choose <strong>some or all</strong>. Here: <strong>Select all resources</strong></li>
+<li>Two kinds of resources:
+<ul>
+<li><strong>BigQuery datasets:</strong> data tables you query with SQL</li>
+<li><strong>Cloud Storage buckets/objects:</strong> files, e.g., genomic data</li>
+</ul></li>
+</ul>
+<p>Click <strong>Next</strong></p>
+</div>
+</div>
+</section>
+<section id="whats-in-cdrv9-controlled-tier" class="level2">
+<h2 class="anchored" data-anchor-id="whats-in-cdrv9-controlled-tier">What’s in cdrv9 (Controlled Tier)?</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Type</th>
+<th>What it holds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>C2025Q4R6</code></td>
+<td>BigQuery</td>
+<td><strong>The main CDR v9</strong>: OMOP tables (EHR, surveys, measurements…); data through Jan 1, 2025</td>
+</tr>
+<tr class="even">
+<td><code>prep_C2025Q4R6</code></td>
+<td>BigQuery</td>
+<td>Supporting tables for the CDR (no description given)</td>
+</tr>
+<tr class="odd">
+<td><code>C_V9_R3_aou_biospecimen</code>, <code>C_v9_R6_aou_biospecimen</code></td>
+<td>BigQuery</td>
+<td>Biospecimen data</td>
+</tr>
+<tr class="even">
+<td><code>C_V9_R6_offcycle_healthkit</code></td>
+<td>BigQuery</td>
+<td>Apple HealthKit data</td>
+</tr>
+<tr class="odd">
+<td><code>C_V9_R6_offcycle_nlp</code></td>
+<td>BigQuery</td>
+<td><strong>New in v9:</strong> concepts extracted from <strong>clinical notes</strong> with NLP (&gt; 99,000 participants)</td>
+</tr>
+<tr class="even">
+<td><code>v9-genomics-folder</code></td>
+<td>Cloud Storage</td>
+<td>Genomic data files</td>
+</tr>
+<tr class="odd">
+<td><code>vwb_aou_allxall_v8</code></td>
+<td>Cloud Storage</td>
+<td>All by All (v8) association results</td>
+</tr>
+<tr class="even">
+<td><code>vwb-aou-datasets-controlled-v9</code></td>
+<td>Cloud Storage</td>
+<td>Controlled Tier dataset files. ⚠️ <strong>Requester pays</strong>: reading it is billed to your pod</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: All of Us “Curated Data Repository (CDR) version 9 Release Notes” (Controlled Tier C2025Q4R6, Registered Tier R2025Q4R6, participant data cutoff January 1, 2025; first release of clinical notes with NLP concept extraction). The resources’ Description fields in the Workbench are empty, so the prep_ and vwb-aou-datasets-controlled-v9 descriptions are based on their names. All are referenced resources in project wb-silky-artichoke-2408 (version-bound to cdrv9). The vwb-aou-datasets-controlled-v9 bucket has Requester Pays enabled.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-review-policies" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-review-policies">Step 3: Review Policies</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dc_add_3_policies.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 1.6%; top: 72.4%; width: 20.4%; height: 5.8%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p>The Controlled Tier has <strong>6 policies</strong>, including:</p>
+<ul>
+<li><strong>App policy:</strong> only approved apps can run; other apps in the workspace are <strong>deleted</strong></li>
+<li><strong>Region policy:</strong> apps and resources must stay in approved US regions</li>
+<li><strong>Research Use Statement:</strong> click <strong>Fill out the questions</strong>. You <strong>can’t continue</strong> until it’s complete.</li>
+</ul>
+<p>⚠️ Your answers are <strong>public</strong> in the <a href="https://www.researchallofus.org/research-projects-directory/">Research Hub Directory</a></p>
+<p>⚠️ Policies <strong>can’t be removed</strong> once set</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The answers aren’t used to make data access decisions; they’re for transparency to participants. All of Us expects a separate workspace for each project, so the answers should be specific to this project. Scroll down in the dialog to see all 6 policies.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-the-research-use-statement" class="level2">
+<h2 class="anchored" data-anchor-id="answer-the-research-use-statement">Answer the Research Use Statement</h2>
+<p>Adding an <em>All of Us</em> data collection asks you to answer the <strong>Research Use Statement</strong> questions. They’re covered step by step on their own page: <a href="../../pages/workspace/research-use-statement.html">Research Use Statement</a>.</p>
+</section>
+<section id="step-3-confirm-policies" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-confirm-policies">Step 3: Confirm Policies</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dc_add_3b_confirm.png" class="img-fluid"></p>
+<div class="red-box" style="left: 0.8%; top: 84.4%; width: 73.4%; height: 5.4%;">
+
+</div>
+<div class="red-circle" style="left: 91.4%; top: 93.0%; width: 8.6%; height: 6.6%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p>Scroll to the bottom of <strong>Review policies</strong>:</p>
+<ul>
+<li><strong>Perimeter policy:</strong> the workspace is enrolled in a secure perimeter (can take up to <strong>30 min</strong>); services outside it may fail</li>
+<li><strong>Group policy:</strong> collaborators must be in the All of Us Controlled Tier group</li>
+<li><strong>Data usage sharing:</strong> usage metrics go to All of Us</li>
+</ul>
+<p>Check <strong>I’m sure…</strong> → <strong>Next</strong></p>
+<p>⚠️ These policies are <strong>permanent</strong> for this workspace</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Bucket browsing in the perimeter: previews up to 5 MB, and only .ipynb, .r, .rmd, and .sas files can be viewed. The group is P_b_aou-prod-ct, so collaborators need Controlled Tier access too.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-review-selection" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-review-selection">Step 4: Review Selection</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dc_add_4_review.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 78.4%; top: 92.8%; width: 21%; height: 6.6%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<ul>
+<li>Check the list of resources: <strong>9</strong> from the All of Us Controlled Tier</li>
+<li>Missing something? Go <strong>Back</strong></li>
+<li>Click <strong>Add to your workspace</strong></li>
+</ul>
+<p>The resources then appear in your workspace’s <strong>Resources</strong> tab. Allow up to <strong>30 min</strong> for the perimeter enrollment to finish.</p>
+</div>
+</div>
+</section>
+<section id="data-collection-rules" class="level2">
+<h2 class="anchored" data-anchor-id="data-collection-rules">Data Collection Rules</h2>
+<ul>
+<li>Add it <strong>to every workspace</strong> that needs All of Us data</li>
+<li>Policies are <strong>permanently</strong> applied to the workspace</li>
+<li><strong>One tier per workspace:</strong> Registered <em>or</em> Controlled, not both</li>
+<li>The workspace also takes on the collection’s:
+<ul>
+<li><strong>Perimeter policy</strong></li>
+<li><strong>Network policy:</strong> no internet access for batch VMs and Dataproc workers</li>
+</ul></li>
+<li>Each user still needs the matching tier access on their own account</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../pages/workspace/workspaces.html" class="pagination-link" aria-label="Workspaces">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Workspaces</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../pages/workspace/research-use-statement.html" class="pagination-link" aria-label="Research Use Statement">
+        <span class="nav-page-text">Research Use Statement</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

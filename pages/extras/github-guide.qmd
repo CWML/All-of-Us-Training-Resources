@@ -1,0 +1,376 @@
+---
+title: "GitHub Guide"
+description: "Push notebooks and scripts from an All of Us workspace to GitHub, step by step"
+---
+
+A step-by-step guide for pushing notebooks and scripts from an All of Us workspace on Verily Workbench to GitHub. It covers two cases:
+
+- **Path A:** Adding your work to an **existing** GitHub repository
+- **Path B:** Creating a **new** GitHub repository for your work
+
+It finishes with how to keep things in sync and a troubleshooting section based on problems we actually ran into.
+
+
+## ⚠️ Read this first: data protection
+
+Everything you push to a public GitHub repo can be seen by anyone, and you can't fully take it back once it's pushed.
+
+The All of Us **Data and Statistics Dissemination Policy** prohibits sharing:
+
+- Participant-level data of any kind
+- Aggregate counts or statistics based on **1–20 participants** (this includes notebook outputs, tables, and plots)
+
+**Share code, not results.** Before every push:
+
+1. **Clear notebook outputs** (the command is in the steps below).
+2. **Leave out data files** (`.csv`, `.tsv`, `.parquet`, `.vcf`, etc.).
+3. **Check for credentials** (tokens, keys, passwords).
+4. **Run `git status` and look at every file** before committing.
+
+Check the current policy on the All of Us Research Hub if you're unsure about anything.
+
+
+## Before you start
+
+You need:
+
+- An All of Us workspace on Verily Workbench
+- A GitHub account
+- For Path A: **write access** to the existing repo (ask the repo or organization owner to add you)
+
+You do **not** need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (`wb`) and Git are already installed and you're already logged in.
+
+
+## Step 1: Start an app and open a terminal
+
+1. In your workspace, go to the **Apps** tab and create an app.
+   - **AoU Jupyter** is the simplest choice for Git work.
+   - Avoid **JupyterLab Spark cluster for AoU** unless you need Spark. It costs more and starts slower.
+   - **R Analysis Environment for AoU** also works. Use RStudio's **Terminal** tab.
+2. Once the app is running, open it.
+3. Open a terminal: **File → New → Terminal**, or the **Terminal** tile in the Launcher (+ tab).
+4. Confirm you're logged in:
+
+```sh
+wb auth status
+```
+
+> **Tip:** If you add a Git repo to the workspace (**Apps** tab → **Git repositories** → **+ Add repository**) *before* creating the app, the app clones it automatically. Apps created earlier won't get it. Clone it manually as shown below.
+
+
+## Step 2: Connect Workbench to GitHub (one-time setup)
+
+### 2a. Test the connection
+
+```sh
+cd ~
+ssh -T git@github.com
+```
+
+The first time, you may be asked `Are you sure you want to continue connecting (yes/no)?`. Type `yes`.
+
+- ✅ Success looks like: `Hi YOUR-USERNAME! You've successfully authenticated, but GitHub does not provide shell access.` (The "no shell access" part is normal.) Skip to 2c.
+- ❌ `Permission denied (publickey)` means GitHub doesn't know your key yet. Continue to 2b.
+
+### 2b. Add your Workbench SSH key to GitHub
+
+Get your public key:
+
+```sh
+wb security ssh-key get
+```
+
+If that errors because no key exists, run `wb security ssh-key generate` first.
+
+Then, on GitHub:
+
+1. Click your profile picture → **Settings** → **SSH and GPG keys** → **New SSH key**
+2. Title: `Verily Workbench`. Key type: **Authentication Key**
+3. Paste the whole key line (starting with `ssh-rsa` or similar) → **Add SSH key**
+4. If a **Configure SSO** button appears next to the key, click it and authorize your organization.
+
+Run `ssh -T git@github.com` again to confirm.
+
+### 2c. Set your Git identity
+
+⚠️ **Replace the example values with your own.** Don't paste them as-is.
+
+```sh
+git config --global user.name "your-github-username"
+git config --global user.email "your-email@example.com"
+git config --global --list    # confirm what's set
+```
+
+For a public repo, consider using your GitHub **noreply** email so your real address isn't published. Find it at GitHub **Settings → Emails**. It looks like `12345678+username@users.noreply.github.com`.
+
+
+## Step 3: Find your notebooks
+
+Your workspace notebooks are usually in a mounted bucket folder like:
+
+```
+/home/jupyter/workspace/<your-workspace-folder>/notebooks
+```
+
+List them:
+
+```sh
+ls -la /home/jupyter/workspace/<your-workspace-folder>/notebooks
+```
+
+**Save any open notebooks in JupyterLab first** (Ctrl/Cmd+S) so you copy the latest version.
+
+> **Important:** Do **not** run `git init` or `git clone` inside `~/workspace/...`. It's a mounted cloud bucket, and Git doesn't work well there. Always clone into your home directory (`~`) and copy files over.
+
+
+## Path A: Add your work to an existing repo
+
+### A1. Clone the repo and create a branch
+
+Use the repo's **SSH** URL (green **Code** button on GitHub → **SSH**):
+
+```sh
+cd ~
+git clone git@github.com:OWNER/REPO-NAME.git
+cd REPO-NAME
+git checkout -b add-my-notebooks
+```
+
+The cloned folder is named after the repo (`REPO-NAME`).
+
+### A2. Copy in your notebooks
+
+Put them in a subfolder so they don't clash with existing files:
+
+```sh
+mkdir -p notebooks
+cp /home/jupyter/workspace/<your-workspace-folder>/notebooks/*.ipynb notebooks/
+ls notebooks/
+```
+
+- To use an existing folder or a name with spaces, **use quotes**: `mkdir -p "Session 3"` and `cp ... "Session 3/"`
+- To copy a single file whose name has spaces, quote the full path:
+  `cp "/home/jupyter/workspace/<folder>/notebooks/01. my notebook.ipynb" notebooks/`
+
+### A3. Clean before committing
+
+```sh
+# Remove all outputs (keeps code and markdown)
+jupyter nbconvert --clear-output --inplace notebooks/*.ipynb
+
+# Check for credentials
+grep -iE "token|key|secret|password" notebooks/*.ipynb
+```
+
+If the `grep` prints anything that looks like a credential, edit or remove that file before continuing. Pay special attention to notebooks that load environment variables or configuration.
+
+### A4. Commit and push
+
+```sh
+git status                     # review every file listed
+git add notebooks
+git commit -m "Add analysis notebooks from All of Us workspace"
+git push -u origin add-my-notebooks
+```
+
+### A5. Open and merge a pull request
+
+The push doesn't change `main` by itself. You need to merge your branch through a pull request:
+
+1. Go to the repo on GitHub.
+2. Click the yellow **Compare & pull request** banner.
+   (If it's not there: **Pull requests** tab → **New pull request**, with **base: main** and **compare: add-my-notebooks**.)
+3. Check the **Files changed** tab. It should contain only the files you meant to add.
+4. Click **Create pull request**, then **Merge pull request** → **Confirm merge**.
+5. Optionally click **Delete branch**.
+
+### A6. Update your local copy
+
+```sh
+git checkout main
+git pull
+```
+
+
+## Path B: Create a new repo for your work
+
+### B1. Create an empty repo on GitHub
+
+1. On GitHub, click **+** (top right) → **New repository**.
+2. Choose a name and set it to **Public** or **Private**.
+3. **Don't** add a README, .gitignore, or license. Leave it empty to avoid conflicts on the first push.
+4. Click **Create repository** and copy the **SSH** URL.
+
+### B2. Set up the repo in your home directory
+
+```sh
+mkdir -p ~/my-new-repo/notebooks
+cd ~/my-new-repo
+git init
+git branch -M main
+git remote add origin git@github.com:YOUR-USERNAME/my-new-repo.git
+```
+
+### B3. Copy, clean, and add a .gitignore
+
+```sh
+cp /home/jupyter/workspace/<your-workspace-folder>/notebooks/*.ipynb notebooks/
+jupyter nbconvert --clear-output --inplace notebooks/*.ipynb
+grep -iE "token|key|secret|password" notebooks/*.ipynb
+
+# Keep data files and clutter out of Git
+cat > .gitignore << 'EOF'
+*.csv
+*.tsv
+*.parquet
+*.vcf
+*.vcf.gz
+*.bam
+*.rds
+*.RData
+.ipynb_checkpoints/
+.DS_Store
+EOF
+```
+
+Optionally create a `README.md` describing the project, the order to run the notebooks in, and what data access is required.
+
+### B4. First commit and push
+
+```sh
+git status
+git add .
+git commit -m "Initial commit: analysis notebooks"
+git push -u origin main
+```
+
+No pull request is needed here. The files go straight to `main`.
+
+
+## Finding your repo in the JupyterLab file browser
+
+The file browser often opens inside your workspace's `notebooks` folder, so the repo you cloned to `~` won't be visible at first. Click the **folder icon at the start of the path bar** to jump to the top level, and your repo folder will be there.
+
+```
+/home/jupyter/                      ← top level
+├── REPO-NAME/                      ← your Git repo (synced with GitHub)
+│   └── notebooks/
+└── workspace/
+    └── <your-workspace-folder>/
+        └── notebooks/              ← your original copies (NOT in Git)
+```
+
+
+## Ongoing workflow: keeping in sync
+
+After setup, **work from the repo folder** (`~/REPO-NAME/notebooks/`), not the original workspace folder.
+
+**Each session:**
+
+```sh
+cd ~/REPO-NAME
+git checkout main
+git pull                       # get the latest from GitHub
+# ...edit and run notebooks...
+jupyter nbconvert --clear-output --inplace notebooks/*.ipynb
+git status
+git add notebooks
+git commit -m "Describe your change"
+git push
+```
+
+You can push straight to `main` if it's your own repo, or use a branch and pull request (as in Path A) if others should review first.
+
+**Things to know:**
+
+- **There are two copies of your notebooks.** `git pull` updates only the repo copy, not the originals in `~/workspace/...`. Pick the repo copy as your working copy, or the two will drift apart.
+- **Pulled notebooks have no outputs** because you cleared them. Rerun the cells to regenerate results.
+- **The clone lives on the app's disk.** If you delete the app, the clone goes with it. Always push before deleting an app, then clone again in the new one.
+- **New apps need setup.** In a new app, you may need to repeat `git config` (Step 2c) and clone the repo again.
+
+
+## Sharing with colleagues
+
+**To use your code** in their own All of Us workspace, colleagues run:
+
+```sh
+cd ~
+git clone https://github.com/OWNER/REPO-NAME.git
+```
+
+No SSH key is needed to clone a public repo over HTTPS. They need the same data access tier your notebooks use (e.g., Controlled Tier).
+
+**To contribute back**, colleagues need:
+
+1. Write access to the repo (granted by the repo or organization owner)
+2. Their own Workbench SSH key added to their GitHub account (Step 2b)
+3. To clone with the `git@github.com:...` URL
+
+**Make notebooks portable:** avoid hardcoded workspace paths. Build paths from your home folder, and keep the bucket name and dataset path in **one place** at the top of the notebook, so collaborators only change those lines:
+
+```r
+# R
+bucket <- file.path(Sys.getenv("HOME"), "workspace", "workspace-bucket")  # your bucket's name
+CURRENT_DATASET <- "<project-id>.<dataset-id>"   # copy from your Data Explorer query
+```
+
+```python
+# Python
+import os
+bucket = os.path.expanduser("~/workspace/workspace-bucket")  # your bucket's name
+CURRENT_DATASET = "<project-id>.<dataset-id>"   # copy from your Data Explorer query
+```
+
+`WORKSPACE_BUCKET` and `WORKSPACE_CDR` from the classic Workbench are **not set** in new Workbench 2.0 workspaces (see [Workspace Variables](../workspace/storage-costs.qmd#workspace-variables)).
+
+To share **results**, share the workspace itself through Workbench's sharing settings so data and outputs stay inside All of Us.
+
+
+## Troubleshooting
+
+| Problem / message | What it means | Fix |
+|---|---|---|
+| "I don't see a terminal app" when creating an app | There isn't a separate terminal app | Terminals are inside each app. In JupyterLab: **File → New → Terminal**. In RStudio: **Terminal** tab. |
+| `fatal: not a git repository ... Stopping at filesystem boundary` | You're in a folder that isn't a Git repo, often the mounted `~/workspace` bucket | Normal before cloning. `cd ~` and clone there. Don't `git init` inside `~/workspace`. |
+| `Permission denied (publickey)` | GitHub doesn't recognize a key from this app | Add your key from `wb security ssh-key get` to GitHub (Step 2b). If it still fails, run `ls -la ~/.ssh`. If the key is missing, restart the app, or create one with `ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ""` and add `~/.ssh/id_ed25519.pub` to GitHub. |
+| `You've successfully authenticated, but GitHub does not provide shell access` | This is success | Nothing to fix. Carry on. |
+| `ERROR: Repository not found` or `Permission ... denied` on push | Your account doesn't have write access, or the URL is wrong | Check the URL with `git remote -v`. Ask the owner for write access, or fork the repo and push to your fork. |
+| An error mentioning **SAML SSO** | Your organization requires SSO authorization for keys | GitHub **Settings → SSH and GPG keys** → **Configure SSO** on the Workbench key → authorize the org. |
+| Commits show the wrong name or email (e.g., "Your Name") | Placeholder values were used in `git config` | Rerun `git config --global user.name/user.email` with your real values. Check with `git config --global --list`. |
+| `destination path 'REPO-NAME' already exists` | You already cloned it (or the app auto-cloned it) | Skip `git clone` and `cd` into the folder. Find it with `find ~ -maxdepth 3 -type d -name "REPO-NAME"`. |
+| `Config option 'extra_template_paths' not recognized` during `nbconvert` | Harmless warning | Ignore it. Outputs are still cleared. |
+| Pushed, but files don't show on GitHub's main page | They're on your branch, not on `main` | Create and merge a pull request (Step A5), or switch to your branch in GitHub's branch dropdown to see them. |
+| "Where's my pull request?" | Pull requests aren't created automatically | Click **Compare & pull request** on the repo page after pushing. |
+| Can't find the cloned repo in the JupyterLab file browser | The browser is showing a subfolder of `~/workspace` | Click the folder icon at the start of the path bar to go to the top level. |
+| `No such file or directory` with a filename containing spaces | The shell split the name at the spaces | Wrap the path in quotes: `"01. my notebook.ipynb"`. |
+| `git pull` refuses because of local changes | You have uncommitted edits to files that also changed on GitHub | `git status`, then commit your changes or discard them with `git restore <file>`, then pull again. |
+| Merge conflict in a `.ipynb` file | Two people edited the same notebook | Notebooks are JSON and hard to merge. Keep one person per notebook where possible. To keep one side entirely: `git checkout --ours <file>` or `git checkout --theirs <file>`, then `git add` and commit. |
+| Repo added to the workspace but not in my app | The app was created before the repo was added | In the app terminal: `wb git clone --resource=<resource-name>`, or `git clone <url>`. |
+| Accidentally pushed outputs or data | Sensitive content is now on GitHub | Act quickly: make the repo private if possible, remove the content, and contact the All of Us support team about the policy steps. Deleting it in a new commit does **not** remove it from Git history. |
+
+
+## Quick reference
+
+```sh
+# One-time setup (per app)
+ssh -T git@github.com
+wb security ssh-key get
+git config --global user.name "your-username"
+git config --global user.email "your-email"
+
+# Clone
+cd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO
+
+# Daily cycle
+git pull
+jupyter nbconvert --clear-output --inplace notebooks/*.ipynb
+git status
+git add notebooks
+git commit -m "message"
+git push
+```
+
+**References:**
+- Verily Workbench: [Git integrations with cloud apps](https://support.workbench.verily.com/docs/guides/cloud_apps/git_integrations/)
+- Verily Workbench: [Install and run the Workbench CLI](https://support.workbench.verily.com/docs/guides/cli/cli_install_and_run/)
+- GitHub: [Adding a new SSH key to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)

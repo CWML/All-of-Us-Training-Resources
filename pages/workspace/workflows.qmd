@@ -1,0 +1,128 @@
+---
+title: "Workflows"
+description: "The Workflows tab, Cromwell and Nextflow workflows, batch jobs, and dsub"
+---
+
+## Workflows Tab
+
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/wf_tab.png>)
+
+::: {.red-circle style="left: 16.4%; top: 3.0%; width: 8.0%; height: 36.0%;"}
+:::
+
+::: {.green-box style="left: 0.2%; top: 36.0%; width: 11.2%; height: 23.0%;"}
+:::
+
+::: {.green-circle style="left: 88.2%; top: 63.0%; width: 11.6%; height: 33.0%;"}
+:::
+:::
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**Two sub-tabs:**
+
+- **Setup:** the workflows added to this workspace. Start new jobs here.
+- **Job status:** follow your jobs and their tasks, and find logs and outputs
+:::
+::: {.g-col-12 .g-col-md-6}
+**To start:** click **+ Add workflow**
+
+A new workspace starts with **no workflows**. Add one before you can run a job.
+:::
+::::
+
+## What Is a Workflow?
+
+A **pipeline** that runs analysis steps for you, in order or in parallel, **without an app running**. Each step runs in its own container on a temporary cloud machine.
+
+**Use it when you need to:** run the same analysis on many files or samples (e.g., genomics), or make it easy to reproduce and share
+
+| Tool | Language | Where you run it |
+|---|---|---|
+| **Cromwell** | WDL | **Workflows** tab (or CLI) |
+| **Nextflow** | Nextflow (`.nf`) | **Workflows** tab (or CLI) |
+| **dsub** | Shell commands, one step | An app's **terminal** |
+
+👉 Most class projects **don't need workflows**: an app is enough. Ready-made workflows: [Dockstore](https://dockstore.org)
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Workflows overview" and "Workflow engines". All three tools use the Google Batch API to run tasks, and read and write files in buckets (gs:// paths). Tasks run with the workspace's service account, which can access every bucket in the workspace. Costs (task machines and storage) are billed to the workspace's pod and are not shown in the app cost estimator.
+:::
+
+## Adding a Workflow
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/wf_add.png>)
+
+::: {.green-box style="left: 1.2%; top: 16.4%; width: 98.4%; height: 9.8%;"}
+:::
+
+::: {.red-box style="left: 1.2%; top: 27.0%; width: 98.4%; height: 6.6%;"}
+:::
+
+::: {.red-circle style="left: 91.8%; top: 93.0%; width: 8.2%; height: 6.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+**Step 1: Provide source.** Where's the workflow file?
+
+- **Workspace bucket:** pick the bucket. Workbench lists the workflow files it finds there (search by name).
+- **Git repository:** a repo with the workflow (see the [GitHub guide](../extras/github-guide.qmd))
+
+Select the workflow → **Next**
+
+**Step 2: Review details** → add it
+
+Upload the workflow file (`.wdl` or `.nf`) to your bucket **first**. Until there's one to select, **Next** stays grey.
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.
+:::
+
+## Running a Workflow
+
+**Setup** tab → select the workflow → **+ New job**
+
+1. Fill in the **inputs**. Workbench builds the form from the workflow file.
+2. Choose an **output bucket** for the results
+3. Start the job, then follow it on **Job status**: each task's progress, logs, and outputs
+
+**Batch jobs:** run one WDL workflow **many times in parallel**, e.g., once per sample
+
+- Choose *Run a batch job with inputs defined by an input table*
+- Upload a **CSV** (one row per run), then match its columns to the workflow's inputs
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
+:::
+
+## dsub: Jobs from an App
+
+For **one-step** jobs, e.g., run a command on many files. It comes with apps created after **June 2025**.
+
+```{.bash code-line-numbers="false"}
+dsub_activate                        # turn on dsub in the terminal
+
+dsub \
+  --provider google-batch \
+  --project "${GOOGLE_CLOUD_PROJECT}" \
+  --service-account "${PET_SA_EMAIL}" \
+  --logging gs://<your-bucket>/logs/ \
+  --input  BAM=gs://<your-bucket>/sample.bam \
+  --output BAI=gs://<your-bucket>/sample.bam.bai \
+  --image  <container image with samtools> \
+  --command 'samtools index ${BAM} ${BAI}' \
+  --wait
+```
+
+👉 More examples: tutorial notebook `05_How_to_use_workflow_tools` (dsub, Cromwell, Nextflow)
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Run dsub jobs". Verily's example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.
+:::

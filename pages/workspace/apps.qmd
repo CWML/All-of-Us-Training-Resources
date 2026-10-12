@@ -1,0 +1,230 @@
+---
+title: "Apps"
+description: "Launch an analysis app (AoU Jupyter), read the cost estimate, and manage your app"
+---
+
+Apps are where you run your analysis: JupyterLab, R, SAS, and more. This page walks through creating an **AoU Jupyter** app.
+
+## The Apps tab
+
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/app_0_tab.png>)
+
+::: {.red-circle style="left: 18.2%; top: 60.0%; width: 6.6%; height: 16.0%;"}
+:::
+
+::: {.green-circle style="left: 81.0%; top: 81.0%; width: 17.4%; height: 18.6%;"}
+:::
+:::
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**What's here:**
+
+- **Your apps:** the analysis environments in this workspace, with their status (*Running*, *Stopped*…)
+- **Git repositories:** code linked to the workspace (see [Optional Extras](../extras/extras.qmd))
+:::
+::: {.g-col-12 .g-col-md-6}
+**To start an app:** click **+ New app instance**, then:
+
+1. Select app
+2. Choose config
+3. Compute options
+4. Review details → **Create app**
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+You need Writer or Owner access to create apps. Our example uses AoU Jupyter.
+:::
+
+## What is an app?
+
+- A **virtual computer in the cloud** with its own **disk** and software already installed (JupyterLab, R, Python, SAS…)
+- Your buckets are **mounted** as folders, so your files are right there
+- You pay for **computing while it runs** and for the **disk until you delete it**
+
+| | Running | Stopped | Deleted |
+|---|:-:|:-:|:-:|
+| **Compute** charged | ✅ | ❌ | ❌ |
+| **Disk** charged | ✅ | ✅ | ❌ |
+| Files on the **app's disk** | kept | kept | **lost** |
+| Files in your **bucket** | kept | kept | kept |
+
+Apps **auto-stop** after **4 hours** idle by default. You can set 1 hour to 14 days.
+
+## Step 1: Select app
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/app_1_select.png>)
+
+::: {.green-box style="left: 1.0%; top: 17.2%; width: 98.6%; height: 61.6%;"}
+:::
+
+::: {.red-box style="left: 1.8%; top: 38.4%; width: 97.0%; height: 8.8%;"}
+:::
+
+::: {.red-circle style="left: 91.4%; top: 93.0%; width: 8.4%; height: 6.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+| App | Use it for |
+|---|---|
+| **JupyterLab Spark cluster** | Large-scale and genomic analysis (Dataproc cluster) |
+| **R Analysis Environment** | R / RStudio |
+| **AoU Jupyter** | Standard JupyterLab: Python or R notebooks |
+| **AoU SAS** | SAS |
+| **JupyterLab (NVIDIA NeMo)** | LLMs, multimodal, and speech AI (GPU) |
+| **JupyterLab (NVIDIA Parabricks + CUDA-X)** | GPU-accelerated genomics |
+
+**Our example: AoU Jupyter.** Select it and click **Next**.
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Hover the ⓘ next to an app name for details. "Some apps are unavailable due to restrictions or policy settings": the All of Us app policy only allows approved apps in this workspace.
+:::
+
+## Step 2: Choose config
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/app_2_config.png>)
+
+::: {.red-box style="left: 1.4%; top: 20.0%; width: 70.0%; height: 10.6%;"}
+:::
+
+::: {.green-box style="left: 72.2%; top: 13.0%; width: 27.4%; height: 66.4%;"}
+:::
+
+::: {.red-circle style="left: 92.0%; top: 93.0%; width: 7.8%; height: 6.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+**Default configuration** (AoU Jupyter):
+
+- Machine **n1-highmem-4**: 4 CPUs, 26 GB memory
+- **500 GB** data disk
+
+**Cost estimate** panel:
+
+- **Cost while running:** \$0.27/hour, or \$194.32/month if left on 24/7
+- **Disk cost (continuous):** \$21.60/month, **even when stopped**
+- **How do we calculate?** and **GCP's pricing calculator** links
+- **Cost note:** an optional reminder saved with the config
+
+Click **Next**
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Saved configurations you or a collaborator created also appear here as options. Prices are estimates and vary by region.
+:::
+
+### Reading the cost estimate
+
+**Example:** default AoU Jupyter, used **20 hours** in a month
+
+| | |
+|---|--:|
+| Computing: 20 hours × \$0.27 | \$5.40 |
+| Disk: the whole month, running or stopped | \$21.60 |
+| **Total** | **≈ \$27** |
+
+::: {.callout-note title="For light use, the disk costs more than the computing"}
+- **Delete** an app you're done with (save to your bucket first)
+- A **smaller data disk** costs less (step 3)
+
+**Not included:** BigQuery query costs, bucket storage, and data transfer.
+:::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+"Per month" assumes the app runs 24/7 (about 730 hours). For comparison, the default JupyterLab Spark cluster is about \$0.64/hour (\$465/month if left on) plus \$37.60/month for disks.
+:::
+
+## Step 3: Compute options
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/app_3_compute.png>)
+
+::: {.green-box style="left: 1.2%; top: 36.6%; width: 23.4%; height: 4.2%;"}
+:::
+
+::: {.green-box style="left: 1.2%; top: 63.4%; width: 18.6%; height: 5.0%;"}
+:::
+
+::: {.green-box style="left: 1.2%; top: 80.4%; width: 70.0%; height: 6.4%;"}
+:::
+
+::: {.red-circle style="left: 91.8%; top: 93.0%; width: 7.8%; height: 6.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+- **Location:** keep **Region** (recommended). It picks a zone with free capacity for you. The region comes from the workspace.
+- **General** or **GPUs:** General is fine for most analysis. GPUs cost much more and **can't be added later**.
+- **Machine type:** CPUs + memory. More is faster but costs more; the estimate updates as you change it.
+- **Scroll down** for **data disk size** (50 GB–64 TB; default 500 GB) and **autostop** (default 4 hours idle)
+
+Click **Next**
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Leave "Use a specific reservation" unchecked; it's for reserved cloud capacity. This training workspace was created in us-central1, so that's the region shown. You can change the machine type and disk later, but only while the app is stopped.
+:::
+
+## Step 4: Review details
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/app_4_review.png>)
+
+::: {.green-box style="left: 1.2%; top: 39.4%; width: 97.6%; height: 25.4%;"}
+:::
+
+::: {.red-circle style="left: 87.0%; top: 93.0%; width: 12.8%; height: 6.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+- **Config:** shows **Custom** if you changed anything in step 3
+- **Workbench ID:** the app's name in Workbench and the CLI (letters, numbers, `-`, `_`)
+- **Instance name:** the cloud machine's name (lowercase, numbers, `-`). **Can't be changed later.**
+- **Description** (optional)
+
+Click **Create app**. The status goes *Creating* → *Provisioning* → *Starting* → **Running**. Then click the app's name to open it.
+:::
+::::
+
+## Managing your app
+
+On the **Apps** tab:
+
+| Action | What happens |
+|---|---|
+| **Open** | Click the app's name (when it's **Running**) |
+| **Stop** | Stops it right away, with no confirmation. Computing charges stop; disk charges continue. |
+| **Start** | Restarts a stopped app in about a minute |
+| **Edit** | Name, description, and autostop: any time. Machine type and disk: only when **stopped**. |
+| **Delete** | Removes the app **and its disk**. ⚠️ Anything not saved in a bucket is **lost**. |
+
+: {tbl-colwidths="[15,85]"}
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+You can't change an app's image (app type) or instance name; create a new app instead. Apps that are Starting or Stopping can't be changed until they finish. If someone loses Writer access to the workspace, their apps are stopped ("abandoned"); an Owner can restore the access or delete the app.
+:::
+
+## Sources
+
+- Verily Workbench: [Cloud apps overview](https://support.workbench.verily.com/docs/guides/cloud_apps/apps_intro/)
+- Verily Workbench: [Basic cloud app operations](https://support.workbench.verily.com/docs/guides/cloud_apps/app_operations/)
+- Verily Workbench: Cloud app cost estimates

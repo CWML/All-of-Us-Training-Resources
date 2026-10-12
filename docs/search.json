@@ -1,0 +1,1572 @@
+[
+  {
+    "objectID": "pages/workspace/workspaces.html#what-workspaces-are-for",
+    "href": "pages/workspace/workspaces.html#what-workspaces-are-for",
+    "title": "Workspaces",
+    "section": "What Workspaces Are For",
+    "text": "What Workspaces Are For\n\nA workspace is where you do your research: data collections, cohorts, datasets, notebooks, apps, and files for one project\nHave more than one (e.g., one per project or per tier)\nShareable with collaborators\nBilled individually through the workspace’s pod, so set up billing first",
+    "crumbs": [
+      "Your Workspace",
+      "Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workspaces.html#using-the-workspaces-page",
+    "href": "pages/workspace/workspaces.html#using-the-workspaces-page",
+    "title": "Workspaces",
+    "section": "Using the Workspaces Page",
+    "text": "Using the Workspaces Page\n\nLeft sidebar → Workspaces lists every workspace you can access\n\nFilter by favorite, cloud, creator, or access level; ⭐ favorites to pin them\nRecent workspaces panel on the right\n\n\nYour access level decides what you can do:\n\n\n\n\n\n\n\n\n\n\nRole\nChange things (resources, apps, details)\nShare\nDelete\nDuplicate\n\n\n\n\nOwner\n✅\n✅\n✅\n✅\n\n\nWriter\n✅\n❌\n❌\n✅\n\n\nReader\n❌\n❌\n❌\n✅\n\n\n\nFeatured tutorial workspaces are Reader, so duplicate them to run the code (the “(Copy)” workspace).\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFeatured tutorial workspaces shown: “Getting Started with Controlled Tier Data (v9)” and “All by All (v8)”. The greyed-out row shows a workspace being deleted; deleting unused workspaces stops their charges. Source for roles: Verily, “Access control and sharing”.",
+    "crumbs": [
+      "Your Workspace",
+      "Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workspaces.html#sharing-a-workspace",
+    "href": "pages/workspace/workspaces.html#sharing-a-workspace",
+    "title": "Workspaces",
+    "section": "Sharing a Workspace",
+    "text": "Sharing a Workspace\nOnly Owners can share. In the workspace, click Share (top right), then:\n\nEnter your collaborator’s email: the one linked to their Workbench account\nChoose their role: Owner, Writer, or Reader\n\n\nThey must already have a Workbench account. You can’t invite someone who hasn’t registered yet.\nThey get access to the resources you created in the workspace (buckets, datasets), at their role’s level\nReferences to outside data are not shared automatically. The data’s owner has to grant access.\nWith a group policy, only group members can open it. You won’t be warned if you share with someone outside the group.\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFor All of Us workspaces, collaborators also need their own All of Us data access (Registered or Controlled Tier) to see the data collection. Verily recommends sharing with Workbench groups rather than individuals for larger teams; that’s beyond what students need here.",
+    "crumbs": [
+      "Your Workspace",
+      "Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html",
+    "href": "pages/workspace/storage-costs.html",
+    "title": "Storage & Costs",
+    "section": "",
+    "text": "One query per domain/concept set\nWrite your own code to clean and manipulate the data\nSave cleaned data to workspace storage so you don’t re-run the queries every session",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html#working-in-your-app",
+    "href": "pages/workspace/storage-costs.html#working-in-your-app",
+    "title": "Storage & Costs",
+    "section": "",
+    "text": "One query per domain/concept set\nWrite your own code to clean and manipulate the data\nSave cleaned data to workspace storage so you don’t re-run the queries every session",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html#snippets-are-gone-use-your-bucket-folder",
+    "href": "pages/workspace/storage-costs.html#snippets-are-gone-use-your-bucket-folder",
+    "title": "Storage & Costs",
+    "section": "Snippets Are Gone: Use Your Bucket Folder",
+    "text": "Snippets Are Gone: Use Your Bucket Folder\nClassic Workbench: copy files to and from the workspace bucket with code snippets (e.g., copy_file_from_workspace_bucket.R) that ran gsutil\nWorkbench 2.0: no Snippets menu. Your buckets are automatically mounted as folders in every app:\n/home/jupyter/workspace/&lt;bucket name&gt;/     standard apps (JupyterLab, R, SAS)\n/home/dataproc/workspace/&lt;bucket name&gt;/    Spark (Dataproc) apps\nSo you save and read files with regular R or Python functions, as if the bucket were a local folder. (No bucket yet? See New Cloud Storage Bucket.)\n\nYour own buckets: read and write\nReferences, including data collection buckets (e.g., v9-genomics-folder): read-only. Don’t save outputs there.\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nIf you put a resource inside a folder on the Resources tab, the folder becomes part of the path (use quotes if the folder name has spaces). Mounts don’t update on their own: a bucket you add (or rename) after the app starts won’t show up until you restart the app or run wb resource mount (or wb resource mount –id= for one). A folder ending in _NO_ACCESS, _NOT_FOUND, or _MOUNT_FAILED means that mount failed. Duplicated workspaces keep their mounts. Source: Verily, “Access workspace files and folders”.",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html#saving-and-reading-files",
+    "href": "pages/workspace/storage-costs.html#saving-and-reading-files",
+    "title": "Storage & Costs",
+    "section": "Saving and Reading Files",
+    "text": "Saving and Reading Files\nR\nbucket &lt;- file.path(Sys.getenv(\"HOME\"), \"workspace\", \"workspace-bucket\")\n\nreadr::write_csv(clean_df, file.path(bucket, \"clean_data.csv\"))   # save\nclean_df &lt;- readr::read_csv(file.path(bucket, \"clean_data.csv\"))  # read\nPython\nimport os, pandas as pd\nbucket = os.path.expanduser(\"~/workspace/workspace-bucket\")\n\nclean_df.to_csv(f\"{bucket}/clean_data.csv\", index=False)   # save\nclean_df = pd.read_csv(f\"{bucket}/clean_data.csv\")         # read\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nReplace workspace-bucket with your bucket’s name as shown in the Resources tab. HOME / ~ points to /home/jupyter or /home/dataproc depending on the app, so this code works in both. The folder tree under ~/workspace matches the folders in the Resources tab. Apps use a standard disk, so files saved anywhere else on the app (e.g., the home directory) are lost if the app crashes or is deleted.",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html#workspace-variables",
+    "href": "pages/workspace/storage-costs.html#workspace-variables",
+    "title": "Storage & Costs",
+    "section": "Workspace Variables",
+    "text": "Workspace Variables\nSome settings are already defined in every app. Others you define yourself.\n\n\n\n\n\n\n\n\nVariable\nSet for you?\nWhat it is\n\n\n\n\nGOOGLE_CLOUD_PROJECT (also GOOGLE_PROJECT)\n✅\nYour workspace’s Google Cloud project; BigQuery bills queries to it\n\n\nPET_SA_EMAIL\n✅\nYour workspace service account (used by dsub)\n\n\nWORKSPACE_BUCKET\n❌\nClassic Workbench only. Use your bucket’s folder instead.\n\n\nWORKSPACE_CDR\n❌\nClassic Workbench only. Define the dataset path yourself.\n\n\nEXPORT_BUCKET\n❌\nUsed by Data Explorer’s exported notebooks. Set it yourself.\n\n\n\nproject &lt;- Sys.getenv(\"GOOGLE_CLOUD_PROJECT\")                              # set for you\nbucket  &lt;- file.path(Sys.getenv(\"HOME\"), \"workspace\", \"workspace-bucket\")  # your bucket\nCURRENT_DATASET &lt;- \"&lt;project-id&gt;.&lt;dataset-id&gt;\"   # copy from a Data Explorer query (FROM line)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nChecked in a new Workbench 2.0 workspace with env | grep -E ‘WORKSPACE|GOOGLE|PET_SA’. The tutorial workspaces define WORKSPACE_BUCKET and WORKSPACE_CDR in their setup scripts, so code copied from classic Workbench notebooks will find them empty (““) elsewhere. The CDR dataset path is in the queries Data Explorer generates (the FROM clause), and in the data collection’s BigQuery resources on the Resources tab.",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html#storage",
+    "href": "pages/workspace/storage-costs.html#storage",
+    "title": "Storage & Costs",
+    "section": "Storage",
+    "text": "Storage\n\nWorkspace bucket: shared, permanent, and the cheapest option for long-term storage. Recommended. (You create it; see New Cloud Storage Bucket.)\nApp disk: attached to an app. Charged until the app is deleted, even when stopped. Files on it survive Stop but are lost on Delete.\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSee What is an app? and Reading the cost estimate on the Apps page.",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/storage-costs.html#saving-money",
+    "href": "pages/workspace/storage-costs.html#saving-money",
+    "title": "Storage & Costs",
+    "section": "Saving Money",
+    "text": "Saving Money\n\nSave your data to workspace storage\nStop or delete apps you aren’t using; keep autostop on\nYour notebooks and data in workspace storage stay intact\nStart a new app any time to pick up where you left off\nDelete workspaces you no longer need\n\n⚠️ Deleting a workspace permanently deletes everything created in it, including your bucket and its files. It can’t be undone. Copy anything you need first.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nOnly Owners can delete a workspace. References (e.g., the All of Us data collection) are only pointers, so the underlying data isn’t affected.",
+    "crumbs": [
+      "Your Workspace",
+      "Storage & Costs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html",
+    "href": "pages/workspace/resources.html",
+    "title": "Overview and Resources Tabs",
+    "section": "",
+    "text": "Every workspace page has the same layout:\n\nHeader: cloud (GCP), dates, Policies (e.g., 6 active; click to view them), and your Access level\nPerimeter banner: shown when the workspace holds restricted data (e.g., Controlled Tier). Services outside the perimeter may not work.\nFour tabs:\n\n\n\n\nTab\nWhat’s there\n\n\n\n\nOverview\nThe workspace description\n\n\nResources\nYour data and storage\n\n\nApps\nAnalysis environments (JupyterLab, RStudio, SAS…)\n\n\nWorkflows\nBatch jobs and pipelines",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#workspace-layout",
+    "href": "pages/workspace/resources.html#workspace-layout",
+    "title": "Overview and Resources Tabs",
+    "section": "",
+    "text": "Every workspace page has the same layout:\n\nHeader: cloud (GCP), dates, Policies (e.g., 6 active; click to view them), and your Access level\nPerimeter banner: shown when the workspace holds restricted data (e.g., Controlled Tier). Services outside the perimeter may not work.\nFour tabs:\n\n\n\n\nTab\nWhat’s there\n\n\n\n\nOverview\nThe workspace description\n\n\nResources\nYour data and storage\n\n\nApps\nAnalysis environments (JupyterLab, RStudio, SAS…)\n\n\nWorkflows\nBatch jobs and pipelines",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#overview-tab",
+    "href": "pages/workspace/resources.html#overview-tab",
+    "title": "Overview and Resources Tabs",
+    "section": "Overview Tab",
+    "text": "Overview Tab\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe first thing you see when you open a workspace\nShows the description: what the project is about, e.g., its scientific questions, approaches, and anticipated findings\nHelps collaborators (and you, later) understand the workspace at a glance\n\nTo update it: click Edit description, make your changes, and save. Update it as your project changes.\n⚠️ The description is publicly accessible, so keep it accurate and leave out sensitive details.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nGood practice: keep the description in sync with your Research Use Statement answers, which are also public.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#resources-tab",
+    "href": "pages/workspace/resources.html#resources-tab",
+    "title": "Overview and Resources Tabs",
+    "section": "Resources Tab",
+    "text": "Resources Tab\n\n\n\n\n\n\n\n\n\n\nWhere your workspace’s data and storage live:\n\nData collections you’ve added (e.g., the All of Us Controlled Tier resources)\nBuckets you create to save files\nOther cloud resources\n\nAdd more with + New resource or + Data from catalog\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nMore detail on each resource type is below.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#adding-new-resources",
+    "href": "pages/workspace/resources.html#adding-new-resources",
+    "title": "Overview and Resources Tabs",
+    "section": "Adding New Resources",
+    "text": "Adding New Resources\nResources tab → + New resource opens a menu of resource types:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCreate new (folder, bucket, BigQuery dataset, cohort)\n\nLives in your workspace, shared with collaborators\nDeleted if the workspace is deleted\n\n\n\nReference existing (bucket, object, BigQuery dataset or table)\n\nA pointer to data that lives elsewhere; nothing is copied\nAccess is managed by the data’s owner\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nVerily calls these “controlled” and “referenced” resources. The data collection resources you added from the catalog are referenced resources too.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#which-resource-do-i-need",
+    "href": "pages/workspace/resources.html#which-resource-do-i-need",
+    "title": "Overview and Resources Tabs",
+    "section": "Which Resource Do I Need?",
+    "text": "Which Resource Do I Need?\n\n\n\n\n\n\n\n\nResource\nWhat it is\nUse it when you want to…\n\n\n\n\nFolder\nA label for grouping resources on the Resources tab\nKeep a busy workspace organized (e.g., Data, Results)\n\n\nCloud Storage bucket\nYour own storage for files\nSave CSVs, notebooks, plots, and cleaned data so they outlast your app\n\n\nBigQuery dataset\nYour own database for tables\nSave large query results as tables you can query again with SQL\n\n\nReference a bucket, object, dataset, or table\nA pointer to data that lives elsewhere\nUse data you already have access to without copying it\n\n\n\n👉 Most students need just one bucket. The others are optional.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nNew Cohort is covered on the Data Explorer page.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#new-folder",
+    "href": "pages/workspace/resources.html#new-folder",
+    "title": "Overview and Resources Tabs",
+    "section": "New Folder",
+    "text": "New Folder\n\n\n\n\n\n\n\n\n\n\nWhy: organize resources on the Resources tab, your way\n\nFolder name (required)\nFolder path: where the folder goes; the workspace itself by default\nDescription (optional)\n\nClick Create folder\nTo put an existing resource in a folder: select it → Move (in its details pane)\nFolders don’t change a resource’s cloud path (gs://…), but they do appear in the app’s mounted path: ~/workspace/&lt;folder&gt;/&lt;bucket&gt;\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nAvoid spaces in folder names: they have to be quoted in file paths in code.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#new-cloud-storage-bucket",
+    "href": "pages/workspace/resources.html#new-cloud-storage-bucket",
+    "title": "Overview and Resources Tabs",
+    "section": "New Cloud Storage Bucket",
+    "text": "New Cloud Storage Bucket\n\n\n\n\n\n\n\n\n\n\nWhy: new workspaces have no bucket, and you need one to save your work\n\nResource ID: the name inside Workbench (letters, numbers, -, _). The tutorials use workspace-bucket.\nFolder path and Description\nBucket name: the name in Google Cloud. It must be globally unique, so keep the generated one: your Resource ID + the workspace’s project ID (↻ makes a new one).\n\nClick Create bucket. You can use it right away; collaborators may wait up to 15 min.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nControlled resources like this bucket are shared with workspace collaborators and deleted when the workspace is deleted. Apps that were already running won’t see a new bucket until you restart the app or run wb resource mount. Mounted folders cache file info for about a minute, so two people writing at once may not see each other’s changes right away. Migrated 1.0 workspaces already have a bucket: rw-migration-aou-rw-…",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#bucket-names-good-practice",
+    "href": "pages/workspace/resources.html#bucket-names-good-practice",
+    "title": "Overview and Resources Tabs",
+    "section": "Bucket Names: Good Practice",
+    "text": "Bucket Names: Good Practice\n\nLowercase letters, numbers, -, _, 3–63 characters, no spaces, no “google”\nBucket names are public: anyone can check whether a name exists\n\n⚠️ No names, emails, NetIDs, or project details\n\nA bucket name can’t be changed (the resource’s name and description can). To rename, create a new bucket and copy the files over.\nDeleting a bucket frees its name for anyone to reuse\n\n👉 Easiest: accept the generated name. It’s built from your Resource ID + the workspace’s project ID, so keep the Resource ID free of personal details too.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Google Cloud, “About Cloud Storage buckets” and “Create a bucket”. Files (objects) also can’t be renamed in place; renaming copies and deletes them. Avoid putting sensitive information in file names too.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#new-bigquery-dataset",
+    "href": "pages/workspace/resources.html#new-bigquery-dataset",
+    "title": "Overview and Resources Tabs",
+    "section": "New BigQuery Dataset",
+    "text": "New BigQuery Dataset\n\n\n\n\n\n\n\n\n\n\nWhy: save large query results as tables, then query them again with SQL instead of re-running long queries or loading big CSVs\n\nResource ID, Folder path, Description\nDataset ID: the name in Google Cloud. Unique within your project; letters, numbers, _ only. Keep the generated one or choose your own. Can’t be changed later.\n\nClick Create dataset. Collaborators may wait up to 15 min.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nOptional for most class projects; a bucket with CSV files is usually enough. BigQuery storage and queries are billed to your pod.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#referencing-existing-data",
+    "href": "pages/workspace/resources.html#referencing-existing-data",
+    "title": "Overview and Resources Tabs",
+    "section": "Referencing Existing Data",
+    "text": "Referencing Existing Data\nA reference points to data that already exists elsewhere. Nothing is copied.\n\n\n\n\n\n\n\nReference\nYou’ll need\n\n\n\n\nCloud Storage bucket\nThe bucket name\n\n\nCloud Storage object (one file)\nIts URL, e.g., gs://bucket-name/path/file.csv\n\n\nBigQuery dataset\nProject ID + Dataset ID\n\n\nBigQuery table\nProject ID + Dataset ID + Table ID\n\n\n\nEvery reference also has a Resource ID, Folder path, and Description. Then click Add to resources.\n⚠️ Access isn’t shared automatically. The data’s owner controls it. In a Controlled Tier workspace, the perimeter may also block data from outside it.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nExample uses: point to a collaborator’s bucket, or to a shared file without copying it. The All of Us data collection resources you added earlier are references too. Deleting a reference removes the pointer, not the data. You can edit a reference’s name and description, but not the bucket name, project ID, dataset ID, or table ID; to fix those, delete the reference and add it again. Some outside buckets are “Requester Pays”: reading or browsing them is billed to your pod, and mounting them when an app starts can cost money too. The Workbench shows a warning when you add one.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#reference-bucket-or-object",
+    "href": "pages/workspace/resources.html#reference-bucket-or-object",
+    "title": "Overview and Resources Tabs",
+    "section": "Reference: Bucket or Object",
+    "text": "Reference: Bucket or Object\n\n\n\n\n\n\n\n\nBucket: enter the bucket name\n\n\n\n\n\n\n\n\nObject: enter its gs:// URL",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#reference-bigquery-dataset-or-table",
+    "href": "pages/workspace/resources.html#reference-bigquery-dataset-or-table",
+    "title": "Overview and Resources Tabs",
+    "section": "Reference: BigQuery Dataset or Table",
+    "text": "Reference: BigQuery Dataset or Table\n\n\n\n\n\n\n\n\nDataset: Project ID + Dataset ID\n\n\n\n\n\n\n\n\nTable: same, + Table ID",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#viewing-your-bucket-in-google-cloud",
+    "href": "pages/workspace/resources.html#viewing-your-bucket-in-google-cloud",
+    "title": "Overview and Resources Tabs",
+    "section": "Viewing Your Bucket in Google Cloud",
+    "text": "Viewing Your Bucket in Google Cloud\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn your workspace, find Workspace details (right side) and click the Google Project link\nThe Google Cloud console opens: menu → Cloud Storage → Buckets\nClick the bucket your files are in\n\nThe details panel also shows the workspace ID, default region, pod, and UUID.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/resources.html#what-you-can-see-and-cant",
+    "href": "pages/workspace/resources.html#what-you-can-see-and-cant",
+    "title": "Overview and Resources Tabs",
+    "section": "What You Can See (and Can’t)",
+    "text": "What You Can See (and Can’t)\n\n\n\n\n\n\n\n\n✅ You can see folder and file names, sizes, and types, e.g., notebooks/, data/, and the bq_exports/ folder from a data snapshot\n\n\n❌ You can’t open or download the files. The perimeter blocks it. Open them from an app in the workspace instead.\n\n\n👉 Handy for checking that an export arrived, or finding a file’s path\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThis bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.",
+    "crumbs": [
+      "Your Workspace",
+      "Overview and Resources Tabs"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html",
+    "href": "pages/workspace/apps.html",
+    "title": "Apps",
+    "section": "",
+    "text": "Apps are where you run your analysis: JupyterLab, R, SAS, and more. This page walks through creating an AoU Jupyter app.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#the-apps-tab",
+    "href": "pages/workspace/apps.html#the-apps-tab",
+    "title": "Apps",
+    "section": "The Apps tab",
+    "text": "The Apps tab\n\n\n\n\n\n\n\n\n\n\n\nWhat’s here:\n\nYour apps: the analysis environments in this workspace, with their status (Running, Stopped…)\nGit repositories: code linked to the workspace (see Optional Extras)\n\n\n\nTo start an app: click + New app instance, then:\n\nSelect app\nChoose config\nCompute options\nReview details → Create app\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYou need Writer or Owner access to create apps. Our example uses AoU Jupyter.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#what-is-an-app",
+    "href": "pages/workspace/apps.html#what-is-an-app",
+    "title": "Apps",
+    "section": "What is an app?",
+    "text": "What is an app?\n\nA virtual computer in the cloud with its own disk and software already installed (JupyterLab, R, Python, SAS…)\nYour buckets are mounted as folders, so your files are right there\nYou pay for computing while it runs and for the disk until you delete it\n\n\n\n\n\nRunning\nStopped\nDeleted\n\n\n\n\nCompute charged\n✅\n❌\n❌\n\n\nDisk charged\n✅\n✅\n❌\n\n\nFiles on the app’s disk\nkept\nkept\nlost\n\n\nFiles in your bucket\nkept\nkept\nkept\n\n\n\nApps auto-stop after 4 hours idle by default. You can set 1 hour to 14 days.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-1-select-app",
+    "href": "pages/workspace/apps.html#step-1-select-app",
+    "title": "Apps",
+    "section": "Step 1: Select app",
+    "text": "Step 1: Select app\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nApp\nUse it for\n\n\n\n\nJupyterLab Spark cluster\nLarge-scale and genomic analysis (Dataproc cluster)\n\n\nR Analysis Environment\nR / RStudio\n\n\nAoU Jupyter\nStandard JupyterLab: Python or R notebooks\n\n\nAoU SAS\nSAS\n\n\nJupyterLab (NVIDIA NeMo)\nLLMs, multimodal, and speech AI (GPU)\n\n\nJupyterLab (NVIDIA Parabricks + CUDA-X)\nGPU-accelerated genomics\n\n\n\nOur example: AoU Jupyter. Select it and click Next.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nHover the ⓘ next to an app name for details. “Some apps are unavailable due to restrictions or policy settings”: the All of Us app policy only allows approved apps in this workspace.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-2-choose-config",
+    "href": "pages/workspace/apps.html#step-2-choose-config",
+    "title": "Apps",
+    "section": "Step 2: Choose config",
+    "text": "Step 2: Choose config\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDefault configuration (AoU Jupyter):\n\nMachine n1-highmem-4: 4 CPUs, 26 GB memory\n500 GB data disk\n\nCost estimate panel:\n\nCost while running: $0.27/hour, or $194.32/month if left on 24/7\nDisk cost (continuous): $21.60/month, even when stopped\nHow do we calculate? and GCP’s pricing calculator links\nCost note: an optional reminder saved with the config\n\nClick Next\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSaved configurations you or a collaborator created also appear here as options. Prices are estimates and vary by region.\n\n\n\n\nReading the cost estimate\nExample: default AoU Jupyter, used 20 hours in a month\n\n\n\nComputing: 20 hours × $0.27\n$5.40\n\n\nDisk: the whole month, running or stopped\n$21.60\n\n\nTotal\n≈ $27\n\n\n\n\n\n\n\n\n\nNoteFor light use, the disk costs more than the computing\n\n\n\n\nDelete an app you’re done with (save to your bucket first)\nA smaller data disk costs less (step 3)\n\nNot included: BigQuery query costs, bucket storage, and data transfer.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n“Per month” assumes the app runs 24/7 (about 730 hours). For comparison, the default JupyterLab Spark cluster is about $0.64/hour ($465/month if left on) plus $37.60/month for disks.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-3-compute-options",
+    "href": "pages/workspace/apps.html#step-3-compute-options",
+    "title": "Apps",
+    "section": "Step 3: Compute options",
+    "text": "Step 3: Compute options\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLocation: keep Region (recommended). It picks a zone with free capacity for you. The region comes from the workspace.\nGeneral or GPUs: General is fine for most analysis. GPUs cost much more and can’t be added later.\nMachine type: CPUs + memory. More is faster but costs more; the estimate updates as you change it.\nScroll down for data disk size (50 GB–64 TB; default 500 GB) and autostop (default 4 hours idle)\n\nClick Next\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nLeave “Use a specific reservation” unchecked; it’s for reserved cloud capacity. This training workspace was created in us-central1, so that’s the region shown. You can change the machine type and disk later, but only while the app is stopped.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#step-4-review-details",
+    "href": "pages/workspace/apps.html#step-4-review-details",
+    "title": "Apps",
+    "section": "Step 4: Review details",
+    "text": "Step 4: Review details\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConfig: shows Custom if you changed anything in step 3\nWorkbench ID: the app’s name in Workbench and the CLI (letters, numbers, -, _)\nInstance name: the cloud machine’s name (lowercase, numbers, -). Can’t be changed later.\nDescription (optional)\n\nClick Create app. The status goes Creating → Provisioning → Starting → Running. Then click the app’s name to open it.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#managing-your-app",
+    "href": "pages/workspace/apps.html#managing-your-app",
+    "title": "Apps",
+    "section": "Managing your app",
+    "text": "Managing your app\nOn the Apps tab:\n\n\n\n\n\n\n\nAction\nWhat happens\n\n\n\n\nOpen\nClick the app’s name (when it’s Running)\n\n\nStop\nStops it right away, with no confirmation. Computing charges stop; disk charges continue.\n\n\nStart\nRestarts a stopped app in about a minute\n\n\nEdit\nName, description, and autostop: any time. Machine type and disk: only when stopped.\n\n\nDelete\nRemoves the app and its disk. ⚠️ Anything not saved in a bucket is lost.\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYou can’t change an app’s image (app type) or instance name; create a new app instead. Apps that are Starting or Stopping can’t be changed until they finish. If someone loses Writer access to the workspace, their apps are stopped (“abandoned”); an Owner can restore the access or delete the app.",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/apps.html#sources",
+    "href": "pages/workspace/apps.html#sources",
+    "title": "Apps",
+    "section": "Sources",
+    "text": "Sources\n\nVerily Workbench: Cloud apps overview\nVerily Workbench: Basic cloud app operations\nVerily Workbench: Cloud app cost estimates",
+    "crumbs": [
+      "Your Workspace",
+      "Apps"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/whats-new.html",
+    "href": "pages/get-started/whats-new.html",
+    "title": "What’s New in Workbench 2.0",
+    "section": "",
+    "text": "Built on Verily Workbench, the new platform behind the All of Us Researcher Workbench\nModern interface with:\n\nJupyterLab (in place of classic Jupyter Notebook)\nA new Data Explorer\nGit repository integration\nImproved batch workflow support\nA more organized storage system",
+    "crumbs": [
+      "Get Started",
+      "What's New in Workbench 2.0"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/whats-new.html#researcher-workbench-2.0",
+    "href": "pages/get-started/whats-new.html#researcher-workbench-2.0",
+    "title": "What’s New in Workbench 2.0",
+    "section": "",
+    "text": "Built on Verily Workbench, the new platform behind the All of Us Researcher Workbench\nModern interface with:\n\nJupyterLab (in place of classic Jupyter Notebook)\nA new Data Explorer\nGit repository integration\nImproved batch workflow support\nA more organized storage system",
+    "crumbs": [
+      "Get Started",
+      "What's New in Workbench 2.0"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/whats-new.html#what-is-verily-workbench",
+    "href": "pages/get-started/whats-new.html#what-is-verily-workbench",
+    "title": "What’s New in Workbench 2.0",
+    "section": "What Is Verily Workbench?",
+    "text": "What Is Verily Workbench?\nA secure research environment for governing and analyzing biomedical data, built on Verily’s experience supporting All of Us\n\n\n\n\n\n\n\nWhat it does\nWhere you’ll see it today\n\n\n\n\nOrganizes data of many types: clinical, omics, imaging\nData collections and the Resources tab\n\n\nExplores data without code: point-and-click cohorts with visualizations\nData Explorer\n\n\nAnalyzes at scale with cloud computing\nApps (JupyterLab, R, SAS, Spark) and Workflows\n\n\nGoverns and secures data\nPolicies, perimeters, and group policies\n\n\nSupports secure collaboration\nSharing roles: Owner, Writer, Reader\n\n\nOffers interfaces for every skill level\nWeb interface, Data Explorer, command line (wb), cloud console\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Verily Workbench overview” (support.workbench.verily.com/docs/getting_started/overview/). Data types it supports include omics (BAM, CRAM, VCF), clinical (CSV/TSV, PDF, OMOP, CDISC), and imaging (DICOM, JPG). Compliance: ISO 27001/SOC 2, GDPR, HIPAA. An activity monitor tracks data access and lineage. Policies can limit access by group membership and geography, and perimeters prevent data from being moved out.",
+    "crumbs": [
+      "Get Started",
+      "What's New in Workbench 2.0"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/whats-new.html#classic-workbench-workbench-2.0",
+    "href": "pages/get-started/whats-new.html#classic-workbench-workbench-2.0",
+    "title": "What’s New in Workbench 2.0",
+    "section": "Classic Workbench → Workbench 2.0",
+    "text": "Classic Workbench → Workbench 2.0\n\n\n\n\n\n\n\nClassic Workbench\nWorkbench 2.0\n\n\n\n\nCohort Builder + Concept Selector + Dataset Builder\nData Explorer (one tool)\n\n\nWorkspace has CDR version + tier\nWorkspace + data collection added from the catalog\n\n\nCloud Analysis Environment\nApps (e.g., JupyterLab, RStudio)\n\n\nJupyter Notebook\nJupyterLab\n\n\nWorkspace bucket (created for you)\nA Cloud Storage bucket you create on the Resources tab\n\n\nCode snippets to copy files\nBuckets mounted as folders in every app\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nBased on the All of Us “Researcher Workbench 2.0 Glossary of Terms and Comparison Guide” and what we confirmed in the Workbench: new 2.0 workspaces have no bucket until you create one (migrated workspaces get an rw-migration-… bucket), and the Snippets menu is gone.",
+    "crumbs": [
+      "Get Started",
+      "What's New in Workbench 2.0"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/access.html",
+    "href": "pages/get-started/access.html",
+    "title": "Getting Access",
+    "section": "",
+    "text": "Create an account at the All of Us Research Hub\nComplete data access registration\n\nID verification\nMandatory trainings\nData User Code of Conduct\n\nFor Controlled Tier data, complete the Controlled Tier training\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nIf you already have Workbench access, skip this step. Registration happens on the All of Us Research Hub before you can use the Workbench.",
+    "crumbs": [
+      "Get Started",
+      "Getting Access"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/access.html#create-your-account",
+    "href": "pages/get-started/access.html#create-your-account",
+    "title": "Getting Access",
+    "section": "",
+    "text": "Create an account at the All of Us Research Hub\nComplete data access registration\n\nID verification\nMandatory trainings\nData User Code of Conduct\n\nFor Controlled Tier data, complete the Controlled Tier training\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nIf you already have Workbench access, skip this step. Registration happens on the All of Us Research Hub before you can use the Workbench.",
+    "crumbs": [
+      "Get Started",
+      "Getting Access"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/access.html#logging-in",
+    "href": "pages/get-started/access.html#logging-in",
+    "title": "Getting Access",
+    "section": "Logging In",
+    "text": "Logging In\n\n\n\n\n\n\nGo to workbench.verily.com\nSelect Continue with Google\nSign in with your All of Us account (yourname@researchallofus.org), not your Yale or personal Google account\n\n\n\n\n\n\n\nTip\n\n\n\nUse Google Chrome to log in.\n\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nworkbench.verily.com redirects to the Verily sign-in page. Make sure your data access requirements (trainings, etc.) are up to date before logging in.",
+    "crumbs": [
+      "Get Started",
+      "Getting Access"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/access.html#the-home-page",
+    "href": "pages/get-started/access.html#the-home-page",
+    "title": "Getting Access",
+    "section": "The Home Page",
+    "text": "The Home Page",
+    "crumbs": [
+      "Get Started",
+      "Getting Access"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/access.html#getting-around",
+    "href": "pages/get-started/access.html#getting-around",
+    "title": "Getting Access",
+    "section": "Getting Around",
+    "text": "Getting Around\n\n\nLeft sidebar\n\nHome: recent workspaces and data collections, plus running apps\nExchange: the data catalog for browsing data collections\nWorkspaces: your workspaces\nData collections: collections you have access to\nPods: billing (see Billing)\nSupport hub: help and documentation\n\n\n\nHome page\n\n+ New workspace\nRunning apps: check here so you don’t pay for apps you forgot to stop!\nTutorial workspace: Getting Started with Controlled Tier Data (v9), a good place to start\nDid you know? Policies can’t be removed once applied\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nAdmin → Organizations shows the organization your account belongs to: for All of Us users, “aou-prod” (the All of Us production organization), with its terms of service and activity logs. Nothing to change there.",
+    "crumbs": [
+      "Get Started",
+      "Getting Access"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html",
+    "href": "pages/extras/github-guide.html",
+    "title": "GitHub Guide",
+    "section": "",
+    "text": "A step-by-step guide for pushing notebooks and scripts from an All of Us workspace on Verily Workbench to GitHub. It covers two cases:\nIt finishes with how to keep things in sync and a troubleshooting section based on problems we actually ran into.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#read-this-first-data-protection",
+    "href": "pages/extras/github-guide.html#read-this-first-data-protection",
+    "title": "GitHub Guide",
+    "section": "⚠️ Read this first: data protection",
+    "text": "⚠️ Read this first: data protection\nEverything you push to a public GitHub repo can be seen by anyone, and you can’t fully take it back once it’s pushed.\nThe All of Us Data and Statistics Dissemination Policy prohibits sharing:\n\nParticipant-level data of any kind\nAggregate counts or statistics based on 1–20 participants (this includes notebook outputs, tables, and plots)\n\nShare code, not results. Before every push:\n\nClear notebook outputs (the command is in the steps below).\nLeave out data files (.csv, .tsv, .parquet, .vcf, etc.).\nCheck for credentials (tokens, keys, passwords).\nRun git status and look at every file before committing.\n\nCheck the current policy on the All of Us Research Hub if you’re unsure about anything.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#before-you-start",
+    "href": "pages/extras/github-guide.html#before-you-start",
+    "title": "GitHub Guide",
+    "section": "Before you start",
+    "text": "Before you start\nYou need:\n\nAn All of Us workspace on Verily Workbench\nA GitHub account\nFor Path A: write access to the existing repo (ask the repo or organization owner to add you)\n\nYou do not need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (wb) and Git are already installed and you’re already logged in.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#step-1-start-an-app-and-open-a-terminal",
+    "href": "pages/extras/github-guide.html#step-1-start-an-app-and-open-a-terminal",
+    "title": "GitHub Guide",
+    "section": "Step 1: Start an app and open a terminal",
+    "text": "Step 1: Start an app and open a terminal\n\nIn your workspace, go to the Apps tab and create an app.\n\nAoU Jupyter is the simplest choice for Git work.\nAvoid JupyterLab Spark cluster for AoU unless you need Spark. It costs more and starts slower.\nR Analysis Environment for AoU also works. Use RStudio’s Terminal tab.\n\nOnce the app is running, open it.\nOpen a terminal: File → New → Terminal, or the Terminal tile in the Launcher (+ tab).\nConfirm you’re logged in:\n\nwb auth status\n\nTip: If you add a Git repo to the workspace (Apps tab → Git repositories → + Add repository) before creating the app, the app clones it automatically. Apps created earlier won’t get it. Clone it manually as shown below.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#step-2-connect-workbench-to-github-one-time-setup",
+    "href": "pages/extras/github-guide.html#step-2-connect-workbench-to-github-one-time-setup",
+    "title": "GitHub Guide",
+    "section": "Step 2: Connect Workbench to GitHub (one-time setup)",
+    "text": "Step 2: Connect Workbench to GitHub (one-time setup)\n\n2a. Test the connection\ncd ~\nssh -T git@github.com\nThe first time, you may be asked Are you sure you want to continue connecting (yes/no)?. Type yes.\n\n✅ Success looks like: Hi YOUR-USERNAME! You've successfully authenticated, but GitHub does not provide shell access. (The “no shell access” part is normal.) Skip to 2c.\n❌ Permission denied (publickey) means GitHub doesn’t know your key yet. Continue to 2b.\n\n\n\n2b. Add your Workbench SSH key to GitHub\nGet your public key:\nwb security ssh-key get\nIf that errors because no key exists, run wb security ssh-key generate first.\nThen, on GitHub:\n\nClick your profile picture → Settings → SSH and GPG keys → New SSH key\nTitle: Verily Workbench. Key type: Authentication Key\nPaste the whole key line (starting with ssh-rsa or similar) → Add SSH key\nIf a Configure SSO button appears next to the key, click it and authorize your organization.\n\nRun ssh -T git@github.com again to confirm.\n\n\n2c. Set your Git identity\n⚠️ Replace the example values with your own. Don’t paste them as-is.\ngit config --global user.name \"your-github-username\"\ngit config --global user.email \"your-email@example.com\"\ngit config --global --list    # confirm what's set\nFor a public repo, consider using your GitHub noreply email so your real address isn’t published. Find it at GitHub Settings → Emails. It looks like 12345678+username@users.noreply.github.com.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#step-3-find-your-notebooks",
+    "href": "pages/extras/github-guide.html#step-3-find-your-notebooks",
+    "title": "GitHub Guide",
+    "section": "Step 3: Find your notebooks",
+    "text": "Step 3: Find your notebooks\nYour workspace notebooks are usually in a mounted bucket folder like:\n/home/jupyter/workspace/&lt;your-workspace-folder&gt;/notebooks\nList them:\nls -la /home/jupyter/workspace/&lt;your-workspace-folder&gt;/notebooks\nSave any open notebooks in JupyterLab first (Ctrl/Cmd+S) so you copy the latest version.\n\nImportant: Do not run git init or git clone inside ~/workspace/.... It’s a mounted cloud bucket, and Git doesn’t work well there. Always clone into your home directory (~) and copy files over.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#path-a-add-your-work-to-an-existing-repo",
+    "href": "pages/extras/github-guide.html#path-a-add-your-work-to-an-existing-repo",
+    "title": "GitHub Guide",
+    "section": "Path A: Add your work to an existing repo",
+    "text": "Path A: Add your work to an existing repo\n\nA1. Clone the repo and create a branch\nUse the repo’s SSH URL (green Code button on GitHub → SSH):\ncd ~\ngit clone git@github.com:OWNER/REPO-NAME.git\ncd REPO-NAME\ngit checkout -b add-my-notebooks\nThe cloned folder is named after the repo (REPO-NAME).\n\n\nA2. Copy in your notebooks\nPut them in a subfolder so they don’t clash with existing files:\nmkdir -p notebooks\ncp /home/jupyter/workspace/&lt;your-workspace-folder&gt;/notebooks/*.ipynb notebooks/\nls notebooks/\n\nTo use an existing folder or a name with spaces, use quotes: mkdir -p \"Session 3\" and cp ... \"Session 3/\"\nTo copy a single file whose name has spaces, quote the full path: cp \"/home/jupyter/workspace/&lt;folder&gt;/notebooks/01. my notebook.ipynb\" notebooks/\n\n\n\nA3. Clean before committing\n# Remove all outputs (keeps code and markdown)\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\n\n# Check for credentials\ngrep -iE \"token|key|secret|password\" notebooks/*.ipynb\nIf the grep prints anything that looks like a credential, edit or remove that file before continuing. Pay special attention to notebooks that load environment variables or configuration.\n\n\nA4. Commit and push\ngit status                     # review every file listed\ngit add notebooks\ngit commit -m \"Add analysis notebooks from All of Us workspace\"\ngit push -u origin add-my-notebooks\n\n\nA5. Open and merge a pull request\nThe push doesn’t change main by itself. You need to merge your branch through a pull request:\n\nGo to the repo on GitHub.\nClick the yellow Compare & pull request banner. (If it’s not there: Pull requests tab → New pull request, with base: main and compare: add-my-notebooks.)\nCheck the Files changed tab. It should contain only the files you meant to add.\nClick Create pull request, then Merge pull request → Confirm merge.\nOptionally click Delete branch.\n\n\n\nA6. Update your local copy\ngit checkout main\ngit pull",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#path-b-create-a-new-repo-for-your-work",
+    "href": "pages/extras/github-guide.html#path-b-create-a-new-repo-for-your-work",
+    "title": "GitHub Guide",
+    "section": "Path B: Create a new repo for your work",
+    "text": "Path B: Create a new repo for your work\n\nB1. Create an empty repo on GitHub\n\nOn GitHub, click + (top right) → New repository.\nChoose a name and set it to Public or Private.\nDon’t add a README, .gitignore, or license. Leave it empty to avoid conflicts on the first push.\nClick Create repository and copy the SSH URL.\n\n\n\nB2. Set up the repo in your home directory\nmkdir -p ~/my-new-repo/notebooks\ncd ~/my-new-repo\ngit init\ngit branch -M main\ngit remote add origin git@github.com:YOUR-USERNAME/my-new-repo.git\n\n\nB3. Copy, clean, and add a .gitignore\ncp /home/jupyter/workspace/&lt;your-workspace-folder&gt;/notebooks/*.ipynb notebooks/\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngrep -iE \"token|key|secret|password\" notebooks/*.ipynb\n\n# Keep data files and clutter out of Git\ncat &gt; .gitignore &lt;&lt; 'EOF'\n*.csv\n*.tsv\n*.parquet\n*.vcf\n*.vcf.gz\n*.bam\n*.rds\n*.RData\n.ipynb_checkpoints/\n.DS_Store\nEOF\nOptionally create a README.md describing the project, the order to run the notebooks in, and what data access is required.\n\n\nB4. First commit and push\ngit status\ngit add .\ngit commit -m \"Initial commit: analysis notebooks\"\ngit push -u origin main\nNo pull request is needed here. The files go straight to main.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#finding-your-repo-in-the-jupyterlab-file-browser",
+    "href": "pages/extras/github-guide.html#finding-your-repo-in-the-jupyterlab-file-browser",
+    "title": "GitHub Guide",
+    "section": "Finding your repo in the JupyterLab file browser",
+    "text": "Finding your repo in the JupyterLab file browser\nThe file browser often opens inside your workspace’s notebooks folder, so the repo you cloned to ~ won’t be visible at first. Click the folder icon at the start of the path bar to jump to the top level, and your repo folder will be there.\n/home/jupyter/                      ← top level\n├── REPO-NAME/                      ← your Git repo (synced with GitHub)\n│   └── notebooks/\n└── workspace/\n    └── &lt;your-workspace-folder&gt;/\n        └── notebooks/              ← your original copies (NOT in Git)",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#ongoing-workflow-keeping-in-sync",
+    "href": "pages/extras/github-guide.html#ongoing-workflow-keeping-in-sync",
+    "title": "GitHub Guide",
+    "section": "Ongoing workflow: keeping in sync",
+    "text": "Ongoing workflow: keeping in sync\nAfter setup, work from the repo folder (~/REPO-NAME/notebooks/), not the original workspace folder.\nEach session:\ncd ~/REPO-NAME\ngit checkout main\ngit pull                       # get the latest from GitHub\n# ...edit and run notebooks...\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngit status\ngit add notebooks\ngit commit -m \"Describe your change\"\ngit push\nYou can push straight to main if it’s your own repo, or use a branch and pull request (as in Path A) if others should review first.\nThings to know:\n\nThere are two copies of your notebooks. git pull updates only the repo copy, not the originals in ~/workspace/.... Pick the repo copy as your working copy, or the two will drift apart.\nPulled notebooks have no outputs because you cleared them. Rerun the cells to regenerate results.\nThe clone lives on the app’s disk. If you delete the app, the clone goes with it. Always push before deleting an app, then clone again in the new one.\nNew apps need setup. In a new app, you may need to repeat git config (Step 2c) and clone the repo again.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#sharing-with-colleagues",
+    "href": "pages/extras/github-guide.html#sharing-with-colleagues",
+    "title": "GitHub Guide",
+    "section": "Sharing with colleagues",
+    "text": "Sharing with colleagues\nTo use your code in their own All of Us workspace, colleagues run:\ncd ~\ngit clone https://github.com/OWNER/REPO-NAME.git\nNo SSH key is needed to clone a public repo over HTTPS. They need the same data access tier your notebooks use (e.g., Controlled Tier).\nTo contribute back, colleagues need:\n\nWrite access to the repo (granted by the repo or organization owner)\nTheir own Workbench SSH key added to their GitHub account (Step 2b)\nTo clone with the git@github.com:... URL\n\nMake notebooks portable: avoid hardcoded workspace paths. Build paths from your home folder, and keep the bucket name and dataset path in one place at the top of the notebook, so collaborators only change those lines:\n# R\nbucket &lt;- file.path(Sys.getenv(\"HOME\"), \"workspace\", \"workspace-bucket\")  # your bucket's name\nCURRENT_DATASET &lt;- \"&lt;project-id&gt;.&lt;dataset-id&gt;\"   # copy from your Data Explorer query\n# Python\nimport os\nbucket = os.path.expanduser(\"~/workspace/workspace-bucket\")  # your bucket's name\nCURRENT_DATASET = \"&lt;project-id&gt;.&lt;dataset-id&gt;\"   # copy from your Data Explorer query\nWORKSPACE_BUCKET and WORKSPACE_CDR from the classic Workbench are not set in new Workbench 2.0 workspaces (see Workspace Variables).\nTo share results, share the workspace itself through Workbench’s sharing settings so data and outputs stay inside All of Us.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#troubleshooting",
+    "href": "pages/extras/github-guide.html#troubleshooting",
+    "title": "GitHub Guide",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\n\n\n\n\n\n\n\n\nProblem / message\nWhat it means\nFix\n\n\n\n\n“I don’t see a terminal app” when creating an app\nThere isn’t a separate terminal app\nTerminals are inside each app. In JupyterLab: File → New → Terminal. In RStudio: Terminal tab.\n\n\nfatal: not a git repository ... Stopping at filesystem boundary\nYou’re in a folder that isn’t a Git repo, often the mounted ~/workspace bucket\nNormal before cloning. cd ~ and clone there. Don’t git init inside ~/workspace.\n\n\nPermission denied (publickey)\nGitHub doesn’t recognize a key from this app\nAdd your key from wb security ssh-key get to GitHub (Step 2b). If it still fails, run ls -la ~/.ssh. If the key is missing, restart the app, or create one with ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N \"\" and add ~/.ssh/id_ed25519.pub to GitHub.\n\n\nYou've successfully authenticated, but GitHub does not provide shell access\nThis is success\nNothing to fix. Carry on.\n\n\nERROR: Repository not found or Permission ... denied on push\nYour account doesn’t have write access, or the URL is wrong\nCheck the URL with git remote -v. Ask the owner for write access, or fork the repo and push to your fork.\n\n\nAn error mentioning SAML SSO\nYour organization requires SSO authorization for keys\nGitHub Settings → SSH and GPG keys → Configure SSO on the Workbench key → authorize the org.\n\n\nCommits show the wrong name or email (e.g., “Your Name”)\nPlaceholder values were used in git config\nRerun git config --global user.name/user.email with your real values. Check with git config --global --list.\n\n\ndestination path 'REPO-NAME' already exists\nYou already cloned it (or the app auto-cloned it)\nSkip git clone and cd into the folder. Find it with find ~ -maxdepth 3 -type d -name \"REPO-NAME\".\n\n\nConfig option 'extra_template_paths' not recognized during nbconvert\nHarmless warning\nIgnore it. Outputs are still cleared.\n\n\nPushed, but files don’t show on GitHub’s main page\nThey’re on your branch, not on main\nCreate and merge a pull request (Step A5), or switch to your branch in GitHub’s branch dropdown to see them.\n\n\n“Where’s my pull request?”\nPull requests aren’t created automatically\nClick Compare & pull request on the repo page after pushing.\n\n\nCan’t find the cloned repo in the JupyterLab file browser\nThe browser is showing a subfolder of ~/workspace\nClick the folder icon at the start of the path bar to go to the top level.\n\n\nNo such file or directory with a filename containing spaces\nThe shell split the name at the spaces\nWrap the path in quotes: \"01. my notebook.ipynb\".\n\n\ngit pull refuses because of local changes\nYou have uncommitted edits to files that also changed on GitHub\ngit status, then commit your changes or discard them with git restore &lt;file&gt;, then pull again.\n\n\nMerge conflict in a .ipynb file\nTwo people edited the same notebook\nNotebooks are JSON and hard to merge. Keep one person per notebook where possible. To keep one side entirely: git checkout --ours &lt;file&gt; or git checkout --theirs &lt;file&gt;, then git add and commit.\n\n\nRepo added to the workspace but not in my app\nThe app was created before the repo was added\nIn the app terminal: wb git clone --resource=&lt;resource-name&gt;, or git clone &lt;url&gt;.\n\n\nAccidentally pushed outputs or data\nSensitive content is now on GitHub\nAct quickly: make the repo private if possible, remove the content, and contact the All of Us support team about the policy steps. Deleting it in a new commit does not remove it from Git history.",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/extras/github-guide.html#quick-reference",
+    "href": "pages/extras/github-guide.html#quick-reference",
+    "title": "GitHub Guide",
+    "section": "Quick reference",
+    "text": "Quick reference\n# One-time setup (per app)\nssh -T git@github.com\nwb security ssh-key get\ngit config --global user.name \"your-username\"\ngit config --global user.email \"your-email\"\n\n# Clone\ncd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO\n\n# Daily cycle\ngit pull\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngit status\ngit add notebooks\ngit commit -m \"message\"\ngit push\nReferences: - Verily Workbench: Git integrations with cloud apps - Verily Workbench: Install and run the Workbench CLI - GitHub: Adding a new SSH key to your account",
+    "crumbs": [
+      "Optional Extras",
+      "GitHub Guide"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html",
+    "href": "pages/examples/tutorial-workspaces.html",
+    "title": "Tutorial Workspaces",
+    "section": "",
+    "text": "Ready-made workspaces from the All of Us Data and Research Center with example notebooks and data already set up\nFind them on the Workspaces page (or the Recent workspaces list on the Home page)\nYou have Reader access: you can browse, but not run anything\n\nDuplicate the workspace to get your own copy you can run\nYour copy is billed to the pod you choose\nTwo to start with:",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#workspace-migration-controlled-tier",
+    "href": "pages/examples/tutorial-workspaces.html#workspace-migration-controlled-tier",
+    "title": "Tutorial Workspaces",
+    "section": "Workspace Migration Controlled Tier",
+    "text": "Workspace Migration Controlled Tier\nFor researchers moving workspaces from the Legacy Workbench (1.0) to Workbench 2.0. It covers:\n\nSetting up a workspace in Workbench 2.0\nSetting up environments and packages\nUpdating SQL queries from the Legacy Workbench\nTable differences between the two Workbenches\nChanges to genomic data and advanced tools\n\n\n\nData collection: Controlled Tier v8 (C2024Q3R8). The same steps work for CDR v7.\n\n\nFeatured notebooks:\n\n04_Migrated_Workspaces_for_CT_(Python).ipynb\n04_Migrated_Workspaces_for_CT_(R).ipynb\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nMost useful for students who had workspaces in the classic Workbench. New users can start with Getting Started with Controlled Tier Data (v9) instead. See the User Support Hub article on workspace migration for more detail.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#migration-what-carries-over",
+    "href": "pages/examples/tutorial-workspaces.html#migration-what-carries-over",
+    "title": "Tutorial Workspaces",
+    "section": "Migration: What Carries Over",
+    "text": "Migration: What Carries Over\n\n\nMigrated from 1.0:\n\nFiles and notebooks in your workspace bucket\nThey’re in a new bucket named like rw-migration-aou-rw-…\n\nNot migrated:\n\nCohorts, datasets, and concept sets. Rebuild them in Data Explorer.\n\n\n\nWatch out:\n\nRe-syncing a migration can overwrite your 2.0 work\nOnly workspace owners can sync\nYou pay storage in both Workbenches, so delete the 1.0 workspace once you’ve checked everything moved\n\n\n\n💾 Save new files to your bucket (workspace/&lt;bucket name&gt;). Files left on the app are lost when the app is deleted.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#setting-up-your-environment-r",
+    "href": "pages/examples/tutorial-workspaces.html#setting-up-your-environment-r",
+    "title": "Tutorial Workspaces",
+    "section": "Setting Up Your Environment (R)",
+    "text": "Setting Up Your Environment (R)\nThe tutorial’s setup script defines your workspace variables:\nsource(\"/home/jupyter/workspace/aou-tutorial-notebooks/Setting_Env_Variables_p2.R\")\n\nlibrary(bigrquery)\nlibrary(tidyverse)\n\nCURRENT_DATASET &lt;- Sys.getenv(\"WORKSPACE_CDR\")   # the CDR in this workspace\n\ndownload_data &lt;- function(query) {\n  tb &lt;- bq_project_query(Sys.getenv(\"GOOGLE_PROJECT\"), query)\n  bq_table_download(tb)\n}\n\nThe script sets WORKSPACE_BUCKET and WORKSPACE_CDR. Without it, they don’t exist (see Workspace Variables).\nThe All of Us app image in 2.0 is smaller, so you may need to install packages\nIn a migrated workspace, set WORKSPACE_BUCKET to your migration bucket (gs://rw-migration-…)",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#updating-sql-queries",
+    "href": "pages/examples/tutorial-workspaces.html#updating-sql-queries",
+    "title": "Tutorial Workspaces",
+    "section": "Updating SQL Queries",
+    "text": "Updating SQL Queries\nReplace hard-coded 1.0 dataset paths with CURRENT_DATASET:\n1.0: won’t run ❌\nquery &lt;- str_glue(\"SELECT * FROM `fc-aou-cdr-prod-ct.C2024Q3R8.condition_occurrence` LIMIT 5\")\n2.0: runs ✅\nquery &lt;- str_glue(\"SELECT * FROM `{CURRENT_DATASET}.condition_occurrence` LIMIT 5\")\ndf &lt;- download_data(query)\nThe standard OMOP tables (condition_occurrence, person, measurement…) keep their names. Only the path changes.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#cohort-builder-tables-have-changed",
+    "href": "pages/examples/tutorial-workspaces.html#cohort-builder-tables-have-changed",
+    "title": "Tutorial Workspaces",
+    "section": "Cohort Builder Tables Have Changed",
+    "text": "Cohort Builder Tables Have Changed\nData Explorer uses new index tables with different table and column names:\n\n\n\n\n\n\n\n1.0 (Cohort/Dataset Builder)\n2.0 (Data Explorer)\n\n\n\n\ncb_search_person\nT_ENT_person\n\n\nds_survey\nT_ENT_surveyOccurrence\n\n\ncondition_occurrence (in builder queries)\nT_ENT_conditionOccurrence, T_ESA_conditionOccurrence_person_id\n\n\ncb_criteria (concept hierarchy)\nT_HAD_conditionConcept_default\n\n\n\nRecommendation: don’t edit old Cohort/Dataset Builder queries by hand. Rebuild your cohort in Data Explorer and use the queries it generates.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe index tables live in a dataset named like C2024Q3R8_index_111825, inside the data collection’s BigQuery project (wb-silky-artichoke-2408). The same project appears in Data Explorer queries from other workspaces, so it belongs to the data collection, not to your workspace; your own project is only used for billing. Genomic data and workflow tools (dsub, Cromwell, Nextflow, Docker): see notebooks 05_How_to_use_workflow_tools and 06_Getting_Started_with_Genomic_Data in the Getting Started with Controlled Tier Data tutorial workspace.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#getting-started-with-controlled-tier-data-v9",
+    "href": "pages/examples/tutorial-workspaces.html#getting-started-with-controlled-tier-data-v9",
+    "title": "Tutorial Workspaces",
+    "section": "Getting Started with Controlled Tier Data (v9)",
+    "text": "Getting Started with Controlled Tier Data (v9)\nFor researchers new to Workbench 2.0: how to set up a workspace in Verily Workbench and access the All of Us Controlled Tier v9 data.\n\n\nData collection: Controlled Tier v9 (C2025Q4R6), the same version used in this presentation\n\n\nFeatured tutorials:\n\nGetting Started with Verily Workbench\nHow to Get Started with Controlled Tier Data\nHow to Use Workflow Tools\nGetting Started with Genomic Data\n\n\n\n👉 Start here if you’re new to All of Us. Use the Migration workspace only if you’re moving work from the classic Workbench.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe workflow tools and genomic data tutorials are the ones the Migration workspace points to for dsub, Cromwell, Nextflow, and Docker. Questions: AoU Researcher Workbench Support Hub or support@researchallofus.org.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#inside-the-getting-started-workspace",
+    "href": "pages/examples/tutorial-workspaces.html#inside-the-getting-started-workspace",
+    "title": "Tutorial Workspaces",
+    "section": "Inside the Getting Started Workspace",
+    "text": "Inside the Getting Started Workspace\n\n\n\n\n\n\n\nFolder\nWhat it covers\n\n\n\n\nSetting_Env_Variables_…\nSet up workspace variables (versions for JupyterLab, RStudio, SAS)\n\n\n01_Getting Started with Verily Workbench\nThe wb command line, buckets, and accessing the CDR (R or Python)\n\n\n02_How to Get Started with Controlled Tier Data\nData 101: what’s in the Controlled vs. Registered Tier, with example queries (R or Python)\n\n\n03_Getting_Started_with_Genomic_Data\nShort- and long-read WGS, arrays, Hail, PLINK, GWAS, extracting genomic data\n\n\n04_Getting_Started_with_Multiomics_Data\nRNA-seq, proteomics, and combining them\n\n\n05_How_to_use_workflow_tools\ndsub, Cromwell, Nextflow\n\n\n\n👉 Start with Readme.ipynb, then folders 01 → 02. Most notebooks come in R and Python versions.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe genomic (Hail) notebooks need a Spark (Dataproc) app; PLINK and bcftools steps use a standard app. Some text in folder 01 still mentions CDR v8.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/examples/tutorial-workspaces.html#using-a-tutorial-workspace",
+    "href": "pages/examples/tutorial-workspaces.html#using-a-tutorial-workspace",
+    "title": "Tutorial Workspaces",
+    "section": "Using a Tutorial Workspace",
+    "text": "Using a Tutorial Workspace\n\nCheck your billing pod first: your All of Us initial credits, or your own pod linked to a Google Cloud billing account\nOpen the workspace → ⋮ (next to Share) → Duplicate\nIn your copy, create a JupyterLab app (Compute Engine). Apps aren’t copied when you duplicate; resources are.\nIn JupyterLab, open the aou-tutorial-notebooks folder\nOpen Readme.ipynb for an overview of the tutorials, then work through the folders in order\n\n⚠️ Running the notebooks uses compute, so it’s billed to your pod. Stop the app when you’re done.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSame steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support@researchallofus.org.",
+    "crumbs": [
+      "Learn by Example",
+      "Tutorial Workspaces"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html",
+    "href": "pages/data/data-explorer.html",
+    "title": "Data Explorer",
+    "section": "",
+    "text": "A point-and-click tool for building datasets from All of Us data collections\nReplaces the classic Cohort Builder, Concept Selector, and Dataset Builder\nAnswers questions without code, e.g., “Who has this diagnosis, this treatment, and genomic data?”\n\nExplore the data with visualizations\nBuild cohorts with Boolean logic (AND, OR, NOT)\nExport a ready-to-use dataset to your workspace\n\nWhat you can see depends on your access level (Registered or Controlled Tier)",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#from-cohort-to-data",
+    "href": "pages/data/data-explorer.html#from-cohort-to-data",
+    "title": "Data Explorer",
+    "section": "From Cohort to Data",
+    "text": "From Cohort to Data\n\n\n\n\n\n\n\n\nStep\nWhere\nWhat you get\n\n\n\n\n1. Add a cohort\nResources tab → + New resource → cohort\nA cohort resource in your workspace\n\n\n2. Build it\nData Explorer\nYour study population: inclusion and exclusion criteria\n\n\n3. Save a data snapshot\nData Explorer → save data snapshot\nCSV files and/or a notebook with the queries, saved to your bucket\n\n\n\n\nA cohort is a controlled resource: it lives in your workspace and collaborators can see it\nA data snapshot captures the data at that point in time, so your analysis stays reproducible\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe definitions come from the “Add cohort to workspace” dialog.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#add-a-cohort-select-collection",
+    "href": "pages/data/data-explorer.html#add-a-cohort-select-collection",
+    "title": "Data Explorer",
+    "section": "Add a Cohort: Select Collection",
+    "text": "Add a Cohort: Select Collection\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStep 1: pick the data collection your workspace already has, e.g., All of Us Controlled Tier\n\nChoose the Version: the newest, cdrv9\nThe other tier shows Policy conflict: one tier per workspace\n\nClick Next\nStep 2: No new policies. Your workspace already has this collection’s policies. Click Next.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nAn earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#add-a-cohort-cohort-details",
+    "href": "pages/data/data-explorer.html#add-a-cohort-cohort-details",
+    "title": "Data Explorer",
+    "section": "Add a Cohort: Cohort Details",
+    "text": "Add a Cohort: Cohort Details\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStep 3: Enter cohort details\n\nCohort name (required) and Description\nWhere to put it:\n\nAdd to an existing folder (pick the folder path; the workspace itself is the top level), or\nCreate a new folder (name, path, description)\n\n\nClick Add to your workspace. Then build your cohort in Data Explorer.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nUse a name that says what the cohort is (e.g., diabetes_age50plus), not test names, so collaborators can tell cohorts apart. The cohort shows up on the Resources tab.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#building-a-cohort",
+    "href": "pages/data/data-explorer.html#building-a-cohort",
+    "title": "Data Explorer",
+    "section": "Building a Cohort",
+    "text": "Building a Cohort\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCohort filter (left): each group is Included or Excluded and must meet any (OR) or all (AND) of its criteria. Groups combine with AND. Add criteria → Apply; the participant count updates.\n\n\nCohort visualizations (right): charts by gender, race, sex at birth, and age. When you’re done, click Save data snapshot.\n⚠️ Review individuals shows participant-level rows: never screenshot or share it\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nExample: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identity = Man or Woman (730,256 participants). Only large counts are shown on this page. Time-based criteria (e.g., within X days of an event) are supported.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#adding-criteria",
+    "href": "pages/data/data-explorer.html#adding-criteria",
+    "title": "Data Explorer",
+    "section": "Adding Criteria",
+    "text": "Adding Criteria\n\n\n\n\n\n\n\n\nAdd criteria opens the full list: domains (conditions, drugs, labs, visits…), source codes (ICD-9/10, CPT-4), demographics, wearables (Fitbit), genomics, physical measurements, and surveys\n\n\n\n+ adds a criterion directly (e.g., Has EHR Data, Current Age)\n🔍 lets you explore a category and pick specific concepts\nOr search by code or description (top)\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nExample study population: Sex → Woman; Age → 65 or older; Condition → Breast cancer; Medication → Tamoxifen.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#concepts-and-domains",
+    "href": "pages/data/data-explorer.html#concepts-and-domains",
+    "title": "Data Explorer",
+    "section": "Concepts and Domains",
+    "text": "Concepts and Domains\n\n\n\n\n\n\n\nDomain\nDescription\n\n\n\n\nConditions\nSNOMED standard codes (mapped from ICD9/ICD10)\n\n\nProcedures\nSNOMED, CPT, ICD codes\n\n\nDrugs\nRxNorm; listed by ingredient\n\n\nMeasurements\nLabs and vitals, LOINC hierarchy\n\n\nVisits\nED, outpatient, inpatient\n\n\nSurveys\nQuestions and responses\n\n\nPhysical Measurements\nBP, HR, height, weight, BMI at enrollment\n\n\nDemographics\nAge, gender, race, ethnicity, deceased status",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#omop-common-data-model",
+    "href": "pages/data/data-explorer.html#omop-common-data-model",
+    "title": "Data Explorer",
+    "section": "OMOP Common Data Model",
+    "text": "OMOP Common Data Model\n\nAn open standard for organizing and coding medical data consistently\nEach concept has a unique numeric concept_id\nAll variations of the same clinical idea map to one standard concept\n\ne.g., ICD-10 at one site and SNOMED-CT at another map to the same ID\n\nExplore the vocabularies at Athena",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#save-a-data-snapshot-select-data",
+    "href": "pages/data/data-explorer.html#save-a-data-snapshot-select-data",
+    "title": "Data Explorer",
+    "section": "Save a Data Snapshot: Select Data",
+    "text": "Save a Data Snapshot: Select Data\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLeft: pick the data (Demographics, + Browse more data…) → Apply\n\n\nTabs: tables, SQL (Copy it), Summary → Next",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#check-the-summary",
+    "href": "pages/data/data-explorer.html#check-the-summary",
+    "title": "Data Explorer",
+    "section": "Check the Summary",
+    "text": "Check the Summary\n\n\n\n\n\n\n\n\nLeft: your cohort’s criteria, e.g., Has EHR data and Gender identity: Man, Woman and Current age: 50–125\n\n\nRight: what’s in the snapshot, e.g., the person table with 12 demographic columns\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nCheck this before saving: it’s the plain-language version of the SQL. The example cohort is deliberately broad, so no small counts appear anywhere.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#save-a-data-snapshot-file-format",
+    "href": "pages/data/data-explorer.html#save-a-data-snapshot-file-format",
+    "title": "Data Explorer",
+    "section": "Save a Data Snapshot: File Format",
+    "text": "Save a Data Snapshot: File Format\n\n\n\n\n\n\n\n\n\n\nPick one or more:\n\nTables (CSV file): the data itself, zipped or not\nR Notebook (.ipynb): R code with the queries\nJupyter Notebook (.ipynb): the Python version\n\nCopy code puts the code on your clipboard instead\nClick Next\n\n\n👉 Choose a notebook. You can re-run and change the queries, and you learn how the data is pulled. CSVs are a fixed copy.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#save-a-data-snapshot-destination-bucket",
+    "href": "pages/data/data-explorer.html#save-a-data-snapshot-destination-bucket",
+    "title": "Data Explorer",
+    "section": "Save a Data Snapshot: Destination Bucket",
+    "text": "Save a Data Snapshot: Destination Bucket\n\n\n\n\n\n\n\n\n\n\n\nExisting bucket: pick its Resource ID (grayed out if the workspace has no bucket yet)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStep 3: where should the files go?\nNew bucket: the same fields as New Cloud Storage Bucket. The generated bucket name is your Resource ID + your workspace’s project ID.\nClick Save\n🔒 The files can only be opened from apps in this workspace, not from the Google Cloud console. That’s the perimeter at work.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nExample of a generated name: Resource ID intro_aou_genetics became bucket name intro-aou-genetics-wb-swift-bean-2622 (underscores turn into dashes). In a workspace with no bucket yet, “Add to existing bucket” is grayed out. Bucket names are public, so the Resource ID shouldn’t contain personal details.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-explorer.html#inside-the-exported-r-notebook",
+    "href": "pages/data/data-explorer.html#inside-the-exported-r-notebook",
+    "title": "Data Explorer",
+    "section": "Inside the Exported R Notebook",
+    "text": "Inside the Exported R Notebook\nThe notebook has the SQL for each table, plus code to run it:\nSys.setenv(EXPORT_BUCKET = \"gs://&lt;your-bucket-name&gt;\")   # ⚠️ not set for you\n\nbq_table_save(                                  # run the query (billed to your project)...\n  bq_dataset_query(\"&lt;data project&gt;.&lt;index dataset&gt;\", person_sql,\n                   billing = \"&lt;your workspace project&gt;\"),\n  person_path, destination_format = \"CSV\")      # ...and save it as CSVs in your bucket\n\nperson_df &lt;- read_bq_export_from_workspace_bucket(person_path)   # read it back\n\nSet EXPORT_BUCKET first, using the bucket name from the Resources tab\nRun the export once. Next time, just read the CSVs; re-running the query costs money.\nExporting again on the same day overwrites the files; a new day makes a new folder\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFrom an exported R notebook (cohort “cwml_aou_test_cohort”, October 2026). The SQL reads OMOP tables from the data collection’s BigQuery project (here wb-silky-artichoke-2408.C2024Q3R9) and the cohort from an index dataset (C2024Q3R9_index_022426.T_ENT_person); billing goes to your workspace project (GOOGLE_CLOUD_PROJECT). The notebook reads the CSVs back with gsutil. You can also read them from the mounted bucket folder (~/workspace//bq_exports/…) with read_csv. Don’t run the notebook while screen-sharing: head(person_df) prints participant-level rows.",
+    "crumbs": [
+      "Data",
+      "Data Explorer"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "",
+    "text": "These pages walk you through the All of Us Researcher Workbench 2.0 (powered by Verily), from logging in to running an analysis. They’re the reference version of our introductory training session."
+  },
+  {
+    "objectID": "index.html#what-youll-learn",
+    "href": "index.html#what-youll-learn",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "What you’ll learn",
+    "text": "What you’ll learn\n\nExplain the All of Us Research Program and its key data sources\nDescribe what changed between the classic Workbench and Workbench 2.0\nCreate a workspace and add an All of Us data collection\nBuild a cohort and dataset with Data Explorer\nLaunch an analysis app and find your exported data\nManage storage and costs"
+  },
+  {
+    "objectID": "index.html#start-here",
+    "href": "index.html#start-here",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Start here",
+    "text": "Start here\n\nAbout All of Us: the program, its data, and the access tiers\nGetting Access and Billing: what to set up before you begin\nSetting Up a Workspace: create a workspace and add an All of Us data collection\nData Explorer: build a cohort and save a data snapshot\nApps: launch an analysis app and work with your data\n\nThroughout, we use an example workspace called intro-to-AoU, set up for instruction only. Some screenshots come from another training workspace, CWML_AoU_training. The steps are the same.\n\n\n\n\n\n\nNotePrefer slides?\n\n\n\nThe same material as a slide deck: Introduction to the Workbench 2.0 (slides). Press F for full screen and Esc for an overview."
+  },
+  {
+    "objectID": "index.html#how-to-read-the-screenshots",
+    "href": "index.html#how-to-read-the-screenshots",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "How to read the screenshots",
+    "text": "How to read the screenshots\nScreenshots are marked up to show you what to do:\n\nRed circle or box: click here\nGreen box: your options\n\n\n\n\n\n\n\nTipInstructor tips\n\n\n\nBoxes like this one hold extra details from the training session. Click them to expand."
+  },
+  {
+    "objectID": "index.html#data-use",
+    "href": "index.html#data-use",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Data use",
+    "text": "Data use\n\n\n\n\n\n\nWarningKeep All of Us data in the Workbench\n\n\n\n\nDon’t download, screenshot, or share participant-level data\nDon’t publish participant counts of 1 to 20, or numbers they could be calculated from\nFollow the All of Us Data User Code of Conduct and the Data and Statistics Dissemination Policy"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Contact",
+    "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine"
+  },
+  {
+    "objectID": "pages/data/data-collections.html",
+    "href": "pages/data/data-collections.html",
+    "title": "Data Collections",
+    "section": "",
+    "text": "A curated dataset published for researchers, e.g., the All of Us Registered Tier\nComes with:\n\nVersions (e.g., cdrv9)\nPolicies on how the data can be accessed and used\nAccess levels (Reader, Discover, …)\n\nYou don’t copy the data. Adding a collection to a workspace creates references to data that stays in the provider’s cloud project.\nThe workspace inherits the collection’s policies, permanently\n\nThink of it as: data collection = the data source; workspace = where you analyze it\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nVerily calls these “referenced resources”. Because the data isn’t copied, adding it is free; you pay for the queries and compute you run on it.",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#what-is-a-data-collection",
+    "href": "pages/data/data-collections.html#what-is-a-data-collection",
+    "title": "Data Collections",
+    "section": "",
+    "text": "A curated dataset published for researchers, e.g., the All of Us Registered Tier\nComes with:\n\nVersions (e.g., cdrv9)\nPolicies on how the data can be accessed and used\nAccess levels (Reader, Discover, …)\n\nYou don’t copy the data. Adding a collection to a workspace creates references to data that stays in the provider’s cloud project.\nThe workspace inherits the collection’s policies, permanently\n\nThink of it as: data collection = the data source; workspace = where you analyze it\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nVerily calls these “referenced resources”. Because the data isn’t copied, adding it is free; you pay for the queries and compute you run on it.",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#the-data-exchange",
+    "href": "pages/data/data-collections.html#the-data-exchange",
+    "title": "Data Collections",
+    "section": "The Data Exchange",
+    "text": "The Data Exchange\n\n\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nOpen from the left sidebar: Exchange. Search by name, tag, or keyword; sort and filter.",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#all-of-us-data-collections",
+    "href": "pages/data/data-collections.html#all-of-us-data-collections",
+    "title": "Data Collections",
+    "section": "All of Us Data Collections",
+    "text": "All of Us Data Collections\n\n\n\n\n\n\n\n\n\nRegistered Tier\nControlled Tier\n\n\n\n\nContains\nEHR, surveys, social determinants of health, lab results, wearables (sensors), physical measurements\nEverything in the Registered Tier plus genomics: WGS, exome, RNA-seq, single-cell, microarray\n\n\nUse it for\nClinical, survey, and lifestyle research: phenotypes, outcomes, health disparities\nGenetic association studies (e.g., GWAS), variant analysis, and anything that needs genomic data\n\n\nAccess\nRegistered Tier training\nControlled Tier training\n\n\nVersion\nSelect from the version drop-down (current: cdrv9)\nSame\n\n\n\n\nBoth are free to add (you pay only for compute and storage)\nAdd to workspace straight from the Exchange, or from a workspace’s Resources tab\nPick the smallest tier you need. You can’t have both tiers in one workspace.\nThe only other collection you can add alongside: GTEx Open Access\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe Exchange lists 10 collections in total.",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#other-collections-on-the-exchange",
+    "href": "pages/data/data-collections.html#other-collections-on-the-exchange",
+    "title": "Data Collections",
+    "section": "Other Collections on the Exchange",
+    "text": "Other Collections on the Exchange\n\n\n\n\n\n\n\n\n\nCollection\nProvider\nWhat it is\nData types\n\n\n\n\nGTEx Open Access\nVerily\nGene expression and its link to genetic variation\nGenomics\n\n\nGP2 Tier 2\nGlobal Parkinson’s Genetics Program\nParkinson’s genetics, 70,000+ people\nGenomics, surveys\n\n\nASAP CRN Harmonized\nAligning Science Across Parkinson’s\nHarmonized Parkinson’s omics\nTranscriptomics\n\n\nProject Baseline (Full)\nVerily\nDeep health profiling study\nEHR, genomics, imaging, eCRF, labs, sensors\n\n\nProject Baseline (Limited)\nVerily\nFree subset of the full study\nImaging, surveys, eCRF, labs\n\n\nPRESCO Immune Profiler\nVerily\nCOVID-19 immune profiling, Long COVID (PASC)\nGenomics, proteomics, labs\n\n\nSightline Wastewater\nVerily\nCommunity pathogen monitoring\nMicrobiomics\n\n\nCervical Cancer: SDOH Screening\nMorehouse School of Medicine\nResearcher-published collection\nImmunology",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#access-levels-on-the-exchange",
+    "href": "pages/data/data-collections.html#access-levels-on-the-exchange",
+    "title": "Data Collections",
+    "section": "Access Levels on the Exchange",
+    "text": "Access Levels on the Exchange\n\nReader → Add to workspace: you can add it right away\n\nAll of Us Registered and Controlled Tiers, GTEx Open Access\n\nDiscover → Get access: you can see the description but have to request access first\n\nInstantly Accessible: access is granted right away (PRESCO, Baseline Limited)\n\nFree badge: no charge for the data itself. Collections without it may cost money or need approval.\nExplore cohorts: shown on each collection, but not available for the All of Us collections\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe non-All of Us collections come from Verily and its partners. Their terms are separate from the All of Us Data User Code of Conduct. An All of Us workspace can hold one All of Us tier (Registered or Controlled) plus GTEx Open Access; the other collections can’t be added to it. Explore cohorts is grayed out and can’t be clicked for the All of Us collections (checked October 2026). For other collections it is meant to preview cohorts in Data Explorer before adding the collection.",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#your-data-collections-page",
+    "href": "pages/data/data-collections.html#your-data-collections-page",
+    "title": "Data Collections",
+    "section": "Your Data Collections Page",
+    "text": "Your Data Collections Page",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/data/data-collections.html#using-the-data-collections-page",
+    "href": "pages/data/data-collections.html#using-the-data-collections-page",
+    "title": "Data Collections",
+    "section": "Using the Data Collections Page",
+    "text": "Using the Data Collections Page\n\nLeft sidebar → Data collections lists every collection you have access to\n\nName, cloud (GCP), last modified, created by, and your access level\nFilter by favorite, cloud, creator, or access level; ⭐ favorites to pin them\n\nReader = you can view and use the data, but not change the collection\nThe Recent data collections panel lists the ones you’ve opened lately\n+ New data collection: researchers can publish their own collections (e.g., the Morehouse collection on the Exchange)\n\nExchange = find and get access to collections · Data collections = the ones you already have\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nCollections only appear here after you have access: the All of Us tiers via your account access, GTEx because it’s open. Creating a collection is beyond this intro.",
+    "crumbs": [
+      "Data",
+      "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html",
+    "href": "pages/examples/notebooks.html",
+    "title": "Example Notebooks",
+    "section": "",
+    "text": "These R notebooks walk through a complete study comparing a diabetes (study) cohort with a non-diabetes (control) cohort, including chronic kidney disease (CKD) outcomes. Run them in order: 0.0 → 1.1–1.3 → 2.0 → 3.0.\nVariables used: age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html#getting-the-notebooks-into-your-workspace",
+    "href": "pages/examples/notebooks.html#getting-the-notebooks-into-your-workspace",
+    "title": "Example Notebooks",
+    "section": "Getting the notebooks into your workspace",
+    "text": "Getting the notebooks into your workspace\nThe notebooks only run inside an All of Us workspace: they query the All of Us data with BigQuery and read and write files in your bucket.\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward. See the GitHub Guide.\nDownload and upload: download the .ipynb files above and upload them to your app.\n\nThen launch an R app (e.g., AoU Jupyter with an R kernel). See Apps.\nR packages: tidyverse, bigrquery, dplyr, lubridate, stringr, tidyr, purrr, broom, survival, survminer\n\n\n\n\n\n\nImportantCode only\n\n\n\nThis repository contains code only, no All of Us data. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20.",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html",
+    "href": "pages/extras/extras.html",
+    "title": "Optional Extras",
+    "section": "",
+    "text": "Useful tools you don’t need for the basics.",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html#try-it-practice-with-synthetic-data",
+    "href": "pages/extras/extras.html#try-it-practice-with-synthetic-data",
+    "title": "Optional Extras",
+    "section": "Try It: Practice with Synthetic Data",
+    "text": "Try It: Practice with Synthetic Data\nGoogle hosts a free, synthetic (fake) OMOP dataset: CMS SynPUF. It has the same table layout as the All of Us CDR, with no real participants.\nAdd it as a BigQuery dataset reference:\n\nProject ID: bigquery-public-data\nDataset ID: cms_synthetic_patient_data_omop\n\nThen query it from an app:\nlibrary(bigrquery)\nquery &lt;- \"SELECT gender_concept_id, COUNT(*) AS n\n          FROM `bigquery-public-data.cms_synthetic_patient_data_omop.person`\n          GROUP BY gender_concept_id\"\ndf &lt;- bq_table_download(bq_project_query(Sys.getenv(\"GOOGLE_CLOUD_PROJECT\"), query))\n👉 Use a separate practice workspace with no All of Us data. Controlled Tier perimeters may block outside data.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Work with OMOP data in BigQuery” (their example uses Python). Example notebooks: github.com/verily-src/workbench-examples. Because it’s synthetic, students can share results and screenshots freely, unlike All of Us data. Queries are billed to your pod (BigQuery charges by data scanned; small queries like this cost very little). GOOGLE_CLOUD_PROJECT and GOOGLE_PROJECT are both set in Workbench apps, with the same value.",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html#add-a-file-from-a-url",
+    "href": "pages/extras/extras.html#add-a-file-from-a-url",
+    "title": "Optional Extras",
+    "section": "Add a File from a URL",
+    "text": "Add a File from a URL\nCopy a public file from the web straight into your bucket. No download or upload needed.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nResources tab → select your bucket → Add file via URL\nURL: a public or signed link to the file\nFile name: what to call it in the bucket (the default is import- + date and time)\nClick Add file to bucket and wait for it to finish\n\n\nFiles up to 100 MB\n\n⚠️ In a Controlled Tier workspace this may fail (“Couldn’t add that file”): the perimeter blocks many outside downloads. Instead, upload the file in JupyterLab, or keep it in a GitHub repo and clone it.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Add files to Cloud Storage via URL”, and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. Tested October 2026 in the intro-to-AoU Controlled Tier workspace: a public GitHub raw URL (reachable from outside, HTTP 200) failed with “Couldn’t add that file. Try again later, or contact support for help.” Most likely the perimeter blocks the transfer. It should work in workspaces without a perimeter (e.g., a practice workspace with no All of Us data). GitHub over git/SSH does work inside the perimeter.",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html#connect-github",
+    "href": "pages/extras/extras.html#connect-github",
+    "title": "Optional Extras",
+    "section": "Connect GitHub",
+    "text": "Connect GitHub\nWhy: back up your code, track changes, and share it with collaborators\nAdd your Workbench SSH key to GitHub (once):\n\nProfile icon (top right) → Manage your profile → Groups & keys tab\nCopy your public SSH key. Workbench creates one for you.\nIn GitHub: Settings → SSH and GPG keys → New SSH key. Paste it and give it a clear name, e.g., Workbench SSH key.\nIf your GitHub organization uses single sign-on (SSO), authorize the key for it\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Git integrations with cloud apps”. CLI alternatives: wb security ssh-key get (show the key) and wb security ssh-key generate (make a new one). The key is needed to push to any repo and to clone private ones; cloning a public repo over https works without it. GitHub is reachable from inside an All of Us (Controlled Tier) workspace: tested with ssh -T git@github.com, clone, and push. Source for the testing: the CWML guide “Sharing Your All of Us Workbench Code on GitHub”.\n\n\n\nFull step-by-step instructions, including troubleshooting: GitHub Guide",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html#add-a-repository",
+    "href": "pages/extras/extras.html#add-a-repository",
+    "title": "Optional Extras",
+    "section": "Add a Repository",
+    "text": "Add a Repository\nApps tab → Git repositories → + Add repository\n\nPublic repo: use the https://github.com/… URL (no key needed)\nPrivate repo: use the git@github.com:… URL (needs your SSH key)\nIt’s cloned automatically into apps you create afterward. For an app you already have, run this in its terminal:\n\nwb git clone --resource=&lt;repo resource name&gt;\nThen work as usual: git add → git commit → git push\n⚠️ Commit code only. Clear notebook outputs first, e.g., jupyter nbconvert --clear-output --inplace *.ipynb. Never commit data files or results.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThis repository (CWML All-of-Us-Training-Resources) is a public example students could add. Outputs can contain participant-level data or small counts, which must not leave the Workbench.",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html#github-things-to-know",
+    "href": "pages/extras/extras.html#github-things-to-know",
+    "title": "Optional Extras",
+    "section": "GitHub: Things to Know",
+    "text": "GitHub: Things to Know\n\nTest the connection: ssh -T git@github.com. “Hi username! You’ve successfully authenticated…” means it works.\nSet your name and email once per app: git config --global user.name / user.email. For a public repo, use your GitHub noreply email.\nClone into your home folder (~), not ~/workspace/…. That’s a mounted bucket, and Git doesn’t work well there.\nThe clone lives on the app’s disk. Push before you delete the app.\n\n⚠️ Before every push: clear outputs, leave out data files (.csv, .vcf…), check for passwords or tokens, and read git status. Pushed data by mistake? Deleting it in a new commit doesn’t remove it from Git history. Make the repo private and contact All of Us support.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFrom the CWML guide “Sharing Your All of Us Workbench Code on GitHub”. It covers adding work to an existing repo (branch and pull request), creating a new repo, keeping in sync, and troubleshooting. Two copies of a notebook drift apart: work from the repo copy, not the copy in ~/workspace.",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/extras/extras.html#ai-tools-use-them-outside-the-workbench",
+    "href": "pages/extras/extras.html#ai-tools-use-them-outside-the-workbench",
+    "title": "Optional Extras",
+    "section": "AI Tools: Use Them Outside the Workbench",
+    "text": "AI Tools: Use Them Outside the Workbench\nInterested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? Use it outside the Workbench, for coding help only.\nWhy not inside the Workbench?\n\nAll of Us does not allow participant-level data to leave the Workbench, and that includes sending it to an AI service\nAI coding assistants like Claude Code can open files and run code on their own. It’s easy for them to read data files, query results, or notebook outputs that contain participant-level data.\nEven one accidental read counts as a Data User Code of Conduct violation, even if nothing is stored\n\n👉 How: get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.",
+    "crumbs": [
+      "Optional Extras"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html",
+    "href": "pages/get-started/about.html",
+    "title": "About All of Us",
+    "section": "",
+    "text": "A national initiative by the NIH\nLaunched in 2018\nGoal: gather health data from over 1 million people\nParticipants join voluntarily\n\nby signing up at JoinAllofUs.org\nor through a participating health care provider",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#background",
+    "href": "pages/get-started/about.html#background",
+    "title": "About All of Us",
+    "section": "",
+    "text": "A national initiative by the NIH\nLaunched in 2018\nGoal: gather health data from over 1 million people\nParticipants join voluntarily\n\nby signing up at JoinAllofUs.org\nor through a participating health care provider",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#vision-and-goals",
+    "href": "pages/get-started/about.html#vision-and-goals",
+    "title": "About All of Us",
+    "section": "Vision and Goals",
+    "text": "Vision and Goals\n\nEnable precision medicine using data on lifestyle, environment, and genetics\nShift from one-size-fits-all to personalized healthcare\nBoost health research and medical breakthroughs\nMake healthcare tailored and equitable\nSupport diverse studies reflecting all populations",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#what-makes-it-unique",
+    "href": "pages/get-started/about.html#what-makes-it-unique",
+    "title": "About All of Us",
+    "section": "What Makes It Unique",
+    "text": "What Makes It Unique\n\nParticipant-centered: participants can view and access their own data\nOpen science: de-identified data available to registered researchers\nResearch opportunities: health disparities, environmental impacts, disease prevention and treatment\nPhenotypic and genotypic data in one place\nScalability and innovation: complex analyses, AI and machine learning",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#data-sources",
+    "href": "pages/get-started/about.html#data-sources",
+    "title": "About All of Us",
+    "section": "Data Sources",
+    "text": "Data Sources\n\n\n\n\n\n\n\n\n\nSource\nDescription\n\n\n\n\n\nSurveys\nLifestyle, medical history, healthcare access, etc.\n\n\n\nEHR\nStandardized with the OMOP Common Data Model\n\n\n\nWearables\nHeart rate, activity, or sleep data from devices like Fitbit\n\n\n\nPhysical measurements\nEHRs, self-reported height and weight, in-person visits\n\n\n\nGenomic\nWhole genome sequencing and genotyping from blood, saliva, and urine",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#the-curated-data-repository-cdr",
+    "href": "pages/get-started/about.html#the-curated-data-repository-cdr",
+    "title": "About All of Us",
+    "section": "The Curated Data Repository (CDR)",
+    "text": "The Curated Data Repository (CDR)\n\nData are organized in a curated data repository (CDR)\n\nDe-identified\nCleaned, validated, standardized (OMOP CDM)\nReleased in numbered versions (current: CDRv9)\n\nHosted on Google Cloud Platform, queried with Google BigQuery\n\nSQL-based; usable from R or Python\nBilled for queries run and data processed (large genomic queries can be costly)\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nCDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace).",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#whats-in-cdr-v9",
+    "href": "pages/get-started/about.html#whats-in-cdr-v9",
+    "title": "About All of Us",
+    "section": "What’s in CDR v9?",
+    "text": "What’s in CDR v9?\nMore than 747,000 participants\n\n\n\n\n\nData type\nParticipants\n\n\n\n\nSurveys\n&gt; 747,000\n\n\nPhysical measurements\n&gt; 600,000\n\n\nWhole genome sequencing\n&gt; 535,000\n\n\nEHR\n&gt; 481,000\n\n\nExploring the Mind\n&gt; 97,000\n\n\nFitbit\n&gt; 68,000\n\n\nLong-read genomes\n&gt; 14,000\n\n\n\n\n\n\n\n\nGenomics and multi-omics\nParticipants\n\n\n\n\nGenotyping arrays\n553,949\n\n\nShort-read WGS (SNPs/indels)\n535,662\n\n\nStructural variants\n96,405\n\n\nLong-read WGS\n14,521\n\n\nProteomics\n9,969\n\n\nRNA-seq\n8,980\n\n\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nNot every participant has every data type: e.g., about two-thirds have EHR data, and Fitbit data covers fewer than 1 in 10. Check the data type you need before planning a study. Genomic data is Controlled Tier only.",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/about.html#data-access-tiers",
+    "href": "pages/get-started/about.html#data-access-tiers",
+    "title": "About All of Us",
+    "section": "Data Access Tiers",
+    "text": "Data Access Tiers\n\nRegistered Tier: EHR, surveys, social determinants of health, lab results, physical measurements, and wearables (sensors)\nControlled Tier: everything in the Registered Tier plus genomic data\n\nRequires additional Controlled Tier training\n\nEach tier is available in Workbench 2.0 as a data collection",
+    "crumbs": [
+      "Get Started",
+      "About All of Us"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html",
+    "href": "pages/get-started/billing.html",
+    "title": "Billing",
+    "section": "",
+    "text": "Everything you run in the Workbench (apps, queries, storage) costs money. It’s paid for through a pod.",
+    "crumbs": [
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html#initial-credits",
+    "href": "pages/get-started/billing.html#initial-credits",
+    "title": "Billing",
+    "section": "Initial credits",
+    "text": "Initial credits\n\n$300 in initial credits per registered researcher\n\nApplied automatically to compute costs\nExpire 365 days after you first get Workbench access\nTied to your personal pod, user-pod-firstname-lastname-####. A workspace’s Workspace details panel (right side, under Pod) shows which pod pays for it.\n\nWhen credits run out or expire:\n\nYou can’t launch or open analysis environments\nStored resources (buckets, disks) may be deleted\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSet up a Google Cloud billing account and billing pod before your credits run out or expire.",
+    "crumbs": [
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html#billing-pods",
+    "href": "pages/get-started/billing.html#billing-pods",
+    "title": "Billing",
+    "section": "Billing pods",
+    "text": "Billing pods\n\nA pod connects your workspaces to a Google Cloud billing account\n\nWorkspace costs are charged to the pod\nThink of the pod as your billing account inside the Workbench\n\nOne pod can pay for many workspaces\nYou can invite other users to your pod (e.g., lab members)\nAll of Us researchers have the Pod Manager role, so you can create your own pod\n\n\n\n\n\n\n\nWarningWatch out\n\n\n\n\nA pod links to only one billing account\nA workspace’s pod can’t be changed later. To switch pods, you have to duplicate the workspace.\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nInitial credits are linked to the personal user pod. Check a workspace’s Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.",
+    "crumbs": [
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
+    "href": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
+    "title": "Billing",
+    "section": "Getting a billing account at Yale",
+    "text": "Getting a billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.",
+    "crumbs": [
+      "Get Started",
+      "Billing"
+    ]
+  },
+  {
+    "objectID": "pages/resources.html",
+    "href": "pages/resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "Save everything to your bucket: notebooks, cleaned data, plots, logs. Files left on the app’s disk are lost if the app crashes or is deleted.\nUse GitHub for your code, and push every day. It’s your backup if an app fails.\n\nConnect GitHub with your Workbench SSH key (see the GitHub guide)\n⚠️ Code only: clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.\n\nAI tools: use them outside the Workbench, for code only (see AI tools)\nStop apps when you’re not using them\nKeep your description up to date, along with your Research Use Statement\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Workbench best practices”."
+  },
+  {
+    "objectID": "pages/resources.html#good-habits",
+    "href": "pages/resources.html#good-habits",
+    "title": "Resources",
+    "section": "",
+    "text": "Save everything to your bucket: notebooks, cleaned data, plots, logs. Files left on the app’s disk are lost if the app crashes or is deleted.\nUse GitHub for your code, and push every day. It’s your backup if an app fails.\n\nConnect GitHub with your Workbench SSH key (see the GitHub guide)\n⚠️ Code only: clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.\n\nAI tools: use them outside the Workbench, for code only (see AI tools)\nStop apps when you’re not using them\nKeep your description up to date, along with your Research Use Statement\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Workbench best practices”."
+  },
+  {
+    "objectID": "pages/resources.html#helpful-resources",
+    "href": "pages/resources.html#helpful-resources",
+    "title": "Resources",
+    "section": "Helpful Resources",
+    "text": "Helpful Resources\n\nResearcher Workbench Getting Started Guide\nWorkbench 2.0 Glossary of Terms and Comparison Guide\nData Explorer in Researcher Workbench\nUsing All of Us Initial Credits\nSet up billing with pods (Verily)\nVerily Workbench documentation"
+  },
+  {
+    "objectID": "pages/resources.html#future-directions",
+    "href": "pages/resources.html#future-directions",
+    "title": "Resources",
+    "section": "Future Directions",
+    "text": "Future Directions\nFuture CWML/BIDS courses to help you work with All of Us:\n\nR, Python, SQL\nOMOP Common Data Model\nOpen to suggestions!\nLet us know if you’d like to present your All of Us work\nCheck the library training calendar for current courses"
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html",
+    "href": "pages/workspace/research-use-statement.html",
+    "title": "Research Use Statement",
+    "section": "",
+    "text": "When you add an All of Us data collection to a workspace (see Setting Up a Workspace), you answer these questions about your research. Our example answers are for an instructional workspace.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-1",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-1",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 1",
+    "text": "Research Use Statement: Question 1\n\n\n\n\n\n\n\n\n\n\nWhat is the primary purpose of your project?\n\nResearch\nEducation ← our example (instructional workspace)\nFor-profit\nOther\n\n8 pages of questions in total\nAnswer for your own project. Answers marked Publicly displayed appear in the Research Hub Directory.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThis example workspace is for teaching, so we answer as an education project. Students doing research should choose Research purpose and describe their actual project.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-2",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-2",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 2",
+    "text": "Research Use Statement: Question 2\n\n\n\n\n\nSummarize your research purpose in plain language:\n\n2.1 Your scientific question(s), and why they matter\n2.2 Your approach: datasets, methods, and tools\n2.3 Your anticipated findings\n\nEach answer: 100–1,000 characters\n⚠️ Answers under 100 characters give an error. Add enough detail to explain your project.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nExample answer for this instructional workspace (used for 2.1–2.3): “This workspace is intended solely for instructional purposes and not for research. I will use this workspace to teach others how to navigate the All of Us Workbench, create workspaces, build cohorts and datasets, and analyze the data provided within the workbench.” Students should describe their real project: hypothesis, methods, and expected findings, with as little jargon as possible.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-3",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-3",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 3",
+    "text": "Research Use Statement: Question 3\n\n\n\n\n\n\n\n\n\n\nHow will you share your findings?\n\nChoose all that apply: journals, conferences, community forums, social media, blogs, press…\nName the venue if you know it (journal, conference, blog, etc.)\nOther requires a short explanation\n\nOur example: Other. The workspace is for teaching, so there are no findings to share.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nAll of Us encourages sharing results with both scientific and community audiences, to recognize participants’ contributions. Example answer: “The purpose of this workspace is to provide instruction, not research. I do not plan on disseminating anything from the work done here.”",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-4",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-4",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 4",
+    "text": "Research Use Statement: Question 4\n\n\n\n\n\n\n\n\n\n\nHow does your project fit the All of Us Scientific Framework?\nSelect all outcomes you expect:\n\nWellness, resilience, healthy living\nHealth equity for underrepresented (UBR) populations\nRisk assessment and prevention\nEarlier, more accurate diagnosis\nBetter treatment and precision interventions\n\nOur example: None of these apply (teaching workspace)",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-5",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-5",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 5",
+    "text": "Research Use Statement: Question 5\n\n\n\n\n\n\n\n\n\n\nPopulation of interest: will your study focus on historically underrepresented populations?\n\nYes: select the groups, e.g., race/ethnicity, age, sex at birth, gender identity, sexual orientation, geography, disability, access to care, education, income\nNo: a diverse sample in general, or well-represented populations\n\nOur example: No (teaching workspace)\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nAll of Us asks this to track how well it serves underrepresented communities and to guard against stigmatizing findings. Encourage students to think about whether their design, methods, or analyses could harm individuals, groups, or communities. Fields marked * are altered, suppressed, or generalized in the Registered Tier for privacy; see the Data Dictionary.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-6",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-6",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 6",
+    "text": "Research Use Statement: Question 6\n\n\n\n\n\n\n\n\n\n\nAI/AN Policy Assessment\nWill your study produce findings specific to American Indian and Alaska Native (AI/AN) populations?\n\nAI/AN-only study population\nAI/AN case or control group\nResults broken down so AI/AN-specific findings may appear\nNo AI/AN-specific analyses\n\nThen explain your answer (required)\nOur example: no AI/AN-specific analyses. If that changes, you must update your answers.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nAll of Us has a policy on respectful research with AI/AN populations; this question checks whether it applies to your project. Students whose work could produce AI/AN-specific findings should read the policy before starting.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-question-7",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-question-7",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Question 7",
+    "text": "Research Use Statement: Question 7\n\n\n\n\n\n\n\n\n\n\n\n\n\nRequest a review of your research purpose?\n\nResearch using demographic variables can unintentionally produce findings that stigmatize participants or communities\nYou can ask the Resource Access Board (RAB) to review your purpose\n\nReply within 5 business days; keep working meanwhile\n\nThis answer is private (not on the Research Hub)\n\nOur example: No concerns. The RAB is available any time via the User Support Hub.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSee the All of Us Stigmatizing Research Policy for more detail. If students are unsure, encourage them to request the review; it’s a precaution, not a penalty.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/research-use-statement.html#research-use-statement-page-8",
+    "href": "pages/workspace/research-use-statement.html#research-use-statement-page-8",
+    "title": "Research Use Statement",
+    "section": "Research Use Statement: Page 8",
+    "text": "Research Use Statement: Page 8\n\n\n\n\n\n\n\n\n\n\n\n\n\nReview and confirm\nThese answers are publicly displayed to inform All of Us participants:\n\nQ1 Primary purpose of your project\nQ2 Summary of research purpose\nQ5 Population of interest\nQ6 Approach to handling AI/AN data\n\nCheck that they’re detailed and in plain language, then click Confirm\nYou can go Back to change answers now, or edit them later after the workspace is created\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nQ3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displayed publicly.",
+    "crumbs": [
+      "Your Workspace",
+      "Research Use Statement"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html",
+    "href": "pages/workspace/setup.html",
+    "title": "Setting Up a Workspace",
+    "section": "",
+    "text": "This page uses our example workspace, intro-to-AoU, created for instruction only.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#creating-a-workspace",
+    "href": "pages/workspace/setup.html#creating-a-workspace",
+    "title": "Setting Up a Workspace",
+    "section": "Creating a Workspace",
+    "text": "Creating a Workspace\nLeft sidebar → Workspaces → + New workspace\n\n\n\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThree steps: Enter details → Set policies → Add description.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-1-enter-details",
+    "href": "pages/workspace/setup.html#step-1-enter-details",
+    "title": "Setting Up a Workspace",
+    "section": "Step 1: Enter Details",
+    "text": "Step 1: Enter Details\n\n\n\n\n\nYou fill in:\n\nWorkspace name: only visible to people with access; you can change it later\nSummary: a short description (up to 140 characters)\n\nFilled in automatically:\n\nWorkspace ID: made from the name; used by the CLI. Changing it later breaks links to the workspace.\nPod: your default billing pod\n\nClick Next\n⚠️ The pod can’t be changed after the workspace is created\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe auto-selected pod is your personal user pod (user-pod-firstname-lastname-####). If you’ve set up a Yale billing pod, choose it here from the drop-down.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-2-set-policies",
+    "href": "pages/workspace/setup.html#step-2-set-policies",
+    "title": "Setting Up a Workspace",
+    "section": "Step 2: Set Policies",
+    "text": "Step 2: Set Policies\n\n\n\n\n\nSharing (group policy):\n\nNo, don’t apply policy: the default; fine for most projects\nLimit discoverability: only members of the selected groups can see the workspace\n\nRegion:\n\nWhere your apps and resources are kept. Pick the one closest to you (Yale: us-east4).\nCan be changed later; only new resources use it\n\nClick Next\n⚠️ Group policies can’t be removed once applied\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nGroup policies also carry over to duplicates of the workspace. Access still has to be granted separately; a group policy only limits who can be given access. Region also affects cost: Verily notes prices can vary by about 25% between regions. Yale is on the East Coast, so us-east4 (Virginia) is the closest region.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-3-add-description",
+    "href": "pages/workspace/setup.html#step-3-add-description",
+    "title": "Setting Up a Workspace",
+    "section": "Step 3: Add Description",
+    "text": "Step 3: Add Description\n\n\n\n\n\nDescription:\n\nWhat the workspace is for: its purpose, data, and tools\nHelps you and your collaborators\nYou can edit it any time\n\nClick Create workspace\n⚠️ The description is publicly accessible. Anyone can see it, so don’t put sensitive details in it.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#your-new-workspace",
+    "href": "pages/workspace/setup.html#your-new-workspace",
+    "title": "Setting Up a Workspace",
+    "section": "Your New Workspace",
+    "text": "Your New Workspace\nGo to the Resources tab → + Data from catalog\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nWorkspace tabs: Overview, Resources (data and cloud storage), Apps (JupyterLab, RStudio, SAS…), Workflows. Edit and Share are at the top right. A new workspace starts with 0 resources and 0 active policies; the policies come in when you add a data collection.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#adding-a-data-collection",
+    "href": "pages/workspace/setup.html#adding-a-data-collection",
+    "title": "Setting Up a Workspace",
+    "section": "Adding a Data Collection",
+    "text": "Adding a Data Collection\nA new workspace has no data until you add a data collection.\nResources tab → + Data from catalog (or Add to workspace on the Exchange), then:\n\nSelect collection: All of Us Registered Tier or Controlled Tier\nSelect resource: e.g., the CDR version\nReview policies: answer the Researcher Use Statement questions\nReview selection → Add to your workspace",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-1-select-collection",
+    "href": "pages/workspace/setup.html#step-1-select-collection",
+    "title": "Setting Up a Workspace",
+    "section": "Step 1: Select Collection",
+    "text": "Step 1: Select Collection\n\n\n\n\n\n\n\n\n\n\n\nPick the collection you need. Here: All of Us Controlled Tier\nYou add references: pointers to the existing data\n\nNo copying or data migration\nThe source data isn’t affected\n\nStatus column:\n\nPerimeter required: adding it puts a security perimeter on your workspace\n✅ No extra policy needed (e.g., GTEx)\n\n\nClick Next\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nOnly collections you have access to appear here (the same list as your Data collections page). The GCP filter is on by default.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-2-select-resources",
+    "href": "pages/workspace/setup.html#step-2-select-resources",
+    "title": "Setting Up a Workspace",
+    "section": "Step 2: Select Resources",
+    "text": "Step 2: Select Resources\n\n\n\n\n\n\n\n\n\n\n\nThe collection version (cdrv9) holds 9 resources\nChoose some or all. Here: Select all resources\nTwo kinds of resources:\n\nBigQuery datasets: data tables you query with SQL\nCloud Storage buckets/objects: files, e.g., genomic data\n\n\nClick Next",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#whats-in-cdrv9-controlled-tier",
+    "href": "pages/workspace/setup.html#whats-in-cdrv9-controlled-tier",
+    "title": "Setting Up a Workspace",
+    "section": "What’s in cdrv9 (Controlled Tier)?",
+    "text": "What’s in cdrv9 (Controlled Tier)?\n\n\n\n\n\n\n\n\nResource\nType\nWhat it holds\n\n\n\n\nC2025Q4R6\nBigQuery\nThe main CDR v9: OMOP tables (EHR, surveys, measurements…); data through Jan 1, 2025\n\n\nprep_C2025Q4R6\nBigQuery\nSupporting tables for the CDR (no description given)\n\n\nC_V9_R3_aou_biospecimen, C_v9_R6_aou_biospecimen\nBigQuery\nBiospecimen data\n\n\nC_V9_R6_offcycle_healthkit\nBigQuery\nApple HealthKit data\n\n\nC_V9_R6_offcycle_nlp\nBigQuery\nNew in v9: concepts extracted from clinical notes with NLP (&gt; 99,000 participants)\n\n\nv9-genomics-folder\nCloud Storage\nGenomic data files\n\n\nvwb_aou_allxall_v8\nCloud Storage\nAll by All (v8) association results\n\n\nvwb-aou-datasets-controlled-v9\nCloud Storage\nControlled Tier dataset files. ⚠️ Requester pays: reading it is billed to your pod\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: All of Us “Curated Data Repository (CDR) version 9 Release Notes” (Controlled Tier C2025Q4R6, Registered Tier R2025Q4R6, participant data cutoff January 1, 2025; first release of clinical notes with NLP concept extraction). The resources’ Description fields in the Workbench are empty, so the prep_ and vwb-aou-datasets-controlled-v9 descriptions are based on their names. All are referenced resources in project wb-silky-artichoke-2408 (version-bound to cdrv9). The vwb-aou-datasets-controlled-v9 bucket has Requester Pays enabled.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-3-review-policies",
+    "href": "pages/workspace/setup.html#step-3-review-policies",
+    "title": "Setting Up a Workspace",
+    "section": "Step 3: Review Policies",
+    "text": "Step 3: Review Policies\n\n\n\n\n\n\n\n\n\n\nThe Controlled Tier has 6 policies, including:\n\nApp policy: only approved apps can run; other apps in the workspace are deleted\nRegion policy: apps and resources must stay in approved US regions\nResearch Use Statement: click Fill out the questions. You can’t continue until it’s complete.\n\n⚠️ Your answers are public in the Research Hub Directory\n⚠️ Policies can’t be removed once set\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe answers aren’t used to make data access decisions; they’re for transparency to participants. All of Us expects a separate workspace for each project, so the answers should be specific to this project. Scroll down in the dialog to see all 6 policies.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#answer-the-research-use-statement",
+    "href": "pages/workspace/setup.html#answer-the-research-use-statement",
+    "title": "Setting Up a Workspace",
+    "section": "Answer the Research Use Statement",
+    "text": "Answer the Research Use Statement\nAdding an All of Us data collection asks you to answer the Research Use Statement questions. They’re covered step by step on their own page: Research Use Statement.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-3-confirm-policies",
+    "href": "pages/workspace/setup.html#step-3-confirm-policies",
+    "title": "Setting Up a Workspace",
+    "section": "Step 3: Confirm Policies",
+    "text": "Step 3: Confirm Policies\n\n\n\n\n\n\n\n\n\n\n\n\n\nScroll to the bottom of Review policies:\n\nPerimeter policy: the workspace is enrolled in a secure perimeter (can take up to 30 min); services outside it may fail\nGroup policy: collaborators must be in the All of Us Controlled Tier group\nData usage sharing: usage metrics go to All of Us\n\nCheck I’m sure… → Next\n⚠️ These policies are permanent for this workspace\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nBucket browsing in the perimeter: previews up to 5 MB, and only .ipynb, .r, .rmd, and .sas files can be viewed. The group is P_b_aou-prod-ct, so collaborators need Controlled Tier access too.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#step-4-review-selection",
+    "href": "pages/workspace/setup.html#step-4-review-selection",
+    "title": "Setting Up a Workspace",
+    "section": "Step 4: Review Selection",
+    "text": "Step 4: Review Selection\n\n\n\n\n\n\n\n\n\n\n\nCheck the list of resources: 9 from the All of Us Controlled Tier\nMissing something? Go Back\nClick Add to your workspace\n\nThe resources then appear in your workspace’s Resources tab. Allow up to 30 min for the perimeter enrollment to finish.",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/setup.html#data-collection-rules",
+    "href": "pages/workspace/setup.html#data-collection-rules",
+    "title": "Setting Up a Workspace",
+    "section": "Data Collection Rules",
+    "text": "Data Collection Rules\n\nAdd it to every workspace that needs All of Us data\nPolicies are permanently applied to the workspace\nOne tier per workspace: Registered or Controlled, not both\nThe workspace also takes on the collection’s:\n\nPerimeter policy\nNetwork policy: no internet access for batch VMs and Dataproc workers\n\nEach user still needs the matching tier access on their own account",
+    "crumbs": [
+      "Your Workspace",
+      "Setting Up a Workspace"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html",
+    "href": "pages/workspace/workflows.html",
+    "title": "Workflows",
+    "section": "",
+    "text": "Two sub-tabs:\n\nSetup: the workflows added to this workspace. Start new jobs here.\nJob status: follow your jobs and their tasks, and find logs and outputs\n\n\n\nTo start: click + Add workflow\nA new workspace starts with no workflows. Add one before you can run a job.",
+    "crumbs": [
+      "Your Workspace",
+      "Workflows"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html#workflows-tab",
+    "href": "pages/workspace/workflows.html#workflows-tab",
+    "title": "Workflows",
+    "section": "",
+    "text": "Two sub-tabs:\n\nSetup: the workflows added to this workspace. Start new jobs here.\nJob status: follow your jobs and their tasks, and find logs and outputs\n\n\n\nTo start: click + Add workflow\nA new workspace starts with no workflows. Add one before you can run a job.",
+    "crumbs": [
+      "Your Workspace",
+      "Workflows"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html#what-is-a-workflow",
+    "href": "pages/workspace/workflows.html#what-is-a-workflow",
+    "title": "Workflows",
+    "section": "What Is a Workflow?",
+    "text": "What Is a Workflow?\nA pipeline that runs analysis steps for you, in order or in parallel, without an app running. Each step runs in its own container on a temporary cloud machine.\nUse it when you need to: run the same analysis on many files or samples (e.g., genomics), or make it easy to reproduce and share\n\n\n\nTool\nLanguage\nWhere you run it\n\n\n\n\nCromwell\nWDL\nWorkflows tab (or CLI)\n\n\nNextflow\nNextflow (.nf)\nWorkflows tab (or CLI)\n\n\ndsub\nShell commands, one step\nAn app’s terminal\n\n\n\n👉 Most class projects don’t need workflows: an app is enough. Ready-made workflows: Dockstore\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Workflows overview” and “Workflow engines”. All three tools use the Google Batch API to run tasks, and read and write files in buckets (gs:// paths). Tasks run with the workspace’s service account, which can access every bucket in the workspace. Costs (task machines and storage) are billed to the workspace’s pod and are not shown in the app cost estimator.",
+    "crumbs": [
+      "Your Workspace",
+      "Workflows"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html#adding-a-workflow",
+    "href": "pages/workspace/workflows.html#adding-a-workflow",
+    "title": "Workflows",
+    "section": "Adding a Workflow",
+    "text": "Adding a Workflow\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStep 1: Provide source. Where’s the workflow file?\n\nWorkspace bucket: pick the bucket. Workbench lists the workflow files it finds there (search by name).\nGit repository: a repo with the workflow (see the GitHub guide)\n\nSelect the workflow → Next\nStep 2: Review details → add it\nUpload the workflow file (.wdl or .nf) to your bucket first. Until there’s one to select, Next stays grey.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThe bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.",
+    "crumbs": [
+      "Your Workspace",
+      "Workflows"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html#running-a-workflow",
+    "href": "pages/workspace/workflows.html#running-a-workflow",
+    "title": "Workflows",
+    "section": "Running a Workflow",
+    "text": "Running a Workflow\nSetup tab → select the workflow → + New job\n\nFill in the inputs. Workbench builds the form from the workflow file.\nChoose an output bucket for the results\nStart the job, then follow it on Job status: each task’s progress, logs, and outputs\n\nBatch jobs: run one WDL workflow many times in parallel, e.g., once per sample\n\nChoose Run a batch job with inputs defined by an input table\nUpload a CSV (one row per run), then match its columns to the workflow’s inputs\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.",
+    "crumbs": [
+      "Your Workspace",
+      "Workflows"
+    ]
+  },
+  {
+    "objectID": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
+    "href": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
+    "title": "Workflows",
+    "section": "dsub: Jobs from an App",
+    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. It comes with apps created after June 2025.\ndsub_activate                        # turn on dsub in the terminal\n\ndsub \\\n  --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --service-account \"${PET_SA_EMAIL}\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  &lt;container image with samtools&gt; \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.",
+    "crumbs": [
+      "Your Workspace",
+      "Workflows"
+    ]
+  }
+]

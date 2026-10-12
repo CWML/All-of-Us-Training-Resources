@@ -1,0 +1,51 @@
+---
+title: "Workspaces"
+description: "What workspaces are for, the Workspaces page, access levels, and sharing"
+---
+
+## Your Workspaces
+
+![](<../../Intro to workbench 2.0/images/workspaces.png>){fig-align="center"}
+
+## What Workspaces Are For
+
+- A workspace is **where you do your research**: data collections, cohorts, datasets, notebooks, apps, and files for one project
+- Have **more than one** (e.g., one per project or per tier)
+- **Shareable** with collaborators
+- **Billed individually** through the workspace's **pod**, so set up billing first
+
+## Using the Workspaces Page
+
+- **Left sidebar → Workspaces** lists every workspace you can access
+  - Filter by favorite, cloud, creator, or access level; ⭐ favorites to pin them
+  - **Recent workspaces** panel on the right
+
+**Your access level** decides what you can do:
+
+| Role | Change things (resources, apps, details) | Share | Delete | Duplicate |
+|---|:-:|:-:|:-:|:-:|
+| **Owner** | ✅ | ✅ | ✅ | ✅ |
+| **Writer** | ✅ | ❌ | ❌ | ✅ |
+| **Reader** | ❌ | ❌ | ❌ | ✅ |
+
+Featured tutorial workspaces are **Reader**, so **duplicate** them to run the code (the "(Copy)" workspace).
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Featured tutorial workspaces shown: "Getting Started with Controlled Tier Data (v9)" and "All by All (v8)". The greyed-out row shows a workspace being deleted; deleting unused workspaces stops their charges. Source for roles: Verily, "Access control and sharing".
+:::
+
+## Sharing a Workspace
+
+**Only Owners can share.** In the workspace, click **Share** (top right), then:
+
+1. Enter your collaborator's **email**: the one linked to their Workbench account
+2. Choose their role: **Owner**, **Writer**, or **Reader**
+
+- They must **already have a Workbench account**. You can't invite someone who hasn't registered yet.
+- They get access to the resources **you created** in the workspace (buckets, datasets), at their role's level
+- **References** to outside data are **not** shared automatically. The data's owner has to grant access.
+- With a **group policy**, only group members can open it. You won't be warned if you share with someone outside the group.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+For All of Us workspaces, collaborators also need their own All of Us data access (Registered or Controlled Tier) to see the data collection. Verily recommends sharing with Workbench groups rather than individuals for larger teams; that's beyond what students need here.
+:::

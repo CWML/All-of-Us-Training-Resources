@@ -1,0 +1,100 @@
+---
+title: "Storage & Costs"
+description: "Saving and reading files in your bucket, workspace variables, storage, and saving money"
+---
+
+## Working in Your App
+
+- One query per domain/concept set
+- Write your own code to clean and manipulate the data
+- **Save cleaned data to workspace storage** so you don't re-run the queries every session
+
+## Snippets Are Gone: Use Your Bucket Folder
+
+**Classic Workbench:** copy files to and from the workspace bucket with **code snippets** (e.g., `copy_file_from_workspace_bucket.R`) that ran `gsutil`
+
+**Workbench 2.0:** no Snippets menu. Your buckets are **automatically mounted as folders** in every app:
+
+```
+/home/jupyter/workspace/<bucket name>/     standard apps (JupyterLab, R, SAS)
+/home/dataproc/workspace/<bucket name>/    Spark (Dataproc) apps
+```
+
+So you save and read files with **regular** R or Python functions, as if the bucket were a local folder. (No bucket yet? See [New Cloud Storage Bucket](resources.qmd#new-cloud-storage-bucket).)
+
+- **Your own buckets:** read **and** write
+- **References**, including data collection buckets (e.g., `v9-genomics-folder`): **read-only**. Don't save outputs there.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+If you put a resource inside a folder on the Resources tab, the folder becomes part of the path (use quotes if the folder name has spaces). Mounts don't update on their own: a bucket you add (or rename) after the app starts won't show up until you restart the app or run wb resource mount (or wb resource mount --id=<resource> for one). A folder ending in _NO_ACCESS, _NOT_FOUND, or _MOUNT_FAILED means that mount failed. Duplicated workspaces keep their mounts. Source: Verily, "Access workspace files and folders".
+:::
+
+## Saving and Reading Files
+
+**R**
+
+```{.r code-line-numbers="false"}
+bucket <- file.path(Sys.getenv("HOME"), "workspace", "workspace-bucket")
+
+readr::write_csv(clean_df, file.path(bucket, "clean_data.csv"))   # save
+clean_df <- readr::read_csv(file.path(bucket, "clean_data.csv"))  # read
+```
+
+**Python**
+
+```{.python code-line-numbers="false"}
+import os, pandas as pd
+bucket = os.path.expanduser("~/workspace/workspace-bucket")
+
+clean_df.to_csv(f"{bucket}/clean_data.csv", index=False)   # save
+clean_df = pd.read_csv(f"{bucket}/clean_data.csv")         # read
+```
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Replace workspace-bucket with your bucket's name as shown in the Resources tab. HOME / ~ points to /home/jupyter or /home/dataproc depending on the app, so this code works in both. The folder tree under ~/workspace matches the folders in the Resources tab. Apps use a standard disk, so files saved anywhere else on the app (e.g., the home directory) are lost if the app crashes or is deleted.
+:::
+
+## Workspace Variables
+
+Some settings are **already defined** in every app. Others you define yourself.
+
+| Variable | Set for you? | What it is |
+|---|:-:|---|
+| `GOOGLE_CLOUD_PROJECT` (also `GOOGLE_PROJECT`) | ✅ | Your workspace's Google Cloud project; BigQuery bills queries to it |
+| `PET_SA_EMAIL` | ✅ | Your workspace service account (used by dsub) |
+| `WORKSPACE_BUCKET` | ❌ | Classic Workbench only. Use your bucket's folder instead. |
+| `WORKSPACE_CDR` | ❌ | Classic Workbench only. Define the dataset path yourself. |
+| `EXPORT_BUCKET` | ❌ | Used by Data Explorer's exported notebooks. Set it yourself. |
+
+```{.r code-line-numbers="false"}
+project <- Sys.getenv("GOOGLE_CLOUD_PROJECT")                              # set for you
+bucket  <- file.path(Sys.getenv("HOME"), "workspace", "workspace-bucket")  # your bucket
+CURRENT_DATASET <- "<project-id>.<dataset-id>"   # copy from a Data Explorer query (FROM line)
+```
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Checked in a new Workbench 2.0 workspace with env | grep -E 'WORKSPACE|GOOGLE|PET_SA'. The tutorial workspaces define WORKSPACE_BUCKET and WORKSPACE_CDR in their setup scripts, so code copied from classic Workbench notebooks will find them empty ("") elsewhere. The CDR dataset path is in the queries Data Explorer generates (the FROM clause), and in the data collection's BigQuery resources on the Resources tab.
+:::
+
+## Storage
+
+- **Workspace bucket:** shared, permanent, and the cheapest option for long-term storage. Recommended. (You create it; see [New Cloud Storage Bucket](resources.qmd#new-cloud-storage-bucket).)
+- **App disk:** attached to an app. Charged **until the app is deleted**, even when stopped. Files on it survive *Stop* but are **lost** on *Delete*.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+See [What is an app?](apps.qmd#what-is-an-app) and [Reading the cost estimate](apps.qmd#reading-the-cost-estimate) on the Apps page.
+:::
+
+## Saving Money
+
+- Save your data to workspace storage
+- **Stop or delete apps** you aren't using; keep **autostop** on
+- Your notebooks and data in workspace storage stay intact
+- Start a new app any time to pick up where you left off
+- Delete workspaces you no longer need
+
+⚠️ Deleting a workspace **permanently deletes** everything created in it, **including your bucket and its files**. It can't be undone. Copy anything you need first.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Only Owners can delete a workspace. References (e.g., the All of Us data collection) are only pointers, so the underlying data isn't affected.
+:::

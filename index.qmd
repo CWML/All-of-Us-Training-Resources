@@ -1,0 +1,54 @@
+---
+title: "All of Us Researcher Workbench 2.0"
+subtitle: "Training materials from the Yale Cushing/Whitney Medical Library"
+toc: false
+---
+
+These pages walk you through the [*All of Us* Researcher Workbench 2.0](https://workbench.verily.com/) (powered by Verily), from logging in to running an analysis. They're the reference version of our introductory training session.
+
+## What you'll learn
+
+- Explain the All of Us Research Program and its key data sources
+- Describe what changed between the classic Workbench and Workbench 2.0
+- Create a workspace and add an All of Us data collection
+- Build a cohort and dataset with Data Explorer
+- Launch an analysis app and find your exported data
+- Manage storage and costs
+
+## Start here
+
+1. **[About All of Us](pages/get-started/about.qmd):** the program, its data, and the access tiers
+2. **[Getting Access](pages/get-started/access.qmd)** and **[Billing](pages/get-started/billing.qmd):** what to set up before you begin
+3. **[Setting Up a Workspace](pages/workspace/setup.qmd):** create a workspace and add an *All of Us* data collection
+4. **[Data Explorer](pages/data/data-explorer.qmd):** build a cohort and save a data snapshot
+5. **[Apps](pages/workspace/apps.qmd):** launch an analysis app and work with your data
+
+Throughout, we use an example workspace called **`intro-to-AoU`**, set up for instruction only.
+Some screenshots come from another training workspace, **`CWML_AoU_training`**. The steps are the same.
+
+::: {.callout-note title="Prefer slides?"}
+The same material as a slide deck: [Introduction to the Workbench 2.0 (slides)](<Intro to workbench 2.0/Introduction.html>). Press **F** for full screen and **Esc** for an overview.
+:::
+
+## How to read the screenshots
+
+Screenshots are marked up to show you what to do:
+
+- **Red circle or box:** click here
+- **Green box:** your options
+
+::: {.callout-tip title="Instructor tips"}
+Boxes like this one hold extra details from the training session. Click them to expand.
+:::
+
+## Data use
+
+::: {.callout-warning title="Keep All of Us data in the Workbench"}
+- Don't download, screenshot, or share **participant-level data**
+- Don't publish participant counts of **1 to 20**, or numbers they could be calculated from
+- Follow the *All of Us* [Data User Code of Conduct](https://www.researchallofus.org/faq/data-user-code-of-conduct/) and the [Data and Statistics Dissemination Policy](https://www.researchallofus.org/faq/data-and-statistics-dissemination-policy/)
+:::
+
+## Contact
+
+Maximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine

@@ -1,0 +1,291 @@
+---
+title: "Setting Up a Workspace"
+description: "Create a workspace and add an All of Us data collection"
+---
+
+This page uses our example workspace, **`intro-to-AoU`**, created for instruction only.
+
+## Creating a Workspace
+
+**Left sidebar → Workspaces → + New workspace**
+
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/workspaces.png>)
+
+::: {.red-circle style="left: 66.2%; top: 0.6%; width: 11.6%; height: 7.6%;"}
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Three steps: Enter details → Set policies → Add description.
+:::
+
+## Step 1: Enter Details
+
+:::::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+![](<../../Intro to workbench 2.0/images/ws_create_1_details.png>)
+:::
+
+:::: {.g-col-12 .g-col-md-5}
+**You fill in:**
+
+- **Workspace name:** only visible to people with access; you can change it later
+- **Summary:** a short description (up to 140 characters)
+
+**Filled in automatically:**
+
+- **Workspace ID:** made from the name; used by the CLI. Changing it later **breaks links** to the workspace.
+- **Pod:** your default billing pod
+
+Click **Next**
+
+⚠️ The pod **can't be changed** after the workspace is created
+::::
+::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The auto-selected pod is your personal user pod (user-pod-firstname-lastname-####). If you've set up a Yale billing pod, choose it here from the drop-down.
+:::
+
+## Step 2: Set Policies
+
+:::::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+![](<../../Intro to workbench 2.0/images/ws_create_2_policies.png>)
+:::
+
+:::: {.g-col-12 .g-col-md-5}
+**Sharing (group policy):**
+
+- **No, don't apply policy:** the default; fine for most projects
+- **Limit discoverability:** only members of the selected groups can see the workspace
+
+**Region:**
+
+- Where your apps and resources are kept. Pick the one **closest to you** (Yale: **us-east4**).
+- Can be changed later; only **new** resources use it
+
+Click **Next**
+
+⚠️ Group policies **can't be removed** once applied
+::::
+::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Group policies also carry over to duplicates of the workspace. Access still has to be granted separately; a group policy only limits who can be given access. Region also affects cost: Verily notes prices can vary by about 25% between regions. Yale is on the East Coast, so us-east4 (Virginia) is the closest region.
+:::
+
+## Step 3: Add Description
+
+:::::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+![](<../../Intro to workbench 2.0/images/ws_create_3_description.png>)
+:::
+
+:::: {.g-col-12 .g-col-md-5}
+**Description:**
+
+- What the workspace is for: its purpose, data, and tools
+- Helps you and your collaborators
+- You can **edit it any time**
+
+Click **Create workspace**
+
+⚠️ The description is **publicly accessible**. Anyone can see it, so don't put sensitive details in it.
+::::
+::::::
+
+## Your New Workspace
+
+Go to the **Resources** tab → **+ Data from catalog**
+
+::::: {.annotated}
+![](<../../Intro to workbench 2.0/images/ws_resources.png>)
+
+::: {.red-circle style="left: 6.4%; top: 13.4%; width: 7.4%; height: 6.2%;"}
+:::
+
+::: {.red-circle style="left: 86.0%; top: 19.2%; width: 13.8%; height: 8%;"}
+:::
+:::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Workspace tabs: Overview, Resources (data and cloud storage), Apps (JupyterLab, RStudio, SAS…), Workflows. Edit and Share are at the top right. A new workspace starts with 0 resources and 0 active policies; the policies come in when you add a data collection.
+:::
+
+## Adding a Data Collection
+
+A new workspace has **no data** until you add a data collection.
+
+**Resources** tab → **+ Data from catalog** (or **Add to workspace** on the Exchange), then:
+
+1.  **Select collection:** All of Us Registered Tier or Controlled Tier
+2.  **Select resource:** e.g., the CDR version
+3.  **Review policies:** answer the **Researcher Use Statement** questions
+4.  **Review selection** → **Add to your workspace**
+
+## Step 1: Select Collection
+
+::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/dc_add_1_collection.png>)
+
+::: {.red-box style="left: 1.2%; top: 43.6%; width: 97.6%; height: 7%;"}
+:::
+::::
+:::::
+
+::: {.g-col-12 .g-col-md-5}
+- Pick the collection you need. Here: **All of Us Controlled Tier**
+- You add **references**: pointers to the existing data
+  - No copying or data migration
+  - The source data isn't affected
+- **Status** column:
+  - **Perimeter required:** adding it puts a security perimeter on your workspace
+  - ✅ No extra policy needed (e.g., GTEx)
+
+Click **Next**
+:::
+:::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Only collections you have access to appear here (the same list as your Data collections page). The GCP filter is on by default.
+:::
+
+## Step 2: Select Resources
+
+::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/dc_add_2_resources.png>)
+
+::: {.red-box style="left: 1.0%; top: 16.9%; width: 18%; height: 5.8%;"}
+:::
+::::
+:::::
+
+::: {.g-col-12 .g-col-md-5}
+- The collection version (**cdrv9**) holds **9 resources**
+- Choose **some or all**. Here: **Select all resources**
+- Two kinds of resources:
+  - **BigQuery datasets:** data tables you query with SQL
+  - **Cloud Storage buckets/objects:** files, e.g., genomic data
+
+Click **Next**
+:::
+:::::::
+
+## What's in cdrv9 (Controlled Tier)?
+
+| Resource | Type | What it holds |
+|------------------------|------------------------|------------------------|
+| `C2025Q4R6` | BigQuery | **The main CDR v9**: OMOP tables (EHR, surveys, measurements…); data through Jan 1, 2025 |
+| `prep_C2025Q4R6` | BigQuery | Supporting tables for the CDR (no description given) |
+| `C_V9_R3_aou_biospecimen`, `C_v9_R6_aou_biospecimen` | BigQuery | Biospecimen data |
+| `C_V9_R6_offcycle_healthkit` | BigQuery | Apple HealthKit data |
+| `C_V9_R6_offcycle_nlp` | BigQuery | **New in v9:** concepts extracted from **clinical notes** with NLP (> 99,000 participants) |
+| `v9-genomics-folder` | Cloud Storage | Genomic data files |
+| `vwb_aou_allxall_v8` | Cloud Storage | All by All (v8) association results |
+| `vwb-aou-datasets-controlled-v9` | Cloud Storage | Controlled Tier dataset files. ⚠️ **Requester pays**: reading it is billed to your pod |
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: All of Us "Curated Data Repository (CDR) version 9 Release Notes" (Controlled Tier C2025Q4R6, Registered Tier R2025Q4R6, participant data cutoff January 1, 2025; first release of clinical notes with NLP concept extraction). The resources' Description fields in the Workbench are empty, so the prep_ and vwb-aou-datasets-controlled-v9 descriptions are based on their names. All are referenced resources in project wb-silky-artichoke-2408 (version-bound to cdrv9). The vwb-aou-datasets-controlled-v9 bucket has Requester Pays enabled.
+:::
+
+## Step 3: Review Policies
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/dc_add_3_policies.png>)
+
+::: {.red-circle style="left: 1.6%; top: 72.4%; width: 20.4%; height: 5.8%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+The Controlled Tier has **6 policies**, including:
+
+- **App policy:** only approved apps can run; other apps in the workspace are **deleted**
+- **Region policy:** apps and resources must stay in approved US regions
+- **Research Use Statement:** click **Fill out the questions**. You **can't continue** until it's complete.
+
+⚠️ Your answers are **public** in the [Research Hub Directory](https://www.researchallofus.org/research-projects-directory/)
+
+⚠️ Policies **can't be removed** once set
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The answers aren't used to make data access decisions; they're for transparency to participants. All of Us expects a separate workspace for each project, so the answers should be specific to this project. Scroll down in the dialog to see all 6 policies.
+:::
+
+## Answer the Research Use Statement
+
+Adding an *All of Us* data collection asks you to answer the **Research Use Statement** questions. They're covered step by step on their own page: [Research Use Statement](research-use-statement.qmd).
+
+## Step 3: Confirm Policies
+
+::::::::: {.grid}
+:::::: {.g-col-12 .g-col-md-7}
+::::: {.annotated}
+![](<../../Intro to workbench 2.0/images/dc_add_3b_confirm.png>)
+
+::: {.red-box style="left: 0.8%; top: 84.4%; width: 73.4%; height: 5.4%;"}
+:::
+
+::: {.red-circle style="left: 91.4%; top: 93.0%; width: 8.6%; height: 6.6%;"}
+:::
+:::::
+::::::
+
+:::: {.g-col-12 .g-col-md-5}
+Scroll to the bottom of **Review policies**:
+
+- **Perimeter policy:** the workspace is enrolled in a secure perimeter (can take up to **30 min**); services outside it may fail
+- **Group policy:** collaborators must be in the All of Us Controlled Tier group
+- **Data usage sharing:** usage metrics go to All of Us
+
+Check **I'm sure…** → **Next**
+
+⚠️ These policies are **permanent** for this workspace
+::::
+:::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Bucket browsing in the perimeter: previews up to 5 MB, and only .ipynb, .r, .rmd, and .sas files can be viewed. The group is P_b_aou-prod-ct, so collaborators need Controlled Tier access too.
+:::
+
+## Step 4: Review Selection
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/dc_add_4_review.png>)
+
+::: {.red-circle style="left: 78.4%; top: 92.8%; width: 21%; height: 6.6%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+- Check the list of resources: **9** from the All of Us Controlled Tier
+- Missing something? Go **Back**
+- Click **Add to your workspace**
+
+The resources then appear in your workspace's **Resources** tab. Allow up to **30 min** for the perimeter enrollment to finish.
+::::
+::::::::
+
+## Data Collection Rules
+
+- Add it **to every workspace** that needs All of Us data
+- Policies are **permanently** applied to the workspace
+- **One tier per workspace:** Registered *or* Controlled, not both
+- The workspace also takes on the collection's:
+  - **Perimeter policy**
+  - **Network policy:** no internet access for batch VMs and Dataproc workers
+- Each user still needs the matching tier access on their own account
