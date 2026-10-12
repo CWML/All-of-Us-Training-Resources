@@ -1076,6 +1076,20 @@ All of Us has a policy on respectful research with AI/AN populations; this quest
 
 ## Research Use Statement: Question 7
 
+:::::::: columns
+::::: {.column width="58%"}
+:::: annotated
+![](images/rus_q7.png)
+
+::: {.green-box style="left: 3.0%; top: 40.0%; width: 95.0%; height: 10.0%;"}
+:::
+
+::: {.red-box style="left: 3.0%; top: 46.2%; width: 95.0%; height: 4.4%;"}
+:::
+::::
+:::::
+
+:::: {.column .side width="42%"}
 **Request a review of your research purpose?**
 
 - Research using **demographic variables** can unintentionally produce findings that **stigmatize** participants or communities
@@ -1086,6 +1100,8 @@ All of Us has a policy on respectful research with AI/AN populations; this quest
 ::: fragment
 Our example: **No** concerns. The RAB is available any time via the **User Support Hub**.
 :::
+::::
+::::::::
 
 ::: notes
 See the All of Us Stigmatizing Research Policy for more detail. If students are unsure, encourage them to request the review; it's a precaution, not a penalty.
@@ -1093,6 +1109,20 @@ See the All of Us Stigmatizing Research Policy for more detail. If students are 
 
 ## Research Use Statement: Page 8
 
+:::::::: columns
+::::: {.column width="58%"}
+:::: annotated
+![](images/rus_q8.png)
+
+::: {.green-box style="left: 3.0%; top: 17.6%; width: 46.0%; height: 10.6%;"}
+:::
+
+::: {.red-circle style="left: 89.6%; top: 93.6%; width: 9.8%; height: 5.6%;"}
+:::
+::::
+:::::
+
+:::: {.column .side width="42%"}
 **Review and confirm**
 
 These answers are **publicly displayed** to inform All of Us participants:
@@ -1107,9 +1137,11 @@ Check that they're detailed and in plain language, then click **Confirm**
 ::: fragment
 You can go **Back** to change answers now, or edit them later after the workspace is created
 :::
+::::
+::::::::
 
 ::: notes
-Q3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displayed publicly. TODO: add screenshots for Q7 and page 8 (save as images/rus_q7.png and images/rus_q8.png).
+Q3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displayed publicly.
 :::
 
 ## Step 3: Confirm Policies
