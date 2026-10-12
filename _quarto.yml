@@ -5,6 +5,7 @@ project:
     - index.qmd
     - "pages/**/*.qmd"
   resources:
+    - ".nojekyll"
     - "Intro to workbench 2.0/Introduction.html"
     - "Intro to workbench 2.0/Introduction_files/**"
     - "Intro to workbench 2.0/images/**"
