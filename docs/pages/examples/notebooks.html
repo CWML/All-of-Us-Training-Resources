@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="R notebooks that build diabetes and CKD cohorts and run common clinical research analyses">
+<meta name="description" content="Short R notebooks: build a diabetes cohort, clean the data, and run Table One, regression, and survival analyses">
 
 <title>Example Notebooks – All of Us Workbench 2.0 Training</title>
 <style>
@@ -353,7 +353,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-the-notebooks-into-your-workspace" id="toc-getting-the-notebooks-into-your-workspace" class="nav-link active" data-scroll-target="#getting-the-notebooks-into-your-workspace">Getting the notebooks into your workspace</a></li>
+  <li><a href="#how-they-fit-together" id="toc-how-they-fit-together" class="nav-link active" data-scroll-target="#how-they-fit-together">How they fit together</a></li>
+  <li><a href="#getting-the-notebooks-into-your-workspace" id="toc-getting-the-notebooks-into-your-workspace" class="nav-link" data-scroll-target="#getting-the-notebooks-into-your-workspace">Getting the notebooks into your workspace</a></li>
   </ul>
 </nav>
     </div>
@@ -368,7 +369,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    R notebooks that build diabetes and CKD cohorts and run common clinical research analyses
+    Short R notebooks: build a diabetes cohort, clean the data, and run Table One, regression, and survival analyses
   </div>
 </div>
 
@@ -385,76 +386,101 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>These R notebooks walk through a complete study comparing a <strong>diabetes (study) cohort</strong> with a <strong>non-diabetes (control) cohort</strong>, including chronic kidney disease (CKD) outcomes. Run them in order: <code>0.0</code> → <code>1.1</code>–<code>1.3</code> → <code>2.0</code> → <code>3.0</code>.</p>
+<p>These R notebooks walk through a complete study comparing people <strong>with</strong> and <strong>without diabetes</strong>, including time to chronic kidney disease (CKD). <strong>Each notebook does one thing</strong>, so each can be taught as its own short class.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 52%">
-<col style="width: 18%">
+<col style="width: 22%">
+<col style="width: 50%">
+<col style="width: 8%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Notebook</th>
 <th>What it does</th>
+<th>Class</th>
 <th>Get it</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>0.0 load_environment_variables</code></td>
-<td>Sets up the environment and loads datasets from the workspace bucket</td>
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20load_environment_variables.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/0.0%20load_environment_variables.ipynb">Download</a></td>
+<td><code>aou_setup.R</code></td>
+<td>Settings you edit once (bucket and dataset) and shared helper functions</td>
+<td></td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/aou_setup.R">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/aou_setup.R">Download</a></td>
 </tr>
 <tr class="even">
-<td><code>1.1 diabetes_control_cohort</code></td>
-<td>Extracts demographic, survey, and measurement data for the control cohort (no diabetes)</td>
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20diabetes_control_cohort.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.1%20diabetes_control_cohort.ipynb">Download</a></td>
+<td><code>0.0 setup</code></td>
+<td>Checks your settings and the connection to the data</td>
+<td>Any</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/0.0%20setup.ipynb">Download</a></td>
 </tr>
 <tr class="odd">
-<td><code>1.2 diabetes_ckd_surv_cohort</code></td>
-<td>Extracts condition and visit data for CKD survival analysis</td>
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20diabetes_ckd_surv_cohort.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.2%20diabetes_ckd_surv_cohort.ipynb">Download</a></td>
+<td><code>1.1 build_cohorts</code></td>
+<td>SQL for the study population: demographics, PTSD survey answers, and measurements. Also shows how to use a Data Explorer export instead.</td>
+<td>1</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20build_cohorts.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.1%20build_cohorts.ipynb">Download</a></td>
 </tr>
 <tr class="even">
-<td><code>1.3 diabetes_study_cohort</code></td>
-<td>Extracts demographic, survey, and measurement data for the study cohort (diabetes)</td>
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.3%20diabetes_study_cohort.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.3%20diabetes_study_cohort.ipynb">Download</a></td>
+<td><code>1.2 survival_data</code></td>
+<td>Diabetes and CKD diagnosis dates, and last visits</td>
+<td>1 or 5</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20survival_data.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.2%20survival_data.ipynb">Download</a></td>
 </tr>
 <tr class="odd">
-<td><code>2.0 clean_join_cohorts_survey_measurements</code></td>
-<td>Imports, cleans, and joins the cohort datasets</td>
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_join_cohorts_survey_measurements.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/2.0%20clean_join_cohorts_survey_measurements.ipynb">Download</a></td>
+<td><code>2.0 clean_and_join</code></td>
+<td>Cleans, reshapes, and joins the data into one analysis table</td>
+<td>2</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_and_join.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/2.0%20clean_and_join.ipynb">Download</a></td>
 </tr>
 <tr class="even">
-<td><code>3.0 Statistical_data_analysis_for_clinical_research</code></td>
-<td>Table One (chi-square, t-tests), logistic and linear regression, and survival analysis (hazard ratios, Kaplan–Meier)</td>
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.0%20Statistical_data_analysis_for_clinical_research.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.0%20Statistical_data_analysis_for_clinical_research.ipynb">Download</a></td>
+<td><code>3.1 table_one</code></td>
+<td>Descriptive statistics, chi-square and t-tests, and a small-count check</td>
+<td>3</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.1%20table_one.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.1%20table_one.ipynb">Download</a></td>
+</tr>
+<tr class="odd">
+<td><code>3.2 logistic_regression</code></td>
+<td>Univariable and multivariable models for the odds of diabetes</td>
+<td>4</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.2%20logistic_regression.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.2%20logistic_regression.ipynb">Download</a></td>
+</tr>
+<tr class="even">
+<td><code>3.3 linear_regression</code></td>
+<td>Models for systolic blood pressure, compared by fit</td>
+<td>4</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.3%20linear_regression.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.3%20linear_regression.ipynb">Download</a></td>
+</tr>
+<tr class="odd">
+<td><code>3.4 survival_analysis</code></td>
+<td>Kaplan–Meier curves and a Cox model with baseline predictors</td>
+<td>5</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.4%20survival_analysis.ipynb">View</a> · <a href="https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.4%20survival_analysis.ipynb">Download</a></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Variables used:</strong> age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Notebooks 1.1–1.3 still use classic Workbench queries">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Notebooks 1.1–1.3 still use classic Workbench queries
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>They were generated for Controlled Tier Dataset v8 in the classic Researcher Workbench and <strong>won’t run as-is</strong> in Workbench 2.0. Build your cohorts with <a href="../../pages/data/data-explorer.html">Data Explorer</a> and replace these queries with the ones it generates for you. Updated versions are planned.</p>
-</div>
-</div>
+<p><strong>Variables used:</strong> age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.</p>
+<section id="how-they-fit-together" class="level2">
+<h2 class="anchored" data-anchor-id="how-they-fit-together">How they fit together</h2>
+<pre><code>aou_setup.R        settings + helpers, loaded by every notebook
+     │
+1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv
+1.2 survival_data ──► survival_conditions.csv, last_visits.csv
+     │
+2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv
+     │
+3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival</code></pre>
+<p>The queries in <strong>1.1</strong> and <strong>1.2</strong> run once and save their results to your bucket. Every later notebook reads those files, so a class can start at any notebook once the data is saved.</p>
+</section>
 <section id="getting-the-notebooks-into-your-workspace" class="level2">
 <h2 class="anchored" data-anchor-id="getting-the-notebooks-into-your-workspace">Getting the notebooks into your workspace</h2>
-<p>The notebooks only run <strong>inside an <em>All of Us</em> workspace</strong>: they query the <em>All of Us</em> data with BigQuery and read and write files in your bucket.</p>
+<p>The notebooks only run <strong>inside an <em>All of Us</em> workspace</strong> (Workbench 2.0): they query the <em>All of Us</em> data with BigQuery and save files in your bucket. You’ll need the Controlled Tier data collection and a bucket (see <a href="../../pages/workspace/resources.html#new-cloud-storage-bucket">Overview and Resources Tabs</a>).</p>
 <ul>
 <li><strong>Clone this repository:</strong> in your workspace, go to <strong>Apps</strong> → <strong>Git repositories</strong> → <strong>+ Add repository</strong> and enter <code>https://github.com/CWML/All-of-Us-Training-Resources.git</code>. It’s cloned into apps you create afterward. See the <a href="../../pages/extras/github-guide.html">GitHub Guide</a>.</li>
-<li><strong>Download and upload:</strong> download the <code>.ipynb</code> files above and upload them to your app.</li>
+<li><strong>Download and upload:</strong> download the files above, <strong>including <code>aou_setup.R</code></strong>, and upload them to one folder in your app.</li>
 </ul>
-<p>Then launch an R app (e.g., AoU Jupyter with an R kernel). See <a href="../../pages/workspace/apps.html">Apps</a>.</p>
-<p><strong>R packages:</strong> <code>tidyverse</code>, <code>bigrquery</code>, <code>dplyr</code>, <code>lubridate</code>, <code>stringr</code>, <code>tidyr</code>, <code>purrr</code>, <code>broom</code>, <code>survival</code>, <code>survminer</code></p>
+<p>Then launch an R app (e.g., AoU Jupyter with an R kernel; see <a href="../../pages/workspace/apps.html">Apps</a>) and <strong>start with <code>0.0 setup</code></strong>: it has you edit two lines in <code>aou_setup.R</code>.</p>
+<p><strong>R packages:</strong> <code>tidyverse</code>, <code>lubridate</code>, <code>bigrquery</code>, <code>broom</code>, <code>survival</code>, <code>survminer</code></p>
 <div class="callout callout-style-default callout-important callout-titled" title="Code only">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -465,9 +491,10 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This repository contains <strong>code only, no <em>All of Us</em> data</strong>. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20.</p>
+<p>This repository contains <strong>code only, no <em>All of Us</em> data</strong>. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20. Notebook 3.1 includes a check for small counts.</p>
 </div>
 </div>
+<p>The earlier versions of these notebooks (classic Workbench) are kept in <a href="https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive"><code>notebooks/archive</code></a> for reference.</p>
 
 
 </section>

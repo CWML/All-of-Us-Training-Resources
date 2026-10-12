@@ -992,7 +992,18 @@
     "href": "pages/examples/notebooks.html",
     "title": "Example Notebooks",
     "section": "",
-    "text": "These R notebooks walk through a complete study comparing a diabetes (study) cohort with a non-diabetes (control) cohort, including chronic kidney disease (CKD) outcomes. Run them in order: 0.0 → 1.1–1.3 → 2.0 → 3.0.\nVariables used: age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.",
+    "text": "These R notebooks walk through a complete study comparing people with and without diabetes, including time to chronic kidney disease (CKD). Each notebook does one thing, so each can be taught as its own short class.\nVariables used: age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.",
+    "crumbs": [
+      "Learn by Example",
+      "Example Notebooks"
+    ]
+  },
+  {
+    "objectID": "pages/examples/notebooks.html#how-they-fit-together",
+    "href": "pages/examples/notebooks.html#how-they-fit-together",
+    "title": "Example Notebooks",
+    "section": "How they fit together",
+    "text": "How they fit together\naou_setup.R        settings + helpers, loaded by every notebook\n     │\n1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv\n1.2 survival_data ──► survival_conditions.csv, last_visits.csv\n     │\n2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv\n     │\n3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival\nThe queries in 1.1 and 1.2 run once and save their results to your bucket. Every later notebook reads those files, so a class can start at any notebook once the data is saved.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -1003,7 +1014,7 @@
     "href": "pages/examples/notebooks.html#getting-the-notebooks-into-your-workspace",
     "title": "Example Notebooks",
     "section": "Getting the notebooks into your workspace",
-    "text": "Getting the notebooks into your workspace\nThe notebooks only run inside an All of Us workspace: they query the All of Us data with BigQuery and read and write files in your bucket.\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward. See the GitHub Guide.\nDownload and upload: download the .ipynb files above and upload them to your app.\n\nThen launch an R app (e.g., AoU Jupyter with an R kernel). See Apps.\nR packages: tidyverse, bigrquery, dplyr, lubridate, stringr, tidyr, purrr, broom, survival, survminer\n\n\n\n\n\n\nImportantCode only\n\n\n\nThis repository contains code only, no All of Us data. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20.",
+    "text": "Getting the notebooks into your workspace\nThe notebooks only run inside an All of Us workspace (Workbench 2.0): they query the All of Us data with BigQuery and save files in your bucket. You’ll need the Controlled Tier data collection and a bucket (see Overview and Resources Tabs).\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward. See the GitHub Guide.\nDownload and upload: download the files above, including aou_setup.R, and upload them to one folder in your app.\n\nThen launch an R app (e.g., AoU Jupyter with an R kernel; see Apps) and start with 0.0 setup: it has you edit two lines in aou_setup.R.\nR packages: tidyverse, lubridate, bigrquery, broom, survival, survminer\n\n\n\n\n\n\nImportantCode only\n\n\n\nThis repository contains code only, no All of Us data. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20. Notebook 3.1 includes a check for small counts.\n\n\nThe earlier versions of these notebooks (classic Workbench) are kept in notebooks/archive for reference.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"

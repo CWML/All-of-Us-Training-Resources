@@ -1,38 +1,54 @@
 ---
 title: "Example Notebooks"
-description: "R notebooks that build diabetes and CKD cohorts and run common clinical research analyses"
+description: "Short R notebooks: build a diabetes cohort, clean the data, and run Table One, regression, and survival analyses"
 ---
 
-These R notebooks walk through a complete study comparing a **diabetes (study) cohort** with a **non-diabetes (control) cohort**, including chronic kidney disease (CKD) outcomes. Run them in order: `0.0` → `1.1`–`1.3` → `2.0` → `3.0`.
+These R notebooks walk through a complete study comparing people **with** and **without diabetes**, including time to chronic kidney disease (CKD). **Each notebook does one thing**, so each can be taught as its own short class.
 
-| Notebook | What it does | Get it |
-|---|---|---|
-| `0.0 load_environment_variables` | Sets up the environment and loads datasets from the workspace bucket | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20load_environment_variables.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/0.0%20load_environment_variables.ipynb) |
-| `1.1 diabetes_control_cohort` | Extracts demographic, survey, and measurement data for the control cohort (no diabetes) | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20diabetes_control_cohort.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.1%20diabetes_control_cohort.ipynb) |
-| `1.2 diabetes_ckd_surv_cohort` | Extracts condition and visit data for CKD survival analysis | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20diabetes_ckd_surv_cohort.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.2%20diabetes_ckd_surv_cohort.ipynb) |
-| `1.3 diabetes_study_cohort` | Extracts demographic, survey, and measurement data for the study cohort (diabetes) | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.3%20diabetes_study_cohort.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.3%20diabetes_study_cohort.ipynb) |
-| `2.0 clean_join_cohorts_survey_measurements` | Imports, cleans, and joins the cohort datasets | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_join_cohorts_survey_measurements.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/2.0%20clean_join_cohorts_survey_measurements.ipynb) |
-| `3.0 Statistical_data_analysis_for_clinical_research` | Table One (chi-square, t-tests), logistic and linear regression, and survival analysis (hazard ratios, Kaplan–Meier) | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.0%20Statistical_data_analysis_for_clinical_research.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.0%20Statistical_data_analysis_for_clinical_research.ipynb) |
+| Notebook | What it does | Class | Get it |
+|---|---|---|---|
+| `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions |  | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/aou_setup.R) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/aou_setup.R) |
+| `0.0 setup` | Checks your settings and the connection to the data | Any | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/0.0%20setup.ipynb) |
+| `1.1 build_cohorts` | SQL for the study population: demographics, PTSD survey answers, and measurements. Also shows how to use a Data Explorer export instead. | 1 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20build_cohorts.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.1%20build_cohorts.ipynb) |
+| `1.2 survival_data` | Diabetes and CKD diagnosis dates, and last visits | 1 or 5 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20survival_data.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.2%20survival_data.ipynb) |
+| `2.0 clean_and_join` | Cleans, reshapes, and joins the data into one analysis table | 2 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_and_join.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/2.0%20clean_and_join.ipynb) |
+| `3.1 table_one` | Descriptive statistics, chi-square and t-tests, and a small-count check | 3 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.1%20table_one.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.1%20table_one.ipynb) |
+| `3.2 logistic_regression` | Univariable and multivariable models for the odds of diabetes | 4 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.2%20logistic_regression.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.2%20logistic_regression.ipynb) |
+| `3.3 linear_regression` | Models for systolic blood pressure, compared by fit | 4 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.3%20linear_regression.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.3%20linear_regression.ipynb) |
+| `3.4 survival_analysis` | Kaplan–Meier curves and a Cox model with baseline predictors | 5 | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.4%20survival_analysis.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.4%20survival_analysis.ipynb) |
 
-: {tbl-colwidths="[30,52,18]"}
+: {tbl-colwidths="[22,50,8,20]"}
 
-**Variables used:** age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.
+**Variables used:** age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.
 
-::: {.callout-warning title="Notebooks 1.1–1.3 still use classic Workbench queries"}
-They were generated for Controlled Tier Dataset v8 in the classic Researcher Workbench and **won't run as-is** in Workbench 2.0. Build your cohorts with [Data Explorer](../data/data-explorer.qmd) and replace these queries with the ones it generates for you. Updated versions are planned.
-:::
+## How they fit together
+
+```
+aou_setup.R        settings + helpers, loaded by every notebook
+     │
+1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv
+1.2 survival_data ──► survival_conditions.csv, last_visits.csv
+     │
+2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv
+     │
+3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival
+```
+
+The queries in **1.1** and **1.2** run once and save their results to your bucket. Every later notebook reads those files, so a class can start at any notebook once the data is saved.
 
 ## Getting the notebooks into your workspace
 
-The notebooks only run **inside an *All of Us* workspace**: they query the *All of Us* data with BigQuery and read and write files in your bucket.
+The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0): they query the *All of Us* data with BigQuery and save files in your bucket. You'll need the Controlled Tier data collection and a bucket (see [Overview and Resources Tabs](../workspace/resources.qmd#new-cloud-storage-bucket)).
 
 - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward. See the [GitHub Guide](../extras/github-guide.qmd).
-- **Download and upload:** download the `.ipynb` files above and upload them to your app.
+- **Download and upload:** download the files above, **including `aou_setup.R`**, and upload them to one folder in your app.
 
-Then launch an R app (e.g., AoU Jupyter with an R kernel). See [Apps](../workspace/apps.qmd).
+Then launch an R app (e.g., AoU Jupyter with an R kernel; see [Apps](../workspace/apps.qmd)) and **start with `0.0 setup`**: it has you edit two lines in `aou_setup.R`.
 
-**R packages:** `tidyverse`, `bigrquery`, `dplyr`, `lubridate`, `stringr`, `tidyr`, `purrr`, `broom`, `survival`, `survminer`
+**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`, `survminer`
 
 ::: {.callout-important title="Code only"}
-This repository contains **code only, no *All of Us* data**. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20.
+This repository contains **code only, no *All of Us* data**. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20. Notebook 3.1 includes a check for small counts.
 :::
+
+The earlier versions of these notebooks (classic Workbench) are kept in [`notebooks/archive`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive) for reference.
