@@ -1,8 +1,37 @@
 ---
 title: "Resources"
-description: "Good habits, helpful links, and contact"
+description: "Good habits, helpful links, and what's next"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: good habits, helpful links, and contact.
+## Good Habits
+
+- **Save everything to your bucket**: notebooks, cleaned data, plots, logs. Files left on the app's disk are lost if the app crashes or is deleted.
+- **Use GitHub** for your code, and **push every day**. It's your backup if an app fails.
+  - Connect GitHub with your Workbench **SSH key** (see the [GitHub guide](extras/github-guide.qmd))
+  - ⚠️ **Code only:** clear notebook outputs before you commit. No participant-level data or counts of 1–20 may leave the Workbench.
+- **AI tools: use them outside the Workbench**, for code only (see [AI tools](extras/extras.qmd#ai-tools-use-them-outside-the-workbench))
+- **Stop apps** when you're not using them
+- **Keep your description up to date**, along with your Research Use Statement
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Verily, "Workbench best practices".
 :::
+
+## Helpful Resources
+
+- [Researcher Workbench Getting Started Guide](https://support.researchallofus.org/hc/en-us/articles/41981050556564-Researcher-Workbench-Getting-Started-Guide)
+- [Workbench 2.0 Glossary of Terms and Comparison Guide](https://support.researchallofus.org/hc/en-us/articles/44371414196116-Researcher-Workbench-2-0-Glossary-of-Terms-and-Comparison-Guide)
+- [Data Explorer in Researcher Workbench](https://support.researchallofus.org/hc/en-us/articles/41981213271188-Data-Explorer-in-Researcher-Workbench)
+- [Using All of Us Initial Credits](https://support.researchallofus.org/hc/en-us/articles/28920849686036-Using-All-of-Us-Initial-Credits)
+- [Set up billing with pods (Verily)](https://support.workbench.verily.com/docs/getting_started/billing_setup/)
+- [Verily Workbench documentation](https://support.workbench.verily.com/docs/)
+
+## Future Directions
+
+Future CWML/BIDS courses to help you work with All of Us:
+
+- R, Python, SQL
+- OMOP Common Data Model
+- Open to suggestions!
+- Let us know if you'd like to present your All of Us work
+- Check the library training calendar for current courses

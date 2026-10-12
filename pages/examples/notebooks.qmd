@@ -1,8 +1,38 @@
 ---
 title: "Example Notebooks"
-description: "Our example R notebooks (diabetes and CKD cohorts), view-only, with downloads"
+description: "R notebooks that build diabetes and CKD cohorts and run common clinical research analyses"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: our example R notebooks (diabetes and CKD cohorts), view-only, with downloads.
+These R notebooks walk through a complete study comparing a **diabetes (study) cohort** with a **non-diabetes (control) cohort**, including chronic kidney disease (CKD) outcomes. Run them in order: `0.0` → `1.1`–`1.3` → `2.0` → `3.0`.
+
+| Notebook | What it does | Get it |
+|---|---|---|
+| `0.0 load_environment_variables` | Sets up the environment and loads datasets from the workspace bucket | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20load_environment_variables.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/0.0%20load_environment_variables.ipynb) |
+| `1.1 diabetes_control_cohort` | Extracts demographic, survey, and measurement data for the control cohort (no diabetes) | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20diabetes_control_cohort.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.1%20diabetes_control_cohort.ipynb) |
+| `1.2 diabetes_ckd_surv_cohort` | Extracts condition and visit data for CKD survival analysis | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20diabetes_ckd_surv_cohort.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.2%20diabetes_ckd_surv_cohort.ipynb) |
+| `1.3 diabetes_study_cohort` | Extracts demographic, survey, and measurement data for the study cohort (diabetes) | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.3%20diabetes_study_cohort.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/1.3%20diabetes_study_cohort.ipynb) |
+| `2.0 clean_join_cohorts_survey_measurements` | Imports, cleans, and joins the cohort datasets | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_join_cohorts_survey_measurements.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/2.0%20clean_join_cohorts_survey_measurements.ipynb) |
+| `3.0 Statistical_data_analysis_for_clinical_research` | Table One (chi-square, t-tests), logistic and linear regression, and survival analysis (hazard ratios, Kaplan–Meier) | [View](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.0%20Statistical_data_analysis_for_clinical_research.ipynb) · [Download](https://github.com/CWML/All-of-Us-Training-Resources/raw/main/notebooks/3.0%20Statistical_data_analysis_for_clinical_research.ipynb) |
+
+: {tbl-colwidths="[30,52,18]"}
+
+**Variables used:** age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.
+
+::: {.callout-warning title="Notebooks 1.1–1.3 still use classic Workbench queries"}
+They were generated for Controlled Tier Dataset v8 in the classic Researcher Workbench and **won't run as-is** in Workbench 2.0. Build your cohorts with [Data Explorer](../data/data-explorer.qmd) and replace these queries with the ones it generates for you. Updated versions are planned.
+:::
+
+## Getting the notebooks into your workspace
+
+The notebooks only run **inside an *All of Us* workspace**: they query the *All of Us* data with BigQuery and read and write files in your bucket.
+
+- **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward. See the [GitHub Guide](../extras/github-guide.qmd).
+- **Download and upload:** download the `.ipynb` files above and upload them to your app.
+
+Then launch an R app (e.g., AoU Jupyter with an R kernel). See [Apps](../workspace/apps.qmd).
+
+**R packages:** `tidyverse`, `bigrquery`, `dplyr`, `lubridate`, `stringr`, `tidyr`, `purrr`, `broom`, `survival`, `survminer`
+
+::: {.callout-important title="Code only"}
+This repository contains **code only, no *All of Us* data**. Clear notebook outputs before sharing or committing, and never publish participant counts of 1 to 20.
 :::

@@ -2,17 +2,50 @@
 
 Training materials from the Yale Cushing/Whitney Medical Library (CWML) for researchers and students working with the [NIH *All of Us* Research Program](https://www.researchallofus.org/) data on the **Researcher Workbench 2.0** (powered by Verily).
 
-The repository has two parts:
+The repository has three parts:
 
-1. **An introductory presentation** walking through the Workbench 2.0, from logging in to running an analysis app.
-2. **Example R notebooks** that build a cohort, extract data, and run common clinical research analyses.
+1. **A website** with the full training as reference pages: <https://cwml.github.io/All-of-Us-Training-Resources/>
+2. **An introductory presentation** walking through the Workbench 2.0, from logging in to running an analysis app.
+3. **Example R notebooks** that build a cohort, extract data, and run common clinical research analyses.
 
 ## Contents
 
 ```
+index.qmd, pages/         Website pages (Quarto)
+_quarto.yml, styles.css   Website settings and styles
+docs/                     The built website (published with GitHub Pages)
 Intro to workbench 2.0/   Reveal.js presentation: introduction to the Workbench 2.0
 notebooks/                R notebooks: example diabetes/CKD analysis workflow
+tools/                    Scripts to build website pages from the slides
 ```
+
+## Website
+
+The website has the same content as the presentation, split into pages, with speaker notes shown as "Instructor tip" boxes. It has a light/dark mode switch and search.
+
+### Editing the website
+
+Edit the `.qmd` files in `pages/` (or `index.qmd`) and rebuild from the repository folder:
+
+```bash
+quarto render
+```
+
+This writes the site to `docs/`. Commit `docs/` along with your changes; GitHub Pages publishes it.
+
+### Updating pages from the slides
+
+Most pages are generated from `Intro to workbench 2.0/Introduction.qmd`. After changing the slides, regenerate them with:
+
+```bash
+python3 tools/deck2site.py "Intro to workbench 2.0/Introduction.qmd" .
+python3 tools/site_fixups.py .
+quarto render
+```
+
+⚠️ This **overwrites** the generated pages, so make lasting edits in the slides (or in `tools/site_fixups.py`), not in those pages. Pages kept by hand and not overwritten: `index.qmd`, `pages/get-started/billing.qmd`, `pages/workspace/apps.qmd`, `pages/extras/github-guide.qmd`, and `pages/examples/notebooks.qmd`.
+
+`tools/redact.py` paints over parts of a screenshot (e.g., names or emails) before it's committed.
 
 ## Presentation: Introduction to the Workbench 2.0
 

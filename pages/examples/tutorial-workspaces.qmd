@@ -1,8 +1,179 @@
 ---
 title: "Tutorial Workspaces"
-description: "The All of Us tutorial workspaces and workspace migration"
+description: "The All of Us tutorial workspaces, workspace migration, and setting up your environment"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: the All of Us tutorial workspaces and workspace migration.
+- Ready-made workspaces from the **All of Us Data and Research Center** with example notebooks and data already set up
+- Find them on the **Workspaces** page (or the **Recent workspaces** list on the Home page)
+- You have **Reader** access: you can browse, but not run anything
+  - **Duplicate** the workspace to get your own copy you can run
+  - Your copy is billed to the **pod** you choose
+
+**Two to start with:**
+
+1.  **Workspace Migration Controlled Tier**
+2.  **Getting Started with Controlled Tier Data (v9)**
+
+## Workspace Migration Controlled Tier
+
+For researchers moving workspaces from the **Legacy Workbench (1.0)** to **Workbench 2.0**. It covers:
+
+- Setting up a workspace in Workbench 2.0
+- Setting up environments and packages
+- Updating SQL queries from the Legacy Workbench
+- Table differences between the two Workbenches
+- Changes to genomic data and advanced tools
+
+::::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**Data collection:** Controlled Tier **v8** (`C2024Q3R8`). The same steps work for CDR v7.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**Featured notebooks:**
+
+- `04_Migrated_Workspaces_for_CT_(Python).ipynb`
+- `04_Migrated_Workspaces_for_CT_(R).ipynb`
+:::
+:::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Most useful for students who had workspaces in the classic Workbench. New users can start with Getting Started with Controlled Tier Data (v9) instead. See the User Support Hub article on workspace migration for more detail.
+:::
+
+## Migration: What Carries Over
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**Migrated from 1.0:**
+
+- Files and notebooks in your **workspace bucket**
+- They're in a new bucket named like `rw-migration-aou-rw-…`
+
+**Not migrated:**
+
+- Cohorts, datasets, and concept sets. Rebuild them in **Data Explorer**.
+:::
+::: {.g-col-12 .g-col-md-6}
+**Watch out:**
+
+- **Re-syncing** a migration can overwrite your 2.0 work
+- Only **workspace owners** can sync
+- You pay storage in **both** Workbenches, so delete the 1.0 workspace once you've checked everything moved
+:::
+::::
+
+💾 Save new files to your **bucket** (`workspace/<bucket name>`). Files left on the app are lost when the app is deleted.
+
+## Setting Up Your Environment (R)
+
+The tutorial's setup script defines your workspace variables:
+
+```{.r}
+source("/home/jupyter/workspace/aou-tutorial-notebooks/Setting_Env_Variables_p2.R")
+
+library(bigrquery)
+library(tidyverse)
+
+CURRENT_DATASET <- Sys.getenv("WORKSPACE_CDR")   # the CDR in this workspace
+
+download_data <- function(query) {
+  tb <- bq_project_query(Sys.getenv("GOOGLE_PROJECT"), query)
+  bq_table_download(tb)
+}
+```
+
+- The script sets `WORKSPACE_BUCKET` and `WORKSPACE_CDR`. **Without it, they don't exist** (see [Workspace Variables](../workspace/storage-costs.qmd#workspace-variables)).
+- The All of Us app image in 2.0 is **smaller**, so you may need to install packages
+- In a migrated workspace, set `WORKSPACE_BUCKET` to your **migration bucket** (`gs://rw-migration-…`)
+
+## Updating SQL Queries
+
+Replace hard-coded 1.0 dataset paths with `CURRENT_DATASET`:
+
+**1.0: won't run** ❌
+
+```{.r code-line-numbers="false"}
+query <- str_glue("SELECT * FROM `fc-aou-cdr-prod-ct.C2024Q3R8.condition_occurrence` LIMIT 5")
+```
+
+**2.0: runs** ✅
+
+```{.r code-line-numbers="false"}
+query <- str_glue("SELECT * FROM `{CURRENT_DATASET}.condition_occurrence` LIMIT 5")
+df <- download_data(query)
+```
+
+The standard OMOP tables (`condition_occurrence`, `person`, `measurement`…) keep their names. Only the path changes.
+
+## Cohort Builder Tables Have Changed
+
+Data Explorer uses new **index tables** with different table and column names:
+
+| 1.0 (Cohort/Dataset Builder) | 2.0 (Data Explorer) |
+|---|---|
+| `cb_search_person` | `T_ENT_person` |
+| `ds_survey` | `T_ENT_surveyOccurrence` |
+| `condition_occurrence` (in builder queries) | `T_ENT_conditionOccurrence`, `T_ESA_conditionOccurrence_person_id` |
+| `cb_criteria` (concept hierarchy) | `T_HAD_conditionConcept_default` |
+
+**Recommendation:** don't edit old Cohort/Dataset Builder queries by hand. **Rebuild your cohort in Data Explorer** and use the queries it generates.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The index tables live in a dataset named like C2024Q3R8_index_111825, inside the data collection's BigQuery project (wb-silky-artichoke-2408). The same project appears in Data Explorer queries from other workspaces, so it belongs to the data collection, not to your workspace; your own project is only used for billing. Genomic data and workflow tools (dsub, Cromwell, Nextflow, Docker): see notebooks 05_How_to_use_workflow_tools and 06_Getting_Started_with_Genomic_Data in the Getting Started with Controlled Tier Data tutorial workspace.
+:::
+
+## Getting Started with Controlled Tier Data (v9)
+
+For researchers **new to Workbench 2.0**: how to set up a workspace in Verily Workbench and access the **All of Us Controlled Tier v9** data.
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**Data collection:** Controlled Tier **v9** (`C2025Q4R6`), the same version used in this presentation
+:::
+::: {.g-col-12 .g-col-md-6}
+**Featured tutorials:**
+
+- Getting Started with Verily Workbench
+- How to Get Started with Controlled Tier Data
+- How to Use Workflow Tools
+- Getting Started with Genomic Data
+:::
+::::
+
+👉 **Start here** if you're new to All of Us. Use the Migration workspace only if you're moving work from the classic Workbench.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The workflow tools and genomic data tutorials are the ones the Migration workspace points to for dsub, Cromwell, Nextflow, and Docker. Questions: AoU Researcher Workbench Support Hub or support@researchallofus.org.
+:::
+
+## Inside the Getting Started Workspace
+
+| Folder | What it covers |
+|---|---|
+| `Setting_Env_Variables_…` | Set up workspace variables (versions for JupyterLab, RStudio, SAS) |
+| `01_Getting Started with Verily Workbench` | The `wb` command line, buckets, and accessing the CDR (R or Python) |
+| `02_How to Get Started with Controlled Tier Data` | **Data 101:** what's in the Controlled vs. Registered Tier, with example queries (R or Python) |
+| `03_Getting_Started_with_Genomic_Data` | Short- and long-read WGS, arrays, Hail, PLINK, GWAS, extracting genomic data |
+| `04_Getting_Started_with_Multiomics_Data` | RNA-seq, proteomics, and combining them |
+| `05_How_to_use_workflow_tools` | dsub, Cromwell, Nextflow |
+
+👉 Start with **`Readme.ipynb`**, then folders **01 → 02**. Most notebooks come in **R** and **Python** versions.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+The genomic (Hail) notebooks need a Spark (Dataproc) app; PLINK and bcftools steps use a standard app. Some text in folder 01 still mentions CDR v8.
+:::
+
+## Using a Tutorial Workspace
+
+1.  **Check your billing pod first:** your All of Us initial credits, or your own pod linked to a Google Cloud billing account
+2.  Open the workspace → **⋮** (next to **Share**) → **Duplicate**
+3.  In your copy, create a **JupyterLab** app (Compute Engine). **Apps aren't copied** when you duplicate; resources are.
+4.  In JupyterLab, open the **`aou-tutorial-notebooks`** folder
+5.  Open **`Readme.ipynb`** for an overview of the tutorials, then work through the folders in order
+
+⚠️ Running the notebooks uses compute, so it's billed to your pod. Stop the app when you're done.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Same steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support\@researchallofus.org.
 :::

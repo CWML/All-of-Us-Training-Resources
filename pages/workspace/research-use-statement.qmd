@@ -1,8 +1,238 @@
 ---
 title: "Research Use Statement"
-description: "The eight Research Use Statement questions, with example answers"
+description: "The Research Use Statement questions you answer when adding an All of Us data collection"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: the eight Research Use Statement questions, with example answers.
+When you add an *All of Us* data collection to a workspace (see [Setting Up a Workspace](setup.qmd)), you answer these questions about your research. Our example answers are for an instructional workspace.
+
+## Research Use Statement: Question 1
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q1.png>)
+
+::: {.red-box style="left: 1.6%; top: 17.2%; width: 83%; height: 5.6%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**What is the primary purpose of your project?**
+
+- Research
+- **Education** ← our example (instructional workspace)
+- For-profit
+- Other
+
+8 pages of questions in total
+
+Answer for **your own project**. Answers marked **Publicly displayed** appear in the Research Hub Directory.
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+This example workspace is for teaching, so we answer as an education project. Students doing research should choose Research purpose and describe their actual project.
+:::
+
+## Research Use Statement: Question 2
+
+:::::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+![](<../../Intro to workbench 2.0/images/rus_q2.png>)
+:::
+
+:::: {.g-col-12 .g-col-md-5}
+**Summarize your research purpose** in plain language:
+
+- **2.1** Your scientific question(s), and why they matter
+- **2.2** Your approach: datasets, methods, and tools
+- **2.3** Your anticipated findings
+
+Each answer: **100–1,000 characters**
+
+⚠️ Answers under 100 characters give an error. Add enough detail to explain your project.
+::::
+::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Example answer for this instructional workspace (used for 2.1–2.3): "This workspace is intended solely for instructional purposes and not for research. I will use this workspace to teach others how to navigate the All of Us Workbench, create workspaces, build cohorts and datasets, and analyze the data provided within the workbench." Students should describe their real project: hypothesis, methods, and expected findings, with as little jargon as possible.
+:::
+
+## Research Use Statement: Question 3
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q3.png>)
+
+::: {.red-box style="left: 0.8%; top: 44.8%; width: 98.8%; height: 10.8%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**How will you share your findings?**
+
+- Choose **all that apply**: journals, conferences, community forums, social media, blogs, press…
+- Name the venue if you know it (journal, conference, blog, etc.)
+- **Other** requires a short explanation
+
+Our example: **Other**. The workspace is for teaching, so there are no findings to share.
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+All of Us encourages sharing results with both scientific and community audiences, to recognize participants' contributions. Example answer: "The purpose of this workspace is to provide instruction, not research. I do not plan on disseminating anything from the work done here."
+:::
+
+## Research Use Statement: Question 4
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q4.png>)
+
+::: {.red-box style="left: 1.4%; top: 33.2%; width: 38.4%; height: 3.8%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**How does your project fit the All of Us Scientific Framework?**
+
+Select all outcomes you expect:
+
+- Wellness, resilience, healthy living
+- Health equity for underrepresented (UBR) populations
+- Risk assessment and prevention
+- Earlier, more accurate diagnosis
+- Better treatment and precision interventions
+
+Our example: **None of these apply** (teaching workspace)
+::::
+::::::::
+
+## Research Use Statement: Question 5
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q5.png>)
+
+::: {.red-box style="left: 0.4%; top: 89.9%; width: 66.4%; height: 3.4%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**Population of interest:** will your study focus on historically underrepresented populations?
+
+- **Yes:** select the groups, e.g., race/ethnicity, age, sex at birth, gender identity, sexual orientation, geography, disability, access to care, education, income
+- **No:** a diverse sample in general, or well-represented populations
+
+Our example: **No** (teaching workspace)
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+All of Us asks this to track how well it serves underrepresented communities and to guard against stigmatizing findings. Encourage students to think about whether their design, methods, or analyses could harm individuals, groups, or communities. Fields marked \* are altered, suppressed, or generalized in the Registered Tier for privacy; see the Data Dictionary.
+:::
+
+## Research Use Statement: Question 6
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q6.png>)
+
+::: {.red-box style="left: 2.6%; top: 47.6%; width: 95.8%; height: 9%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**AI/AN Policy Assessment**
+
+Will your study produce findings specific to **American Indian and Alaska Native (AI/AN)** populations?
+
+- AI/AN-only study population
+- AI/AN case or control group
+- Results broken down so AI/AN-specific findings may appear
+- **No AI/AN-specific analyses**
+
+Then explain your answer (required)
+
+Our example: **no AI/AN-specific analyses**. If that changes, you must update your answers.
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+All of Us has a policy on respectful research with AI/AN populations; this question checks whether it applies to your project. Students whose work could produce AI/AN-specific findings should read the policy before starting.
+:::
+
+## Research Use Statement: Question 7
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q7.png>)
+
+::: {.green-box style="left: 3.0%; top: 40.0%; width: 95.0%; height: 10.0%;"}
+:::
+
+::: {.red-box style="left: 3.0%; top: 46.2%; width: 95.0%; height: 4.4%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**Request a review of your research purpose?**
+
+- Research using **demographic variables** can unintentionally produce findings that **stigmatize** participants or communities
+- You can ask the **Resource Access Board (RAB)** to review your purpose
+  - Reply within **5 business days**; keep working meanwhile
+- This answer is **private** (not on the Research Hub)
+
+Our example: **No** concerns. The RAB is available any time via the **User Support Hub**.
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+See the All of Us Stigmatizing Research Policy for more detail. If students are unsure, encourage them to request the review; it's a precaution, not a penalty.
+:::
+
+## Research Use Statement: Page 8
+
+:::::::: {.grid}
+::::: {.g-col-12 .g-col-md-7}
+:::: {.annotated}
+![](<../../Intro to workbench 2.0/images/rus_q8.png>)
+
+::: {.green-box style="left: 3.0%; top: 17.6%; width: 46.0%; height: 10.6%;"}
+:::
+
+::: {.red-circle style="left: 89.6%; top: 93.6%; width: 9.8%; height: 5.6%;"}
+:::
+::::
+:::::
+
+:::: {.g-col-12 .g-col-md-5}
+**Review and confirm**
+
+These answers are **publicly displayed** to inform All of Us participants:
+
+- **Q1** Primary purpose of your project
+- **Q2** Summary of research purpose
+- **Q5** Population of interest
+- **Q6** Approach to handling AI/AN data
+
+Check that they're detailed and in plain language, then click **Confirm**
+
+You can go **Back** to change answers now, or edit them later after the workspace is created
+::::
+::::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Q3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displayed publicly.
 :::

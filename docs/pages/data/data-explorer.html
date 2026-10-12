@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Adding a cohort, building it, saving a data snapshot, and the exported notebook">
+<meta name="description" content="Add a cohort, build it with criteria, save a data snapshot, and use the exported notebook">
 
 <title>Data Explorer – All of Us Workbench 2.0 Training</title>
 <style>
@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -37,7 +72,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../pages/examples/tutorial-workspaces.html" rel="next">
 <link href="../../pages/data/data-collections.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -278,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../pages/get-started/about.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -286,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Your Workspace</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/data/data-collections.html"> 
+    <a class="nav-link active" href="../../pages/data/data-collections.html" aria-current="page"> 
 <span class="menu-text">Data</span></a>
   </li>  
   <li class="nav-item">
@@ -320,7 +354,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/data/data-collections.html">Data</a></li><li class="breadcrumb-item"><a href="../../pages/data/data-explorer.html">Data Explorer</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/data/data-explorer.html">Data Explorer</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -332,161 +366,16 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Get Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About All of Us</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/whats-new.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">What’s New in Workbench 2.0</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/access.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Access</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/billing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Billing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Your Workspace</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Setting Up a Workspace</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/research-use-statement.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Research Use Statement</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview and Resources Tabs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/apps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Apps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflows</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/storage-costs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Storage &amp; Costs</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/data/data-collections.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Collections</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/data/data-explorer.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Data Explorer</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Learn by Example</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/tutorial-workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/notebooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example Notebooks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Optional Extras</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optional Extras</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Resources</span></a>
   </div>
 </li>
     </ul>
@@ -494,21 +383,38 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#from-cohort-to-data" id="toc-from-cohort-to-data" class="nav-link active" data-scroll-target="#from-cohort-to-data">From Cohort to Data</a></li>
+  <li><a href="#add-a-cohort-select-collection" id="toc-add-a-cohort-select-collection" class="nav-link" data-scroll-target="#add-a-cohort-select-collection">Add a Cohort: Select Collection</a></li>
+  <li><a href="#add-a-cohort-cohort-details" id="toc-add-a-cohort-cohort-details" class="nav-link" data-scroll-target="#add-a-cohort-cohort-details">Add a Cohort: Cohort Details</a></li>
+  <li><a href="#building-a-cohort" id="toc-building-a-cohort" class="nav-link" data-scroll-target="#building-a-cohort">Building a Cohort</a></li>
+  <li><a href="#adding-criteria" id="toc-adding-criteria" class="nav-link" data-scroll-target="#adding-criteria">Adding Criteria</a></li>
+  <li><a href="#concepts-and-domains" id="toc-concepts-and-domains" class="nav-link" data-scroll-target="#concepts-and-domains">Concepts and Domains</a></li>
+  <li><a href="#omop-common-data-model" id="toc-omop-common-data-model" class="nav-link" data-scroll-target="#omop-common-data-model">OMOP Common Data Model</a></li>
+  <li><a href="#save-a-data-snapshot-select-data" id="toc-save-a-data-snapshot-select-data" class="nav-link" data-scroll-target="#save-a-data-snapshot-select-data">Save a Data Snapshot: Select Data</a></li>
+  <li><a href="#check-the-summary" id="toc-check-the-summary" class="nav-link" data-scroll-target="#check-the-summary">Check the Summary</a></li>
+  <li><a href="#save-a-data-snapshot-file-format" id="toc-save-a-data-snapshot-file-format" class="nav-link" data-scroll-target="#save-a-data-snapshot-file-format">Save a Data Snapshot: File Format</a></li>
+  <li><a href="#save-a-data-snapshot-destination-bucket" id="toc-save-a-data-snapshot-destination-bucket" class="nav-link" data-scroll-target="#save-a-data-snapshot-destination-bucket">Save a Data Snapshot: Destination Bucket</a></li>
+  <li><a href="#inside-the-exported-r-notebook" id="toc-inside-the-exported-r-notebook" class="nav-link" data-scroll-target="#inside-the-exported-r-notebook">Inside the Exported R Notebook</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/data/data-collections.html">Data</a></li><li class="breadcrumb-item"><a href="../../pages/data/data-explorer.html">Data Explorer</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Data Explorer</h1>
 </div>
 
 <div>
   <div class="description">
-    Adding a cohort, building it, saving a data snapshot, and the exported notebook
+    Add a cohort, build it with criteria, save a data snapshot, and use the exported notebook
   </div>
 </div>
 
@@ -525,21 +431,487 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
-<div class="callout-header d-flex align-content-center">
+<ul>
+<li>A point-and-click tool for building datasets from All of Us data collections</li>
+<li>Replaces the classic <strong>Cohort Builder</strong>, <strong>Concept Selector</strong>, and <strong>Dataset Builder</strong></li>
+<li>Answers questions <strong>without code</strong>, e.g., <em>“Who has this diagnosis, this treatment, <strong>and</strong> genomic data?”</em>
+<ul>
+<li><strong>Explore</strong> the data with visualizations</li>
+<li><strong>Build cohorts</strong> with Boolean logic (<strong>AND</strong>, <strong>OR</strong>, <strong>NOT</strong>)</li>
+<li><strong>Export</strong> a ready-to-use dataset to your workspace</li>
+</ul></li>
+<li>What you can see depends on your <strong>access level</strong> (Registered or Controlled Tier)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+<span class="screen-reader-only">Tip</span>Instructor tip
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This page is being converted from the training slides. It will cover: adding a cohort, building it, saving a data snapshot, and the exported notebook.</p>
+<p>Source: Verily, “Verily Workbench overview”, Data exploration section.</p>
+</div>
+</div>
+</div>
+<section id="from-cohort-to-data" class="level2">
+<h2 class="anchored" data-anchor-id="from-cohort-to-data">From Cohort to Data</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Where</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Add a cohort</strong></td>
+<td><strong>Resources</strong> tab → <strong>+ New resource</strong> → cohort</td>
+<td>A cohort resource in your workspace</td>
+</tr>
+<tr class="even">
+<td><strong>2. Build it</strong></td>
+<td><strong>Data Explorer</strong></td>
+<td>Your study population: inclusion and exclusion criteria</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Save a data snapshot</strong></td>
+<td><strong>Data Explorer</strong> → save data snapshot</td>
+<td>CSV files and/or a notebook with the queries, saved to <strong>your bucket</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A <strong>cohort</strong> is a <strong>controlled resource</strong>: it lives in your workspace and collaborators can see it</li>
+<li>A <strong>data snapshot</strong> captures the data <strong>at that point in time</strong>, so your analysis stays reproducible</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The definitions come from the “Add cohort to workspace” dialog.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="add-a-cohort-select-collection" class="level2">
+<h2 class="anchored" data-anchor-id="add-a-cohort-select-collection">Add a Cohort: Select Collection</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_add_1_collection.png" class="img-fluid"></p>
+<div class="red-box" style="left: 1.4%; top: 43.6%; width: 97.8%; height: 7.4%;">
+
+</div>
+<div class="green-box" style="left: 68.8%; top: 45.2%; width: 19.0%; height: 4.4%;">
+
+</div>
+<div class="red-circle" style="left: 92.2%; top: 93.4%; width: 7.6%; height: 5.8%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>Step 1:</strong> pick the <strong>data collection</strong> your workspace already has, e.g., <strong>All of Us Controlled Tier</strong></p>
+<ul>
+<li>Choose the <strong>Version</strong>: the newest, <strong>cdrv9</strong></li>
+<li>The other tier shows <strong>Policy conflict</strong>: one tier per workspace</li>
+</ul>
+<p>Click <strong>Next</strong></p>
+<p><strong>Step 2: No new policies.</strong> Your workspace already has this collection’s policies. Click <strong>Next</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>An earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="add-a-cohort-cohort-details" class="level2">
+<h2 class="anchored" data-anchor-id="add-a-cohort-cohort-details">Add a Cohort: Cohort Details</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_add_3_details.png" class="img-fluid"></p>
+<div class="green-box" style="left: 1.0%; top: 17.2%; width: 98.2%; height: 16.8%;">
+
+</div>
+<div class="green-box" style="left: 1.0%; top: 40.4%; width: 48.6%; height: 9.6%;">
+
+</div>
+<div class="red-circle" style="left: 79.0%; top: 93.4%; width: 20.2%; height: 5.8%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>Step 3: Enter cohort details</strong></p>
+<ul>
+<li><strong>Cohort name</strong> (required) and <strong>Description</strong></li>
+<li>Where to put it:
+<ul>
+<li><strong>Add to an existing folder</strong> (pick the folder path; the workspace itself is the top level), or</li>
+<li><strong>Create a new folder</strong> (name, path, description)</li>
+</ul></li>
+</ul>
+<p>Click <strong>Add to your workspace</strong>. Then build your cohort in <strong>Data Explorer</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Use a name that says what the cohort is (e.g., diabetes_age50plus), not test names, so collaborators can tell cohorts apart. The cohort shows up on the Resources tab.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-cohort" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-cohort">Building a Cohort</h2>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_cohort_view.png" class="img-fluid"></p>
+<div class="green-box" style="left: 0.4%; top: 10.0%; width: 40.8%; height: 77.0%;">
+
+</div>
+<div class="red-circle" style="left: 1.6%; top: 47.6%; width: 7.8%; height: 6.6%;">
+
+</div>
+<div class="red-circle" style="left: 87.0%; top: 0.8%; width: 10.8%; height: 6.8%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Cohort filter</strong> (left): each <strong>group</strong> is <strong>Included</strong> or <strong>Excluded</strong> and must <strong>meet any</strong> (OR) or <strong>all</strong> (AND) of its criteria. Groups combine with <strong>AND</strong>. <strong>Add criteria</strong> → <strong>Apply</strong>; the participant count updates.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Cohort visualizations</strong> (right): charts by gender, race, sex at birth, and age. When you’re done, click <strong>Save data snapshot</strong>.</p>
+<p>⚠️ <strong>Review individuals</strong> shows participant-level rows: never screenshot or share it</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Example: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identity = Man or Woman (730,256 participants). Only large counts are shown on this page. Time-based criteria (e.g., within X days of an event) are supported.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-criteria" class="level2">
+<h2 class="anchored" data-anchor-id="adding-criteria">Adding Criteria</h2>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_criteria.png" class="img-fluid"></p>
+<div class="green-box" style="left: 1.2%; top: 5.6%; width: 98.4%; height: 5.6%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Add criteria</strong> opens the full list: <strong>domains</strong> (conditions, drugs, labs, visits…), <strong>source codes</strong> (ICD-9/10, CPT-4), <strong>demographics</strong>, <strong>wearables</strong> (Fitbit), <strong>genomics</strong>, <strong>physical measurements</strong>, and <strong>surveys</strong></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<ul>
+<li><strong>+</strong> adds a criterion directly (e.g., <em>Has EHR Data</em>, <em>Current Age</em>)</li>
+<li><strong>🔍</strong> lets you <strong>explore</strong> a category and pick specific concepts</li>
+<li>Or <strong>search</strong> by code or description (top)</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Example study population: Sex → Woman; Age → 65 or older; Condition → Breast cancer; Medication → Tamoxifen.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="concepts-and-domains" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-and-domains">Concepts and Domains</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 67%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conditions</td>
+<td>SNOMED standard codes (mapped from ICD9/ICD10)</td>
+</tr>
+<tr class="even">
+<td>Procedures</td>
+<td>SNOMED, CPT, ICD codes</td>
+</tr>
+<tr class="odd">
+<td>Drugs</td>
+<td>RxNorm; listed by ingredient</td>
+</tr>
+<tr class="even">
+<td>Measurements</td>
+<td>Labs and vitals, LOINC hierarchy</td>
+</tr>
+<tr class="odd">
+<td>Visits</td>
+<td>ED, outpatient, inpatient</td>
+</tr>
+<tr class="even">
+<td>Surveys</td>
+<td>Questions and responses</td>
+</tr>
+<tr class="odd">
+<td>Physical Measurements</td>
+<td>BP, HR, height, weight, BMI at enrollment</td>
+</tr>
+<tr class="even">
+<td>Demographics</td>
+<td>Age, gender, race, ethnicity, deceased status</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="omop-common-data-model" class="level2">
+<h2 class="anchored" data-anchor-id="omop-common-data-model">OMOP Common Data Model</h2>
+<ul>
+<li>An open standard for organizing and coding medical data consistently</li>
+<li>Each <strong>concept</strong> has a unique numeric <code>concept_id</code></li>
+<li>All variations of the same clinical idea map to one <strong>standard concept</strong>
+<ul>
+<li>e.g., ICD-10 at one site and SNOMED-CT at another map to the same ID</li>
+</ul></li>
+<li>Explore the vocabularies at <a href="https://athena.ohdsi.org/">Athena</a></li>
+</ul>
+</section>
+<section id="save-a-data-snapshot-select-data" class="level2">
+<h2 class="anchored" data-anchor-id="save-a-data-snapshot-select-data">Save a Data Snapshot: Select Data</h2>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_snap_1_select.png" class="img-fluid"></p>
+<div class="green-box" style="left: 1.0%; top: 26.0%; width: 18.4%; height: 20.4%;">
+
+</div>
+<div class="green-box" style="left: 20.6%; top: 12.4%; width: 30.8%; height: 5.6%;">
+
+</div>
+<div class="red-circle" style="left: 95.2%; top: 18.6%; width: 4.8%; height: 5.6%;">
+
+</div>
+<div class="red-circle" style="left: 95.8%; top: 93.0%; width: 4.2%; height: 6.4%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Left:</strong> pick the data (<strong>Demographics</strong>, <strong>+ Browse more data</strong>…) → <strong>Apply</strong></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Tabs:</strong> tables, <strong>SQL</strong> (<strong>Copy</strong> it), <strong>Summary</strong> → <strong>Next</strong></p>
+</div>
+</div>
+</section>
+<section id="check-the-summary" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-summary">Check the Summary</h2>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_snap_1_summary.png" class="img-fluid"></p>
+<div class="red-box" style="left: 46.0%; top: 12.4%; width: 5.8%; height: 6.0%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Left: your cohort’s criteria</strong>, e.g., <em>Has EHR data</em> <strong>and</strong> <em>Gender identity: Man, Woman</em> <strong>and</strong> <em>Current age: 50–125</em></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Right: what’s in the snapshot</strong>, e.g., the <strong>person</strong> table with 12 demographic columns</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Check this before saving: it’s the plain-language version of the SQL. The example cohort is deliberately broad, so no small counts appear anywhere.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="save-a-data-snapshot-file-format" class="level2">
+<h2 class="anchored" data-anchor-id="save-a-data-snapshot-file-format">Save a Data Snapshot: File Format</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_snap_2_format.png" class="img-fluid"></p>
+<div class="green-box" style="left: 3.2%; top: 58.4%; width: 74.0%; height: 36.4%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p>Pick one or more:</p>
+<ul>
+<li><strong>Tables (CSV file):</strong> the data itself, <strong>zipped</strong> or not</li>
+<li><strong>R Notebook</strong> (<code>.ipynb</code>): R code with the queries</li>
+<li><strong>Jupyter Notebook</strong> (<code>.ipynb</code>): the Python version</li>
+</ul>
+<p><strong>Copy code</strong> puts the code on your clipboard instead</p>
+<p>Click <strong>Next</strong></p>
+</div>
+</div>
+<p>👉 <strong>Choose a notebook.</strong> You can re-run and change the queries, and you learn how the data is pulled. CSVs are a fixed copy.</p>
+</section>
+<section id="save-a-data-snapshot-destination-bucket" class="level2">
+<h2 class="anchored" data-anchor-id="save-a-data-snapshot-destination-bucket">Save a Data Snapshot: Destination Bucket</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-4">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_snap_3_bucket.png" class="img-fluid"></p>
+<div class="green-box" style="left: 3.4%; top: 58.4%; width: 93.4%; height: 14.2%;">
+
+</div>
+<div class="red-box" style="left: 3.4%; top: 74.6%; width: 93.4%; height: 9.6%;">
+
+</div>
+</div>
+<p><strong>Existing bucket:</strong> pick its <strong>Resource ID</strong> (grayed out if the workspace has no bucket yet)</p>
+</div>
+<div class="g-col-12 g-col-md-3">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/dx_snap_3_newbucket.png" class="img-fluid"></p>
+<div class="green-box" style="left: 2.4%; top: 31.2%; width: 95.4%; height: 8.6%;">
+
+</div>
+<div class="green-box" style="left: 2.4%; top: 76.8%; width: 95.4%; height: 6.4%;">
+
+</div>
+<div class="red-circle" style="left: 84.4%; top: 93.4%; width: 14.2%; height: 5.4%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>Step 3:</strong> where should the files go?</p>
+<p><strong>New bucket:</strong> the same fields as <a href="../../pages/workspace/resources.html#new-cloud-storage-bucket">New Cloud Storage Bucket</a>. The generated <strong>bucket name</strong> is your <strong>Resource ID + your workspace’s project ID</strong>.</p>
+<p>Click <strong>Save</strong></p>
+<p>🔒 The files can only be opened from <strong>apps in this workspace</strong>, not from the Google Cloud console. That’s the perimeter at work.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Example of a generated name: Resource ID intro_aou_genetics became bucket name intro-aou-genetics-wb-swift-bean-2622 (underscores turn into dashes). In a workspace with no bucket yet, “Add to existing bucket” is grayed out. Bucket names are public, so the Resource ID shouldn’t contain personal details.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="inside-the-exported-r-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="inside-the-exported-r-notebook">Inside the Exported R Notebook</h2>
+<p>The notebook has the <strong>SQL</strong> for each table, plus code to run it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">EXPORT_BUCKET =</span> <span class="st">"gs://&lt;your-bucket-name&gt;"</span>)   <span class="co"># ⚠️ not set for you</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bq_table_save</span>(                                  <span class="co"># run the query (billed to your project)...</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bq_dataset_query</span>(<span class="st">"&lt;data project&gt;.&lt;index dataset&gt;"</span>, person_sql,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">billing =</span> <span class="st">"&lt;your workspace project&gt;"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  person_path, <span class="at">destination_format =</span> <span class="st">"CSV"</span>)      <span class="co"># ...and save it as CSVs in your bucket</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>person_df <span class="ot">&lt;-</span> <span class="fu">read_bq_export_from_workspace_bucket</span>(person_path)   <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><strong>Set <code>EXPORT_BUCKET</code> first</strong>, using the bucket name from the <strong>Resources</strong> tab</li>
+<li><strong>Run the export once.</strong> Next time, just read the CSVs; re-running the query costs money.</li>
+<li>Exporting again <strong>on the same day overwrites</strong> the files; a new day makes a new folder</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>From an exported R notebook (cohort “cwml_aou_test_cohort”, October 2026). The SQL reads OMOP tables from the data collection’s BigQuery project (here wb-silky-artichoke-2408.C2024Q3R9) and the cohort from an index dataset (C2024Q3R9_index_022426.T_ENT_person); billing goes to your workspace project (GOOGLE_CLOUD_PROJECT). The notebook reads the CSVs back with gsutil. You can also read them from the mounted bucket folder (~/workspace/<bucket>/bq_exports/…) with read_csv. Don’t run the notebook while screen-sharing: head(person_df) prints participant-level rows.</bucket></p>
+</div>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -962,9 +1334,6 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../pages/examples/tutorial-workspaces.html" class="pagination-link" aria-label="Tutorial Workspaces">
-        <span class="nav-page-text">Tutorial Workspaces</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

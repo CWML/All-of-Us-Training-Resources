@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud">
+<meta name="description" content="Workspace layout, the Overview and Resources tabs, buckets, BigQuery datasets, folders, and references">
 
 <title>Overview and Resources Tabs – All of Us Workbench 2.0 Training</title>
 <style>
@@ -278,11 +278,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../pages/get-started/about.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/workspace/workspaces.html"> 
+    <a class="nav-link active" href="../../pages/workspace/workspaces.html" aria-current="page"> 
 <span class="menu-text">Your Workspace</span></a>
   </li>  
   <li class="nav-item">
@@ -320,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/workspaces.html">Your Workspace</a></li><li class="breadcrumb-item"><a href="../../pages/workspace/resources.html">Overview and Resources Tabs</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/resources.html">Overview and Resources Tabs</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -332,161 +332,46 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Get Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About All of Us</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/whats-new.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">What’s New in Workbench 2.0</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/access.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Access</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/billing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Billing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Your Workspace</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/workspaces.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Workspaces</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Setting Up a Workspace</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/research-use-statement.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Research Use Statement</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/resources.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Overview and Resources Tabs</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/apps.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Apps</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflows</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/storage-costs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Storage &amp; Costs</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-collections.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Collections</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Explorer</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Learn by Example</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/tutorial-workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/notebooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example Notebooks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Optional Extras</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optional Extras</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../pages/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Resources</span></a>
+  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workflows</span></a>
   </div>
 </li>
     </ul>
@@ -494,21 +379,40 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#workspace-layout" id="toc-workspace-layout" class="nav-link active" data-scroll-target="#workspace-layout">Workspace Layout</a></li>
+  <li><a href="#overview-tab" id="toc-overview-tab" class="nav-link" data-scroll-target="#overview-tab">Overview Tab</a></li>
+  <li><a href="#resources-tab" id="toc-resources-tab" class="nav-link" data-scroll-target="#resources-tab">Resources Tab</a></li>
+  <li><a href="#adding-new-resources" id="toc-adding-new-resources" class="nav-link" data-scroll-target="#adding-new-resources">Adding New Resources</a></li>
+  <li><a href="#which-resource-do-i-need" id="toc-which-resource-do-i-need" class="nav-link" data-scroll-target="#which-resource-do-i-need">Which Resource Do I Need?</a></li>
+  <li><a href="#new-folder" id="toc-new-folder" class="nav-link" data-scroll-target="#new-folder">New Folder</a></li>
+  <li><a href="#new-cloud-storage-bucket" id="toc-new-cloud-storage-bucket" class="nav-link" data-scroll-target="#new-cloud-storage-bucket">New Cloud Storage Bucket</a></li>
+  <li><a href="#bucket-names-good-practice" id="toc-bucket-names-good-practice" class="nav-link" data-scroll-target="#bucket-names-good-practice">Bucket Names: Good Practice</a></li>
+  <li><a href="#new-bigquery-dataset" id="toc-new-bigquery-dataset" class="nav-link" data-scroll-target="#new-bigquery-dataset">New BigQuery Dataset</a></li>
+  <li><a href="#referencing-existing-data" id="toc-referencing-existing-data" class="nav-link" data-scroll-target="#referencing-existing-data">Referencing Existing Data</a></li>
+  <li><a href="#reference-bucket-or-object" id="toc-reference-bucket-or-object" class="nav-link" data-scroll-target="#reference-bucket-or-object">Reference: Bucket or Object</a></li>
+  <li><a href="#reference-bigquery-dataset-or-table" id="toc-reference-bigquery-dataset-or-table" class="nav-link" data-scroll-target="#reference-bigquery-dataset-or-table">Reference: BigQuery Dataset or Table</a></li>
+  <li><a href="#viewing-your-bucket-in-google-cloud" id="toc-viewing-your-bucket-in-google-cloud" class="nav-link" data-scroll-target="#viewing-your-bucket-in-google-cloud">Viewing Your Bucket in Google Cloud</a></li>
+  <li><a href="#what-you-can-see-and-cant" id="toc-what-you-can-see-and-cant" class="nav-link" data-scroll-target="#what-you-can-see-and-cant">What You Can See (and Can’t)</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/workspaces.html">Your Workspace</a></li><li class="breadcrumb-item"><a href="../../pages/workspace/resources.html">Overview and Resources Tabs</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Overview and Resources Tabs</h1>
 </div>
 
 <div>
   <div class="description">
-    Workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud
+    Workspace layout, the Overview and Resources tabs, buckets, BigQuery datasets, folders, and references
   </div>
 </div>
 
@@ -525,21 +429,534 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
-<div class="callout-header d-flex align-content-center">
+<section id="workspace-layout" class="level2">
+<h2 class="anchored" data-anchor-id="workspace-layout">Workspace Layout</h2>
+<p>Every workspace page has the same layout:</p>
+<ul>
+<li><strong>Header:</strong> cloud (GCP), dates, <strong>Policies</strong> (e.g., <em>6 active</em>; click to view them), and your <strong>Access</strong> level</li>
+<li><strong>Perimeter banner:</strong> shown when the workspace holds restricted data (e.g., Controlled Tier). Services outside the perimeter may not work.</li>
+<li><strong>Four tabs:</strong></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tab</th>
+<th>What’s there</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Overview</strong></td>
+<td>The workspace description</td>
+</tr>
+<tr class="even">
+<td><strong>Resources</strong></td>
+<td>Your data and storage</td>
+</tr>
+<tr class="odd">
+<td><strong>Apps</strong></td>
+<td>Analysis environments (JupyterLab, RStudio, SAS…)</td>
+</tr>
+<tr class="even">
+<td><strong>Workflows</strong></td>
+<td>Batch jobs and pipelines</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="overview-tab" class="level2">
+<h2 class="anchored" data-anchor-id="overview-tab">Overview Tab</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/ws_tabs.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 1.2%; top: 25.2%; width: 9.0%; height: 7.4%;">
+
+</div>
+<div class="red-box" style="left: 11.4%; top: 34.6%; width: 13.2%; height: 5.8%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<ul>
+<li>The first thing you see when you open a workspace</li>
+<li>Shows the <strong>description</strong>: what the project is about, e.g., its scientific questions, approaches, and anticipated findings</li>
+<li>Helps collaborators (and you, later) understand the workspace at a glance</li>
+</ul>
+<p><strong>To update it:</strong> click <strong>Edit description</strong>, make your changes, and save. Update it as your project changes.</p>
+<p>⚠️ The description is <strong>publicly accessible</strong>, so keep it accurate and leave out sensitive details.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+<span class="screen-reader-only">Tip</span>Instructor tip
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This page is being converted from the training slides. It will cover: workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud.</p>
+<p>Good practice: keep the description in sync with your Research Use Statement answers, which are also public.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="resources-tab" class="level2">
+<h2 class="anchored" data-anchor-id="resources-tab">Resources Tab</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/ws_tabs.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 10.0%; top: 25.2%; width: 7.4%; height: 7.4%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p>Where your workspace’s <strong>data and storage</strong> live:</p>
+<ul>
+<li><strong>Data collections</strong> you’ve added (e.g., the All of Us Controlled Tier resources)</li>
+<li><strong>Buckets</strong> you create to save files</li>
+<li>Other cloud resources</li>
+</ul>
+<p>Add more with <strong>+ New resource</strong> or <strong>+ Data from catalog</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>More detail on each resource type is below.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-new-resources" class="level2">
+<h2 class="anchored" data-anchor-id="adding-new-resources">Adding New Resources</h2>
+<p><strong>Resources</strong> tab → <strong>+ New resource</strong> opens a menu of resource types:</p>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_new_menu.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 7.8%; top: 1.0%; width: 9.0%; height: 11.6%;">
+
+</div>
+<div class="red-circle" style="left: 66.8%; top: 14.6%; width: 15%; height: 12.4%;">
+
+</div>
+<div class="green-box" style="left: 67.2%; top: 25.0%; width: 23.4%; height: 69.6%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Create new</strong> (folder, bucket, BigQuery dataset, cohort)</p>
+<ul>
+<li>Lives <strong>in your workspace</strong>, shared with collaborators</li>
+<li>Deleted if the workspace is deleted</li>
+</ul>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Reference existing</strong> (bucket, object, BigQuery dataset or table)</p>
+<ul>
+<li>A <strong>pointer</strong> to data that lives elsewhere; nothing is copied</li>
+<li>Access is managed by the data’s owner</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Verily calls these “controlled” and “referenced” resources. The data collection resources you added from the catalog are referenced resources too.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="which-resource-do-i-need" class="level2">
+<h2 class="anchored" data-anchor-id="which-resource-do-i-need">Which Resource Do I Need?</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>What it is</th>
+<th>Use it when you want to…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Folder</strong></td>
+<td>A label for grouping resources on the Resources tab</td>
+<td>Keep a busy workspace organized (e.g., <em>Data</em>, <em>Results</em>)</td>
+</tr>
+<tr class="even">
+<td><strong>Cloud Storage bucket</strong></td>
+<td>Your own storage for files</td>
+<td>Save CSVs, notebooks, plots, and cleaned data so they outlast your app</td>
+</tr>
+<tr class="odd">
+<td><strong>BigQuery dataset</strong></td>
+<td>Your own database for tables</td>
+<td>Save large query results as tables you can query again with SQL</td>
+</tr>
+<tr class="even">
+<td><strong>Reference</strong> a bucket, object, dataset, or table</td>
+<td>A pointer to data that lives elsewhere</td>
+<td>Use data you already have access to without copying it</td>
+</tr>
+</tbody>
+</table>
+<p>👉 Most students need just <strong>one bucket</strong>. The others are optional.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>New Cohort is covered on the <a href="../../pages/data/data-explorer.html">Data Explorer</a> page.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="new-folder" class="level2">
+<h2 class="anchored" data-anchor-id="new-folder">New Folder</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-7">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_folder.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 77.4%; top: 84.0%; width: 21.6%; height: 13.6%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<p><strong>Why:</strong> organize resources on the Resources tab, your way</p>
+<ul>
+<li><strong>Folder name</strong> (required)</li>
+<li><strong>Folder path:</strong> where the folder goes; the workspace itself by default</li>
+<li><strong>Description</strong> (optional)</li>
+</ul>
+<p>Click <strong>Create folder</strong></p>
+<p>To put an existing resource in a folder: select it → <strong>Move</strong> (in its details pane)</p>
+<p>Folders don’t change a resource’s <strong>cloud path</strong> (<code>gs://…</code>), but they <strong>do</strong> appear in the app’s mounted path: <code>~/workspace/&lt;folder&gt;/&lt;bucket&gt;</code></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Avoid spaces in folder names: they have to be quoted in file paths in code.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="new-cloud-storage-bucket" class="level2">
+<h2 class="anchored" data-anchor-id="new-cloud-storage-bucket">New Cloud Storage Bucket</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_bucket.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 73.6%; top: 90.0%; width: 24.4%; height: 8.6%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Why:</strong> new workspaces have <strong>no bucket</strong>, and you need one to save your work</p>
+<ul>
+<li><strong>Resource ID:</strong> the name inside Workbench (letters, numbers, <code>-</code>, <code>_</code>). The tutorials use <code>workspace-bucket</code>.</li>
+<li><strong>Folder path</strong> and <strong>Description</strong></li>
+<li><strong>Bucket name:</strong> the name in Google Cloud. It must be <strong>globally unique</strong>, so keep the generated one: your Resource ID + the workspace’s project ID (↻ makes a new one).</li>
+</ul>
+<p>Click <strong>Create bucket</strong>. You can use it right away; collaborators may wait <strong>up to 15 min</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Controlled resources like this bucket are shared with workspace collaborators and deleted when the workspace is deleted. Apps that were already running won’t see a new bucket until you restart the app or run wb resource mount. Mounted folders cache file info for about a minute, so two people writing at once may not see each other’s changes right away. Migrated 1.0 workspaces already have a bucket: rw-migration-aou-rw-…</p>
+</div>
+</div>
+</div>
+</section>
+<section id="bucket-names-good-practice" class="level2">
+<h2 class="anchored" data-anchor-id="bucket-names-good-practice">Bucket Names: Good Practice</h2>
+<ul>
+<li><strong>Lowercase</strong> letters, numbers, <code>-</code>, <code>_</code>, 3–63 characters, no spaces, no “google”</li>
+<li>Bucket names are <strong>public</strong>: anyone can check whether a name exists
+<ul>
+<li>⚠️ No names, emails, NetIDs, or project details</li>
+</ul></li>
+<li>A bucket name <strong>can’t be changed</strong> (the resource’s name and description can). To rename, create a new bucket and copy the files over.</li>
+<li>Deleting a bucket frees its name for <strong>anyone</strong> to reuse</li>
+</ul>
+<p>👉 Easiest: accept the <strong>generated name</strong>. It’s built from your <strong>Resource ID</strong> + the workspace’s project ID, so keep the Resource ID free of personal details too.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: Google Cloud, “About Cloud Storage buckets” and “Create a bucket”. Files (objects) also can’t be renamed in place; renaming copies and deletes them. Avoid putting sensitive information in file names too.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="new-bigquery-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="new-bigquery-dataset">New BigQuery Dataset</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_bq_dataset.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 72.6%; top: 90.0%; width: 24.8%; height: 8.4%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Why:</strong> save large query results as <strong>tables</strong>, then query them again with SQL instead of re-running long queries or loading big CSVs</p>
+<ul>
+<li><strong>Resource ID</strong>, <strong>Folder path</strong>, <strong>Description</strong></li>
+<li><strong>Dataset ID:</strong> the name in Google Cloud. Unique within your project; letters, numbers, <code>_</code> only. Keep the generated one or choose your own. <strong>Can’t be changed later.</strong></li>
+</ul>
+<p>Click <strong>Create dataset</strong>. Collaborators may wait <strong>up to 15 min</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Optional for most class projects; a bucket with CSV files is usually enough. BigQuery storage and queries are billed to your pod.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="referencing-existing-data" class="level2">
+<h2 class="anchored" data-anchor-id="referencing-existing-data">Referencing Existing Data</h2>
+<p>A <strong>reference</strong> points to data that already exists elsewhere. Nothing is copied.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reference</th>
+<th>You’ll need</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cloud Storage bucket</strong></td>
+<td>The bucket name</td>
+</tr>
+<tr class="even">
+<td><strong>Cloud Storage object</strong> (one file)</td>
+<td>Its URL, e.g., <code>gs://bucket-name/path/file.csv</code></td>
+</tr>
+<tr class="odd">
+<td><strong>BigQuery dataset</strong></td>
+<td>Project ID + Dataset ID</td>
+</tr>
+<tr class="even">
+<td><strong>BigQuery table</strong></td>
+<td>Project ID + Dataset ID + Table ID</td>
+</tr>
+</tbody>
+</table>
+<p>Every reference also has a <strong>Resource ID</strong>, <strong>Folder path</strong>, and <strong>Description</strong>. Then click <strong>Add to resources</strong>.</p>
+<p>⚠️ <strong>Access isn’t shared automatically.</strong> The data’s owner controls it. In a Controlled Tier workspace, the <strong>perimeter</strong> may also block data from outside it.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Example uses: point to a collaborator’s bucket, or to a shared file without copying it. The All of Us data collection resources you added earlier are references too. Deleting a reference removes the pointer, not the data. You can edit a reference’s name and description, but not the bucket name, project ID, dataset ID, or table ID; to fix those, delete the reference and add it again. Some outside buckets are “Requester Pays”: reading or browsing them is billed to your pod, and mounting them when an app starts can cost money too. The Workbench shows a warning when you add one.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reference-bucket-or-object" class="level2">
+<h2 class="anchored" data-anchor-id="reference-bucket-or-object">Reference: Bucket or Object</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_ref_bucket.png" class="img-fluid"></p>
+<div class="red-box" style="left: 2.6%; top: 62.6%; width: 94.8%; height: 8.4%;">
+
+</div>
+</div>
+<p><strong>Bucket:</strong> enter the <strong>bucket name</strong></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_ref_object.png" class="img-fluid"></p>
+<div class="red-box" style="left: 2.4%; top: 63.4%; width: 94.4%; height: 9.0%;">
+
+</div>
+</div>
+<p><strong>Object:</strong> enter its <strong><code>gs://</code> URL</strong></p>
+</div>
+</div>
+</section>
+<section id="reference-bigquery-dataset-or-table" class="level2">
+<h2 class="anchored" data-anchor-id="reference-bigquery-dataset-or-table">Reference: BigQuery Dataset or Table</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_ref_bq_dataset.png" class="img-fluid"></p>
+<div class="red-box" style="left: 2.6%; top: 62.4%; width: 94.8%; height: 25.4%;">
+
+</div>
+</div>
+<p><strong>Dataset:</strong> Project ID + Dataset ID</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_ref_bq_table.png" class="img-fluid"></p>
+<div class="red-box" style="left: 2.4%; top: 54.8%; width: 94.8%; height: 32.4%;">
+
+</div>
+</div>
+<p><strong>Table:</strong> same, <strong>+ Table ID</strong></p>
+</div>
+</div>
+</section>
+<section id="viewing-your-bucket-in-google-cloud" class="level2">
+<h2 class="anchored" data-anchor-id="viewing-your-bucket-in-google-cloud">Viewing Your Bucket in Google Cloud</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-4">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/gcp_1_ws_details.png" class="img-fluid"></p>
+<div class="red-box" style="left: 3.0%; top: 86.0%; width: 47.0%; height: 9.4%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-3">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/gcp_2_console_menu.png" class="img-fluid"></p>
+<div class="red-box" style="left: 0.4%; top: 93.4%; width: 60.0%; height: 6.4%;">
+
+</div>
+<div class="red-box" style="left: 60.6%; top: 57.2%; width: 39.0%; height: 5.0%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-5">
+<ol type="1">
+<li>In your workspace, find <strong>Workspace details</strong> (right side) and click the <strong>Google Project</strong> link</li>
+<li>The <strong>Google Cloud console</strong> opens: menu → <strong>Cloud Storage</strong> → <strong>Buckets</strong></li>
+<li>Click the bucket your files are in</li>
+</ol>
+<p>The details panel also shows the workspace <strong>ID</strong>, <strong>default region</strong>, <strong>pod</strong>, and <strong>UUID</strong>.</p>
+</div>
+</div>
+</section>
+<section id="what-you-can-see-and-cant" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-can-see-and-cant">What You Can See (and Can’t)</h2>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/gcp_3_bucket.png" class="img-fluid"></p>
+<div class="green-box" style="left: 37.4%; top: 57.0%; width: 62.4%; height: 38.6%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p>✅ <strong>You can see</strong> folder and file <strong>names</strong>, sizes, and types, e.g., <code>notebooks/</code>, <code>data/</code>, and the <code>bq_exports/</code> folder from a data snapshot</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p>❌ <strong>You can’t open or download</strong> the files. The perimeter blocks it. Open them from an <strong>app</strong> in the workspace instead.</p>
+</div>
+</div>
+<p>👉 Handy for checking that an export arrived, or finding a file’s path</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.</p>
+</div>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

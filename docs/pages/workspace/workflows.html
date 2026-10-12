@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="The Workflows tab, Cromwell, Nextflow, batch jobs, and dsub">
+<meta name="description" content="The Workflows tab, Cromwell and Nextflow workflows, batch jobs, and dsub">
 
 <title>Workflows – All of Us Workbench 2.0 Training</title>
 <style>
@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -37,8 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../pages/workspace/storage-costs.html" rel="next">
-<link href="../../pages/workspace/apps.html" rel="prev">
+<link href="../../pages/workspace/storage-costs.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -278,11 +312,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../pages/get-started/about.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/workspace/workspaces.html"> 
+    <a class="nav-link active" href="../../pages/workspace/workspaces.html" aria-current="page"> 
 <span class="menu-text">Your Workspace</span></a>
   </li>  
   <li class="nav-item">
@@ -320,7 +354,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/workspaces.html">Your Workspace</a></li><li class="breadcrumb-item"><a href="../../pages/workspace/workflows.html">Workflows</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/workflows.html">Workflows</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -332,161 +366,46 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Get Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About All of Us</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/whats-new.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">What’s New in Workbench 2.0</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/access.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Access</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/billing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Billing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Your Workspace</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/workspaces.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Workspaces</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Setting Up a Workspace</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/research-use-statement.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Research Use Statement</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview and Resources Tabs</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/apps.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Apps</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Workflows</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/workspace/storage-costs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Storage &amp; Costs</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-collections.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Collections</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Explorer</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Learn by Example</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/tutorial-workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/notebooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example Notebooks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Optional Extras</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optional Extras</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../pages/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Resources</span></a>
+  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Workflows</span></a>
   </div>
 </li>
     </ul>
@@ -494,21 +413,31 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#workflows-tab" id="toc-workflows-tab" class="nav-link active" data-scroll-target="#workflows-tab">Workflows Tab</a></li>
+  <li><a href="#what-is-a-workflow" id="toc-what-is-a-workflow" class="nav-link" data-scroll-target="#what-is-a-workflow">What Is a Workflow?</a></li>
+  <li><a href="#adding-a-workflow" id="toc-adding-a-workflow" class="nav-link" data-scroll-target="#adding-a-workflow">Adding a Workflow</a></li>
+  <li><a href="#running-a-workflow" id="toc-running-a-workflow" class="nav-link" data-scroll-target="#running-a-workflow">Running a Workflow</a></li>
+  <li><a href="#dsub-jobs-from-an-app" id="toc-dsub-jobs-from-an-app" class="nav-link" data-scroll-target="#dsub-jobs-from-an-app">dsub: Jobs from an App</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/workspace/workspaces.html">Your Workspace</a></li><li class="breadcrumb-item"><a href="../../pages/workspace/workflows.html">Workflows</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Workflows</h1>
 </div>
 
 <div>
   <div class="description">
-    The Workflows tab, Cromwell, Nextflow, batch jobs, and dsub
+    The Workflows tab, Cromwell and Nextflow workflows, batch jobs, and dsub
   </div>
 </div>
 
@@ -525,21 +454,192 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
-<div class="callout-header d-flex align-content-center">
+<section id="workflows-tab" class="level2">
+<h2 class="anchored" data-anchor-id="workflows-tab">Workflows Tab</h2>
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/wf_tab.png" class="img-fluid"></p>
+<div class="red-circle" style="left: 16.4%; top: 3.0%; width: 8.0%; height: 36.0%;">
+
+</div>
+<div class="green-box" style="left: 0.2%; top: 36.0%; width: 11.2%; height: 23.0%;">
+
+</div>
+<div class="green-circle" style="left: 88.2%; top: 63.0%; width: 11.6%; height: 33.0%;">
+
+</div>
+</div>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Two sub-tabs:</strong></p>
+<ul>
+<li><strong>Setup:</strong> the workflows added to this workspace. Start new jobs here.</li>
+<li><strong>Job status:</strong> follow your jobs and their tasks, and find logs and outputs</li>
+</ul>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>To start:</strong> click <strong>+ Add workflow</strong></p>
+<p>A new workspace starts with <strong>no workflows</strong>. Add one before you can run a job.</p>
+</div>
+</div>
+</section>
+<section id="what-is-a-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-workflow">What Is a Workflow?</h2>
+<p>A <strong>pipeline</strong> that runs analysis steps for you, in order or in parallel, <strong>without an app running</strong>. Each step runs in its own container on a temporary cloud machine.</p>
+<p><strong>Use it when you need to:</strong> run the same analysis on many files or samples (e.g., genomics), or make it easy to reproduce and share</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Language</th>
+<th>Where you run it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cromwell</strong></td>
+<td>WDL</td>
+<td><strong>Workflows</strong> tab (or CLI)</td>
+</tr>
+<tr class="even">
+<td><strong>Nextflow</strong></td>
+<td>Nextflow (<code>.nf</code>)</td>
+<td><strong>Workflows</strong> tab (or CLI)</td>
+</tr>
+<tr class="odd">
+<td><strong>dsub</strong></td>
+<td>Shell commands, one step</td>
+<td>An app’s <strong>terminal</strong></td>
+</tr>
+</tbody>
+</table>
+<p>👉 Most class projects <strong>don’t need workflows</strong>: an app is enough. Ready-made workflows: <a href="https://dockstore.org">Dockstore</a></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+<span class="screen-reader-only">Tip</span>Instructor tip
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This page is being converted from the training slides. It will cover: the Workflows tab, Cromwell, Nextflow, batch jobs, and dsub.</p>
+<p>Source: Verily, “Workflows overview” and “Workflow engines”. All three tools use the Google Batch API to run tasks, and read and write files in buckets (gs:// paths). Tasks run with the workspace’s service account, which can access every bucket in the workspace. Costs (task machines and storage) are billed to the workspace’s pod and are not shown in the app cost estimator.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-a-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="adding-a-workflow">Adding a Workflow</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/wf_add.png" class="img-fluid"></p>
+<div class="green-box" style="left: 1.2%; top: 16.4%; width: 98.4%; height: 9.8%;">
+
+</div>
+<div class="red-box" style="left: 1.2%; top: 27.0%; width: 98.4%; height: 6.6%;">
+
+</div>
+<div class="red-circle" style="left: 91.8%; top: 93.0%; width: 8.2%; height: 6.6%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Step 1: Provide source.</strong> Where’s the workflow file?</p>
+<ul>
+<li><strong>Workspace bucket:</strong> pick the bucket. Workbench lists the workflow files it finds there (search by name).</li>
+<li><strong>Git repository:</strong> a repo with the workflow (see the <a href="../../pages/extras/github-guide.html">GitHub guide</a>)</li>
+</ul>
+<p>Select the workflow → <strong>Next</strong></p>
+<p><strong>Step 2: Review details</strong> → add it</p>
+<p>Upload the workflow file (<code>.wdl</code> or <code>.nf</code>) to your bucket <strong>first</strong>. Until there’s one to select, <strong>Next</strong> stays grey.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="running-a-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="running-a-workflow">Running a Workflow</h2>
+<p><strong>Setup</strong> tab → select the workflow → <strong>+ New job</strong></p>
+<ol type="1">
+<li>Fill in the <strong>inputs</strong>. Workbench builds the form from the workflow file.</li>
+<li>Choose an <strong>output bucket</strong> for the results</li>
+<li>Start the job, then follow it on <strong>Job status</strong>: each task’s progress, logs, and outputs</li>
+</ol>
+<p><strong>Batch jobs:</strong> run one WDL workflow <strong>many times in parallel</strong>, e.g., once per sample</p>
+<ul>
+<li>Choose <em>Run a batch job with inputs defined by an input table</em></li>
+<li>Upload a <strong>CSV</strong> (one row per run), then match its columns to the workflow’s inputs</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="dsub-jobs-from-an-app" class="level2">
+<h2 class="anchored" data-anchor-id="dsub-jobs-from-an-app">dsub: Jobs from an App</h2>
+<p>For <strong>one-step</strong> jobs, e.g., run a command on many files. It comes with apps created after <strong>June 2025</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub_activate</span>                        <span class="co"># turn on dsub in the terminal</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">${PET_SA_EMAIL}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="op">&lt;</span>container image with samtools<span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>👉 More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.</p>
+</div>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -957,14 +1057,11 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../pages/workspace/apps.html" class="pagination-link" aria-label="Apps">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Apps</span>
+      <a href="../../pages/workspace/storage-costs.html" class="pagination-link" aria-label="Storage &amp; Costs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Storage &amp; Costs</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../pages/workspace/storage-costs.html" class="pagination-link" aria-label="Storage &amp; Costs">
-        <span class="nav-page-text">Storage &amp; Costs</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

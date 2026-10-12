@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="The All of Us tutorial workspaces and workspace migration">
+<meta name="description" content="The All of Us tutorial workspaces, workspace migration, and setting up your environment">
 
 <title>Tutorial Workspaces – All of Us Workbench 2.0 Training</title>
 <style>
@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -38,7 +73,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../pages/examples/notebooks.html" rel="next">
-<link href="../../pages/data/data-explorer.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -278,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../pages/get-started/about.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -290,7 +324,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Data</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/examples/tutorial-workspaces.html"> 
+    <a class="nav-link active" href="../../pages/examples/tutorial-workspaces.html" aria-current="page"> 
 <span class="menu-text">Learn by Example</span></a>
   </li>  
   <li class="nav-item">
@@ -320,7 +354,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/examples/tutorial-workspaces.html">Learn by Example</a></li><li class="breadcrumb-item"><a href="../../pages/examples/tutorial-workspaces.html">Tutorial Workspaces</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/examples/tutorial-workspaces.html">Tutorial Workspaces</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -332,161 +366,16 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Get Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About All of Us</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/whats-new.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">What’s New in Workbench 2.0</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/access.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Access</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/billing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Billing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Your Workspace</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Setting Up a Workspace</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/research-use-statement.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Research Use Statement</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview and Resources Tabs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/apps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Apps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflows</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/storage-costs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Storage &amp; Costs</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-collections.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Collections</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Explorer</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Learn by Example</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/examples/tutorial-workspaces.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Tutorial Workspaces</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/examples/notebooks.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Example Notebooks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Optional Extras</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optional Extras</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Resources</span></a>
   </div>
 </li>
     </ul>
@@ -494,21 +383,34 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#workspace-migration-controlled-tier" id="toc-workspace-migration-controlled-tier" class="nav-link active" data-scroll-target="#workspace-migration-controlled-tier">Workspace Migration Controlled Tier</a></li>
+  <li><a href="#migration-what-carries-over" id="toc-migration-what-carries-over" class="nav-link" data-scroll-target="#migration-what-carries-over">Migration: What Carries Over</a></li>
+  <li><a href="#setting-up-your-environment-r" id="toc-setting-up-your-environment-r" class="nav-link" data-scroll-target="#setting-up-your-environment-r">Setting Up Your Environment (R)</a></li>
+  <li><a href="#updating-sql-queries" id="toc-updating-sql-queries" class="nav-link" data-scroll-target="#updating-sql-queries">Updating SQL Queries</a></li>
+  <li><a href="#cohort-builder-tables-have-changed" id="toc-cohort-builder-tables-have-changed" class="nav-link" data-scroll-target="#cohort-builder-tables-have-changed">Cohort Builder Tables Have Changed</a></li>
+  <li><a href="#getting-started-with-controlled-tier-data-v9" id="toc-getting-started-with-controlled-tier-data-v9" class="nav-link" data-scroll-target="#getting-started-with-controlled-tier-data-v9">Getting Started with Controlled Tier Data (v9)</a></li>
+  <li><a href="#inside-the-getting-started-workspace" id="toc-inside-the-getting-started-workspace" class="nav-link" data-scroll-target="#inside-the-getting-started-workspace">Inside the Getting Started Workspace</a></li>
+  <li><a href="#using-a-tutorial-workspace" id="toc-using-a-tutorial-workspace" class="nav-link" data-scroll-target="#using-a-tutorial-workspace">Using a Tutorial Workspace</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/examples/tutorial-workspaces.html">Learn by Example</a></li><li class="breadcrumb-item"><a href="../../pages/examples/tutorial-workspaces.html">Tutorial Workspaces</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Tutorial Workspaces</h1>
 </div>
 
 <div>
   <div class="description">
-    The All of Us tutorial workspaces and workspace migration
+    The All of Us tutorial workspaces, workspace migration, and setting up your environment
   </div>
 </div>
 
@@ -525,21 +427,287 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
-<div class="callout-header d-flex align-content-center">
+<ul>
+<li>Ready-made workspaces from the <strong>All of Us Data and Research Center</strong> with example notebooks and data already set up</li>
+<li>Find them on the <strong>Workspaces</strong> page (or the <strong>Recent workspaces</strong> list on the Home page)</li>
+<li>You have <strong>Reader</strong> access: you can browse, but not run anything
+<ul>
+<li><strong>Duplicate</strong> the workspace to get your own copy you can run</li>
+<li>Your copy is billed to the <strong>pod</strong> you choose</li>
+</ul></li>
+</ul>
+<p><strong>Two to start with:</strong></p>
+<ol type="1">
+<li><strong>Workspace Migration Controlled Tier</strong></li>
+<li><strong>Getting Started with Controlled Tier Data (v9)</strong></li>
+</ol>
+<section id="workspace-migration-controlled-tier" class="level2">
+<h2 class="anchored" data-anchor-id="workspace-migration-controlled-tier">Workspace Migration Controlled Tier</h2>
+<p>For researchers moving workspaces from the <strong>Legacy Workbench (1.0)</strong> to <strong>Workbench 2.0</strong>. It covers:</p>
+<ul>
+<li>Setting up a workspace in Workbench 2.0</li>
+<li>Setting up environments and packages</li>
+<li>Updating SQL queries from the Legacy Workbench</li>
+<li>Table differences between the two Workbenches</li>
+<li>Changes to genomic data and advanced tools</li>
+</ul>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Data collection:</strong> Controlled Tier <strong>v8</strong> (<code>C2024Q3R8</code>). The same steps work for CDR v7.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Featured notebooks:</strong></p>
+<ul>
+<li><code>04_Migrated_Workspaces_for_CT_(Python).ipynb</code></li>
+<li><code>04_Migrated_Workspaces_for_CT_(R).ipynb</code></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+<span class="screen-reader-only">Tip</span>Instructor tip
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This page is being converted from the training slides. It will cover: the All of Us tutorial workspaces and workspace migration.</p>
+<p>Most useful for students who had workspaces in the classic Workbench. New users can start with Getting Started with Controlled Tier Data (v9) instead. See the User Support Hub article on workspace migration for more detail.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="migration-what-carries-over" class="level2">
+<h2 class="anchored" data-anchor-id="migration-what-carries-over">Migration: What Carries Over</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Migrated from 1.0:</strong></p>
+<ul>
+<li>Files and notebooks in your <strong>workspace bucket</strong></li>
+<li>They’re in a new bucket named like <code>rw-migration-aou-rw-…</code></li>
+</ul>
+<p><strong>Not migrated:</strong></p>
+<ul>
+<li>Cohorts, datasets, and concept sets. Rebuild them in <strong>Data Explorer</strong>.</li>
+</ul>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Watch out:</strong></p>
+<ul>
+<li><strong>Re-syncing</strong> a migration can overwrite your 2.0 work</li>
+<li>Only <strong>workspace owners</strong> can sync</li>
+<li>You pay storage in <strong>both</strong> Workbenches, so delete the 1.0 workspace once you’ve checked everything moved</li>
+</ul>
+</div>
+</div>
+<p>💾 Save new files to your <strong>bucket</strong> (<code>workspace/&lt;bucket name&gt;</code>). Files left on the app are lost when the app is deleted.</p>
+</section>
+<section id="setting-up-your-environment-r" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-your-environment-r">Setting Up Your Environment (R)</h2>
+<p>The tutorial’s setup script defines your workspace variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"/home/jupyter/workspace/aou-tutorial-notebooks/Setting_Env_Variables_p2.R"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"WORKSPACE_CDR"</span>)   <span class="co"># the CDR in this workspace</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>download_data <span class="ot">&lt;-</span> <span class="cf">function</span>(query) {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  tb <span class="ot">&lt;-</span> <span class="fu">bq_project_query</span>(<span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_PROJECT"</span>), query)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bq_table_download</span>(tb)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The script sets <code>WORKSPACE_BUCKET</code> and <code>WORKSPACE_CDR</code>. <strong>Without it, they don’t exist</strong> (see <a href="../../pages/workspace/storage-costs.html#workspace-variables">Workspace Variables</a>).</li>
+<li>The All of Us app image in 2.0 is <strong>smaller</strong>, so you may need to install packages</li>
+<li>In a migrated workspace, set <code>WORKSPACE_BUCKET</code> to your <strong>migration bucket</strong> (<code>gs://rw-migration-…</code>)</li>
+</ul>
+</section>
+<section id="updating-sql-queries" class="level2">
+<h2 class="anchored" data-anchor-id="updating-sql-queries">Updating SQL Queries</h2>
+<p>Replace hard-coded 1.0 dataset paths with <code>CURRENT_DATASET</code>:</p>
+<p><strong>1.0: won’t run</strong> ❌</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(<span class="st">"SELECT * FROM `fc-aou-cdr-prod-ct.C2024Q3R8.condition_occurrence` LIMIT 5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>2.0: runs</strong> ✅</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(<span class="st">"SELECT * FROM `{CURRENT_DATASET}.condition_occurrence` LIMIT 5"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">download_data</span>(query)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The standard OMOP tables (<code>condition_occurrence</code>, <code>person</code>, <code>measurement</code>…) keep their names. Only the path changes.</p>
+</section>
+<section id="cohort-builder-tables-have-changed" class="level2">
+<h2 class="anchored" data-anchor-id="cohort-builder-tables-have-changed">Cohort Builder Tables Have Changed</h2>
+<p>Data Explorer uses new <strong>index tables</strong> with different table and column names:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>1.0 (Cohort/Dataset Builder)</th>
+<th>2.0 (Data Explorer)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cb_search_person</code></td>
+<td><code>T_ENT_person</code></td>
+</tr>
+<tr class="even">
+<td><code>ds_survey</code></td>
+<td><code>T_ENT_surveyOccurrence</code></td>
+</tr>
+<tr class="odd">
+<td><code>condition_occurrence</code> (in builder queries)</td>
+<td><code>T_ENT_conditionOccurrence</code>, <code>T_ESA_conditionOccurrence_person_id</code></td>
+</tr>
+<tr class="even">
+<td><code>cb_criteria</code> (concept hierarchy)</td>
+<td><code>T_HAD_conditionConcept_default</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation:</strong> don’t edit old Cohort/Dataset Builder queries by hand. <strong>Rebuild your cohort in Data Explorer</strong> and use the queries it generates.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The index tables live in a dataset named like C2024Q3R8_index_111825, inside the data collection’s BigQuery project (wb-silky-artichoke-2408). The same project appears in Data Explorer queries from other workspaces, so it belongs to the data collection, not to your workspace; your own project is only used for billing. Genomic data and workflow tools (dsub, Cromwell, Nextflow, Docker): see notebooks 05_How_to_use_workflow_tools and 06_Getting_Started_with_Genomic_Data in the Getting Started with Controlled Tier Data tutorial workspace.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-started-with-controlled-tier-data-v9" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-with-controlled-tier-data-v9">Getting Started with Controlled Tier Data (v9)</h2>
+<p>For researchers <strong>new to Workbench 2.0</strong>: how to set up a workspace in Verily Workbench and access the <strong>All of Us Controlled Tier v9</strong> data.</p>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Data collection:</strong> Controlled Tier <strong>v9</strong> (<code>C2025Q4R6</code>), the same version used in this presentation</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Featured tutorials:</strong></p>
+<ul>
+<li>Getting Started with Verily Workbench</li>
+<li>How to Get Started with Controlled Tier Data</li>
+<li>How to Use Workflow Tools</li>
+<li>Getting Started with Genomic Data</li>
+</ul>
+</div>
+</div>
+<p>👉 <strong>Start here</strong> if you’re new to All of Us. Use the Migration workspace only if you’re moving work from the classic Workbench.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The workflow tools and genomic data tutorials are the ones the Migration workspace points to for dsub, Cromwell, Nextflow, and Docker. Questions: AoU Researcher Workbench Support Hub or support@researchallofus.org.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="inside-the-getting-started-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="inside-the-getting-started-workspace">Inside the Getting Started Workspace</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Folder</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Setting_Env_Variables_…</code></td>
+<td>Set up workspace variables (versions for JupyterLab, RStudio, SAS)</td>
+</tr>
+<tr class="even">
+<td><code>01_Getting Started with Verily Workbench</code></td>
+<td>The <code>wb</code> command line, buckets, and accessing the CDR (R or Python)</td>
+</tr>
+<tr class="odd">
+<td><code>02_How to Get Started with Controlled Tier Data</code></td>
+<td><strong>Data 101:</strong> what’s in the Controlled vs.&nbsp;Registered Tier, with example queries (R or Python)</td>
+</tr>
+<tr class="even">
+<td><code>03_Getting_Started_with_Genomic_Data</code></td>
+<td>Short- and long-read WGS, arrays, Hail, PLINK, GWAS, extracting genomic data</td>
+</tr>
+<tr class="odd">
+<td><code>04_Getting_Started_with_Multiomics_Data</code></td>
+<td>RNA-seq, proteomics, and combining them</td>
+</tr>
+<tr class="even">
+<td><code>05_How_to_use_workflow_tools</code></td>
+<td>dsub, Cromwell, Nextflow</td>
+</tr>
+</tbody>
+</table>
+<p>👉 Start with <strong><code>Readme.ipynb</code></strong>, then folders <strong>01 → 02</strong>. Most notebooks come in <strong>R</strong> and <strong>Python</strong> versions.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The genomic (Hail) notebooks need a Spark (Dataproc) app; PLINK and bcftools steps use a standard app. Some text in folder 01 still mentions CDR v8.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="using-a-tutorial-workspace" class="level2">
+<h2 class="anchored" data-anchor-id="using-a-tutorial-workspace">Using a Tutorial Workspace</h2>
+<ol type="1">
+<li><strong>Check your billing pod first:</strong> your All of Us initial credits, or your own pod linked to a Google Cloud billing account</li>
+<li>Open the workspace → <strong>⋮</strong> (next to <strong>Share</strong>) → <strong>Duplicate</strong></li>
+<li>In your copy, create a <strong>JupyterLab</strong> app (Compute Engine). <strong>Apps aren’t copied</strong> when you duplicate; resources are.</li>
+<li>In JupyterLab, open the <strong><code>aou-tutorial-notebooks</code></strong> folder</li>
+<li>Open <strong><code>Readme.ipynb</code></strong> for an overview of the tutorials, then work through the folders in order</li>
+</ol>
+<p>⚠️ Running the notebooks uses compute, so it’s billed to your pod. Stop the app when you’re done.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Same steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support@researchallofus.org.</p>
+</div>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -957,9 +1125,6 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../pages/data/data-explorer.html" class="pagination-link" aria-label="Data Explorer">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Explorer</span>
-      </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../pages/examples/notebooks.html" class="pagination-link" aria-label="Example Notebooks">

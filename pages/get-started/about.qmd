@@ -1,8 +1,92 @@
 ---
 title: "About All of Us"
-description: "Background, vision and goals, data sources, the CDR, CDR v9 counts, and data access tiers"
+description: "The All of Us Research Program, its data sources, the CDR, and data access tiers"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: background, vision and goals, data sources, the CDR, CDR v9 counts, and data access tiers.
+## Background
+
+- A national initiative by the NIH
+- Launched in 2018
+- Goal: gather health data from **over 1 million people**
+- Participants join voluntarily
+  - by signing up at [JoinAllofUs.org](https://joinallofus.org)
+  - or through a participating health care provider
+
+## Vision and Goals
+
+- Enable precision medicine using data on lifestyle, environment, and genetics
+- Shift from one-size-fits-all to personalized healthcare
+- Boost health research and medical breakthroughs
+- Make healthcare tailored and equitable
+- Support diverse studies reflecting all populations
+
+## What Makes It Unique
+
+- **Participant-centered:** participants can view and access their own data
+- **Open science:** de-identified data available to registered researchers
+- **Research opportunities:** health disparities, environmental impacts, disease prevention and treatment
+- **Phenotypic and genotypic data** in one place
+- **Scalability and innovation:** complex analyses, AI and machine learning
+
+## Data Sources
+
+|   | Source | Description |
+|------------------------|------------------------|------------------------|
+| ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60"} | **Surveys** | Lifestyle, medical history, healthcare access, etc. |
+| ![](<../../Intro to workbench 2.0/images/ds_ehr.png>){height="60"} | **EHR** | Standardized with the OMOP Common Data Model |
+| ![](<../../Intro to workbench 2.0/images/ds_wearables.png>){height="60"} | **Wearables** | Heart rate, activity, or sleep data from devices like Fitbit |
+| ![](<../../Intro to workbench 2.0/images/ds_physical.png>){height="60"} | **Physical measurements** | EHRs, self-reported height and weight, in-person visits |
+| ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60"} | **Genomic** | Whole genome sequencing and genotyping from blood, saliva, and urine |
+
+## The Curated Data Repository (CDR)
+
+- Data are organized in a **curated data repository (CDR)**
+  - De-identified
+  - Cleaned, validated, standardized (OMOP CDM)
+  - Released in numbered versions (current: **CDRv9**)
+- Hosted on **Google Cloud Platform**, queried with **Google BigQuery**
+  - SQL-based; usable from R or Python
+  - Billed for queries run and data processed (large genomic queries can be costly)
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace).
 :::
+
+## What's in CDR v9?
+
+**More than 747,000 participants**
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+| Data type | Participants |
+|---|--:|
+| Surveys | > 747,000 |
+| Physical measurements | > 600,000 |
+| Whole genome sequencing | > 535,000 |
+| EHR | > 481,000 |
+| Exploring the Mind | > 97,000 |
+| Fitbit | > 68,000 |
+| Long-read genomes | > 14,000 |
+:::
+::: {.g-col-12 .g-col-md-6}
+| Genomics and multi-omics | Participants |
+|---|--:|
+| Genotyping arrays | 553,949 |
+| Short-read WGS (SNPs/indels) | 535,662 |
+| Structural variants | 96,405 |
+| Long-read WGS | 14,521 |
+| Proteomics | 9,969 |
+| RNA-seq | 8,980 |
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Not every participant has every data type: e.g., about two-thirds have EHR data, and Fitbit data covers fewer than 1 in 10. Check the data type you need before planning a study. Genomic data is Controlled Tier only.
+:::
+
+## Data Access Tiers
+
+- **Registered Tier:** EHR, surveys, social determinants of health, lab results, physical measurements, and wearables (sensors)
+- **Controlled Tier:** everything in the Registered Tier **plus genomic data**
+  - Requires additional Controlled Tier training
+- Each tier is available in Workbench 2.0 as a **data collection**

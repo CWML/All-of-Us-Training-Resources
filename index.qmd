@@ -6,6 +6,15 @@ toc: false
 
 These pages walk you through the [*All of Us* Researcher Workbench 2.0](https://workbench.verily.com/) (powered by Verily), from logging in to running an analysis. They're the reference version of our introductory training session.
 
+## What you'll learn
+
+- Explain the All of Us Research Program and its key data sources
+- Describe what changed between the classic Workbench and Workbench 2.0
+- Create a workspace and add an All of Us data collection
+- Build a cohort and dataset with Data Explorer
+- Launch an analysis app and find your exported data
+- Manage storage and costs
+
 ## Start here
 
 1. **[About All of Us](pages/get-started/about.qmd):** the program, its data, and the access tiers
@@ -15,6 +24,11 @@ These pages walk you through the [*All of Us* Researcher Workbench 2.0](https://
 5. **[Apps](pages/workspace/apps.qmd):** launch an analysis app and work with your data
 
 Throughout, we use an example workspace called **`intro-to-AoU`**, set up for instruction only.
+Some screenshots come from another training workspace, **`CWML_AoU_training`**. The steps are the same.
+
+::: {.callout-note title="Prefer slides?"}
+The same material as a slide deck: [Introduction to the Workbench 2.0 (slides)](<Intro to workbench 2.0/Introduction.html>). Press **F** for full screen and **Esc** for an overview.
+:::
 
 ## How to read the screenshots
 

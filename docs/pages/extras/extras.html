@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -37,8 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../pages/resources.html" rel="next">
-<link href="../../pages/examples/notebooks.html" rel="prev">
+<link href="../../pages/extras/github-guide.html" rel="next">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -278,7 +312,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../pages/get-started/about.html" aria-current="page"> 
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
@@ -294,7 +328,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Learn by Example</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../pages/extras/extras.html"> 
+    <a class="nav-link active" href="../../pages/extras/extras.html" aria-current="page"> 
 <span class="menu-text">Optional Extras</span></a>
   </li>  
   <li class="nav-item">
@@ -320,7 +354,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/extras/extras.html">Optional Extras</a></li><li class="breadcrumb-item"><a href="../../pages/extras/extras.html">Optional Extras</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/extras/extras.html">Optional Extras</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -332,161 +366,16 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Get Started</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About All of Us</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/whats-new.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">What’s New in Workbench 2.0</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/access.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Access</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/get-started/billing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Billing</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Your Workspace</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Setting Up a Workspace</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/research-use-statement.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Research Use Statement</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview and Resources Tabs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/apps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Apps</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/workflows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workflows</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/workspace/storage-costs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Storage &amp; Costs</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-collections.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Collections</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/data/data-explorer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Explorer</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Learn by Example</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/tutorial-workspaces.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial Workspaces</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../pages/examples/notebooks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example Notebooks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Optional Extras</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Optional Extras</span></a>
   </div>
 </li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../pages/resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Resources</span></a>
+  <a href="../../pages/extras/github-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub Guide</span></a>
   </div>
 </li>
     </ul>
@@ -494,14 +383,25 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#try-it-practice-with-synthetic-data" id="toc-try-it-practice-with-synthetic-data" class="nav-link active" data-scroll-target="#try-it-practice-with-synthetic-data">Try It: Practice with Synthetic Data</a></li>
+  <li><a href="#add-a-file-from-a-url" id="toc-add-a-file-from-a-url" class="nav-link" data-scroll-target="#add-a-file-from-a-url">Add a File from a URL</a></li>
+  <li><a href="#connect-github" id="toc-connect-github" class="nav-link" data-scroll-target="#connect-github">Connect GitHub</a></li>
+  <li><a href="#add-a-repository" id="toc-add-a-repository" class="nav-link" data-scroll-target="#add-a-repository">Add a Repository</a></li>
+  <li><a href="#github-things-to-know" id="toc-github-things-to-know" class="nav-link" data-scroll-target="#github-things-to-know">GitHub: Things to Know</a></li>
+  <li><a href="#ai-tools-use-them-outside-the-workbench" id="toc-ai-tools-use-them-outside-the-workbench" class="nav-link" data-scroll-target="#ai-tools-use-them-outside-the-workbench">AI Tools: Use Them Outside the Workbench</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/extras/extras.html">Optional Extras</a></li><li class="breadcrumb-item"><a href="../../pages/extras/extras.html">Optional Extras</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Optional Extras</h1>
 </div>
@@ -525,21 +425,198 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled" title="Coming soon">
-<div class="callout-header d-flex align-content-center">
+<p>Useful tools you <strong>don’t need</strong> for the basics.</p>
+<section id="try-it-practice-with-synthetic-data" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-practice-with-synthetic-data">Try It: Practice with Synthetic Data</h2>
+<p>Google hosts a free, <strong>synthetic</strong> (fake) OMOP dataset: <strong>CMS SynPUF</strong>. It has the same table layout as the All of Us CDR, with <strong>no real participants</strong>.</p>
+<p>Add it as a <strong>BigQuery dataset reference</strong>:</p>
+<ul>
+<li><strong>Project ID:</strong> <code>bigquery-public-data</code></li>
+<li><strong>Dataset ID:</strong> <code>cms_synthetic_patient_data_omop</code></li>
+</ul>
+<p>Then query it from an app:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">"SELECT gender_concept_id, COUNT(*) AS n</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">          FROM `bigquery-public-data.cms_synthetic_patient_data_omop.person`</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">          GROUP BY gender_concept_id"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(<span class="fu">bq_project_query</span>(<span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>), query))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>👉 Use a <strong>separate practice workspace</strong> with no All of Us data. Controlled Tier perimeters may block outside data.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Coming soon
+<span class="screen-reader-only">Tip</span>Instructor tip
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>This page is being converted from the training slides. It will cover: practice with synthetic data, adding a file from a URL, GitHub, and AI tools.</p>
+<p>Source: Verily, “Work with OMOP data in BigQuery” (their example uses Python). Example notebooks: github.com/verily-src/workbench-examples. Because it’s synthetic, students can share results and screenshots freely, unlike All of Us data. Queries are billed to your pod (BigQuery charges by data scanned; small queries like this cost very little). GOOGLE_CLOUD_PROJECT and GOOGLE_PROJECT are both set in Workbench apps, with the same value.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="add-a-file-from-a-url" class="level2">
+<h2 class="anchored" data-anchor-id="add-a-file-from-a-url">Add a File from a URL</h2>
+<p>Copy a <strong>public</strong> file from the web straight into your bucket. No download or upload needed.</p>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="annotated">
+<p><img src="../../Intro to workbench 2.0/images/res_add_file_url.png" class="img-fluid"></p>
+<div class="green-box" style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;">
+
+</div>
+<div class="green-box" style="left: 3.0%; top: 55.0%; width: 94.2%; height: 17.4%;">
+
+</div>
+<div class="red-circle" style="left: 69.0%; top: 81.6%; width: 28.6%; height: 15.0%;">
+
+</div>
+</div>
+</div>
+<div class="g-col-12 g-col-md-6">
+<ol type="1">
+<li><strong>Resources</strong> tab → select your bucket → <strong>Add file via URL</strong></li>
+<li><strong>URL:</strong> a <strong>public</strong> or <strong>signed</strong> link to the file</li>
+<li><strong>File name:</strong> what to call it in the bucket (the default is <code>import-</code> + date and time)</li>
+<li>Click <strong>Add file to bucket</strong> and wait for it to finish</li>
+</ol>
+<ul>
+<li>Files up to <strong>100 MB</strong></li>
+</ul>
+<p>⚠️ <strong>In a Controlled Tier workspace this may fail</strong> (“Couldn’t add that file”): the perimeter blocks many outside downloads. Instead, <strong>upload</strong> the file in JupyterLab, or keep it in a <strong>GitHub repo</strong> and clone it.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: Verily, “Add files to Cloud Storage via URL”, and the dialog in an All of Us Controlled Tier workspace (the option is available there). The transfer runs while you wait, so keep the page open. Tested October 2026 in the intro-to-AoU Controlled Tier workspace: a public GitHub raw URL (reachable from outside, HTTP 200) failed with “Couldn’t add that file. Try again later, or contact support for help.” Most likely the perimeter blocks the transfer. It should work in workspaces without a perimeter (e.g., a practice workspace with no All of Us data). GitHub over git/SSH does work inside the perimeter.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="connect-github" class="level2">
+<h2 class="anchored" data-anchor-id="connect-github">Connect GitHub</h2>
+<p><strong>Why:</strong> back up your code, track changes, and share it with collaborators</p>
+<p><strong>Add your Workbench SSH key to GitHub</strong> (once):</p>
+<ol type="1">
+<li><strong>Profile icon</strong> (top right) → <strong>Manage your profile</strong> → <strong>Groups &amp; keys</strong> tab</li>
+<li>Copy your <strong>public SSH key</strong>. Workbench creates one for you.</li>
+<li>In GitHub: <strong>Settings</strong> → <strong>SSH and GPG keys</strong> → <strong>New SSH key</strong>. Paste it and give it a clear name, e.g., <em>Workbench SSH key</em>.</li>
+<li>If your GitHub <strong>organization</strong> uses single sign-on (SSO), <strong>authorize</strong> the key for it</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: Verily, “Git integrations with cloud apps”. CLI alternatives: wb security ssh-key get (show the key) and wb security ssh-key generate (make a new one). The key is needed to push to any repo and to clone private ones; cloning a public repo over https works without it. GitHub is reachable from inside an All of Us (Controlled Tier) workspace: tested with ssh -T git@github.com, clone, and push. Source for the testing: the CWML guide “Sharing Your All of Us Workbench Code on GitHub”.</p>
+</div>
+</div>
+</div>
+<p><strong>Full step-by-step instructions</strong>, including troubleshooting: <a href="../../pages/extras/github-guide.html">GitHub Guide</a></p>
+</section>
+<section id="add-a-repository" class="level2">
+<h2 class="anchored" data-anchor-id="add-a-repository">Add a Repository</h2>
+<p><strong>Apps</strong> tab → <strong>Git repositories</strong> → <strong>+ Add repository</strong></p>
+<ul>
+<li><strong>Public repo:</strong> use the <code>https://github.com/…</code> URL (no key needed)</li>
+<li><strong>Private repo:</strong> use the <code>git@github.com:…</code> URL (needs your SSH key)</li>
+<li>It’s <strong>cloned automatically</strong> into apps you create <strong>afterward</strong>. For an app you already have, run this in its terminal:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> git clone <span class="at">--resource</span><span class="op">=&lt;</span>repo resource name<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then work as usual: <code>git add</code> → <code>git commit</code> → <code>git push</code></p>
+<p>⚠️ <strong>Commit code only.</strong> Clear notebook outputs first, e.g., <code>jupyter nbconvert --clear-output --inplace *.ipynb</code>. Never commit data files or results.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This repository (CWML All-of-Us-Training-Resources) is a public example students could add. Outputs can contain participant-level data or small counts, which must not leave the Workbench.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="github-things-to-know" class="level2">
+<h2 class="anchored" data-anchor-id="github-things-to-know">GitHub: Things to Know</h2>
+<ul>
+<li><strong>Test the connection:</strong> <code>ssh -T git@github.com</code>. <em>“Hi username! You’ve successfully authenticated…”</em> means it works.</li>
+<li><strong>Set your name and email</strong> once per app: <code>git config --global user.name</code> / <code>user.email</code>. For a public repo, use your GitHub <strong>noreply</strong> email.</li>
+<li><strong>Clone into your home folder (<code>~</code>), not <code>~/workspace/…</code>.</strong> That’s a mounted bucket, and Git doesn’t work well there.</li>
+<li><strong>The clone lives on the app’s disk.</strong> Push before you delete the app.</li>
+</ul>
+<p>⚠️ <strong>Before every push:</strong> clear outputs, leave out data files (<code>.csv</code>, <code>.vcf</code>…), check for passwords or tokens, and read <code>git status</code>. Pushed data by mistake? Deleting it in a new commit <strong>doesn’t</strong> remove it from Git history. Make the repo private and contact All of Us support.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>From the CWML guide “Sharing Your All of Us Workbench Code on GitHub”. It covers adding work to an existing repo (branch and pull request), creating a new repo, keeping in sync, and troubleshooting. Two copies of a notebook drift apart: work from the repo copy, not the copy in ~/workspace.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ai-tools-use-them-outside-the-workbench" class="level2">
+<h2 class="anchored" data-anchor-id="ai-tools-use-them-outside-the-workbench">AI Tools: Use Them Outside the Workbench</h2>
+<p>Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? <strong>Use it outside the Workbench</strong>, for <strong>coding help only</strong>.</p>
+<p><strong>Why not inside the Workbench?</strong></p>
+<ul>
+<li>All of Us does <strong>not allow participant-level data to leave the Workbench</strong>, and that includes sending it to an AI service</li>
+<li>AI coding assistants like <strong>Claude Code</strong> can <strong>open files and run code on their own</strong>. It’s easy for them to read <strong>data files</strong>, <strong>query results</strong>, or <strong>notebook outputs</strong> that contain participant-level data.</li>
+<li>Even one accidental read counts as a <strong>Data User Code of Conduct violation</strong>, even if nothing is stored</li>
+</ul>
+<p>👉 <strong>How:</strong> get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.</p>
+</div>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -957,13 +1034,10 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../pages/examples/notebooks.html" class="pagination-link" aria-label="Example Notebooks">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Example Notebooks</span>
-      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../pages/resources.html" class="pagination-link" aria-label="Resources">
-        <span class="nav-page-text">Resources</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../pages/extras/github-guide.html" class="pagination-link" aria-label="GitHub Guide">
+        <span class="nav-page-text">GitHub Guide</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

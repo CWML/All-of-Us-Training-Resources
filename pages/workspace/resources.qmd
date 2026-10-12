@@ -1,8 +1,344 @@
 ---
 title: "Overview and Resources Tabs"
-description: "Workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud"
+description: "Workspace layout, the Overview and Resources tabs, buckets, BigQuery datasets, folders, and references"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: workspace layout, buckets, BigQuery datasets, folders, references, and viewing your bucket in Google Cloud.
+## Workspace Layout
+
+Every workspace page has the same layout:
+
+- **Header:** cloud (GCP), dates, **Policies** (e.g., *6 active*; click to view them), and your **Access** level
+- **Perimeter banner:** shown when the workspace holds restricted data (e.g., Controlled Tier). Services outside the perimeter may not work.
+- **Four tabs:**
+
+| Tab | What's there |
+|---|---|
+| **Overview** | The workspace description |
+| **Resources** | Your data and storage |
+| **Apps** | Analysis environments (JupyterLab, RStudio, SAS…) |
+| **Workflows** | Batch jobs and pipelines |
+
+## Overview Tab
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/ws_tabs.png>)
+
+::: {.red-circle style="left: 1.2%; top: 25.2%; width: 9.0%; height: 7.4%;"}
+:::
+
+::: {.red-box style="left: 11.4%; top: 34.6%; width: 13.2%; height: 5.8%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-5}
+- The first thing you see when you open a workspace
+- Shows the **description**: what the project is about, e.g., its scientific questions, approaches, and anticipated findings
+- Helps collaborators (and you, later) understand the workspace at a glance
+
+**To update it:** click **Edit description**, make your changes, and save. Update it as your project changes.
+
+⚠️ The description is **publicly accessible**, so keep it accurate and leave out sensitive details.
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Good practice: keep the description in sync with your Research Use Statement answers, which are also public.
+:::
+
+## Resources Tab
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/ws_tabs.png>)
+
+::: {.red-circle style="left: 10.0%; top: 25.2%; width: 7.4%; height: 7.4%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-5}
+Where your workspace's **data and storage** live:
+
+- **Data collections** you've added (e.g., the All of Us Controlled Tier resources)
+- **Buckets** you create to save files
+- Other cloud resources
+
+Add more with **+ New resource** or **+ Data from catalog**
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+More detail on each resource type is below.
+:::
+
+## Adding New Resources
+
+**Resources** tab → **+ New resource** opens a menu of resource types:
+
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_new_menu.png>)
+
+::: {.red-circle style="left: 7.8%; top: 1.0%; width: 9.0%; height: 11.6%;"}
+:::
+
+::: {.red-circle style="left: 66.8%; top: 14.6%; width: 15%; height: 12.4%;"}
+:::
+
+::: {.green-box style="left: 67.2%; top: 25.0%; width: 23.4%; height: 69.6%;"}
+:::
+:::
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**Create new** (folder, bucket, BigQuery dataset, cohort)
+
+- Lives **in your workspace**, shared with collaborators
+- Deleted if the workspace is deleted
+:::
+::: {.g-col-12 .g-col-md-6}
+**Reference existing** (bucket, object, BigQuery dataset or table)
+
+- A **pointer** to data that lives elsewhere; nothing is copied
+- Access is managed by the data's owner
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Verily calls these "controlled" and "referenced" resources. The data collection resources you added from the catalog are referenced resources too.
+:::
+
+## Which Resource Do I Need?
+
+| Resource | What it is | Use it when you want to… |
+|---|---|---|
+| **Folder** | A label for grouping resources on the Resources tab | Keep a busy workspace organized (e.g., *Data*, *Results*) |
+| **Cloud Storage bucket** | Your own storage for files | Save CSVs, notebooks, plots, and cleaned data so they outlast your app |
+| **BigQuery dataset** | Your own database for tables | Save large query results as tables you can query again with SQL |
+| **Reference** a bucket, object, dataset, or table | A pointer to data that lives elsewhere | Use data you already have access to without copying it |
+
+👉 Most students need just **one bucket**. The others are optional.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+New Cohort is covered on the [Data Explorer](../data/data-explorer.qmd) page.
+:::
+
+## New Folder
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-7}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_folder.png>)
+
+::: {.red-circle style="left: 77.4%; top: 84.0%; width: 21.6%; height: 13.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-5}
+**Why:** organize resources on the Resources tab, your way
+
+- **Folder name** (required)
+- **Folder path:** where the folder goes; the workspace itself by default
+- **Description** (optional)
+
+Click **Create folder**
+
+To put an existing resource in a folder: select it → **Move** (in its details pane)
+
+Folders don't change a resource's **cloud path** (`gs://…`), but they **do** appear in the app's mounted path: `~/workspace/<folder>/<bucket>`
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Avoid spaces in folder names: they have to be quoted in file paths in code.
+:::
+
+## New Cloud Storage Bucket
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_bucket.png>)
+
+::: {.red-circle style="left: 73.6%; top: 90.0%; width: 24.4%; height: 8.6%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+**Why:** new workspaces have **no bucket**, and you need one to save your work
+
+- **Resource ID:** the name inside Workbench (letters, numbers, `-`, `_`). The tutorials use `workspace-bucket`.
+- **Folder path** and **Description**
+- **Bucket name:** the name in Google Cloud. It must be **globally unique**, so keep the generated one: your Resource ID + the workspace's project ID (↻ makes a new one).
+
+Click **Create bucket**. You can use it right away; collaborators may wait **up to 15 min**.
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Controlled resources like this bucket are shared with workspace collaborators and deleted when the workspace is deleted. Apps that were already running won't see a new bucket until you restart the app or run wb resource mount. Mounted folders cache file info for about a minute, so two people writing at once may not see each other's changes right away. Migrated 1.0 workspaces already have a bucket: rw-migration-aou-rw-…
+:::
+
+## Bucket Names: Good Practice
+
+- **Lowercase** letters, numbers, `-`, `_`, 3–63 characters, no spaces, no "google"
+- Bucket names are **public**: anyone can check whether a name exists
+  - ⚠️ No names, emails, NetIDs, or project details
+- A bucket name **can't be changed** (the resource's name and description can). To rename, create a new bucket and copy the files over.
+- Deleting a bucket frees its name for **anyone** to reuse
+
+👉 Easiest: accept the **generated name**. It's built from your **Resource ID** + the workspace's project ID, so keep the Resource ID free of personal details too.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: Google Cloud, "About Cloud Storage buckets" and "Create a bucket". Files (objects) also can't be renamed in place; renaming copies and deletes them. Avoid putting sensitive information in file names too.
+:::
+
+## New BigQuery Dataset
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_bq_dataset.png>)
+
+::: {.red-circle style="left: 72.6%; top: 90.0%; width: 24.8%; height: 8.4%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-6}
+**Why:** save large query results as **tables**, then query them again with SQL instead of re-running long queries or loading big CSVs
+
+- **Resource ID**, **Folder path**, **Description**
+- **Dataset ID:** the name in Google Cloud. Unique within your project; letters, numbers, `_` only. Keep the generated one or choose your own. **Can't be changed later.**
+
+Click **Create dataset**. Collaborators may wait **up to 15 min**.
+:::
+::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Optional for most class projects; a bucket with CSV files is usually enough. BigQuery storage and queries are billed to your pod.
+:::
+
+## Referencing Existing Data
+
+A **reference** points to data that already exists elsewhere. Nothing is copied.
+
+| Reference | You'll need |
+|---|---|
+| **Cloud Storage bucket** | The bucket name |
+| **Cloud Storage object** (one file) | Its URL, e.g., `gs://bucket-name/path/file.csv` |
+| **BigQuery dataset** | Project ID + Dataset ID |
+| **BigQuery table** | Project ID + Dataset ID + Table ID |
+
+Every reference also has a **Resource ID**, **Folder path**, and **Description**. Then click **Add to resources**.
+
+⚠️ **Access isn't shared automatically.** The data's owner controls it. In a Controlled Tier workspace, the **perimeter** may also block data from outside it.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Example uses: point to a collaborator's bucket, or to a shared file without copying it. The All of Us data collection resources you added earlier are references too. Deleting a reference removes the pointer, not the data. You can edit a reference's name and description, but not the bucket name, project ID, dataset ID, or table ID; to fix those, delete the reference and add it again. Some outside buckets are "Requester Pays": reading or browsing them is billed to your pod, and mounting them when an app starts can cost money too. The Workbench shows a warning when you add one.
+:::
+
+## Reference: Bucket or Object
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_ref_bucket.png>)
+
+::: {.red-box style="left: 2.6%; top: 62.6%; width: 94.8%; height: 8.4%;"}
+:::
+:::
+
+**Bucket:** enter the **bucket name**
+:::
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_ref_object.png>)
+
+::: {.red-box style="left: 2.4%; top: 63.4%; width: 94.4%; height: 9.0%;"}
+:::
+:::
+
+**Object:** enter its **`gs://` URL**
+:::
+::::
+
+## Reference: BigQuery Dataset or Table
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_ref_bq_dataset.png>)
+
+::: {.red-box style="left: 2.6%; top: 62.4%; width: 94.8%; height: 25.4%;"}
+:::
+:::
+
+**Dataset:** Project ID + Dataset ID
+:::
+::: {.g-col-12 .g-col-md-6}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/res_ref_bq_table.png>)
+
+::: {.red-box style="left: 2.4%; top: 54.8%; width: 94.8%; height: 32.4%;"}
+:::
+:::
+
+**Table:** same, **+ Table ID**
+:::
+::::
+
+## Viewing Your Bucket in Google Cloud
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-4}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/gcp_1_ws_details.png>)
+
+::: {.red-box style="left: 3.0%; top: 86.0%; width: 47.0%; height: 9.4%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-3}
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/gcp_2_console_menu.png>)
+
+::: {.red-box style="left: 0.4%; top: 93.4%; width: 60.0%; height: 6.4%;"}
+:::
+
+::: {.red-box style="left: 60.6%; top: 57.2%; width: 39.0%; height: 5.0%;"}
+:::
+:::
+:::
+::: {.g-col-12 .g-col-md-5}
+1. In your workspace, find **Workspace details** (right side) and click the **Google Project** link
+2. The **Google Cloud console** opens: menu → **Cloud Storage** → **Buckets**
+3. Click the bucket your files are in
+
+The details panel also shows the workspace **ID**, **default region**, **pod**, and **UUID**.
+:::
+::::
+
+## What You Can See (and Can't)
+
+::: {.annotated}
+![](<../../Intro to workbench 2.0/images/gcp_3_bucket.png>)
+
+::: {.green-box style="left: 37.4%; top: 57.0%; width: 62.4%; height: 38.6%;"}
+:::
+:::
+
+:::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+✅ **You can see** folder and file **names**, sizes, and types, e.g., `notebooks/`, `data/`, and the `bq_exports/` folder from a data snapshot
+:::
+::: {.g-col-12 .g-col-md-6}
+❌ **You can't open or download** the files. The perimeter blocks it. Open them from an **app** in the workspace instead.
+:::
+::::
+
+👉 Handy for checking that an export arrived, or finding a file's path
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab's trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.
 :::

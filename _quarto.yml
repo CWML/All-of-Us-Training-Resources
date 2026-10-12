@@ -4,6 +4,10 @@ project:
   render:
     - index.qmd
     - "pages/**/*.qmd"
+  resources:
+    - "Intro to workbench 2.0/Introduction.html"
+    - "Intro to workbench 2.0/Introduction_files/**"
+    - "Intro to workbench 2.0/images/**"
 
 website:
   title: "All of Us Workbench 2.0 Training"
@@ -34,35 +38,43 @@ website:
         href: https://github.com/CWML/All-of-Us-Training-Resources
 
   sidebar:
-    style: docked
-    contents:
-      - section: "Get Started"
-        contents:
-          - pages/get-started/about.qmd
-          - pages/get-started/whats-new.qmd
-          - pages/get-started/access.qmd
-          - pages/get-started/billing.qmd
-      - section: "Your Workspace"
-        contents:
-          - pages/workspace/workspaces.qmd
-          - pages/workspace/setup.qmd
-          - pages/workspace/research-use-statement.qmd
-          - pages/workspace/resources.qmd
-          - pages/workspace/apps.qmd
-          - pages/workspace/workflows.qmd
-          - pages/workspace/storage-costs.qmd
-      - section: "Data"
-        contents:
-          - pages/data/data-collections.qmd
-          - pages/data/data-explorer.qmd
-      - section: "Learn by Example"
-        contents:
-          - pages/examples/tutorial-workspaces.qmd
-          - pages/examples/notebooks.qmd
-      - section: "Optional Extras"
-        contents:
-          - pages/extras/extras.qmd
-      - pages/resources.qmd
+    - id: get-started
+      title: "Get Started"
+      style: docked
+      contents:
+        - pages/get-started/about.qmd
+        - pages/get-started/whats-new.qmd
+        - pages/get-started/access.qmd
+        - pages/get-started/billing.qmd
+    - id: workspace
+      title: "Your Workspace"
+      style: docked
+      contents:
+        - pages/workspace/workspaces.qmd
+        - pages/workspace/setup.qmd
+        - pages/workspace/research-use-statement.qmd
+        - pages/workspace/resources.qmd
+        - pages/workspace/apps.qmd
+        - pages/workspace/storage-costs.qmd
+        - pages/workspace/workflows.qmd
+    - id: data
+      title: "Data"
+      style: docked
+      contents:
+        - pages/data/data-collections.qmd
+        - pages/data/data-explorer.qmd
+    - id: examples
+      title: "Learn by Example"
+      style: docked
+      contents:
+        - pages/examples/tutorial-workspaces.qmd
+        - pages/examples/notebooks.qmd
+    - id: extras
+      title: "Optional Extras"
+      style: docked
+      contents:
+        - pages/extras/extras.qmd
+        - pages/extras/github-guide.qmd
 
   page-footer:
     left: "Cushing/Whitney Medical Library, Yale School of Medicine"

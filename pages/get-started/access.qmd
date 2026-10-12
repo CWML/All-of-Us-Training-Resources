@@ -1,8 +1,72 @@
 ---
 title: "Getting Access"
-description: "Creating your account, logging in, the home page, and getting around"
+description: "Creating your account, logging in, and finding your way around the Workbench"
 ---
 
-::: {.callout-note title="Coming soon"}
-This page is being converted from the training slides. It will cover: creating your account, logging in, the home page, and getting around.
+## Create Your Account
+
+1.  Create an account at the [All of Us Research Hub](https://www.researchallofus.org/)
+2.  Complete data access registration
+    - ID verification
+    - Mandatory trainings
+    - Data User Code of Conduct
+3.  For Controlled Tier data, complete the **Controlled Tier training**
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+If you already have Workbench access, skip this step. Registration happens on the All of Us Research Hub before you can use the Workbench.
+:::
+
+## Logging In
+
+:::::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+![](<../../Intro to workbench 2.0/images/login.png>)
+:::
+
+:::: {.g-col-12 .g-col-md-6}
+- Go to [**workbench.verily.com**](https://workbench.verily.com/)
+- Select **Continue with Google**
+- Sign in with your **All of Us account** (`yourname@researchallofus.org`), not your Yale or personal Google account
+
+::: callout-tip
+Use **Google Chrome** to log in.
+:::
+::::
+::::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+workbench.verily.com redirects to the Verily sign-in page. Make sure your data access requirements (trainings, etc.) are up to date before logging in.
+:::
+
+## The Home Page
+
+![](<../../Intro to workbench 2.0/images/homepage.png>){fig-align="center"}
+
+
+## Getting Around
+
+::::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+**Left sidebar**
+
+- **Home:** recent workspaces and data collections, plus running apps
+- **Exchange:** the data catalog for browsing data collections
+- **Workspaces:** your workspaces
+- **Data collections:** collections you have access to
+- **Pods:** billing (see Billing)
+- **Support hub:** help and documentation
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**Home page**
+
+- **+ New workspace**
+- **Running apps:** check here so you don't pay for apps you forgot to stop!
+- **Tutorial workspace:** *Getting Started with Controlled Tier Data (v9)*, a good place to start
+- **Did you know?** Policies can't be removed once applied
+:::
+:::::
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Admin → Organizations shows the organization your account belongs to: for All of Us users, "aou-prod" (the All of Us production organization), with its terms of service and activity logs. Nothing to change there.
 :::
