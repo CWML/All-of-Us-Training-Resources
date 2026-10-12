@@ -35,7 +35,6 @@ website:
 
   sidebar:
     style: docked
-    background: light
     contents:
       - section: "Get Started"
         contents:
@@ -71,7 +70,10 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
+    respect-user-color-scheme: true
     css: styles.css
     toc: true
     toc-title: "On this page"

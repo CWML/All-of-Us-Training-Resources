@@ -27,3 +27,8 @@
 .annotated.narrow {
   max-width: 720px;
 }
+
+/* Dark mode: soften screenshot borders */
+body.quarto-dark .annotated img {
+  border-color: #495057;
+}
