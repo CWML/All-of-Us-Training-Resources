@@ -61,41 +61,7 @@ load_data <- function(file_name) {
   read_csv(file.path(DATA_DIR, file_name), show_col_types = FALSE)
 }
 
-# ---- 3. THE STUDY POPULATION (used by notebooks 1.1 and 1.2) ----------------
-#
-# Adults aged 25-50 who are alive; race White, Black, or Asian; ethnicity
-# Hispanic or not Hispanic; gender Man or Woman. Each person is flagged
-# diabetes = "Yes" (any diabetes mellitus diagnosis) or "No".
-
-cohort_sql <- function() {
-  str_glue("
-WITH diabetes_people AS (
-  -- everyone with a diagnosis of diabetes mellitus (concept 201820) or any more specific type
-  SELECT DISTINCT person_id
-  FROM `{CURRENT_DATASET}.condition_occurrence`
-  WHERE condition_concept_id IN (
-    SELECT descendant_concept_id
-    FROM `{CURRENT_DATASET}.concept_ancestor`
-    WHERE ancestor_concept_id = 201820
-  )
-),
-cohort AS (
-  SELECT
-    p.person_id,
-    IF(d.person_id IS NOT NULL, 'Yes', 'No') AS diabetes
-  FROM `{CURRENT_DATASET}.person` p
-  LEFT JOIN diabetes_people d ON p.person_id = d.person_id
-  WHERE FLOOR(DATE_DIFF(CURRENT_DATE(), DATE(p.birth_datetime), DAY) / 365.25) BETWEEN 25 AND 50
-    AND p.race_concept_id      IN (8527, 8516, 8515)        -- White, Black, Asian
-    AND p.ethnicity_concept_id IN (38003563, 38003564)      -- Hispanic, not Hispanic
-    AND p.gender_concept_id    IN (45878463, 45880669)      -- Woman, Man
-    AND NOT EXISTS (                                        -- alive
-      SELECT 1 FROM `{CURRENT_DATASET}.death` dd WHERE dd.person_id = p.person_id
-    )
-)")
-}
-
-# ---- 4. ANALYSIS HELPERS (used by notebooks 3.1-3.3) -------------------------
+# ---- 3. ANALYSIS HELPERS (used by notebooks 3.1-3.3) -------------------------
 
 # Read final_analysis.csv and set up variable types for modelling
 prepare_analysis_data <- function() {
