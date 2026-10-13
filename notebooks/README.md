@@ -1,5 +1,7 @@
 Short R notebooks that walk through a complete study comparing people **with** and **without diabetes**, including time to chronic kidney disease (CKD). **Each notebook does one thing**, so each can be taught as its own short class. They run in the *All of Us* Researcher Workbench 2.0.
 
+**Written for beginners.** Each notebook has learning objectives, a plain-language primer on the key concepts (R, SQL, or statistics), an explanation of every step and function, "Read the output" guides, exercises with hidden answers, common errors, and key takeaways. Notebook **0.0** includes a 5-minute introduction to Jupyter and R.
+
 ## The notebooks
 
 | Notebook | What it does | Class |
