@@ -83,34 +83,39 @@ Styling is in `custom.scss`.
 
 ## Notebooks: Example Analysis Workflow
 
-The notebooks walk through a complete study comparing a **diabetes (study) cohort** with a **non-diabetes (control) cohort**, including chronic kidney disease (CKD) outcomes. Run them in order:
+Short R notebooks that walk through a complete study comparing people **with** and **without diabetes**, including time to chronic kidney disease (CKD). Each notebook does one thing, so each can be taught as its own short class.
 
-| Notebook | What it does |
-|---|---|
-| `0.0 load_environment_variables` | Sets up the environment and loads datasets from the workspace bucket |
-| `1.1 diabetes_control_cohort` | Extracts demographic, survey, and measurement data for the control cohort (no diabetes) |
-| `1.2 diabetes_ckd_surv_cohort` | Extracts condition and visit data for CKD survival analysis |
-| `1.3 diabetes_study_cohort` | Extracts demographic, survey, and measurement data for the study cohort (diabetes) |
-| `2.0 clean_join_cohorts_survey_measurements` | Imports, cleans, and joins the cohort datasets |
-| `3.0 Statistical_data_analysis_for_clinical_research` | Table One (chi-square, t-tests), logistic and linear regression, and survival analysis (hazard ratios, Kaplan–Meier) |
+| Notebook | What it does | Class |
+|---|---|---|
+| `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions | |
+| `0.0 setup` | Checks your settings and the connection to the data | Any |
+| `1.1 build_cohorts` | Cohort Builder SQL (updated for 2.0) for the study population: demographics, PTSD survey answers, and measurements. Also shows how to use a Data Explorer export instead. | 1 |
+| `1.2 survival_data` | Diabetes and CKD diagnosis dates, and last visits | 1 or 5 |
+| `2.0 clean_and_join` | Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table | 2 |
+| `3.1 table_one` | Descriptive statistics, chi-square and t-tests, and a small-count check | 3 |
+| `3.2 logistic_regression` | Univariable and multivariable models for the odds of diabetes | 4 |
+| `3.3 linear_regression` | Models for systolic blood pressure, compared by fit | 4 |
+| `3.4 survival_analysis` | Kaplan–Meier curves and a Cox model with baseline predictors | 5 |
 
-**Variables used:** age, ethnicity, race, and other demographics; survey questions on current doctor visits and prescriptions; BMI, LDL cholesterol, systolic blood pressure, and A1C; diabetes and CKD diagnoses; visit dates.
+**Variables used:** age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.
+
+**Full instructions**, including how to build the same cohorts in **Data Explorer**, are in [`notebooks/README.md`](notebooks/README.md).
+
+The earlier versions of the notebooks (classic Workbench) are in `notebooks/archive/`.
 
 ### Running the notebooks
 
-The notebooks only run **inside an *All of Us* workspace**. They query the *All of Us* data with BigQuery and read and write files in the workspace bucket.
+The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They query the *All of Us* data with BigQuery and save files in your bucket.
 
-1. Create a workspace on the [Researcher Workbench](https://workbench.verily.com/) and add an *All of Us* data collection.
-2. Build your cohorts and datasets with Data Explorer.
-3. Get the notebooks into your workspace, either way:
+1. Create a workspace on the [Researcher Workbench](https://workbench.verily.com/), add the *All of Us* Controlled Tier data collection, and create a **bucket** on the Resources tab.
+2. Get the notebooks into your workspace, either way:
    - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward.
-   - **Download and upload:** download the `.ipynb` files from GitHub and upload them to your app.
-4. Launch an R analysis app (e.g., AoU Jupyter with an R kernel).
-5. Run the notebooks in order: `0.0` → `1.1`–`1.3` → `2.0` → `3.0`.
+   - **Download and upload:** download the `notebooks/` files from GitHub, **including `aou_setup.R`**, and upload them to one folder in your app.
+3. Launch an R app (e.g., AoU Jupyter with an R kernel).
+4. Open **`0.0 setup`** and follow it: it has you edit two lines in `aou_setup.R`.
+5. Run the notebooks in order: `1.1` → `1.2` → `2.0` → `3.1` to `3.4`. The queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files.
 
-> **Note:** Notebooks `1.1`–`1.3` still use SQL queries from the classic Researcher Workbench (1.0), generated for Controlled Tier Dataset v8. They won't run as-is in Workbench 2.0. Build your cohorts with Data Explorer and replace these queries with the ones it generates for you. Updated versions are planned.
-
-**R packages:** `tidyverse`, `bigrquery`, `dplyr`, `lubridate`, `stringr`, `tidyr`, `purrr`, `broom`, `survival`, `survminer`
+**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`, `survminer`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 
 ## Data Use
 
