@@ -422,41 +422,36 @@ ul.task-list li input[type="checkbox"] {
 <td>Any</td>
 </tr>
 <tr class="odd">
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.1%20use_saved_data.ipynb"><code>0.1 use_saved_data</code></a></td>
-<td><em>Optional:</em> converts files saved by the earlier notebooks, so you can skip 1.1 and 1.2</td>
-<td></td>
-</tr>
-<tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20build_cohorts.ipynb"><code>1.1 build_cohorts</code></a></td>
-<td>Cohort Builder SQL (updated for 2.0) for the study population: demographics, PTSD survey answers, and measurements</td>
+<td>Cohort Builder SQL (updated for 2.0): demographics, PTSD survey answers, and measurements, saved separately for the study and control groups</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20survival_data.ipynb"><code>1.2 survival_data</code></a></td>
-<td>Diabetes and CKD diagnosis dates, and last visits</td>
+<td>Diabetes and CKD diagnoses, and visits</td>
 <td>1 or 5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_and_join.ipynb"><code>2.0 clean_and_join</code></a></td>
-<td>Cleans, reshapes, and joins the data into one analysis table</td>
+<td>Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table</td>
 <td>2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.1%20table_one.ipynb"><code>3.1 table_one</code></a></td>
 <td>Descriptive statistics, chi-square and t-tests, and a small-count check</td>
 <td>3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.2%20logistic_regression.ipynb"><code>3.2 logistic_regression</code></a></td>
 <td>Univariable and multivariable models for the odds of diabetes</td>
 <td>4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.3%20linear_regression.ipynb"><code>3.3 linear_regression</code></a></td>
 <td>Models for systolic blood pressure, compared by fit</td>
 <td>4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.4%20survival_analysis.ipynb"><code>3.4 survival_analysis</code></a></td>
 <td>Kaplan–Meier curves and a Cox model with baseline predictors</td>
 <td>5</td>
@@ -468,11 +463,13 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="how-they-fit-together">How they fit together</h3>
 <pre><code>aou_setup.R          settings + helpers, loaded by every notebook
      │
-1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv
-1.2 survival_data ──► survival_conditions.csv, last_visits.csv
-   (or 0.1 use_saved_data: makes the same five files from older saved data)
+1.1 build_cohorts ──► person_study.csv       person_control.csv
+                      survey_study.csv       survey_control.csv
+                      measurement_study.csv  measurement_control.csv
+1.2 survival_data ──► condition_arranged.csv, visit_arranged.csv
      │
-2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv
+2.0 clean_and_join ─► flag the groups (diabetes = Yes / No), stack them, clean, join
+                      ──► final_analysis.csv, measurements_wide.csv
      │
 3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival</code></pre>
 <p>The queries in <strong>1.1</strong> and <strong>1.2</strong> run once and save their results to your bucket’s <code>data/</code> folder. Every later notebook reads those files, so a class can start at any notebook once the data is saved.</p>
@@ -573,7 +570,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="use-the-exports-with-these-notebooks" class="level3">
 <h3 class="anchored" data-anchor-id="use-the-exports-with-these-notebooks">4. Use the exports with these notebooks</h3>
-<p>Run each exported notebook once: it saves CSV files to your bucket under <code>bq_exports/</code>. Then follow <strong>“Alternative: use a Data Explorer export instead”</strong> at the end of notebook <strong>1.1</strong>: it combines the two cohorts, adds the <code>diabetes</code> flag, and renames the columns so notebooks 2.0 to 3.4 work unchanged.</p>
+<p>Run each exported notebook once: it saves CSV files to your bucket under <code>bq_exports/</code>. Then follow <strong>“Alternative: use a Data Explorer export instead”</strong> at the end of notebook <strong>1.1</strong>: it renames the columns and saves each cohort with the same file names as the SQL version (<code>person_study.csv</code>, <code>person_control.csv</code>…), so notebooks 2.0 to 3.4 work unchanged.</p>
 <blockquote class="blockquote">
 <p><strong>To confirm in the Workbench:</strong> where the PTSD questions and the four measurements appear under <strong>+ Browse more data</strong>, and that <strong>Deceased</strong> can be used as an exclusion. Menus may differ slightly.</p>
 <p><strong>Counts won’t exactly match the SQL version.</strong> Data Explorer and the Cohort Builder SQL in notebook 1.1 calculate age and match diagnosis codes in slightly different ways. Both are fine for learning; just use one method consistently.</p>
@@ -582,7 +579,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="already-have-data-from-the-earlier-notebooks" class="level2">
 <h2 class="anchored" data-anchor-id="already-have-data-from-the-earlier-notebooks">Already have data from the earlier notebooks?</h2>
-<p>If you ran the earlier (classic Workbench) versions of these notebooks and still have their CSV files, open <strong><code>0.1 use_saved_data</code></strong>. It converts them into the new format so you can skip 1.1 and 1.2. Your old <code>final_analysis.csv</code> works with notebooks 3.1 to 3.3 as it is.</p>
+<p>If you ran the earlier (classic Workbench) versions of these notebooks, your saved CSV files <strong>work as they are</strong>: they use the same file names (<code>person_study.csv</code>, <code>survey_control.csv</code>, <code>condition_arranged.csv</code>…). Set <code>BUCKET_NAME</code> in <code>aou_setup.R</code> to the bucket that holds them (in a migrated workspace, the one named like <code>rw-migration-aou-rw-…</code>), run <strong>0.0</strong>, then <strong>skip 1.1 and 1.2</strong> and start at <strong>2.0</strong>.</p>
 <p>Those files come from the older dataset (CDR v8), so results won’t match a fresh CDR v9 run. The earlier notebooks themselves are in <a href="https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive"><code>archive/</code></a>.</p>
 </section>
 <section id="data-use" class="level2">

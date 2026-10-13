@@ -73,10 +73,7 @@ prepare_analysis_data <- function() {
       # rebuilt from age, so files saved with older age-group labels still work
       age_group = cut(age, breaks = c(25, 35, 45, 51), right = FALSE,
                       labels = c("25-34", "35-44", "45-50")),
-      diabetes  = factor(diabetes, levels = c("No", "Yes")),
-      diabetes_binary       = if_else(diabetes == "Yes", 1L, 0L),
-      ptsd_doctor_binary    = if_else(ptsd_doctor == "Yes", 1L, 0L),
-      ptsd_treatment_binary = if_else(ptsd_treatment == "Yes", 1L, 0L)
+      diabetes  = factor(diabetes, levels = c("No", "Yes"))   # the flagging variable
     )
 }
 

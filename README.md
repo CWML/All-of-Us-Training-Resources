@@ -89,10 +89,9 @@ Short R notebooks that walk through a complete study comparing people **with** a
 |---|---|---|
 | `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions | |
 | `0.0 setup` | Checks your settings and the connection to the data | Any |
-| `0.1 use_saved_data` | *Optional:* converts files saved by the earlier notebooks, so you can skip 1.1 and 1.2 | |
 | `1.1 build_cohorts` | Cohort Builder SQL (updated for 2.0) for the study population: demographics, PTSD survey answers, and measurements. Also shows how to use a Data Explorer export instead. | 1 |
 | `1.2 survival_data` | Diabetes and CKD diagnosis dates, and last visits | 1 or 5 |
-| `2.0 clean_and_join` | Cleans, reshapes, and joins the data into one analysis table | 2 |
+| `2.0 clean_and_join` | Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table | 2 |
 | `3.1 table_one` | Descriptive statistics, chi-square and t-tests, and a small-count check | 3 |
 | `3.2 logistic_regression` | Univariable and multivariable models for the odds of diabetes | 4 |
 | `3.3 linear_regression` | Models for systolic blood pressure, compared by fit | 4 |

@@ -6,10 +6,9 @@ Short R notebooks that walk through a complete study comparing people **with** a
 |---|---|---|
 | [`aou_setup.R`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/aou_setup.R) | Settings you edit once (bucket and dataset) and shared helper functions | |
 | [`0.0 setup`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb) | Checks your settings and the connection to the data | Any |
-| [`0.1 use_saved_data`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.1%20use_saved_data.ipynb) | *Optional:* converts files saved by the earlier notebooks, so you can skip 1.1 and 1.2 | |
-| [`1.1 build_cohorts`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20build_cohorts.ipynb) | Cohort Builder SQL (updated for 2.0) for the study population: demographics, PTSD survey answers, and measurements | 1 |
-| [`1.2 survival_data`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20survival_data.ipynb) | Diabetes and CKD diagnosis dates, and last visits | 1 or 5 |
-| [`2.0 clean_and_join`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_and_join.ipynb) | Cleans, reshapes, and joins the data into one analysis table | 2 |
+| [`1.1 build_cohorts`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.1%20build_cohorts.ipynb) | Cohort Builder SQL (updated for 2.0): demographics, PTSD survey answers, and measurements, saved separately for the study and control groups | 1 |
+| [`1.2 survival_data`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/1.2%20survival_data.ipynb) | Diabetes and CKD diagnoses, and visits | 1 or 5 |
+| [`2.0 clean_and_join`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/2.0%20clean_and_join.ipynb) | Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table | 2 |
 | [`3.1 table_one`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.1%20table_one.ipynb) | Descriptive statistics, chi-square and t-tests, and a small-count check | 3 |
 | [`3.2 logistic_regression`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.2%20logistic_regression.ipynb) | Univariable and multivariable models for the odds of diabetes | 4 |
 | [`3.3 linear_regression`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/3.3%20linear_regression.ipynb) | Models for systolic blood pressure, compared by fit | 4 |
@@ -22,11 +21,13 @@ Short R notebooks that walk through a complete study comparing people **with** a
 ```
 aou_setup.R          settings + helpers, loaded by every notebook
      │
-1.1 build_cohorts ──► person.csv, survey.csv, measurement.csv
-1.2 survival_data ──► survival_conditions.csv, last_visits.csv
-   (or 0.1 use_saved_data: makes the same five files from older saved data)
+1.1 build_cohorts ──► person_study.csv       person_control.csv
+                      survey_study.csv       survey_control.csv
+                      measurement_study.csv  measurement_control.csv
+1.2 survival_data ──► condition_arranged.csv, visit_arranged.csv
      │
-2.0 clean_and_join ─► final_analysis.csv, measurements_wide.csv
+2.0 clean_and_join ─► flag the groups (diabetes = Yes / No), stack them, clean, join
+                      ──► final_analysis.csv, measurements_wide.csv
      │
 3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival
 ```
@@ -97,7 +98,7 @@ Repeat steps 1 to 3 for the **control** cohort (group 2 set to **Excluded**).
 
 ### 4. Use the exports with these notebooks
 
-Run each exported notebook once: it saves CSV files to your bucket under `bq_exports/`. Then follow **"Alternative: use a Data Explorer export instead"** at the end of notebook **1.1**: it combines the two cohorts, adds the `diabetes` flag, and renames the columns so notebooks 2.0 to 3.4 work unchanged.
+Run each exported notebook once: it saves CSV files to your bucket under `bq_exports/`. Then follow **"Alternative: use a Data Explorer export instead"** at the end of notebook **1.1**: it renames the columns and saves each cohort with the same file names as the SQL version (`person_study.csv`, `person_control.csv`…), so notebooks 2.0 to 3.4 work unchanged.
 
 > **To confirm in the Workbench:** where the PTSD questions and the four measurements appear under **+ Browse more data**, and that **Deceased** can be used as an exclusion. Menus may differ slightly.
 >
@@ -105,7 +106,7 @@ Run each exported notebook once: it saves CSV files to your bucket under `bq_exp
 
 ## Already have data from the earlier notebooks?
 
-If you ran the earlier (classic Workbench) versions of these notebooks and still have their CSV files, open **`0.1 use_saved_data`**. It converts them into the new format so you can skip 1.1 and 1.2. Your old `final_analysis.csv` works with notebooks 3.1 to 3.3 as it is.
+If you ran the earlier (classic Workbench) versions of these notebooks, your saved CSV files **work as they are**: they use the same file names (`person_study.csv`, `survey_control.csv`, `condition_arranged.csv`…). Set `BUCKET_NAME` in `aou_setup.R` to the bucket that holds them (in a migrated workspace, the one named like `rw-migration-aou-rw-…`), run **0.0**, then **skip 1.1 and 1.2** and start at **2.0**.
 
 Those files come from the older dataset (CDR v8), so results won't match a fresh CDR v9 run. The earlier notebooks themselves are in [`archive/`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive).
 
