@@ -19,6 +19,21 @@ CURRENT_DATASET <- "wb-silky-artichoke-2408.C2025Q4R6"
 
 # ---- 2. NOTHING BELOW NEEDS TO CHANGE ----------------------------------------
 
+# Install any packages the notebooks need that aren't in this app yet.
+# This only happens the first time (it can take a few minutes); after that it's skipped.
+NEEDED_PACKAGES <- c("tidyverse", "lubridate", "bigrquery", "broom", "survival", "survminer")
+missing_packages <- NEEDED_PACKAGES[!vapply(NEEDED_PACKAGES, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing_packages) > 0) {
+  message("Installing missing packages: ", paste(missing_packages, collapse = ", "),
+          " (first time only, this can take a few minutes)...")
+  user_lib <- Sys.getenv("R_LIBS_USER")
+  dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
+  .libPaths(c(user_lib, .libPaths()))
+  repos <- getOption("repos")
+  if (is.null(repos) || identical(unname(repos["CRAN"]), "@CRAN@")) repos <- "https://cloud.r-project.org"
+  install.packages(missing_packages, lib = user_lib, repos = repos)
+}
+
 suppressPackageStartupMessages({
   library(tidyverse)  # dplyr, tidyr, readr, stringr, purrr, ggplot2
   library(lubridate)  # dates

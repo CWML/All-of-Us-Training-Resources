@@ -115,7 +115,7 @@ The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They
 4. Open **`0.0 setup`** and follow it: it has you edit two lines in `aou_setup.R`.
 5. Run the notebooks in order: `1.1` → `1.2` → `2.0` → `3.1` to `3.4`. The queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files.
 
-**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`, `survminer`
+**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`, `survminer`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 
 ## Data Use
 
