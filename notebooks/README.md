@@ -98,7 +98,7 @@ Repeat steps 1 to 3 for the **control** cohort (group 2 set to **Excluded**).
 
 ### 4. Use the exports with these notebooks
 
-Run each exported notebook once: it saves CSV files to your bucket under `bq_exports/`. Then follow **"Alternative: use a Data Explorer export instead"** at the end of notebook **1.1**: it renames the columns and saves each cohort with the same file names as the SQL version (`person_study.csv`, `person_control.csv`…), so notebooks 2.0 to 3.4 work unchanged.
+Run each exported notebook once: it saves CSV files to your bucket under `bq_exports/`. Then follow **"Optional: use a Data Explorer export instead"** at the end of notebook **1.1**: it renames the columns and saves each cohort with the same file names as the SQL version (`person_study.csv`, `person_control.csv`…), so notebooks 2.0 to 3.4 work unchanged.
 
 > **To confirm in the Workbench:** where the PTSD questions and the four measurements appear under **+ Browse more data**, and that **Deceased** can be used as an exclusion. Menus may differ slightly.
 >
