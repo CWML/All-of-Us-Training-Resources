@@ -4,3 +4,8 @@ description: "Short R notebooks: build a diabetes cohort, clean the data, and ru
 ---
 
 {{< include ../../notebooks/README.md >}}
+
+<!-- section-nav -->
+::: {.section-nav}
+[Next section: Optional Extras →](../extras/extras.qmd){.section-nav-next}
+:::

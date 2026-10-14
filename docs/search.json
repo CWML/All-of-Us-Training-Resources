@@ -26,7 +26,7 @@
     "href": "pages/workspace/workspaces.html#sharing-a-workspace",
     "title": "Workspaces",
     "section": "Sharing a Workspace",
-    "text": "Sharing a Workspace\nOnly Owners can share. In the workspace, click Share (top right), then:\n\nEnter your collaborator’s email: the one linked to their Workbench account\nChoose their role: Owner, Writer, or Reader\n\n\nThey must already have a Workbench account. You can’t invite someone who hasn’t registered yet.\nThey get access to the resources you created in the workspace (buckets, datasets), at their role’s level\nReferences to outside data are not shared automatically. The data’s owner has to grant access.\nWith a group policy, only group members can open it. You won’t be warned if you share with someone outside the group.\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFor All of Us workspaces, collaborators also need their own All of Us data access (Registered or Controlled Tier) to see the data collection. Verily recommends sharing with Workbench groups rather than individuals for larger teams; that’s beyond what students need here.",
+    "text": "Sharing a Workspace\nOnly Owners can share. In the workspace, click Share (top right), then:\n\nEnter your collaborator’s email: the one linked to their Workbench account\nChoose their role: Owner, Writer, or Reader\n\n\nThey must already have a Workbench account. You can’t invite someone who hasn’t registered yet.\nThey get access to the resources you created in the workspace (buckets, datasets), at their role’s level\nReferences to outside data are not shared automatically. The data’s owner has to grant access.\nWith a group policy, only group members can open it. You won’t be warned if you share with someone outside the group.\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFor All of Us workspaces, collaborators also need their own All of Us data access (Registered or Controlled Tier) to see the data collection. Verily recommends sharing with Workbench groups rather than individuals for larger teams; that’s beyond what students need here.\n\n\n\n\n\n← Previous section: Get Started",
     "crumbs": [
       "Your Workspace",
       "Workspaces"
@@ -609,7 +609,7 @@
     "href": "pages/extras/github-guide.html#quick-reference",
     "title": "GitHub Guide",
     "section": "Quick reference",
-    "text": "Quick reference\n# One-time setup (per app)\nssh -T git@github.com\nwb security ssh-key get\ngit config --global user.name \"your-username\"\ngit config --global user.email \"your-email\"\n\n# Clone\ncd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO\n\n# Daily cycle\ngit pull\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngit status\ngit add notebooks\ngit commit -m \"message\"\ngit push\nReferences: - Verily Workbench: Git integrations with cloud apps - Verily Workbench: Install and run the Workbench CLI - GitHub: Adding a new SSH key to your account",
+    "text": "Quick reference\n# One-time setup (per app)\nssh -T git@github.com\nwb security ssh-key get\ngit config --global user.name \"your-username\"\ngit config --global user.email \"your-email\"\n\n# Clone\ncd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO\n\n# Daily cycle\ngit pull\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngit status\ngit add notebooks\ngit commit -m \"message\"\ngit push\nReferences: - Verily Workbench: Git integrations with cloud apps - Verily Workbench: Install and run the Workbench CLI - GitHub: Adding a new SSH key to your account\n\n\nNext section: Resources →",
     "crumbs": [
       "Optional Extras",
       "GitHub Guide"
@@ -708,7 +708,7 @@
     "href": "pages/examples/tutorial-workspaces.html#using-a-tutorial-workspace",
     "title": "Tutorial Workspaces",
     "section": "Using a Tutorial Workspace",
-    "text": "Using a Tutorial Workspace\n\nCheck your billing pod first: your All of Us initial credits, or your own pod linked to a Google Cloud billing account\nOpen the workspace → ⋮ (next to Share) → Duplicate\nIn your copy, create a JupyterLab app (Compute Engine). Apps aren’t copied when you duplicate; resources are.\nIn JupyterLab, open the aou-tutorial-notebooks folder\nOpen Readme.ipynb for an overview of the tutorials, then work through the folders in order\n\n⚠️ Running the notebooks uses compute, so it’s billed to your pod. Stop the app when you’re done.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSame steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support@researchallofus.org.",
+    "text": "Using a Tutorial Workspace\n\nCheck your billing pod first: your All of Us initial credits, or your own pod linked to a Google Cloud billing account\nOpen the workspace → ⋮ (next to Share) → Duplicate\nIn your copy, create a JupyterLab app (Compute Engine). Apps aren’t copied when you duplicate; resources are.\nIn JupyterLab, open the aou-tutorial-notebooks folder\nOpen Readme.ipynb for an overview of the tutorials, then work through the folders in order\n\n⚠️ Running the notebooks uses compute, so it’s billed to your pod. Stop the app when you’re done.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSame steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support@researchallofus.org.\n\n\n\n\n\n← Previous section: Data",
     "crumbs": [
       "Learn by Example",
       "Tutorial Workspaces"
@@ -851,7 +851,7 @@
     "href": "pages/data/data-explorer.html#inside-the-exported-r-notebook",
     "title": "Data Explorer",
     "section": "Inside the Exported R Notebook",
-    "text": "Inside the Exported R Notebook\nThe notebook has the SQL for each table, plus code to run it:\nSys.setenv(EXPORT_BUCKET = \"gs://&lt;your-bucket-name&gt;\")   # ⚠️ not set for you\n\nbq_table_save(                                  # run the query (billed to your project)...\n  bq_dataset_query(\"&lt;data project&gt;.&lt;index dataset&gt;\", person_sql,\n                   billing = \"&lt;your workspace project&gt;\"),\n  person_path, destination_format = \"CSV\")      # ...and save it as CSVs in your bucket\n\nperson_df &lt;- read_bq_export_from_workspace_bucket(person_path)   # read it back\n\nSet EXPORT_BUCKET first, using the bucket name from the Resources tab\nRun the export once. Next time, just read the CSVs; re-running the query costs money.\nExporting again on the same day overwrites the files; a new day makes a new folder\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFrom an exported R notebook (cohort “cwml_aou_test_cohort”, October 2026). The SQL reads OMOP tables from the data collection’s BigQuery project (here wb-silky-artichoke-2408.C2024Q3R9) and the cohort from an index dataset (C2024Q3R9_index_022426.T_ENT_person); billing goes to your workspace project (GOOGLE_CLOUD_PROJECT). The notebook reads the CSVs back with gsutil. You can also read them from the mounted bucket folder (~/workspace//bq_exports/…) with read_csv. Don’t run the notebook while screen-sharing: head(person_df) prints participant-level rows.",
+    "text": "Inside the Exported R Notebook\nThe notebook has the SQL for each table, plus code to run it:\nSys.setenv(EXPORT_BUCKET = \"gs://&lt;your-bucket-name&gt;\")   # ⚠️ not set for you\n\nbq_table_save(                                  # run the query (billed to your project)...\n  bq_dataset_query(\"&lt;data project&gt;.&lt;index dataset&gt;\", person_sql,\n                   billing = \"&lt;your workspace project&gt;\"),\n  person_path, destination_format = \"CSV\")      # ...and save it as CSVs in your bucket\n\nperson_df &lt;- read_bq_export_from_workspace_bucket(person_path)   # read it back\n\nSet EXPORT_BUCKET first, using the bucket name from the Resources tab\nRun the export once. Next time, just read the CSVs; re-running the query costs money.\nExporting again on the same day overwrites the files; a new day makes a new folder\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nFrom an exported R notebook (cohort “cwml_aou_test_cohort”, October 2026). The SQL reads OMOP tables from the data collection’s BigQuery project (here wb-silky-artichoke-2408.C2024Q3R9) and the cohort from an index dataset (C2024Q3R9_index_022426.T_ENT_person); billing goes to your workspace project (GOOGLE_CLOUD_PROJECT). The notebook reads the CSVs back with gsutil. You can also read them from the mounted bucket folder (~/workspace//bq_exports/…) with read_csv. Don’t run the notebook while screen-sharing: head(person_df) prints participant-level rows.\n\n\n\n\n\nNext section: Learn by Example →",
     "crumbs": [
       "Data",
       "Data Explorer"
@@ -897,7 +897,7 @@
     "href": "index.html#contact",
     "title": "All of Us Researcher Workbench 2.0",
     "section": "Contact",
-    "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine"
+    "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine\n\n\nNext section: Get Started →"
   },
   {
     "objectID": "pages/data/data-collections.html",
@@ -981,7 +981,7 @@
     "href": "pages/data/data-collections.html#using-the-data-collections-page",
     "title": "Data Collections",
     "section": "Using the Data Collections Page",
-    "text": "Using the Data Collections Page\n\nLeft sidebar → Data collections lists every collection you have access to\n\nName, cloud (GCP), last modified, created by, and your access level\nFilter by favorite, cloud, creator, or access level; ⭐ favorites to pin them\n\nReader = you can view and use the data, but not change the collection\nThe Recent data collections panel lists the ones you’ve opened lately\n+ New data collection: researchers can publish their own collections (e.g., the Morehouse collection on the Exchange)\n\nExchange = find and get access to collections · Data collections = the ones you already have\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nCollections only appear here after you have access: the All of Us tiers via your account access, GTEx because it’s open. Creating a collection is beyond this intro.",
+    "text": "Using the Data Collections Page\n\nLeft sidebar → Data collections lists every collection you have access to\n\nName, cloud (GCP), last modified, created by, and your access level\nFilter by favorite, cloud, creator, or access level; ⭐ favorites to pin them\n\nReader = you can view and use the data, but not change the collection\nThe Recent data collections panel lists the ones you’ve opened lately\n+ New data collection: researchers can publish their own collections (e.g., the Morehouse collection on the Exchange)\n\nExchange = find and get access to collections · Data collections = the ones you already have\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nCollections only appear here after you have access: the All of Us tiers via your account access, GTEx because it’s open. Creating a collection is beyond this intro.\n\n\n\n\n\n← Previous section: Your Workspace",
     "crumbs": [
       "Data",
       "Data Collections"
@@ -1058,7 +1058,7 @@
     "href": "pages/examples/notebooks.html#data-use",
     "title": "Example Notebooks",
     "section": "Data use",
-    "text": "Data use\nThis repository contains code only, no All of Us data.\n\nDon’t download, screenshot, or share participant-level data\nDon’t share counts of 1 to 20, or numbers they could be calculated from (notebook 3.1 checks for these)\nClear notebook outputs before you share or commit a notebook",
+    "text": "Data use\nThis repository contains code only, no All of Us data.\n\nDon’t download, screenshot, or share participant-level data\nDon’t share counts of 1 to 20, or numbers they could be calculated from (notebook 3.1 checks for these)\nClear notebook outputs before you share or commit a notebook\n\n\n\nNext section: Optional Extras →",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -1129,7 +1129,7 @@
     "href": "pages/extras/extras.html#ai-tools-use-them-outside-the-workbench",
     "title": "Optional Extras",
     "section": "AI Tools: Use Them Outside the Workbench",
-    "text": "AI Tools: Use Them Outside the Workbench\nInterested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? Use it outside the Workbench, for coding help only.\nWhy not inside the Workbench?\n\nAll of Us does not allow participant-level data to leave the Workbench, and that includes sending it to an AI service\nAI coding assistants like Claude Code can open files and run code on their own. It’s easy for them to read data files, query results, or notebook outputs that contain participant-level data.\nEven one accidental read counts as a Data User Code of Conduct violation, even if nothing is stored\n\n👉 How: get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.",
+    "text": "AI Tools: Use Them Outside the Workbench\nInterested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with your code? Use it outside the Workbench, for coding help only.\nWhy not inside the Workbench?\n\nAll of Us does not allow participant-level data to leave the Workbench, and that includes sending it to an AI service\nAI coding assistants like Claude Code can open files and run code on their own. It’s easy for them to read data files, query results, or notebook outputs that contain participant-level data.\nEven one accidental read counts as a Data User Code of Conduct violation, even if nothing is stored\n\n👉 How: get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.\n\n\n\n\n\n← Previous section: Learn by Example",
     "crumbs": [
       "Optional Extras"
     ]
@@ -1216,7 +1216,7 @@
     "href": "pages/get-started/about.html#data-access-tiers",
     "title": "About All of Us",
     "section": "Data Access Tiers",
-    "text": "Data Access Tiers\n\nRegistered Tier: EHR, surveys, social determinants of health, lab results, physical measurements, and wearables (sensors)\nControlled Tier: everything in the Registered Tier plus genomic data\n\nRequires additional Controlled Tier training\n\nEach tier is available in Workbench 2.0 as a data collection",
+    "text": "Data Access Tiers\n\nRegistered Tier: EHR, surveys, social determinants of health, lab results, physical measurements, and wearables (sensors)\nControlled Tier: everything in the Registered Tier plus genomic data\n\nRequires additional Controlled Tier training\n\nEach tier is available in Workbench 2.0 as a data collection\n\n\n\n← Previous section: Home",
     "crumbs": [
       "Get Started",
       "About All of Us"
@@ -1260,7 +1260,7 @@
     "href": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
     "title": "Billing",
     "section": "Getting a billing account at Yale",
-    "text": "Getting a billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.",
+    "text": "Getting a billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.\n\n\n\n\n\nNext section: Your Workspace →",
     "crumbs": [
       "Get Started",
       "Billing"
@@ -1292,7 +1292,7 @@
     "href": "pages/resources.html#future-directions",
     "title": "Resources",
     "section": "Future Directions",
-    "text": "Future Directions\nFuture CWML/BIDS courses to help you work with All of Us:\n\nR, Python, SQL\nOMOP Common Data Model\nOpen to suggestions!\nLet us know if you’d like to present your All of Us work\nCheck the library training calendar for current courses"
+    "text": "Future Directions\nFuture CWML/BIDS courses to help you work with All of Us:\n\nR, Python, SQL\nOMOP Common Data Model\nOpen to suggestions!\nLet us know if you’d like to present your All of Us work\nCheck the library training calendar for current courses\n\n\n\n← Previous section: Optional Extras Back to Home →"
   },
   {
     "objectID": "pages/workspace/research-use-statement.html",
@@ -1618,7 +1618,7 @@
     "href": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
     "title": "Workflows",
     "section": "dsub: Jobs from an App",
-    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. It comes with apps created after June 2025.\ndsub_activate                        # turn on dsub in the terminal\n\ndsub \\\n  --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --service-account \"${PET_SA_EMAIL}\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  &lt;container image with samtools&gt; \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.",
+    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. It comes with apps created after June 2025.\ndsub_activate                        # turn on dsub in the terminal\n\ndsub \\\n  --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --service-account \"${PET_SA_EMAIL}\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  &lt;container image with samtools&gt; \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.\n\n\n\n\n\nNext section: Data →",
     "crumbs": [
       "Your Workspace",
       "Workflows"

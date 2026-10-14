@@ -90,3 +90,8 @@ The non-All of Us collections come from Verily and its partners. Their terms are
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Collections only appear here after you have access: the All of Us tiers via your account access, GTEx because it's open. Creating a collection is beyond this intro.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[← Previous section: Your Workspace](../workspace/workspaces.qmd){.section-nav-prev}
+:::

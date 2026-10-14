@@ -32,3 +32,26 @@
 body.quarto-dark .annotated img {
   border-color: #495057;
 }
+
+/* Links to the previous / next section, at the bottom of a section's first and last page */
+.section-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+.section-nav p { margin: 0; display: contents; }
+.section-nav a {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.section-nav a:hover { background: rgba(13, 110, 253, 0.08); }
+.section-nav .section-nav-next { margin-left: auto; }
+body.quarto-dark .section-nav,
+body.quarto-dark .section-nav a { border-color: #495057; }

@@ -49,3 +49,8 @@ Featured tutorial workspaces shown: "Getting Started with Controlled Tier Data (
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 For All of Us workspaces, collaborators also need their own All of Us data access (Registered or Controlled Tier) to see the data collection. Verily recommends sharing with Workbench groups rather than individuals for larger teams; that's beyond what students need here.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[← Previous section: Get Started](../get-started/about.qmd){.section-nav-prev}
+:::
