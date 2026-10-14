@@ -57,7 +57,7 @@ A slide deck (built with [Quarto](https://quarto.org/) and reveal.js) covering:
 - What changed from the classic Workbench to Workbench 2.0
 - Logging in and getting around the Workbench
 - Data collections and the Data Exchange
-- Billing: initial credits, pods, and setting up a billing account at Yale
+- Billing: initial credits, pods, and setting up a Google Cloud billing account at Yale
 - Creating a workspace and adding a data collection, including the Research Use Statement questions
 - Building cohorts and datasets with Data Explorer
 - Launching apps (JupyterLab, RStudio, SAS) and estimating costs
