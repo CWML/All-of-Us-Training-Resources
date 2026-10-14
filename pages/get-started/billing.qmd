@@ -50,3 +50,8 @@ Yale Cloud Support will send the next steps for linking the billing account and 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Yale Cloud Support may give additional or different guidance.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[Next section: Your Workspace →](../workspace/workspaces.qmd){.section-nav-next}
+:::

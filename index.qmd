@@ -52,3 +52,8 @@ Boxes like this one hold extra details from the training session. Click them to 
 ## Contact
 
 Maximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine
+
+<!-- section-nav -->
+::: {.section-nav}
+[Next section: Get Started →](pages/get-started/about.qmd){.section-nav-next}
+:::

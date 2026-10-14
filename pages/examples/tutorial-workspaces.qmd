@@ -177,3 +177,8 @@ The genomic (Hail) notebooks need a Spark (Dataproc) app; PLINK and bcftools ste
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Same steps for both tutorial workspaces (from their Overview pages). Questions: the AoU Researcher Workbench Support Hub or support\@researchallofus.org.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[← Previous section: Data](../data/data-collections.qmd){.section-nav-prev}
+:::

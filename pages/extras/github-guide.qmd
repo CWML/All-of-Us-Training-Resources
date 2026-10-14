@@ -374,3 +374,8 @@ git push
 - Verily Workbench: [Git integrations with cloud apps](https://support.workbench.verily.com/docs/guides/cloud_apps/git_integrations/)
 - Verily Workbench: [Install and run the Workbench CLI](https://support.workbench.verily.com/docs/guides/cli/cli_install_and_run/)
 - GitHub: [Adding a new SSH key to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+
+<!-- section-nav -->
+::: {.section-nav}
+[Next section: Resources →](../resources.qmd){.section-nav-next}
+:::

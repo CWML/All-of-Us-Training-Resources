@@ -73,3 +73,51 @@ assert s.count(a) == 1
 s = s.replace(a, "**Full step-by-step instructions**, including troubleshooting: [GitHub Guide](github-guide.qmd)\n\n" + a)
 p.write_text(s)
 print("github link added")
+
+
+# ---- Section navigation ------------------------------------------------------
+# Quarto's previous/next links only work within a section's sidebar, so the
+# first and last page of each section get links to the neighbouring sections.
+import os
+
+SECTIONS = [  # (name, first page, last page), in site order
+    ("Home",             "index.qmd",                             "index.qmd"),
+    ("Get Started",      "pages/get-started/about.qmd",           "pages/get-started/billing.qmd"),
+    ("Your Workspace",   "pages/workspace/workspaces.qmd",        "pages/workspace/workflows.qmd"),
+    ("Data",             "pages/data/data-collections.qmd",       "pages/data/data-explorer.qmd"),
+    ("Learn by Example", "pages/examples/tutorial-workspaces.qmd", "pages/examples/notebooks.qmd"),
+    ("Optional Extras",  "pages/extras/extras.qmd",               "pages/extras/github-guide.qmd"),
+    ("Resources",        "pages/resources.qmd",                   "pages/resources.qmd"),
+]
+NAV_START = "<!-- section-nav -->"
+
+
+def rel(src, dst):
+    return os.path.relpath(dst, os.path.dirname(src) or ".")
+
+
+def set_section_nav(page, prev=None, nxt=None):
+    p = root / page
+    s = p.read_text()
+    if NAV_START in s:                       # replace an existing bar
+        s = s[:s.index(NAV_START)].rstrip() + "\n"
+    links = []
+    if prev:
+        links.append(f"[← {prev[0]}]({rel(page, prev[1])}){{.section-nav-prev}}")
+    if nxt:
+        links.append(f"[{nxt[0]} →]({rel(page, nxt[1])}){{.section-nav-next}}")
+    s += f"\n{NAV_START}\n::: {{.section-nav}}\n" + "\n".join(links) + "\n:::\n"
+    p.write_text(s)
+
+
+nav = {}
+for i, (name, first, last) in enumerate(SECTIONS):
+    if i > 0:  # first page links back to the previous section
+        nav.setdefault(first, {})["prev"] = (f"Previous section: {SECTIONS[i-1][0]}", SECTIONS[i-1][1])
+    if i < len(SECTIONS) - 1:  # last page links on to the next section
+        nav.setdefault(last, {})["next"] = (f"Next section: {SECTIONS[i+1][0]}", SECTIONS[i+1][1])
+nav.setdefault("pages/resources.qmd", {})["next"] = ("Back to Home", "index.qmd")
+
+for page, links in nav.items():
+    set_section_nav(page, links.get("prev"), links.get("next"))
+print("section navigation added to", len(nav), "pages")

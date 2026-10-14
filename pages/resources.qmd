@@ -35,3 +35,9 @@ Future CWML/BIDS courses to help you work with All of Us:
 - Open to suggestions!
 - Let us know if you'd like to present your All of Us work
 - Check the library training calendar for current courses
+
+<!-- section-nav -->
+::: {.section-nav}
+[← Previous section: Optional Extras](extras/extras.qmd){.section-nav-prev}
+[Back to Home →](../index.qmd){.section-nav-next}
+:::

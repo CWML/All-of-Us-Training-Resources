@@ -130,3 +130,8 @@ Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with you
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Source: All of Us User Support Hub, "Frequently Asked Questions" (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; "transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used." Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[← Previous section: Learn by Example](../examples/tutorial-workspaces.qmd){.section-nav-prev}
+:::

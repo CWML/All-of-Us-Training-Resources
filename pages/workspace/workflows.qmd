@@ -126,3 +126,8 @@ dsub \
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Source: Verily, "Run dsub jobs". Verily's example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[Next section: Data →](../data/data-collections.qmd){.section-nav-next}
+:::

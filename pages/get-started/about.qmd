@@ -90,3 +90,8 @@ Not every participant has every data type: e.g., about two-thirds have EHR data,
 - **Controlled Tier:** everything in the Registered Tier **plus genomic data**
   - Requires additional Controlled Tier training
 - Each tier is available in Workbench 2.0 as a **data collection**
+
+<!-- section-nav -->
+::: {.section-nav}
+[← Previous section: Home](../../index.qmd){.section-nav-prev}
+:::

@@ -313,3 +313,8 @@ person_df <- read_bq_export_from_workspace_bucket(person_path)   # read it back
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 From an exported R notebook (cohort "cwml_aou_test_cohort", October 2026). The SQL reads OMOP tables from the data collection's BigQuery project (here wb-silky-artichoke-2408.C2024Q3R9) and the cohort from an index dataset (C2024Q3R9_index_022426.T_ENT_person); billing goes to your workspace project (GOOGLE_CLOUD_PROJECT). The notebook reads the CSVs back with gsutil. You can also read them from the mounted bucket folder (~/workspace/<bucket>/bq_exports/…) with read_csv. Don't run the notebook while screen-sharing: head(person_df) prints participant-level rows.
 :::
+
+<!-- section-nav -->
+::: {.section-nav}
+[Next section: Learn by Example →](../examples/tutorial-workspaces.qmd){.section-nav-next}
+:::

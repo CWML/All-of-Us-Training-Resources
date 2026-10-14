@@ -45,6 +45,8 @@ quarto render
 
 ⚠️ This **overwrites** the generated pages, so make lasting edits in the slides (or in `tools/site_fixups.py`), not in those pages. Pages kept by hand and not overwritten: `index.qmd`, `pages/get-started/billing.qmd`, `pages/workspace/apps.qmd`, `pages/extras/github-guide.qmd`, and `pages/examples/notebooks.qmd`.
 
+The **"Previous section / Next section"** buttons at the bottom of each section's first and last page are added by `tools/site_fixups.py` (see `SECTIONS` there). If you add, remove, or reorder sections in `_quarto.yml`, update that list too and rerun the commands above.
+
 `tools/redact.py` paints over parts of a screenshot (e.g., names or emails) before it's committed.
 
 ## Presentation: Introduction to the Workbench 2.0
