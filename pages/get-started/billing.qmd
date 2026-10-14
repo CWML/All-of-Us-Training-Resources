@@ -1,6 +1,6 @@
 ---
 title: "Billing"
-description: "Initial credits, billing pods, and getting a billing account at Yale"
+description: "Initial credits, billing pods, and getting a Google Cloud billing account at Yale"
 ---
 
 Everything you run in the Workbench (apps, queries, storage) costs money. It's paid for through a **pod**.
@@ -16,7 +16,7 @@ Everything you run in the Workbench (apps, queries, storage) costs money. It's p
   - Stored resources (buckets, disks) **may be deleted**
 
 ::: {.callout-important}
-Set up a **Google Cloud billing account** and **billing pod** *before* your credits run out or expire.
+Set up a **Google Cloud billing account** and **billing pod** *before* your credits run out or expire. See [Getting a Google Cloud billing account at Yale](#getting-a-google-cloud-billing-account-at-yale).
 :::
 
 ## Billing pods
@@ -37,7 +37,7 @@ Set up a **Google Cloud billing account** and **billing pod** *before* your cred
 Initial credits are linked to the personal user pod. Check a workspace's Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.
 :::
 
-## Getting a billing account at Yale
+## Getting a Google Cloud billing account at Yale
 
 Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us billing account"** and include:
 
@@ -45,7 +45,7 @@ Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us bi
 - Your **COA** number
 - Whether this is an **NIH-funded** project
 
-Yale Cloud Support will send the next steps for linking the billing account and creating your **pod**.
+Yale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your **pod**.
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Yale Cloud Support may give additional or different guidance.

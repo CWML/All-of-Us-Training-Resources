@@ -1238,7 +1238,7 @@
     "href": "pages/get-started/billing.html#initial-credits",
     "title": "Billing",
     "section": "Initial credits",
-    "text": "Initial credits\n\n$300 in initial credits per registered researcher\n\nApplied automatically to compute costs\nExpire 365 days after you first get Workbench access\nTied to your personal pod, user-pod-firstname-lastname-####. A workspace’s Workspace details panel (right side, under Pod) shows which pod pays for it.\n\nWhen credits run out or expire:\n\nYou can’t launch or open analysis environments\nStored resources (buckets, disks) may be deleted\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSet up a Google Cloud billing account and billing pod before your credits run out or expire.",
+    "text": "Initial credits\n\n$300 in initial credits per registered researcher\n\nApplied automatically to compute costs\nExpire 365 days after you first get Workbench access\nTied to your personal pod, user-pod-firstname-lastname-####. A workspace’s Workspace details panel (right side, under Pod) shows which pod pays for it.\n\nWhen credits run out or expire:\n\nYou can’t launch or open analysis environments\nStored resources (buckets, disks) may be deleted\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSet up a Google Cloud billing account and billing pod before your credits run out or expire. See Getting a Google Cloud billing account at Yale.",
     "crumbs": [
       "Get Started",
       "Billing"
@@ -1256,11 +1256,11 @@
     ]
   },
   {
-    "objectID": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
-    "href": "pages/get-started/billing.html#getting-a-billing-account-at-yale",
+    "objectID": "pages/get-started/billing.html#getting-a-google-cloud-billing-account-at-yale",
+    "href": "pages/get-started/billing.html#getting-a-google-cloud-billing-account-at-yale",
     "title": "Billing",
-    "section": "Getting a billing account at Yale",
-    "text": "Getting a billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.\n\n\n\n\n\nNext section: Your Workspace →",
+    "section": "Getting a Google Cloud billing account at Yale",
+    "text": "Getting a Google Cloud billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.\n\n\n\n\n\nNext section: Your Workspace →",
     "crumbs": [
       "Get Started",
       "Billing"
