@@ -1,0 +1,8 @@
+Cohort Notes.pptx
+# Private notes folder; anchored to the root, because on macOS "Notes/" also matches
+# the slide decks' revealjs plugin/notes/ folders
+/Notes/
+.DS_Store
+/.quarto/
+
+**/*.quarto_ipynb
