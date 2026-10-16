@@ -10,7 +10,7 @@ This page uses our example workspace, **`intro-to-AoU`**, created for instructio
 **Left sidebar → Workspaces → + New workspace**
 
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/workspaces.png>)
+![](<../../Intro to workbench 2.0/images/workspaces.png>){fig-alt="Your workspaces page in Workbench with the New workspace button highlighted."}
 
 ::: {.red-circle style="left: 66.2%; top: 0.6%; width: 11.6%; height: 7.6%;"}
 :::
@@ -24,7 +24,7 @@ Three steps: Enter details → Set policies → Add description.
 
 :::::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
-![](<../../Intro to workbench 2.0/images/ws_create_1_details.png>)
+![](<../../Intro to workbench 2.0/images/ws_create_1_details.png>){fig-alt="Create a new workspace dialog, step 1 Enter details, showing workspace name, summary, workspace ID, and pod fields."}
 :::
 
 :::: {.g-col-12 .g-col-md-5}
@@ -52,7 +52,7 @@ The auto-selected pod is your personal user pod (user-pod-firstname-lastname-###
 
 :::::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
-![](<../../Intro to workbench 2.0/images/ws_create_2_policies.png>)
+![](<../../Intro to workbench 2.0/images/ws_create_2_policies.png>){fig-alt="Create a new workspace dialog, step 2 Set policies, showing the group policy choice and default resource region."}
 :::
 
 :::: {.g-col-12 .g-col-md-5}
@@ -80,7 +80,7 @@ Group policies also carry over to duplicates of the workspace. Access still has 
 
 :::::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
-![](<../../Intro to workbench 2.0/images/ws_create_3_description.png>)
+![](<../../Intro to workbench 2.0/images/ws_create_3_description.png>){fig-alt="Create a new workspace dialog, step 3 Add description, with a description field and the Create workspace button."}
 :::
 
 :::: {.g-col-12 .g-col-md-5}
@@ -101,7 +101,7 @@ Click **Create workspace**
 Go to the **Resources** tab → **+ Data from catalog**
 
 ::::: {.annotated}
-![](<../../Intro to workbench 2.0/images/ws_resources.png>)
+![](<../../Intro to workbench 2.0/images/ws_resources.png>){fig-alt="New empty workspace with the Resources tab and the Data from catalog button highlighted."}
 
 ::: {.red-circle style="left: 6.4%; top: 13.4%; width: 7.4%; height: 6.2%;"}
 :::
@@ -130,7 +130,7 @@ A new workspace has **no data** until you add a data collection.
 ::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dc_add_1_collection.png>)
+![](<../../Intro to workbench 2.0/images/dc_add_1_collection.png>){fig-alt="Adding data from catalog dialog, step 1 Select collection, with the All of Us Controlled Tier collection highlighted."}
 
 ::: {.red-box style="left: 1.2%; top: 43.6%; width: 97.6%; height: 7%;"}
 :::
@@ -159,7 +159,7 @@ Only collections you have access to appear here (the same list as your Data coll
 ::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dc_add_2_resources.png>)
+![](<../../Intro to workbench 2.0/images/dc_add_2_resources.png>){fig-alt="Adding data from catalog dialog, step 2 Select resource, with the Select all resources checkbox highlighted."}
 
 ::: {.red-box style="left: 1.0%; top: 16.9%; width: 18%; height: 5.8%;"}
 :::
@@ -199,7 +199,7 @@ Source: All of Us "Curated Data Repository (CDR) version 9 Release Notes" (Contr
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dc_add_3_policies.png>)
+![](<../../Intro to workbench 2.0/images/dc_add_3_policies.png>){fig-alt="Adding data from catalog dialog, step 3 Review policies, with the Fill out the questions button for the Research Use Statement highlighted."}
 
 ::: {.red-circle style="left: 1.6%; top: 72.4%; width: 20.4%; height: 5.8%;"}
 :::
@@ -232,7 +232,7 @@ Adding an *All of Us* data collection asks you to answer the **Research Use Stat
 ::::::::: {.grid}
 :::::: {.g-col-12 .g-col-md-7}
 ::::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dc_add_3b_confirm.png>)
+![](<../../Intro to workbench 2.0/images/dc_add_3b_confirm.png>){fig-alt="Adding data from catalog policy review with the checkbox accepting permanent policies and the Next button highlighted."}
 
 ::: {.red-box style="left: 0.8%; top: 84.4%; width: 73.4%; height: 5.4%;"}
 :::
@@ -264,7 +264,7 @@ Bucket browsing in the perimeter: previews up to 5 MB, and only .ipynb, .r, .rmd
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dc_add_4_review.png>)
+![](<../../Intro to workbench 2.0/images/dc_add_4_review.png>){fig-alt="Adding data from catalog dialog, step 4 Review selection, listing the chosen resources with the Add to your workspace button highlighted."}
 
 ::: {.red-circle style="left: 78.4%; top: 92.8%; width: 21%; height: 6.6%;"}
 :::

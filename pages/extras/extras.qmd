@@ -1,6 +1,6 @@
 ---
 title: "Optional Extras"
-description: "Practice with synthetic data, adding a file from a URL, GitHub, and AI tools"
+description: "Practice with synthetic data, adding a file from a URL, GitHub, and AI tools (and what you can share with them)"
 ---
 
 Useful tools you **don't need** for the basics.
@@ -37,7 +37,7 @@ Copy a **public** file from the web straight into your bucket. No download or up
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_add_file_url.png>)
+![](<../../Intro to workbench 2.0/images/res_add_file_url.png>){fig-alt="Adding file to bucket via URL dialog with the URL and File name fields and the Add file to bucket button highlighted."}
 
 ::: {.green-box style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;"}
 :::
@@ -129,6 +129,30 @@ Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with you
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Source: All of Us User Support Hub, "Frequently Asked Questions" (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; "transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used." Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.
+:::
+
+## What You Can Share with an AI
+
+✅ **Safe to share** (no participant data):
+
+- **Your code**, with outputs cleared
+- **Public example code**: All of Us tutorial workspace notebooks and other notebooks published by All of Us, **with outputs cleared** (some are saved with outputs)
+- **Table and column names**: the [CDR v9 Data Dictionary](https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit) or the [OMOP Common Data Model](https://ohdsi.github.io/CommonDataModel/) documentation
+- **Concept IDs and names** from [Athena](https://athena.ohdsi.org/search-terms/start) or the public All of Us [Data Browser](https://databrowser.researchallofus.org/), e.g. *201820 = Diabetes mellitus*
+- **Error messages**, after checking they don't include data values (an ID, a date, a result)
+- **A small fake dataset** with the same columns, to test your code. Ask the AI to make one, or use the synthetic data from *Try It: Practice with Synthetic Data*.
+
+❌ **Never share:** query results, data files, notebook outputs, screenshots of data, participant IDs, or counts of 1 to 20.
+
+**Example prompts:**
+
+- *"Using these OMOP tables from the data dictionary, write a BigQuery query that finds everyone with concept 201820 or any of its descendants."*
+- *"Here's the All of Us tutorial notebook for loading RNA-seq data. Rewrite it in R."*
+- *"Here's my R code and the error message. What's wrong?"*
+- *"Make a fake data frame with columns person_id, age, and diabetes so I can test this code."*
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: All of Us User Support Hub, "Data Dictionaries" (https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries), which links the data dictionary for each CDR version. Everything in the safe list contains no participant data. Error messages are the one to check: some quote a value from the data.
 :::
 
 <!-- section-nav -->

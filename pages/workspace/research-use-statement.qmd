@@ -10,7 +10,7 @@ When you add an *All of Us* data collection to a workspace (see [Setting Up a Wo
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q1.png>)
+![](<../../Intro to workbench 2.0/images/rus_q1.png>){fig-alt="Research Use Statement question 1 on primary purpose, with the Education purpose option checked and highlighted."}
 
 ::: {.red-box style="left: 1.6%; top: 17.2%; width: 83%; height: 5.6%;"}
 :::
@@ -39,7 +39,7 @@ This example workspace is for teaching, so we answer as an education project. St
 
 :::::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
-![](<../../Intro to workbench 2.0/images/rus_q2.png>)
+![](<../../Intro to workbench 2.0/images/rus_q2.png>){fig-alt="Research Use Statement question 2, three text boxes summarizing the scientific question, approaches, and anticipated findings."}
 :::
 
 :::: {.g-col-12 .g-col-md-5}
@@ -64,7 +64,7 @@ Example answer for this instructional workspace (used for 2.1–2.3): "This work
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q3.png>)
+![](<../../Intro to workbench 2.0/images/rus_q3.png>){fig-alt="Research Use Statement question 3 on sharing findings, with the Other option checked and its explanation text box highlighted."}
 
 ::: {.red-box style="left: 0.8%; top: 44.8%; width: 98.8%; height: 10.8%;"}
 :::
@@ -91,7 +91,7 @@ All of Us encourages sharing results with both scientific and community audience
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q4.png>)
+![](<../../Intro to workbench 2.0/images/rus_q4.png>){fig-alt="Research Use Statement question 4 on expected outcomes, with None of these statements apply checked and highlighted."}
 
 ::: {.red-box style="left: 1.4%; top: 33.2%; width: 38.4%; height: 3.8%;"}
 :::
@@ -118,7 +118,7 @@ Our example: **None of these apply** (teaching workspace)
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q5.png>)
+![](<../../Intro to workbench 2.0/images/rus_q5.png>){fig-alt="Research Use Statement question 5 on population of interest, with the option to not focus on underrepresented populations highlighted."}
 
 ::: {.red-box style="left: 0.4%; top: 89.9%; width: 66.4%; height: 3.4%;"}
 :::
@@ -144,7 +144,7 @@ All of Us asks this to track how well it serves underrepresented communities and
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q6.png>)
+![](<../../Intro to workbench 2.0/images/rus_q6.png>){fig-alt="Research Use Statement question 6 on AI/AN policy, with the option to not conduct AI/AN-specific analyses selected and highlighted."}
 
 ::: {.red-box style="left: 2.6%; top: 47.6%; width: 95.8%; height: 9%;"}
 :::
@@ -176,7 +176,7 @@ All of Us has a policy on respectful research with AI/AN populations; this quest
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q7.png>)
+![](<../../Intro to workbench 2.0/images/rus_q7.png>){fig-alt="Research Use Statement question 7 on requesting a review, with both answer options outlined and the No concerns option highlighted."}
 
 ::: {.green-box style="left: 3.0%; top: 40.0%; width: 95.0%; height: 10.0%;"}
 :::
@@ -207,7 +207,7 @@ See the All of Us Stigmatizing Research Policy for more detail. If students are 
 :::::::: {.grid}
 ::::: {.g-col-12 .g-col-md-7}
 :::: {.annotated}
-![](<../../Intro to workbench 2.0/images/rus_q8.png>)
+![](<../../Intro to workbench 2.0/images/rus_q8.png>){fig-alt="Research Use Statement final page listing the publicly displayed answers in a green box, with the Confirm button circled."}
 
 ::: {.green-box style="left: 3.0%; top: 17.6%; width: 46.0%; height: 10.6%;"}
 :::

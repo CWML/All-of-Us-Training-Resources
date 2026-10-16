@@ -53,6 +53,10 @@ Boxes like this one hold extra details from the training session. Click them to 
 
 Maximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine
 
+Email: [maximilian.wegener@yale.edu](mailto:maximilian.wegener@yale.edu)
+
+**Feedback is welcome.** Found something unclear, out of date, or broken? [Send us your feedback](mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback), or use the **Feedback** link at the top of every page.
+
 <!-- section-nav -->
 ::: {.section-nav}
 [Next section: Get Started →](pages/get-started/about.qmd){.section-nav-next}

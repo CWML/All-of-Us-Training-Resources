@@ -32,11 +32,11 @@ description: "The All of Us Research Program, its data sources, the CDR, and dat
 
 |   | Source | Description |
 |------------------------|------------------------|------------------------|
-| ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60"} | **Surveys** | Lifestyle, medical history, healthcare access, etc. |
-| ![](<../../Intro to workbench 2.0/images/ds_ehr.png>){height="60"} | **EHR** | Standardized with the OMOP Common Data Model |
-| ![](<../../Intro to workbench 2.0/images/ds_wearables.png>){height="60"} | **Wearables** | Heart rate, activity, or sleep data from devices like Fitbit |
-| ![](<../../Intro to workbench 2.0/images/ds_physical.png>){height="60"} | **Physical measurements** | EHRs, self-reported height and weight, in-person visits |
-| ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60"} | **Genomic** | Whole genome sequencing and genotyping from blood, saliva, and urine |
+| ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60" fig-alt="Icon for survey data, a clipboard with a checklist."} | **Surveys** | Lifestyle, medical history, healthcare access, etc. |
+| ![](<../../Intro to workbench 2.0/images/ds_ehr.png>){height="60" fig-alt="Icon for electronic health record data, a laptop showing a health chart."} | **EHR** | Standardized with the OMOP Common Data Model |
+| ![](<../../Intro to workbench 2.0/images/ds_wearables.png>){height="60" fig-alt="Icon for wearables data, a fitness wristband."} | **Wearables** | Heart rate, activity, or sleep data from devices like Fitbit |
+| ![](<../../Intro to workbench 2.0/images/ds_physical.png>){height="60" fig-alt="Icon for physical measurements, a heart with a heartbeat line."} | **Physical measurements** | EHRs, self-reported height and weight, in-person visits |
+| ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60" fig-alt="Icon for genomic data, a DNA double helix."} | **Genomic** | Whole genome sequencing and genotyping from blood, saliva, and urine |
 
 ## The Curated Data Repository (CDR)
 

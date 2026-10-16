@@ -55,3 +55,32 @@ body.quarto-dark .annotated img {
 .section-nav .section-nav-next { margin-left: auto; }
 body.quarto-dark .section-nav,
 body.quarto-dark .section-nav a { border-color: #495057; }
+
+/* Contrast (WCAG 4.5:1) fixes for the stock cosmo/darkly themes */
+
+/* Dark mode: darkly gives inline code in headings, table headers, and callout
+   titles a near-white background with white text */
+body.quarto-dark :is(h1, h2, h3, h4, h5, h6, th, .callout-title-container, .callout-header) code {
+  background-color: rgba(67, 67, 67, 0.65);
+  color: inherit;
+}
+
+/* Outline buttons, previous/next page links, and quotes need at least 4.5:1 */
+body.quarto-light .btn-outline-primary {
+  --bs-btn-color: #1b5fae;
+  --bs-btn-border-color: #1b5fae;
+}
+body.quarto-dark .btn-outline-primary,
+body.quarto-dark .btn-outline-secondary {
+  --bs-btn-color: #e9ecef;
+  --bs-btn-border-color: #adb5bd;
+}
+body.quarto-dark .page-navigation .nav-page-text { color: #dee2e6; }
+body.quarto-light blockquote { color: #495057; }
+
+/* Navbar: keep each item on one line, and tighten spacing on mid-size screens so the
+   menu fits on one row (it wrapped below about 1300px, worse in darkly's wider font) */
+#quarto-header .navbar-nav .nav-link { white-space: nowrap; }
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  #quarto-header .navbar-nav .nav-link { padding-left: 0.35rem; padding-right: 0.35rem; }
+}

@@ -6,7 +6,7 @@ description: "The Workflows tab, Cromwell and Nextflow workflows, batch jobs, an
 ## Workflows Tab
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/wf_tab.png>)
+![](<../../Intro to workbench 2.0/images/wf_tab.png>){fig-alt="Workspace Workflows tab highlighted, with the Setup and Job status sub-tabs and the Add workflow button marked as options."}
 
 ::: {.red-circle style="left: 16.4%; top: 3.0%; width: 8.0%; height: 36.0%;"}
 :::
@@ -55,7 +55,7 @@ Source: Verily, "Workflows overview" and "Workflow engines". All three tools use
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/wf_add.png>)
+![](<../../Intro to workbench 2.0/images/wf_add.png>){fig-alt="Adding workflow dialog with the workflow source options marked, and the bucket name field and Next button highlighted."}
 
 ::: {.green-box style="left: 1.2%; top: 16.4%; width: 98.4%; height: 9.8%;"}
 :::

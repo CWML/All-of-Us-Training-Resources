@@ -4,8 +4,9 @@ project:
   render:
     - index.qmd
     - "pages/**/*.qmd"
+    - "!Notes/"
   resources:
-    - ".nojekyll"
+    - "/.nojekyll"
     - "Intro to workbench 2.0/Introduction.html"
     - "Intro to workbench 2.0/Introduction_files/**"
     - "Intro to workbench 2.0/images/**"
@@ -19,6 +20,7 @@ website:
   page-navigation: true
 
   navbar:
+    collapse-below: xl   # hamburger menu below 1200px, so the title isn't squeezed
     left:
       - text: "Home"
         href: index.qmd
@@ -35,8 +37,12 @@ website:
       - text: "Resources"
         href: pages/resources.qmd
     right:
+      - icon: envelope
+        text: "Feedback"
+        href: "mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"
       - icon: github
         href: https://github.com/CWML/All-of-Us-Training-Resources
+        aria-label: "Source code on GitHub"
 
   sidebar:
     - id: get-started
@@ -79,6 +85,7 @@ website:
 
   page-footer:
     left: "Cushing/Whitney Medical Library, Yale School of Medicine"
+    center: "Questions or feedback? Email [maximilian.wegener@yale.edu](mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback)"
     right: "Built with [Quarto](https://quarto.org)"
 
 format:

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Practice with synthetic data, adding a file from a URL, GitHub, and AI tools">
+<meta name="description" content="Practice with synthetic data, adding a file from a URL, GitHub, and AI tools (and what you can share with them)">
 
 <title>Optional Extras – All of Us Workbench 2.0 Training</title>
 <style>
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
@@ -337,8 +337,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -394,6 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#add-a-repository" id="toc-add-a-repository" class="nav-link" data-scroll-target="#add-a-repository">Add a Repository</a></li>
   <li><a href="#github-things-to-know" id="toc-github-things-to-know" class="nav-link" data-scroll-target="#github-things-to-know">GitHub: Things to Know</a></li>
   <li><a href="#ai-tools-use-them-outside-the-workbench" id="toc-ai-tools-use-them-outside-the-workbench" class="nav-link" data-scroll-target="#ai-tools-use-them-outside-the-workbench">AI Tools: Use Them Outside the Workbench</a></li>
+  <li><a href="#what-you-can-share-with-an-ai" id="toc-what-you-can-share-with-an-ai" class="nav-link" data-scroll-target="#what-you-can-share-with-an-ai">What You Can Share with an AI</a></li>
   </ul>
 </nav>
     </div>
@@ -408,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Practice with synthetic data, adding a file from a URL, GitHub, and AI tools
+    Practice with synthetic data, adding a file from a URL, GitHub, and AI tools (and what you can share with them)
   </div>
 </div>
 
@@ -464,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="grid">
 <div class="g-col-12 g-col-md-6">
 <div class="annotated">
-<p><img src="../../Intro to workbench 2.0/images/res_add_file_url.png" class="img-fluid"></p>
+<p><img src="../../Intro to workbench 2.0/images/res_add_file_url.png" class="img-fluid" alt="Adding file to bucket via URL dialog with the URL and File name fields and the Add file to bucket button highlighted."></p>
 <div class="green-box" style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;">
 
 </div>
@@ -611,6 +617,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Source: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460): AI/ML tools used on participant data must run only within the Researcher Workbench, with no outgoing API; “transit of individual-level data to any external system is considered a DUCC violation, even if the data is not stored or used.” Summary statistics that follow the dissemination policy (no counts under 20) may be shared. Claude Code and Gemini CLI can be installed in Workbench apps, but both send what they read to outside services (Anthropic, Google), so this training recommends not using them there.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-you-can-share-with-an-ai" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-can-share-with-an-ai">What You Can Share with an AI</h2>
+<p>✅ <strong>Safe to share</strong> (no participant data):</p>
+<ul>
+<li><strong>Your code</strong>, with outputs cleared</li>
+<li><strong>Public example code</strong>: All of Us tutorial workspace notebooks and other notebooks published by All of Us, <strong>with outputs cleared</strong> (some are saved with outputs)</li>
+<li><strong>Table and column names</strong>: the <a href="https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit">CDR v9 Data Dictionary</a> or the <a href="https://ohdsi.github.io/CommonDataModel/">OMOP Common Data Model</a> documentation</li>
+<li><strong>Concept IDs and names</strong> from <a href="https://athena.ohdsi.org/search-terms/start">Athena</a> or the public All of Us <a href="https://databrowser.researchallofus.org/">Data Browser</a>, e.g.&nbsp;<em>201820 = Diabetes mellitus</em></li>
+<li><strong>Error messages</strong>, after checking they don’t include data values (an ID, a date, a result)</li>
+<li><strong>A small fake dataset</strong> with the same columns, to test your code. Ask the AI to make one, or use the synthetic data from <em>Try It: Practice with Synthetic Data</em>.</li>
+</ul>
+<p>❌ <strong>Never share:</strong> query results, data files, notebook outputs, screenshots of data, participant IDs, or counts of 1 to 20.</p>
+<p><strong>Example prompts:</strong></p>
+<ul>
+<li><em>“Using these OMOP tables from the data dictionary, write a BigQuery query that finds everyone with concept 201820 or any of its descendants.”</em></li>
+<li><em>“Here’s the All of Us tutorial notebook for loading RNA-seq data. Rewrite it in R.”</em></li>
+<li><em>“Here’s my R code and the error message. What’s wrong?”</em></li>
+<li><em>“Make a fake data frame with columns person_id, age, and diabetes so I can test this code.”</em></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Source: All of Us User Support Hub, “Data Dictionaries” (https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries), which links the data dictionary for each CDR version. Everything in the safe list contains no participant data. Error messages are the one to check: some quote a value from the data.</p>
 </div>
 </div>
 </div>
@@ -1052,8 +1094,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
     <div class="nav-footer-right">
 <p>Built with <a href="https://quarto.org">Quarto</a></p>
 </div>
