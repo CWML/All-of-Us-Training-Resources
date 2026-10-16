@@ -2520,7 +2520,7 @@ Source: All of Us User Support Hub, "Frequently Asked Questions" (support.resear
 - **Your code**, with outputs cleared
 - **Public example code**: All of Us tutorial workspace notebooks and other notebooks published by All of Us, **with outputs cleared** (some are saved with outputs)
 - **Table and column names**: the [CDR v9 Data Dictionary](https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit) or the [OMOP Common Data Model](https://ohdsi.github.io/CommonDataModel/) documentation
-- **Concept IDs and names** from [Athena](https://athena.ohdsi.org/search-terms/start), e.g. *201820 = Diabetes mellitus*
+- **Concept IDs and names** from [Athena](https://athena.ohdsi.org/search-terms/start) or the public All of Us [Data Browser](https://databrowser.researchallofus.org/), e.g. *201820 = Diabetes mellitus*
 - **Error messages**, after checking they don't include data values (an ID, a date, a result)
 - **A small fake dataset** with the same columns, to test your code. Ask the AI to make one, or use the synthetic data from *Try It: Practice with Synthetic Data*.
 
