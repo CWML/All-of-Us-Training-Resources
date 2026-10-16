@@ -4063,6 +4063,42 @@ Maximilian Wegener, MPH
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="what-you-can-share-with-an-ai" class="slide level2 smaller">
+<h2>What You Can Share with an AI</h2>
+<p>✅ <strong>Safe to share</strong> (no participant data):</p>
+<ul>
+<li><strong>Your code</strong>, with outputs cleared</li>
+<li><strong>Public example code</strong>: All of Us tutorial workspace notebooks and other notebooks published by All of Us, <strong>with outputs cleared</strong> (some are saved with outputs)</li>
+<li><strong>Table and column names</strong>: the <a href="https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit">CDR v9 Data Dictionary</a> or the <a href="https://ohdsi.github.io/CommonDataModel/">OMOP Common Data Model</a> documentation</li>
+<li><strong>Concept IDs and names</strong> from <a href="https://athena.ohdsi.org/search-terms/start">Athena</a>, e.g.&nbsp;<em>201820 = Diabetes mellitus</em></li>
+<li><strong>Error messages</strong>, after checking they don’t include data values (an ID, a date, a result)</li>
+<li><strong>A small fake dataset</strong> with the same columns, to test your code. Ask the AI to make one, or use the synthetic data from <em>Try It: Practice with Synthetic Data</em>.</li>
+</ul>
+<p>❌ <strong>Never share:</strong> query results, data files, notebook outputs, screenshots of data, participant IDs, or counts of 1 to 20.</p>
+<aside class="notes">
+<p>Source: All of Us User Support Hub, “Data Dictionaries” (https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries), which links the data dictionary for each CDR version. Everything in the safe list contains no participant data. Error messages are the one to check: some quote a value from the data.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="example-ai-prompts" class="slide level2">
+<h2>Example AI Prompts</h2>
+<p>Ask your AI tool <strong>on your own computer</strong>, sharing only what’s on the safe list:</p>
+<ul>
+<li><em>“Using these OMOP tables from the data dictionary, write a BigQuery query that finds everyone with concept 201820 or any of its descendants.”</em></li>
+<li><em>“Here’s the All of Us tutorial notebook for loading RNA-seq data. Rewrite it in R.”</em></li>
+<li><em>“Here’s my R code and the error message. What’s wrong?”</em></li>
+<li><em>“Make a fake data frame with columns person_id, age, and diabetes so I can test this code.”</em></li>
+</ul>
 </section></section>
 <section>
 <section id="wrap-up" class="title-slide slide level1 center">
