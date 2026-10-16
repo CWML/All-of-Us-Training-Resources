@@ -8,7 +8,7 @@ Apps are where you run your analysis: JupyterLab, R, SAS, and more. This page wa
 ## The Apps tab
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/app_0_tab.png>)
+![](<../../Intro to workbench 2.0/images/app_0_tab.png>){fig-alt="Workspace page with the Apps tab circled and the New app instance button highlighted."}
 
 ::: {.red-circle style="left: 18.2%; top: 60.0%; width: 6.6%; height: 16.0%;"}
 :::
@@ -58,7 +58,7 @@ Apps **auto-stop** after **4 hours** idle by default. You can set 1 hour to 14 d
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/app_1_select.png>)
+![](<../../Intro to workbench 2.0/images/app_1_select.png>){fig-alt="Creating app dialog, Select app step, with the list of available apps outlined, AoU Jupyter selected, and the Next button circled."}
 
 ::: {.green-box style="left: 1.0%; top: 17.2%; width: 98.6%; height: 61.6%;"}
 :::
@@ -93,7 +93,7 @@ Hover the ⓘ next to an app name for details. "Some apps are unavailable due to
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/app_2_config.png>)
+![](<../../Intro to workbench 2.0/images/app_2_config.png>){fig-alt="Creating app dialog, Choose config step, with Default configuration selected, the Cost estimate panel outlined, and Next circled."}
 
 ::: {.red-box style="left: 1.4%; top: 20.0%; width: 70.0%; height: 10.6%;"}
 :::
@@ -152,7 +152,7 @@ Saved configurations you or a collaborator created also appear here as options. 
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/app_3_compute.png>)
+![](<../../Intro to workbench 2.0/images/app_3_compute.png>){fig-alt="Creating app dialog, Compute options step, with Location, General or GPUs, and Machine type options outlined and Next circled."}
 
 ::: {.green-box style="left: 1.2%; top: 36.6%; width: 23.4%; height: 4.2%;"}
 :::
@@ -186,7 +186,7 @@ Leave "Use a specific reservation" unchecked; it's for reserved cloud capacity. 
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/app_4_review.png>)
+![](<../../Intro to workbench 2.0/images/app_4_review.png>){fig-alt="Creating app dialog, Review details step, with the app ID and name fields outlined and the Create app button circled."}
 
 ::: {.green-box style="left: 1.2%; top: 39.4%; width: 97.6%; height: 25.4%;"}
 :::

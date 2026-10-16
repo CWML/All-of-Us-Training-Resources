@@ -21,7 +21,7 @@ Verily calls these "referenced resources". Because the data isn't copied, adding
 
 ## The Data Exchange
 
-![](<../../Intro to workbench 2.0/images/exchange.png>){fig-align="center"}
+![](<../../Intro to workbench 2.0/images/exchange.png>){fig-align="center" fig-alt="Data Exchange page listing the All of Us Registered Tier and Controlled Tier collections, each with an Add to workspace button."}
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
 Open from the left sidebar: Exchange. Search by name, tag, or keyword; sort and filter.
@@ -74,7 +74,7 @@ The non-All of Us collections come from Verily and its partners. Their terms are
 
 ## Your Data Collections Page
 
-![](<../../Intro to workbench 2.0/images/data_collections.png>){fig-align="center"}
+![](<../../Intro to workbench 2.0/images/data_collections.png>){fig-align="center" fig-alt="Data collections page listing your collections, with a panel of recent data collections on the right."}
 
 ## Using the Data Collections Page
 

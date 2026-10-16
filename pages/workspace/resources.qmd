@@ -23,7 +23,7 @@ Every workspace page has the same layout:
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/ws_tabs.png>)
+![](<../../Intro to workbench 2.0/images/ws_tabs.png>){fig-alt="Workspace page with the Overview tab circled and the Edit description button highlighted."}
 
 ::: {.red-circle style="left: 1.2%; top: 25.2%; width: 9.0%; height: 7.4%;"}
 :::
@@ -52,7 +52,7 @@ Good practice: keep the description in sync with your Research Use Statement ans
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/ws_tabs.png>)
+![](<../../Intro to workbench 2.0/images/ws_tabs.png>){fig-alt="Workspace page showing the Overview tab, with the Resources tab circled."}
 
 ::: {.red-circle style="left: 10.0%; top: 25.2%; width: 7.4%; height: 7.4%;"}
 :::
@@ -78,7 +78,7 @@ More detail on each resource type is below.
 **Resources** tab → **+ New resource** opens a menu of resource types:
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_new_menu.png>)
+![](<../../Intro to workbench 2.0/images/res_new_menu.png>){fig-alt="Resources tab with the tab and New resource button circled, and its menu of create and reference resource types outlined."}
 
 ::: {.red-circle style="left: 7.8%; top: 1.0%; width: 9.0%; height: 11.6%;"}
 :::
@@ -129,7 +129,7 @@ New Cohort is covered on the [Data Explorer](../data/data-explorer.qmd) page.
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_folder.png>)
+![](<../../Intro to workbench 2.0/images/res_folder.png>){fig-alt="New folder details dialog with name, path, and description fields, and the Create folder button circled."}
 
 ::: {.red-circle style="left: 77.4%; top: 84.0%; width: 21.6%; height: 13.6%;"}
 :::
@@ -159,7 +159,7 @@ Avoid spaces in folder names: they have to be quoted in file paths in code.
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_bucket.png>)
+![](<../../Intro to workbench 2.0/images/res_bucket.png>){fig-alt="Creating Cloud Storage bucket dialog with resource ID, folder, description, and bucket name fields, and Create bucket circled."}
 
 ::: {.red-circle style="left: 73.6%; top: 90.0%; width: 24.4%; height: 8.6%;"}
 :::
@@ -199,7 +199,7 @@ Source: Google Cloud, "About Cloud Storage buckets" and "Create a bucket". Files
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_bq_dataset.png>)
+![](<../../Intro to workbench 2.0/images/res_bq_dataset.png>){fig-alt="Creating BigQuery dataset dialog with resource ID, folder, description, and dataset ID fields, and Create dataset circled."}
 
 ::: {.red-circle style="left: 72.6%; top: 90.0%; width: 24.8%; height: 8.4%;"}
 :::
@@ -243,7 +243,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_ref_bucket.png>)
+![](<../../Intro to workbench 2.0/images/res_ref_bucket.png>){fig-alt="Adding Cloud Storage bucket reference dialog with the Bucket name field highlighted."}
 
 ::: {.red-box style="left: 2.6%; top: 62.6%; width: 94.8%; height: 8.4%;"}
 :::
@@ -253,7 +253,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_ref_object.png>)
+![](<../../Intro to workbench 2.0/images/res_ref_object.png>){fig-alt="Adding Cloud Storage object reference dialog with the Object URL field, which takes a gs:// address, highlighted."}
 
 ::: {.red-box style="left: 2.4%; top: 63.4%; width: 94.4%; height: 9.0%;"}
 :::
@@ -268,7 +268,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_ref_bq_dataset.png>)
+![](<../../Intro to workbench 2.0/images/res_ref_bq_dataset.png>){fig-alt="Adding a BigQuery dataset dialog with the Project ID and Dataset ID fields highlighted."}
 
 ::: {.red-box style="left: 2.6%; top: 62.4%; width: 94.8%; height: 25.4%;"}
 :::
@@ -278,7 +278,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_ref_bq_table.png>)
+![](<../../Intro to workbench 2.0/images/res_ref_bq_table.png>){fig-alt="Adding BigQuery table dialog with the Project ID, Dataset ID, and Table ID fields highlighted."}
 
 ::: {.red-box style="left: 2.4%; top: 54.8%; width: 94.8%; height: 32.4%;"}
 :::
@@ -293,7 +293,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-4}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/gcp_1_ws_details.png>)
+![](<../../Intro to workbench 2.0/images/gcp_1_ws_details.png>){fig-alt="Workspace details panel with the Google Project link highlighted."}
 
 ::: {.red-box style="left: 3.0%; top: 86.0%; width: 47.0%; height: 9.4%;"}
 :::
@@ -301,7 +301,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::
 ::: {.g-col-12 .g-col-md-3}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/gcp_2_console_menu.png>)
+![](<../../Intro to workbench 2.0/images/gcp_2_console_menu.png>){fig-alt="Google Cloud console navigation menu with Cloud Storage and its Buckets submenu item highlighted."}
 
 ::: {.red-box style="left: 0.4%; top: 93.4%; width: 60.0%; height: 6.4%;"}
 :::
@@ -322,7 +322,7 @@ The details panel also shows the workspace **ID**, **default region**, **pod**, 
 ## What You Can See (and Can't)
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/gcp_3_bucket.png>)
+![](<../../Intro to workbench 2.0/images/gcp_3_bucket.png>){fig-alt="Google Cloud Bucket details page with the workspace bucket's folder and file list highlighted."}
 
 ::: {.green-box style="left: 37.4%; top: 57.0%; width: 62.4%; height: 38.6%;"}
 :::

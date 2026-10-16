@@ -69,7 +69,7 @@ Reminder for the presenter: use the intro-to-AoU workspace for live demos. Creat
 
 ## Course Progression
 
-![](images/course_progression.png){fig-align="center"}
+![](images/course_progression.png){fig-align="center" fig-alt="Course roadmap: Level 1 Introduction (circled, this session), Level 2 cohort and dataset building, Level 3 clinical data analysis, Level 4 genomic data analysis"}
 
 ::: notes
 Course progression graphic reused from Session 1. Update it if the Level 2–4 sessions now use Workbench 2.0.
@@ -106,11 +106,11 @@ Course progression graphic reused from Session 1. Update it if the Level 2–4 s
 
 |   | Source | Description |
 |------------------------|------------------------|------------------------|
-| ![](images/ds_surveys.png){height="60"} | **Surveys** | Lifestyle, medical history, healthcare access, etc. |
-| ![](images/ds_ehr.png){height="60"} | **EHR** | Standardized with the OMOP Common Data Model |
-| ![](images/ds_wearables.png){height="60"} | **Wearables** | Heart rate, activity, or sleep data from devices like Fitbit |
-| ![](images/ds_physical.png){height="60"} | **Physical measurements** | EHRs, self-reported height and weight, in-person visits |
-| ![](images/ds_genomic.png){height="60"} | **Genomic** | Whole genome sequencing and genotyping from blood, saliva, and urine |
+| ![](images/ds_surveys.png){height="60" fig-alt="Icon for survey data, a clipboard with a checklist."} | **Surveys** | Lifestyle, medical history, healthcare access, etc. |
+| ![](images/ds_ehr.png){height="60" fig-alt="Icon for electronic health record data, a laptop showing a health chart."} | **EHR** | Standardized with the OMOP Common Data Model |
+| ![](images/ds_wearables.png){height="60" fig-alt="Icon for wearables data, a fitness wristband."} | **Wearables** | Heart rate, activity, or sleep data from devices like Fitbit |
+| ![](images/ds_physical.png){height="60" fig-alt="Icon for physical measurements, a heart with a heartbeat line."} | **Physical measurements** | EHRs, self-reported height and weight, in-person visits |
+| ![](images/ds_genomic.png){height="60" fig-alt="Icon for genomic data, a DNA double helix."} | **Genomic** | Whole genome sequencing and genotyping from blood, saliva, and urine |
 
 ## The Curated Data Repository (CDR)
 
@@ -228,7 +228,7 @@ Students who already have Workbench access can skip this slide. Registration hap
 
 :::::: columns
 ::: {.column width="50%"}
-![](images/login.png)
+![](images/login.png){fig-alt="Verily sign-in page with a Continue with Google button and an email address option."}
 :::
 
 :::: {.column width="50%"}
@@ -248,7 +248,7 @@ workbench.verily.com redirects to the Verily sign-in page. Make sure your data a
 
 ## The Home Page
 
-![](images/homepage.png){fig-align="center"}
+![](images/homepage.png){fig-align="center" fig-alt="Workbench home page with New workspace and New data collection buttons, recently updated items, and running apps."}
 
 ::: notes
 Screenshot shows the presenter's name. Crop it if needed.
@@ -304,7 +304,7 @@ Verily calls these "referenced resources". Because the data isn't copied, adding
 
 ## The Data Exchange
 
-![](images/exchange.png){fig-align="center"}
+![](images/exchange.png){fig-align="center" fig-alt="Data Exchange page listing the All of Us Registered Tier and Controlled Tier collections, each with an Add to workspace button."}
 
 ::: notes
 Open from the left sidebar: Exchange. Search by name, tag, or keyword; sort and filter.
@@ -360,7 +360,7 @@ The non-All of Us collections come from Verily and its partners. Their terms are
 
 ## Your Data Collections Page
 
-![](images/data_collections.png){fig-align="center"}
+![](images/data_collections.png){fig-align="center" fig-alt="Data collections page listing your collections, with a panel of recent data collections on the right."}
 
 ## Using the Data Collections Page
 
@@ -383,7 +383,7 @@ Collections only appear here after you have access: the All of Us tiers via your
 
 ## Your Workspaces
 
-![](images/workspaces.png){fig-align="center"}
+![](images/workspaces.png){fig-align="center" fig-alt="Your workspaces page in Workbench listing workspaces, with filters, a New workspace button, and a Recent workspaces panel."}
 
 ## What Workspaces Are For
 
@@ -675,7 +675,7 @@ Same steps for both tutorial workspaces (from their Overview pages). Questions: 
 **Left sidebar → Workspaces → + New workspace**
 
 :::: annotated
-![](images/workspaces.png)
+![](images/workspaces.png){fig-alt="Your workspaces page in Workbench with the New workspace button highlighted."}
 
 ::: {.red-circle style="left: 66.2%; top: 0.6%; width: 11.6%; height: 7.6%;"}
 :::
@@ -689,7 +689,7 @@ Three steps: Enter details → Set policies → Add description.
 
 :::::: columns
 ::: {.column width="55%"}
-![](images/ws_create_1_details.png)
+![](images/ws_create_1_details.png){fig-alt="Create a new workspace dialog, step 1 Enter details, showing workspace name, summary, workspace ID, and pod fields."}
 :::
 
 :::: {.column .side width="45%"}
@@ -719,7 +719,7 @@ The auto-selected pod is your personal user pod (user-pod-firstname-lastname-###
 
 :::::: columns
 ::: {.column width="55%"}
-![](images/ws_create_2_policies.png)
+![](images/ws_create_2_policies.png){fig-alt="Create a new workspace dialog, step 2 Set policies, showing the group policy choice and default resource region."}
 :::
 
 :::: {.column .side width="45%"}
@@ -749,7 +749,7 @@ Group policies also carry over to duplicates of the workspace. Access still has 
 
 :::::: columns
 ::: {.column width="55%"}
-![](images/ws_create_3_description.png)
+![](images/ws_create_3_description.png){fig-alt="Create a new workspace dialog, step 3 Add description, with a description field and the Create workspace button."}
 :::
 
 :::: {.column .side width="45%"}
@@ -772,7 +772,7 @@ Click **Create workspace**
 Go to the **Resources** tab → **+ Data from catalog**
 
 ::::: annotated
-![](images/ws_resources.png)
+![](images/ws_resources.png){fig-alt="New empty workspace with the Resources tab and the Data from catalog button highlighted."}
 
 ::: {.red-circle style="left: 6.4%; top: 13.4%; width: 7.4%; height: 6.2%;"}
 :::
@@ -801,7 +801,7 @@ A new workspace has **no data** until you add a data collection.
 ::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/dc_add_1_collection.png)
+![](images/dc_add_1_collection.png){fig-alt="Adding data from catalog dialog, step 1 Select collection, with the All of Us Controlled Tier collection highlighted."}
 
 ::: {.red-box style="left: 1.2%; top: 43.6%; width: 97.6%; height: 7%;"}
 :::
@@ -830,7 +830,7 @@ Only collections you have access to appear here (the same list as your Data coll
 ::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/dc_add_2_resources.png)
+![](images/dc_add_2_resources.png){fig-alt="Adding data from catalog dialog, step 2 Select resource, with the Select all resources checkbox highlighted."}
 
 ::: {.red-box style="left: 1.0%; top: 16.9%; width: 18%; height: 5.8%;"}
 :::
@@ -870,7 +870,7 @@ Source: All of Us "Curated Data Repository (CDR) version 9 Release Notes" (Contr
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/dc_add_3_policies.png)
+![](images/dc_add_3_policies.png){fig-alt="Adding data from catalog dialog, step 3 Review policies, with the Fill out the questions button for the Research Use Statement highlighted."}
 
 ::: {.red-circle style="left: 1.6%; top: 72.4%; width: 20.4%; height: 5.8%;"}
 :::
@@ -901,7 +901,7 @@ The answers aren't used to make data access decisions; they're for transparency 
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q1.png)
+![](images/rus_q1.png){fig-alt="Research Use Statement question 1 on primary purpose, with the Education purpose option checked and highlighted."}
 
 ::: {.red-box style="left: 1.6%; top: 17.2%; width: 83%; height: 5.6%;"}
 :::
@@ -932,7 +932,7 @@ This example workspace is for teaching, so we answer as an education project. St
 
 :::::: columns
 ::: {.column width="58%"}
-![](images/rus_q2.png)
+![](images/rus_q2.png){fig-alt="Research Use Statement question 2, three text boxes summarizing the scientific question, approaches, and anticipated findings."}
 :::
 
 :::: {.column .side width="42%"}
@@ -959,7 +959,7 @@ Example answer for this instructional workspace (used for 2.1–2.3): "This work
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q3.png)
+![](images/rus_q3.png){fig-alt="Research Use Statement question 3 on sharing findings, with the Other option checked and its explanation text box highlighted."}
 
 ::: {.red-box style="left: 0.8%; top: 44.8%; width: 98.8%; height: 10.8%;"}
 :::
@@ -988,7 +988,7 @@ All of Us encourages sharing results with both scientific and community audience
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q4.png)
+![](images/rus_q4.png){fig-alt="Research Use Statement question 4 on expected outcomes, with None of these statements apply checked and highlighted."}
 
 ::: {.red-box style="left: 1.4%; top: 33.2%; width: 38.4%; height: 3.8%;"}
 :::
@@ -1017,7 +1017,7 @@ Our example: **None of these apply** (teaching workspace)
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q5.png)
+![](images/rus_q5.png){fig-alt="Research Use Statement question 5 on population of interest, with the option to not focus on underrepresented populations highlighted."}
 
 ::: {.red-box style="left: 0.4%; top: 89.9%; width: 66.4%; height: 3.4%;"}
 :::
@@ -1045,7 +1045,7 @@ All of Us asks this to track how well it serves underrepresented communities and
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q6.png)
+![](images/rus_q6.png){fig-alt="Research Use Statement question 6 on AI/AN policy, with the option to not conduct AI/AN-specific analyses selected and highlighted."}
 
 ::: {.red-box style="left: 2.6%; top: 47.6%; width: 95.8%; height: 9%;"}
 :::
@@ -1079,7 +1079,7 @@ All of Us has a policy on respectful research with AI/AN populations; this quest
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q7.png)
+![](images/rus_q7.png){fig-alt="Research Use Statement question 7 on requesting a review, with both answer options outlined and the No concerns option highlighted."}
 
 ::: {.green-box style="left: 3.0%; top: 40.0%; width: 95.0%; height: 10.0%;"}
 :::
@@ -1112,7 +1112,7 @@ See the All of Us Stigmatizing Research Policy for more detail. If students are 
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/rus_q8.png)
+![](images/rus_q8.png){fig-alt="Research Use Statement final page listing the publicly displayed answers in a green box, with the Confirm button circled."}
 
 ::: {.green-box style="left: 3.0%; top: 17.6%; width: 46.0%; height: 10.6%;"}
 :::
@@ -1149,7 +1149,7 @@ Q3 (dissemination), Q4 (scientific framework), and Q7 (RAB review) are not displ
 ::::::::: columns
 :::::: {.column width="58%"}
 ::::: annotated
-![](images/dc_add_3b_confirm.png)
+![](images/dc_add_3b_confirm.png){fig-alt="Adding data from catalog policy review with the checkbox accepting permanent policies and the Next button highlighted."}
 
 ::: {.red-box style="left: 0.8%; top: 84.4%; width: 73.4%; height: 5.4%;"}
 :::
@@ -1183,7 +1183,7 @@ Bucket browsing in the perimeter: previews up to 5 MB, and only .ipynb, .r, .rmd
 :::::::: columns
 ::::: {.column width="58%"}
 :::: annotated
-![](images/dc_add_4_review.png)
+![](images/dc_add_4_review.png){fig-alt="Adding data from catalog dialog, step 4 Review selection, listing the chosen resources with the Add to your workspace button highlighted."}
 
 ::: {.red-circle style="left: 78.4%; top: 92.8%; width: 21%; height: 6.6%;"}
 :::
@@ -1233,7 +1233,7 @@ Every workspace page has the same layout:
 :::: {.columns}
 ::: {.column width="58%"}
 ::: {.annotated}
-![](images/ws_tabs.png)
+![](images/ws_tabs.png){fig-alt="Workspace page with the Overview tab circled and the Edit description button highlighted."}
 
 ::: {.red-circle style="left: 1.2%; top: 25.2%; width: 9.0%; height: 7.4%;"}
 :::
@@ -1264,7 +1264,7 @@ Good practice: keep the description in sync with your Research Use Statement ans
 :::: {.columns}
 ::: {.column width="58%"}
 ::: {.annotated}
-![](images/ws_tabs.png)
+![](images/ws_tabs.png){fig-alt="Workspace page showing the Overview tab, with the Resources tab circled."}
 
 ::: {.red-circle style="left: 10.0%; top: 25.2%; width: 7.4%; height: 7.4%;"}
 :::
@@ -1290,7 +1290,7 @@ More detail on each resource type follows.
 **Resources** tab → **+ New resource** opens a menu of resource types:
 
 ::: {.annotated .short}
-![](images/res_new_menu.png)
+![](images/res_new_menu.png){fig-alt="Resources tab with the tab and New resource button circled, and its menu of create and reference resource types outlined."}
 
 ::: {.red-circle style="left: 7.8%; top: 1.0%; width: 9.0%; height: 11.6%;"}
 :::
@@ -1343,7 +1343,7 @@ New Cohort is covered in the Data Explorer section.
 :::: {.columns}
 ::: {.column width="55%"}
 ::: {.annotated}
-![](images/res_folder.png)
+![](images/res_folder.png){fig-alt="New folder details dialog with name, path, and description fields, and the Create folder button circled."}
 
 ::: {.red-circle style="left: 77.4%; top: 84.0%; width: 21.6%; height: 13.6%;"}
 :::
@@ -1375,7 +1375,7 @@ Avoid spaces in folder names: they have to be quoted in file paths in code.
 :::: {.columns}
 ::: {.column width="50%"}
 ::: {.annotated}
-![](images/res_bucket.png)
+![](images/res_bucket.png){fig-alt="Creating Cloud Storage bucket dialog with resource ID, folder, description, and bucket name fields, and Create bucket circled."}
 
 ::: {.red-circle style="left: 73.6%; top: 90.0%; width: 24.4%; height: 8.6%;"}
 :::
@@ -1417,7 +1417,7 @@ Source: Google Cloud, "About Cloud Storage buckets" and "Create a bucket". Files
 :::: {.columns}
 ::: {.column width="50%"}
 ::: {.annotated}
-![](images/res_bq_dataset.png)
+![](images/res_bq_dataset.png){fig-alt="Creating BigQuery dataset dialog with resource ID, folder, description, and dataset ID fields, and Create dataset circled."}
 
 ::: {.red-circle style="left: 72.6%; top: 90.0%; width: 24.8%; height: 8.4%;"}
 :::
@@ -1463,7 +1463,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::: {.columns}
 ::: {.column width="50%"}
 ::: {.annotated}
-![](images/res_ref_bucket.png)
+![](images/res_ref_bucket.png){fig-alt="Adding Cloud Storage bucket reference dialog with the Bucket name field highlighted."}
 
 ::: {.red-box style="left: 2.6%; top: 62.6%; width: 94.8%; height: 8.4%;"}
 :::
@@ -1473,7 +1473,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::
 ::: {.column width="50%"}
 ::: {.annotated}
-![](images/res_ref_object.png)
+![](images/res_ref_object.png){fig-alt="Adding Cloud Storage object reference dialog with the Object URL field, which takes a gs:// address, highlighted."}
 
 ::: {.red-box style="left: 2.4%; top: 63.4%; width: 94.4%; height: 9.0%;"}
 :::
@@ -1488,7 +1488,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::: {.columns}
 ::: {.column width="50%"}
 ::: {.annotated}
-![](images/res_ref_bq_dataset.png)
+![](images/res_ref_bq_dataset.png){fig-alt="Adding a BigQuery dataset dialog with the Project ID and Dataset ID fields highlighted."}
 
 ::: {.red-box style="left: 2.6%; top: 62.4%; width: 94.8%; height: 25.4%;"}
 :::
@@ -1498,7 +1498,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::
 ::: {.column width="50%"}
 ::: {.annotated}
-![](images/res_ref_bq_table.png)
+![](images/res_ref_bq_table.png){fig-alt="Adding BigQuery table dialog with the Project ID, Dataset ID, and Table ID fields highlighted."}
 
 ::: {.red-box style="left: 2.4%; top: 54.8%; width: 94.8%; height: 32.4%;"}
 :::
@@ -1513,7 +1513,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::: {.columns}
 ::: {.column width="30%"}
 ::: {.annotated}
-![](images/gcp_1_ws_details.png)
+![](images/gcp_1_ws_details.png){fig-alt="Workspace details panel with the Google Project link highlighted."}
 
 ::: {.red-box style="left: 3.0%; top: 86.0%; width: 47.0%; height: 9.4%;"}
 :::
@@ -1521,7 +1521,7 @@ Example uses: point to a collaborator's bucket, or to a shared file without copy
 :::
 ::: {.column width="28%"}
 ::: {.annotated}
-![](images/gcp_2_console_menu.png)
+![](images/gcp_2_console_menu.png){fig-alt="Google Cloud console navigation menu with Cloud Storage and its Buckets submenu item highlighted."}
 
 ::: {.red-box style="left: 0.4%; top: 93.4%; width: 60.0%; height: 6.4%;"}
 :::
@@ -1544,7 +1544,7 @@ The details panel also shows the workspace **ID**, **default region**, **pod**, 
 ## What You Can See (and Can't)
 
 ::: {.annotated .short}
-![](images/gcp_3_bucket.png)
+![](images/gcp_3_bucket.png){fig-alt="Google Cloud Bucket details page with the workspace bucket's folder and file list highlighted."}
 
 ::: {.green-box style="left: 37.4%; top: 57.0%; width: 62.4%; height: 38.6%;"}
 :::
@@ -1605,7 +1605,7 @@ The definitions come from the "Add cohort to workspace" dialog.
 :::: {.columns}
 ::: {.column width="55%"}
 ::: {.annotated}
-![](images/dx_add_1_collection.png)
+![](images/dx_add_1_collection.png){fig-alt="Add cohort to workspace dialog with the All of Us Controlled Tier collection row, its version, and the Next button highlighted."}
 
 ::: {.red-box style="left: 1.4%; top: 43.6%; width: 97.8%; height: 7.4%;"}
 :::
@@ -1638,7 +1638,7 @@ The screenshot's "Last modified … by" column showed a staff email; it has been
 :::: {.columns}
 ::: {.column width="55%"}
 ::: {.annotated}
-![](images/dx_add_3_details.png)
+![](images/dx_add_3_details.png){fig-alt="Add cohort to workspace details step with the cohort name, description, and folder options and the Add to your workspace button highlighted."}
 
 ::: {.green-box style="left: 1.0%; top: 17.2%; width: 98.2%; height: 16.8%;"}
 :::
@@ -1669,7 +1669,7 @@ Use a name that says what the cohort is (e.g., diabetes_age50plus), not test nam
 ## Building a Cohort
 
 ::: {.annotated .short}
-![](images/dx_cohort_view.png)
+![](images/dx_cohort_view.png){fig-alt="Cohort builder with the Cohort filter panel, Add criteria button, and Save data snapshot button highlighted, beside demographic charts."}
 
 ::: {.green-box style="left: 0.4%; top: 10.0%; width: 40.8%; height: 77.0%;"}
 :::
@@ -1699,7 +1699,7 @@ Example: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identit
 ## Adding Criteria
 
 ::: {.annotated .short}
-![](images/dx_criteria.png)
+![](images/dx_criteria.png){fig-alt="Adding criteria screen listing criteria by category, with the search by code or description box highlighted."}
 
 ::: {.green-box style="left: 1.2%; top: 5.6%; width: 98.4%; height: 5.6%;"}
 :::
@@ -1744,7 +1744,7 @@ Example study population: Sex → Woman; Age → 65 or older; Condition → Brea
 ## Save a Data Snapshot: Select Data
 
 ::: {.annotated}
-![](images/dx_snap_1_select.png)
+![](images/dx_snap_1_select.png){fig-alt="Save data snapshot, Select data step, with the data choices and tabs outlined and the SQL Copy and Next buttons circled."}
 
 ::: {.green-box style="left: 1.0%; top: 26.0%; width: 18.4%; height: 20.4%;"}
 :::
@@ -1771,7 +1771,7 @@ Example study population: Sex → Woman; Age → 65 or older; Condition → Brea
 ## Check the Summary
 
 ::: {.annotated .short}
-![](images/dx_snap_1_summary.png)
+![](images/dx_snap_1_summary.png){fig-alt="Save data snapshot Select data step with the Summary tab highlighted, showing cohort criteria and the included table columns."}
 
 ::: {.red-box style="left: 46.0%; top: 12.4%; width: 5.8%; height: 6.0%;"}
 :::
@@ -1795,7 +1795,7 @@ Check this before saving: it's the plain-language version of the SQL. The exampl
 :::: {.columns}
 ::: {.column width="55%"}
 ::: {.annotated}
-![](images/dx_snap_2_format.png)
+![](images/dx_snap_2_format.png){fig-alt="Save data snapshot file format step with the CSV tables and R and Jupyter notebook query options highlighted."}
 
 ::: {.green-box style="left: 3.2%; top: 58.4%; width: 74.0%; height: 36.4%;"}
 :::
@@ -1823,7 +1823,7 @@ Click **Next**
 :::: {.columns}
 ::: {.column .side width="34%"}
 ::: {.annotated .short}
-![](images/dx_snap_3_bucket.png)
+![](images/dx_snap_3_bucket.png){fig-alt="Select destination bucket dialog with the existing or new bucket choice and the Resource ID field highlighted."}
 
 ::: {.green-box style="left: 3.4%; top: 58.4%; width: 93.4%; height: 14.2%;"}
 :::
@@ -1836,7 +1836,7 @@ Click **Next**
 :::
 ::: {.column width="28%"}
 ::: {.annotated}
-![](images/dx_snap_3_newbucket.png)
+![](images/dx_snap_3_newbucket.png){fig-alt="Select destination bucket dialog with Create a new bucket and the bucket name fields highlighted, and the Save button circled."}
 
 ::: {.green-box style="left: 2.4%; top: 31.2%; width: 95.4%; height: 8.6%;"}
 :::
@@ -1895,7 +1895,7 @@ From an exported R notebook (cohort "cwml_aou_test_cohort", October 2026). The S
 ## Apps Tab
 
 ::: {.annotated .short}
-![](images/app_0_tab.png)
+![](images/app_0_tab.png){fig-alt="Workspace page with the Apps tab circled and the New app instance button highlighted."}
 
 ::: {.red-circle style="left: 18.2%; top: 60.0%; width: 6.6%; height: 16.0%;"}
 :::
@@ -1951,7 +1951,7 @@ Source: Verily, "Cloud apps overview" and "Basic cloud app operations". The disk
 :::: {.columns}
 ::: {.column width="52%"}
 ::: {.annotated}
-![](images/app_1_select.png)
+![](images/app_1_select.png){fig-alt="Creating app dialog, Select app step, with the list of available apps outlined, AoU Jupyter selected, and the Next button circled."}
 
 ::: {.green-box style="left: 1.0%; top: 17.2%; width: 98.6%; height: 61.6%;"}
 :::
@@ -1986,7 +1986,7 @@ Hover the ⓘ next to an app name for details. "Some apps are unavailable due to
 :::: {.columns}
 ::: {.column width="55%"}
 ::: {.annotated}
-![](images/app_2_config.png)
+![](images/app_2_config.png){fig-alt="Creating app dialog, Choose config step, with Default configuration selected, the Cost estimate panel outlined, and Next circled."}
 
 ::: {.red-box style="left: 1.4%; top: 20.0%; width: 70.0%; height: 10.6%;"}
 :::
@@ -2049,7 +2049,7 @@ Saved configurations you or a collaborator created also appear here as options. 
 :::: {.columns}
 ::: {.column width="52%"}
 ::: {.annotated}
-![](images/app_3_compute.png)
+![](images/app_3_compute.png){fig-alt="Creating app dialog, Compute options step, with Location, General or GPUs, and Machine type options outlined and Next circled."}
 
 ::: {.green-box style="left: 1.2%; top: 36.6%; width: 23.4%; height: 4.2%;"}
 :::
@@ -2083,7 +2083,7 @@ Leave "Use a specific reservation" unchecked; it's for reserved cloud capacity. 
 :::: {.columns}
 ::: {.column width="52%"}
 ::: {.annotated}
-![](images/app_4_review.png)
+![](images/app_4_review.png){fig-alt="Creating app dialog, Review details step, with the app ID and name fields outlined and the Create app button circled."}
 
 ::: {.green-box style="left: 1.2%; top: 39.4%; width: 97.6%; height: 25.4%;"}
 :::
@@ -2208,7 +2208,7 @@ Checked in a new Workbench 2.0 workspace with env | grep -E 'WORKSPACE|GOOGLE|PE
 ## Workflows Tab
 
 ::: {.annotated .short}
-![](images/wf_tab.png)
+![](images/wf_tab.png){fig-alt="Workspace Workflows tab highlighted, with the Setup and Job status sub-tabs and the Add workflow button marked as options."}
 
 ::: {.red-circle style="left: 16.4%; top: 3.0%; width: 8.0%; height: 36.0%;"}
 :::
@@ -2259,7 +2259,7 @@ Source: Verily, "Workflows overview" and "Workflow engines". All three tools use
 :::: {.columns}
 ::: {.column width="52%"}
 ::: {.annotated}
-![](images/wf_add.png)
+![](images/wf_add.png){fig-alt="Adding workflow dialog with the workflow source options marked, and the bucket name field and Next button highlighted."}
 
 ::: {.green-box style="left: 1.2%; top: 16.4%; width: 98.4%; height: 9.8%;"}
 :::
@@ -2413,7 +2413,7 @@ Copy a **public** file from the web straight into your bucket. No download or up
 :::: {.columns}
 ::: {.column width="52%"}
 ::: {.annotated}
-![](images/res_add_file_url.png)
+![](images/res_add_file_url.png){fig-alt="Adding file to bucket via URL dialog with the URL and File name fields and the Add file to bucket button highlighted."}
 
 ::: {.green-box style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;"}
 :::

@@ -20,7 +20,7 @@ If you already have Workbench access, skip this step. Registration happens on th
 
 :::::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
-![](<../../Intro to workbench 2.0/images/login.png>)
+![](<../../Intro to workbench 2.0/images/login.png>){fig-alt="Verily sign-in page with a Continue with Google button and an email address option."}
 :::
 
 :::: {.g-col-12 .g-col-md-6}
@@ -40,7 +40,7 @@ workbench.verily.com redirects to the Verily sign-in page. Make sure your data a
 
 ## The Home Page
 
-![](<../../Intro to workbench 2.0/images/homepage.png>){fig-align="center"}
+![](<../../Intro to workbench 2.0/images/homepage.png>){fig-align="center" fig-alt="Workbench home page with New workspace and New data collection buttons, recently updated items, and running apps."}
 
 
 ## Getting Around

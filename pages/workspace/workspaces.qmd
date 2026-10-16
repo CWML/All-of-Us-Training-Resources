@@ -5,7 +5,7 @@ description: "What workspaces are for, the Workspaces page, access levels, and s
 
 ## Your Workspaces
 
-![](<../../Intro to workbench 2.0/images/workspaces.png>){fig-align="center"}
+![](<../../Intro to workbench 2.0/images/workspaces.png>){fig-align="center" fig-alt="Your workspaces page in Workbench listing workspaces, with filters, a New workspace button, and a Recent workspaces panel."}
 
 ## What Workspaces Are For
 

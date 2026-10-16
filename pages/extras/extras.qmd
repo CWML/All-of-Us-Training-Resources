@@ -37,7 +37,7 @@ Copy a **public** file from the web straight into your bucket. No download or up
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/res_add_file_url.png>)
+![](<../../Intro to workbench 2.0/images/res_add_file_url.png>){fig-alt="Adding file to bucket via URL dialog with the URL and File name fields and the Add file to bucket button highlighted."}
 
 ::: {.green-box style="left: 3.0%; top: 28.8%; width: 94.2%; height: 15.0%;"}
 :::

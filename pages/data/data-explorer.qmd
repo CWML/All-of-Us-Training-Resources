@@ -35,7 +35,7 @@ The definitions come from the "Add cohort to workspace" dialog.
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_add_1_collection.png>)
+![](<../../Intro to workbench 2.0/images/dx_add_1_collection.png>){fig-alt="Add cohort to workspace dialog with the All of Us Controlled Tier collection row, its version, and the Next button highlighted."}
 
 ::: {.red-box style="left: 1.4%; top: 43.6%; width: 97.8%; height: 7.4%;"}
 :::
@@ -68,7 +68,7 @@ An earlier test cohort used the older version v8r9, whose queries read dataset C
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_add_3_details.png>)
+![](<../../Intro to workbench 2.0/images/dx_add_3_details.png>){fig-alt="Add cohort to workspace details step with the cohort name, description, and folder options and the Add to your workspace button highlighted."}
 
 ::: {.green-box style="left: 1.0%; top: 17.2%; width: 98.2%; height: 16.8%;"}
 :::
@@ -99,7 +99,7 @@ Use a name that says what the cohort is (e.g., diabetes_age50plus), not test nam
 ## Building a Cohort
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_cohort_view.png>)
+![](<../../Intro to workbench 2.0/images/dx_cohort_view.png>){fig-alt="Cohort builder with the Cohort filter panel, Add criteria button, and Save data snapshot button highlighted, beside demographic charts."}
 
 ::: {.green-box style="left: 0.4%; top: 10.0%; width: 40.8%; height: 77.0%;"}
 :::
@@ -129,7 +129,7 @@ Example: intro_test_cohort in the intro-to-AoU workspace, CDR v9, Gender identit
 ## Adding Criteria
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_criteria.png>)
+![](<../../Intro to workbench 2.0/images/dx_criteria.png>){fig-alt="Adding criteria screen listing criteria by category, with the search by code or description box highlighted."}
 
 ::: {.green-box style="left: 1.2%; top: 5.6%; width: 98.4%; height: 5.6%;"}
 :::
@@ -174,7 +174,7 @@ Example study population: Sex → Woman; Age → 65 or older; Condition → Brea
 ## Save a Data Snapshot: Select Data
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_snap_1_select.png>)
+![](<../../Intro to workbench 2.0/images/dx_snap_1_select.png>){fig-alt="Save data snapshot, Select data step, with the data choices and tabs outlined and the SQL Copy and Next buttons circled."}
 
 ::: {.green-box style="left: 1.0%; top: 26.0%; width: 18.4%; height: 20.4%;"}
 :::
@@ -201,7 +201,7 @@ Example study population: Sex → Woman; Age → 65 or older; Condition → Brea
 ## Check the Summary
 
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_snap_1_summary.png>)
+![](<../../Intro to workbench 2.0/images/dx_snap_1_summary.png>){fig-alt="Save data snapshot Select data step with the Summary tab highlighted, showing cohort criteria and the included table columns."}
 
 ::: {.red-box style="left: 46.0%; top: 12.4%; width: 5.8%; height: 6.0%;"}
 :::
@@ -225,7 +225,7 @@ Check this before saving: it's the plain-language version of the SQL. The exampl
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-7}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_snap_2_format.png>)
+![](<../../Intro to workbench 2.0/images/dx_snap_2_format.png>){fig-alt="Save data snapshot file format step with the CSV tables and R and Jupyter notebook query options highlighted."}
 
 ::: {.green-box style="left: 3.2%; top: 58.4%; width: 74.0%; height: 36.4%;"}
 :::
@@ -251,7 +251,7 @@ Click **Next**
 :::: {.grid}
 ::: {.g-col-12 .g-col-md-4}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_snap_3_bucket.png>)
+![](<../../Intro to workbench 2.0/images/dx_snap_3_bucket.png>){fig-alt="Select destination bucket dialog with the existing or new bucket choice and the Resource ID field highlighted."}
 
 ::: {.green-box style="left: 3.4%; top: 58.4%; width: 93.4%; height: 14.2%;"}
 :::
@@ -264,7 +264,7 @@ Click **Next**
 :::
 ::: {.g-col-12 .g-col-md-3}
 ::: {.annotated}
-![](<../../Intro to workbench 2.0/images/dx_snap_3_newbucket.png>)
+![](<../../Intro to workbench 2.0/images/dx_snap_3_newbucket.png>){fig-alt="Select destination bucket dialog with Create a new bucket and the bucket name fields highlighted, and the Save button circled."}
 
 ::: {.green-box style="left: 2.4%; top: 31.2%; width: 95.4%; height: 8.6%;"}
 :::
