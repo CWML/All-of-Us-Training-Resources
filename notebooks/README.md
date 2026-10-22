@@ -49,7 +49,7 @@ You need an *All of Us* workspace with the **Controlled Tier** data collection a
    - `CURRENT_DATASET`: the dataset, copied from the `FROM` line of any Data Explorer query (Controlled Tier CDR v9 is `C2025Q4R6`)
 4. Run the notebooks in order: `1.1` → `1.2` → `2.0` → `3.1` to `3.4`.
 
-**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`, `survminer`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
+**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 
 ## The study population
 

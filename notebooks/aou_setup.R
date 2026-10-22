@@ -21,7 +21,7 @@ CURRENT_DATASET <- "wb-silky-artichoke-2408.C2025Q4R6"
 
 # Install any packages the notebooks need that aren't in this app yet.
 # This only happens the first time (it can take a few minutes); after that it's skipped.
-NEEDED_PACKAGES <- c("tidyverse", "lubridate", "bigrquery", "broom", "survival", "survminer")
+NEEDED_PACKAGES <- c("tidyverse", "lubridate", "bigrquery", "broom", "survival")
 missing_packages <- NEEDED_PACKAGES[!vapply(NEEDED_PACKAGES, requireNamespace, logical(1), quietly = TRUE)]
 if (length(missing_packages) > 0) {
   message("Installing missing packages: ", paste(missing_packages, collapse = ", "),

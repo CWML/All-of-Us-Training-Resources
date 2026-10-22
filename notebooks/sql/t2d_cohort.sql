@@ -3,8 +3,9 @@
 --
 -- Returns ONE ROW PER PARTICIPANT who
 --   * has electronic health record (EHR) data, and
---   * was 18 or older on the age reference date,
--- with their demographics and three diabetes flags. The last column, `cohort`,
+--   * was 18 or older on the age reference date (or at death, if earlier),
+-- with their demographics, the dates of their first and last EHR visit, death
+-- information, and three diabetes flags. The last column, `cohort`,
 -- puts each person in one group:
 --   case      type 2 diabetes, and no type 1 diabetes diagnosis
 --   control   no diabetes diagnosis of any type
@@ -24,14 +25,35 @@
 
 WITH
 
--- People with at least one visit recorded by an EHR site (hospital or clinic).
--- Visits from the program itself (surveys, physical measurements) don't count.
+-- People with at least one EHR visit, and the dates of their first and last one.
+-- `src_id` says where each visit came from:
+--   'EHR site ...'               records sent by a hospital or clinic
+--   'Participant Mediated EHR...' records the participant shared themselves
+--   'Staff Portal' / 'Participant Portal'  program visits (physical measurements,
+--                                surveys): these are NOT health records, so they
+--                                don't count
+-- The first and last EHR dates show when we could have seen a diagnosis:
+-- they're used as the start and end of follow-up in the survival analysis.
 ehr_people AS (
-  SELECT DISTINCT v.person_id
+  SELECT
+    v.person_id,
+    MIN(v.visit_start_date) AS first_ehr_date,
+    MAX(v.visit_start_date) AS last_ehr_date
   FROM `{CURRENT_DATASET}.visit_occurrence` AS v
   JOIN `{CURRENT_DATASET}.visit_occurrence_ext` AS ve
     ON v.visit_occurrence_id = ve.visit_occurrence_id
-  WHERE ve.src_id LIKE 'EHR site%'
+  WHERE STARTS_WITH(ve.src_id, 'EHR site')
+     OR STARTS_WITH(ve.src_id, 'Participant Mediated EHR')
+  GROUP BY v.person_id
+),
+
+-- Date of death, for people who have died. MIN() keeps one date per person,
+-- in case there is more than one record. If only the year of death is known,
+-- the date is recorded as December 31 of that year.
+deaths AS (
+  SELECT person_id, MIN(death_date) AS death_date
+  FROM `{CURRENT_DATASET}.death`
+  GROUP BY person_id
 ),
 
 -- People with a type 2 diabetes diagnosis (201826 or anything below it)
@@ -61,15 +83,18 @@ any_diabetes AS (
   WHERE ca.ancestor_concept_id = 201820
 ),
 
--- Demographics for everyone with EHR data, with age on the reference date.
--- Age = the difference in years, minus 1 if their birthday hadn't come yet that year.
+-- Demographics for everyone with EHR data.
+-- `age_on` is the date we calculate age on: the age date, or the date of death
+-- if that came first (otherwise a person who died in 2019 would keep "getting older").
 people AS (
   SELECT
     p.person_id,
     DATE(p.birth_datetime) AS date_of_birth,
-    DATE_DIFF(DATE '{AGE_DATE}', DATE(p.birth_datetime), YEAR)
-      - IF(FORMAT_DATE('%m%d', DATE(p.birth_datetime)) > FORMAT_DATE('%m%d', DATE '{AGE_DATE}'), 1, 0)
-      AS age,
+    LEAST(DATE '{AGE_DATE}', COALESCE(d.death_date, DATE '{AGE_DATE}')) AS age_on,
+    d.death_date IS NOT NULL AS deceased,
+    d.death_date,
+    e.first_ehr_date,
+    e.last_ehr_date,
     sex.concept_name      AS sex_at_birth,
     gender.concept_name   AS gender,
     race.concept_name     AS race,
@@ -78,6 +103,8 @@ people AS (
   FROM `{CURRENT_DATASET}.person` AS p
   JOIN ehr_people AS e
     ON p.person_id = e.person_id
+  LEFT JOIN deaths AS d
+    ON p.person_id = d.person_id
   LEFT JOIN `{CURRENT_DATASET}.concept` AS sex
     ON p.sex_at_birth_concept_id = sex.concept_id
   LEFT JOIN `{CURRENT_DATASET}.concept` AS gender
@@ -88,6 +115,16 @@ people AS (
     ON p.ethnicity_concept_id = ethnicity.concept_id
   LEFT JOIN `{CURRENT_DATASET}.concept` AS category
     ON p.self_reported_category_concept_id = category.concept_id
+),
+
+-- Age in whole years on `age_on`: the difference in years, minus 1 if their
+-- birthday hadn't come yet that year.
+people_with_age AS (
+  SELECT
+    *,
+    DATE_DIFF(age_on, date_of_birth, YEAR)
+      - IF(FORMAT_DATE('%m%d', date_of_birth) > FORMAT_DATE('%m%d', age_on), 1, 0) AS age
+  FROM people
 )
 
 SELECT
@@ -101,5 +138,5 @@ SELECT
     WHEN people.person_id NOT IN (SELECT person_id FROM any_diabetes) THEN 'control'
     ELSE 'excluded'
   END AS cohort
-FROM people
+FROM people_with_age AS people
 WHERE people.age >= 18

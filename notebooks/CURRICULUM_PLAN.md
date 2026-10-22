@@ -4,7 +4,7 @@
 
 ## 1. The research question
 
-> **Which factors, from health records, surveys, measurements, genes, gene expression, and proteins, are associated with type 2 diabetes?**
+> **Which factors, from health records, surveys, measurements, wearables, genes, gene expression, and proteins, are associated with type 2 diabetes?**
 
 Every class uses the **same cohort** and adds one new kind of data or analysis. Students see the same people from different angles, and every class's numbers match.
 
@@ -65,7 +65,7 @@ The cohort SQL lives in **one shared file**, `notebooks/sql/t2d_cohort.sql`, tha
 | **3.1 table_one** | Descriptive statistics and tests | Recheck all outputs and text |
 | **3.2 logistic_regression** | Odds of type 2 diabetes | Recheck all outputs and text |
 | **3.3 linear_regression** | Systolic blood pressure | Recheck all outputs and text |
-| **3.4 survival_analysis** | Time from diabetes to CKD | Recheck all outputs and text |
+| **3.4 survival_analysis** | Time from type 2 diabetes to CKD | New follow-up rules (D15): time zero = first type 2 diabetes date; event = first CKD date; censored at the earlier of the last EHR date and death. Kaplan–Meier curves with ggplot2 instead of survminer (D17) |
 
 ### Omics series: new, in `notebooks/omics/`
 
@@ -82,6 +82,26 @@ Each starts with a **short cohort section** (the shared SQL, limited to people w
 | **4.7 rnaseq_proteomics** | R | Do genes and their proteins change together? | both |
 
 Supporting files: `notebooks/sql/t2d_cohort.sql` (shared query, used by every notebook); in `notebooks/omics/`: `aou_setup.py` (Python version of `aou_setup.R`), and `README.md` (the series overview, data map, and decisions log below).
+
+### Series 5: survey data (new, in `notebooks/surveys/`)
+
+Each starts with the short cohort section, so it works on its own.
+
+| Notebook | What it does |
+|---|---|
+| **5.1 survey_basics** | How surveys are organised (modules, questions, answers); finding them in the data dictionary and Data Browser; non-answers (*PMI: Skip*, *Prefer not to answer*, *Don't know*); skip logic (a missing answer can mean "not asked"); questions with several answers; survey dates and versions |
+| **5.2 family_history_lifestyle** | Family history of diabetes, smoking, alcohol, physical activity, and type 2 diabetes |
+| **5.3 social_factors** | Food insecurity, health care access, and other social factors, and type 2 diabetes |
+
+### Series 6: wearables (new, in `notebooks/wearables/`)
+
+| Notebook | What it does |
+|---|---|
+| **6.1 fitbit_basics** | Which Fitbit tables exist (use the **daily** tables; minute-level steps are huge and costly); who has Fitbit data and why they aren't a random sample; summarising many days to one value per person; valid wear days |
+| **6.2 steps_and_t2d** | Average daily steps and type 2 diabetes, modelled on the published All of Us study of step counts and chronic disease; steps measured **before** the diagnosis, to avoid reverse causation |
+| **6.3 sleep_and_heart_rate** | The same approach with sleep and resting heart rate |
+
+Apple HealthKit data (fewer participants) can be added later.
 
 ### Every notebook includes
 
@@ -109,15 +129,31 @@ Supporting files: `notebooks/sql/t2d_cohort.sql` (shared query, used by every no
 | D9 | GWAS region: *TCF7L2*, chr10:112.7–113.4 Mb (GRCh38) | The strongest known type 2 diabetes locus; extracting it took 10 seconds and 3 MB for 5,000 people | Decided |
 | D10 | Both **PLINK** (R) and **Hail** (Python) for the GWAS, on the same data | Students see two common tools and can compare their results | Decided |
 | D11 | Readable OMOP SQL in **one shared file** | Easier to teach than the Cohort Builder's generated SQL; one definition for R and Python. The data dictionary also marks the `cb_` tables as *not recommended for research analysis* | Decided |
-| D14 | "Has EHR data" = at least one visit from an EHR site (`visit_occurrence_ext.src_id`) | Uses the standard OMOP tables instead of the `cb_search_person` flag | Decided (to test) |
+| D14 | "Has EHR data" = at least one visit from an EHR site **or** shared by the participant (`visit_occurrence_ext.src_id` starting with `EHR site` or `Participant Mediated EHR`) | Uses the standard OMOP tables instead of the `cb_search_person` flag; participant-shared records are real health records | Decided (decision A); `EHR site` tested: 381,006 people |
+| D16 | People who died before the age date: age **at death**, plus `deceased` and `death_date` columns | Otherwise their age keeps growing after death (ages up to 119 in the first test) | Decided (decision B) |
+| D17 | Drop `survminer`; draw survival curves with `ggplot2` | `survminer` failed to install in the app (its dependency `nloptr` needs compiling) | Decided (decision C) |
+| D15 | Follow-up from **EHR dates**: entry at the first relevant date, censoring at the earlier of the last EHR date and death | Follow-up should only count time when a diagnosis could have been recorded; `observation_period` also counts survey dates | Decided (details below this table) |
 | D12 | Rewrite the existing classes' queries too | They haven't been taught or shared yet, so every class can use one cohort | Decided |
 | D13 | Split 2.0 into **2.1 clean, 2.2 reshape, 2.3 join_and_bind** | Fills gaps (join types, deduplication, pivot longer, non-answer codes, impossible values) in short, single-purpose notebooks | Decided |
+
+### Follow-up dates (for 3.4, and as background in 1.2)
+
+- `first_ehr_date` and `last_ehr_date`: the first and last **EHR visit** dates per person (`visit_occurrence` with `visit_occurrence_ext.src_id` from an EHR source). Added to the shared SQL.
+- Not `observation_period`: its dates come from EHR **and** surveys (data dictionary: "EHR/PPI"), so a recent survey can stretch someone's follow-up past their last health record.
+- `death_date` from `death`. If only the year is known, it's recorded as December 31.
+- Time zero depends on the question: first **type 2 diabetes** date for diabetes → CKD (3.4); first **EHR** date for "who develops type 2 diabetes" (an incidence question). Censoring is the earlier of the last EHR date and death in both.
+- Exclude people whose event came before time zero (e.g. CKD before diabetes).
+- Idea from the All of Us Friday coffee series, 2026-10-16.
 
 ## 5. Build order
 
 1. Shared cohort SQL file and helpers; test the queries in the Workbench, and compare counts with Data Explorer
 2. Core series: 1.1, 1.2, then 2.1–2.3, then recheck 3.1–3.4
 3. Omics series in table order: 4.1 → 4.7
+4. Survey series: 5.1 → 5.3
+5. Wearables series: 6.1 → 6.3
+
+(The order of steps 3–5 can change: series 5 and 6 need no special tools, so they are quicker to build.)
 
 Each step is tested in the Workbench before the next one starts.
 
