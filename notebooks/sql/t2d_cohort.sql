@@ -5,7 +5,8 @@
 --   * has electronic health record (EHR) data, and
 --   * was 18 or older on the age reference date (or at death, if earlier),
 -- with their demographics, the dates of their first and last EHR visit, death
--- information, and three diabetes flags. The last column, `cohort`,
+-- information, three diabetes flags, the first type 2 diabetes date, and the
+-- number of days with a type 2 diabetes code. The last column, `cohort`,
 -- puts each person in one group:
 --   case      type 2 diabetes, and no type 1 diabetes diagnosis
 --   control   no diabetes diagnosis of any type
@@ -56,13 +57,23 @@ deaths AS (
   GROUP BY person_id
 ),
 
--- People with a type 2 diabetes diagnosis (201826 or anything below it)
+-- People with a type 2 diabetes diagnosis (201826 or anything below it), with
+--   first_t2d_date  the first date a type 2 diabetes code appears (the start of
+--                   follow-up in the survival analysis)
+--   t2d_code_days   how many DIFFERENT days a type 2 diabetes code appears. Our
+--                   case definition needs 1; a stricter definition (used by
+--                   All by All) needs 2 or more. Counting days, not codes, so
+--                   several codes on the same visit count once.
 t2d AS (
-  SELECT DISTINCT co.person_id
+  SELECT
+    co.person_id,
+    MIN(co.condition_start_date)            AS first_t2d_date,
+    COUNT(DISTINCT co.condition_start_date) AS t2d_code_days
   FROM `{CURRENT_DATASET}.condition_occurrence` AS co
   JOIN `{CURRENT_DATASET}.concept_ancestor` AS ca
     ON co.condition_concept_id = ca.descendant_concept_id
   WHERE ca.ancestor_concept_id = 201826
+  GROUP BY co.person_id
 ),
 
 -- People with a type 1 diabetes diagnosis (201254 or anything below it)
@@ -129,6 +140,8 @@ people_with_age AS (
 
 SELECT
   people.*,
+  t2d.first_t2d_date,
+  COALESCE(t2d.t2d_code_days, 0)                           AS t2d_code_days,
   people.person_id IN (SELECT person_id FROM t2d)          AS has_t2d,
   people.person_id IN (SELECT person_id FROM t1d)          AS has_t1d,
   people.person_id IN (SELECT person_id FROM any_diabetes) AS has_any_diabetes,
@@ -139,4 +152,6 @@ SELECT
     ELSE 'excluded'
   END AS cohort
 FROM people_with_age AS people
+LEFT JOIN t2d
+  ON people.person_id = t2d.person_id
 WHERE people.age >= 18

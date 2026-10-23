@@ -132,6 +132,7 @@ Apple HealthKit data (fewer participants) can be added later.
 | D14 | "Has EHR data" = at least one visit from an EHR site **or** shared by the participant (`visit_occurrence_ext.src_id` starting with `EHR site` or `Participant Mediated EHR`) | Uses the standard OMOP tables instead of the `cb_search_person` flag; participant-shared records are real health records | Decided (decision A); `EHR site` tested: 381,006 people |
 | D16 | People who died before the age date: age **at death**, plus `deceased` and `death_date` columns | Otherwise their age keeps growing after death (ages up to 119 in the first test) | Decided (decision B) |
 | D17 | Drop `survminer`; draw survival curves with `ggplot2` | `survminer` failed to install in the app (its dependency `nloptr` needs compiling) | Decided (decision C) |
+| D18 | Case definition: **1 code** (current) or **2+ codes** (All by All's rule)? | 1 code finds more cases; 2+ codes are more certain (higher PPV) but lose cases | Decided: 1 code is the main definition; 2+ code days as a comparison (column `t2d_code_days`) |
 | D15 | Follow-up from **EHR dates**: entry at the first relevant date, censoring at the earlier of the last EHR date and death | Follow-up should only count time when a diagnosis could have been recorded; `observation_period` also counts survey dates | Decided (details below this table) |
 | D12 | Rewrite the existing classes' queries too | They haven't been taught or shared yet, so every class can use one cohort | Decided |
 | D13 | Split 2.0 into **2.1 clean, 2.2 reshape, 2.3 join_and_bind** | Fills gaps (join types, deduplication, pivot longer, non-answer codes, impossible values) in short, single-purpose notebooks | Decided |
@@ -148,12 +149,10 @@ Apple HealthKit data (fewer participants) can be added later.
 ## 5. Build order
 
 1. Shared cohort SQL file and helpers; test the queries in the Workbench, and compare counts with Data Explorer
-2. Core series: 1.1, 1.2, then 2.1–2.3, then recheck 3.1–3.4
-3. Omics series in table order: 4.1 → 4.7
+2. **Omics series first** (specifically requested), in table order: 4.1 → 4.7. Each omics notebook has its own short cohort section, so it doesn't depend on the core rewrite.
+3. Core series: 1.1, 1.2, then 2.1–2.3, then recheck 3.1–3.4
 4. Survey series: 5.1 → 5.3
 5. Wearables series: 6.1 → 6.3
-
-(The order of steps 3–5 can change: series 5 and 6 need no special tools, so they are quicker to build.)
 
 Each step is tested in the Workbench before the next one starts.
 
@@ -163,4 +162,16 @@ Each step is tested in the Workbench before the next one starts.
 - Short-read genome sequences: **535,662** participants. ACAF common variants come as `bed`, `bgen`, `multiMT`, `pgen`, `plink_bed`, `splitMT`, `vcf`. One chromosome in PLINK 1 format is 540–790 GB; in `pgen` format, 75 GB (chr10). The `.psam` files have **no sex** recorded, so sex comes from the `person` table.
 - PLINK 1.9, PLINK 2, and Hail 0.2.137 are installed in the regular app; no cluster needed for a region.
 - RNA-seq: 8,980 samples × 77,814 genes; manifest columns `sampleid`, `research_id`, and BAM paths.
+- From the CDR v9 release talk (Office Hours, 2026-07-24; notes in `Notes/aou_youtube/`):
+  - **Controlled Tier person IDs changed between v8 and v9.** Files saved from v8 (e.g. the classic notebooks' CSVs) can't be joined to v9 data; every class must build its data from v9.
+  - 481,000 participants with EHR; 9,969 proteomics samples; 14,521 long-read genomes; 68,000 with Fitbit.
+  - Precomputed **relatedness** and genetic ancestry files exist (for GWAS quality control in 4.2–4.3); file paths are in the data dictionary's *Genomic and Multi-omics File Paths* tab.
+  - **All by All** phenome-wide results (refreshed with v8 data) can be used in v9 workspaces: a resource for 4.4 PheWAS.
+  - Clinical-notes conditions (NLP, 99,000 people) are a separate release, not in `condition_occurrence`, so our diabetes definition doesn't use them.
+  - The data cutoff date (our age date, 2025-01-01) wasn't mentioned; still needs a source.
+- From other Office Hours talks (notes in `Notes/aou_youtube/`):
+  - **Multi-omics:** RNA-seq is from **whole blood** (Watchmaker kit); proteomics is **plasma, Olink Explore** (5,000+ proteins), as 61 batch files plus one cross-batch normalized matrix (with or without about 127 replicates). Expression PCA clusters reflect **library preparation, not biology**; adjust for expression PCs and genotype PCs. How participants were selected wasn't stated. AoU tutorial notebooks use downsampled data on n1-highmem-4.
+  - **All by All phenotypes:** phecode cases need **≥ 2 codes**; controls = everyone else with EHR data. Lab cleaning pipeline (units, lab-specific outlier cut-offs, per-person summaries) is a model for 2.1. Rerunning All by All is not recommended (quoted about $22,000 per phenotype); use the precomputed tables and allbyall.researchallofus.org for 4.4.
+  - **Computable phenotypes:** combining codes, medications and labs raises PPV; requiring 2+ codes lowers sensitivity; plot phenotype counts by date to catch coding drift.
+  - **Fitbit:** valid day = fewer than 200 missing minutes; use data from 2018 onward for sleep (algorithm changed in 2017); don't naively pool "bring your own device" and WEAR participants; leave a gap (e.g. 30 days) before diagnosis. Steps were among the strongest links for obesity and diabetes.
 - Not yet checked: the proteomics folder, `rnaseq_metadata.tsv`, the microarray files, `ancestry_preds.tsv` columns, and how many cases and controls have each data type.
