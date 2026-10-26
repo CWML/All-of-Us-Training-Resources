@@ -40,8 +40,10 @@ description: "The All of Us Research Program, its data sources, the CDR, and dat
 | ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60" fig-alt="Icon for multi-omics data, a DNA double helix."} | **Multi-omics** *(new in v9)* | RNA-seq from whole blood; proteomics from plasma | about 9,000 each |
 | ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60" fig-alt="Icon for clinical notes, a clipboard with a checklist."} | **Clinical notes** *(new in v9)* | Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables | > 99,000 |
 
+**Not available:** medical images (e.g. X-rays, MRI or CT scans). EHR procedure records only show **that** an imaging exam happened (e.g. *radiologic examination of knee*) and when; some of these codes are removed for privacy.
+
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-Source: All of Us Researcher Workbench Office Hours, "Release of the Curated Data Repository (CDR) v9 Dataset" (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA.
+Source: All of Us Researcher Workbench Office Hours, "Release of the Curated Data Repository (CDR) v9 Dataset" (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA. Medical imaging (X-rays, MRI, CT) is not part of v9: the data dictionary has no imaging tables, and the v9 release talk doesn't list it among current or upcoming data types. EHR procedure records only show that an imaging exam happened.
 :::
 
 ## The Curated Data Repository (CDR)
