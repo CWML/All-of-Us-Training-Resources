@@ -106,13 +106,13 @@ Course progression graphic reused from Session 1. Update it if the Level 2–4 s
 
 |   | Source | Description | Participants (v9) |
 |------------------|------------------|------------------------------|-----------:|
-| ![](images/ds_surveys.png){height="36" fig-alt="Icon for survey data, a clipboard with a checklist."} | **Surveys** | Lifestyle, medical and family history, health care access, social factors | > 747,000 |
-| ![](images/ds_ehr.png){height="36" fig-alt="Icon for electronic health record data, a laptop showing a health chart."} | **EHR** | Diagnoses, medications, labs, procedures, and visits from health care providers, standardized with the OMOP Common Data Model | > 481,000 |
-| ![](images/ds_physical.png){height="36" fig-alt="Icon for physical measurements, a heart with a heartbeat line."} | **Physical measurements** | Height, weight, blood pressure, heart rate, and waist and hip measured at enrollment visits | > 600,000 |
-| ![](images/ds_wearables.png){height="36" fig-alt="Icon for wearables data, a fitness wristband."} | **Wearables** | Steps, heart rate, and sleep (including sleep stages) from Fitbit; some Apple HealthKit data | > 68,000 (Fitbit) |
-| ![](images/ds_genomic.png){height="36" fig-alt="Icon for genomic data, a DNA double helix."} | **Genomic** | Short-read and long-read whole genomes, and genotyping arrays, from blood or saliva | > 535,000 (short-read) |
-|   | **Multi-omics** *(new in v9)* | RNA-seq from whole blood; proteomics from plasma | about 9,000 each |
-|   | **Clinical notes** *(new in v9)* | Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables | > 99,000 |
+| ![](images/ds_surveys.png){height="28" fig-alt="Icon for survey data, a clipboard with a checklist."} | **Surveys** | Lifestyle, medical and family history, health care access, social factors | > 747,000 |
+| ![](images/ds_ehr.png){height="28" fig-alt="Icon for electronic health record data, a laptop showing a health chart."} | **EHR** | Diagnoses, medications, labs, procedures, and visits from health care providers, standardized with the OMOP Common Data Model | > 481,000 |
+| ![](images/ds_physical.png){height="28" fig-alt="Icon for physical measurements, a heart with a heartbeat line."} | **Physical measurements** | Height, weight, blood pressure, heart rate, and waist and hip measured at enrollment visits | > 600,000 |
+| ![](images/ds_wearables.png){height="28" fig-alt="Icon for wearables data, a fitness wristband."} | **Wearables** | Steps, heart rate, and sleep (including sleep stages) from Fitbit; some Apple HealthKit data | > 68,000 (Fitbit) |
+| ![](images/ds_genomic.png){height="28" fig-alt="Icon for genomic data, a DNA double helix."} | **Genomic** | Short-read and long-read whole genomes, and genotyping arrays, from blood or saliva | > 535,000 (short-read) |
+| ![](images/ds_genomic.png){height="28" fig-alt="Icon for multi-omics data, a DNA double helix."} | **Multi-omics** *(new in v9)* | RNA-seq from whole blood; proteomics from plasma | about 9,000 each |
+| ![](images/ds_surveys.png){height="28" fig-alt="Icon for clinical notes, a clipboard with a checklist."} | **Clinical notes** *(new in v9)* | Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables | > 99,000 |
 
 ::: notes
 Source: All of Us Researcher Workbench Office Hours, "Release of the Curated Data Repository (CDR) v9 Dataset" (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA.
