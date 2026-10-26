@@ -350,43 +350,43 @@ Maximilian Wegener, MPH
 </thead>
 <tbody>
 <tr class="odd">
-<td><img data-src="images/ds_surveys.png" alt="Icon for survey data, a clipboard with a checklist." height="36"></td>
+<td><img data-src="images/ds_surveys.png" alt="Icon for survey data, a clipboard with a checklist." height="28"></td>
 <td><strong>Surveys</strong></td>
 <td>Lifestyle, medical and family history, health care access, social factors</td>
 <td style="text-align: right;">&gt; 747,000</td>
 </tr>
 <tr class="even">
-<td><img data-src="images/ds_ehr.png" alt="Icon for electronic health record data, a laptop showing a health chart." height="36"></td>
+<td><img data-src="images/ds_ehr.png" alt="Icon for electronic health record data, a laptop showing a health chart." height="28"></td>
 <td><strong>EHR</strong></td>
 <td>Diagnoses, medications, labs, procedures, and visits from health care providers, standardized with the OMOP Common Data Model</td>
 <td style="text-align: right;">&gt; 481,000</td>
 </tr>
 <tr class="odd">
-<td><img data-src="images/ds_physical.png" alt="Icon for physical measurements, a heart with a heartbeat line." height="36"></td>
+<td><img data-src="images/ds_physical.png" alt="Icon for physical measurements, a heart with a heartbeat line." height="28"></td>
 <td><strong>Physical measurements</strong></td>
 <td>Height, weight, blood pressure, heart rate, and waist and hip measured at enrollment visits</td>
 <td style="text-align: right;">&gt; 600,000</td>
 </tr>
 <tr class="even">
-<td><img data-src="images/ds_wearables.png" alt="Icon for wearables data, a fitness wristband." height="36"></td>
+<td><img data-src="images/ds_wearables.png" alt="Icon for wearables data, a fitness wristband." height="28"></td>
 <td><strong>Wearables</strong></td>
 <td>Steps, heart rate, and sleep (including sleep stages) from Fitbit; some Apple HealthKit data</td>
 <td style="text-align: right;">&gt; 68,000 (Fitbit)</td>
 </tr>
 <tr class="odd">
-<td><img data-src="images/ds_genomic.png" alt="Icon for genomic data, a DNA double helix." height="36"></td>
+<td><img data-src="images/ds_genomic.png" alt="Icon for genomic data, a DNA double helix." height="28"></td>
 <td><strong>Genomic</strong></td>
 <td>Short-read and long-read whole genomes, and genotyping arrays, from blood or saliva</td>
 <td style="text-align: right;">&gt; 535,000 (short-read)</td>
 </tr>
 <tr class="even">
-<td></td>
+<td><img data-src="images/ds_genomic.png" alt="Icon for multi-omics data, a DNA double helix." height="28"></td>
 <td><strong>Multi-omics</strong> <em>(new in v9)</em></td>
 <td>RNA-seq from whole blood; proteomics from plasma</td>
 <td style="text-align: right;">about 9,000 each</td>
 </tr>
 <tr class="odd">
-<td></td>
+<td><img data-src="images/ds_surveys.png" alt="Icon for clinical notes, a clipboard with a checklist." height="28"></td>
 <td><strong>Clinical notes</strong> <em>(new in v9)</em></td>
 <td>Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables</td>
 <td style="text-align: right;">&gt; 99,000</td>
@@ -394,7 +394,7 @@ Maximilian Wegener, MPH
 </tbody>
 </table>
 <aside class="notes">
-<p>Source: All of Us Researcher Workbench Office Hours, “Release of the Curated Data Repository (CDR) v9 Dataset” (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA.</p>
+<p>Source: All of Us Researcher Workbench Office Hours, “Release of the Curated Data Repository (CDR) v9 Dataset” (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA. Medical imaging (X-rays, MRI, CT) is not part of v9: the data dictionary has no imaging tables, and the v9 release talk doesn’t list it among current or upcoming data types. EHR procedure records only show that an imaging exam happened.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2402,6 +2402,44 @@ Maximilian Wegener, MPH
           display:block!important;
       }</style></aside>
 </section>
+<section id="buckets-objects-datasets-and-tables" class="slide level2 smaller">
+<h2>Buckets, Objects, Datasets, and Tables</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Cloud Storage: files</strong></p>
+<pre><code>bucket      my-workspace-bucket
+└── object  data/results.csv</code></pre>
+<ul>
+<li>A <strong>bucket</strong> is a container; an <strong>object</strong> is one file in it</li>
+<li>Address: <code>gs://my-workspace-bucket/data/results.csv</code></li>
+<li><strong>Folders aren’t real:</strong> <code>data/</code> is just the start of the file’s name, so an empty folder disappears</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>BigQuery: tables</strong></p>
+<pre><code>project         wb-silky-artichoke-2408
+└── dataset     C2025Q4R6
+    └── table   person</code></pre>
+<ul>
+<li>A <strong>dataset</strong> is a collection of tables; a <strong>table</strong> has rows and columns</li>
+<li>Address: <code>project.dataset.table</code>, used in SQL after <code>FROM</code></li>
+<li>You pay for the data a query <strong>reads</strong>, so select only the columns you need</li>
+</ul>
+</div></div>
+<p>👉 All of Us data uses both: <strong>tables</strong> in BigQuery (EHR, surveys, measurements) and <strong>files</strong> in a bucket (genomic and multi-omics data).</p>
+<aside class="notes">
+<p>Example: the Controlled Tier v9 tables are the dataset C2025Q4R6, which the notebooks call CURRENT_DATASET; the genomic files are objects in the vwb-aou-datasets-controlled bucket, mounted in apps under ~/workspace/. The Workbench and the Google Cloud console show object names containing “/” as folders to make browsing easier. Don’t confuse these with the Workbench’s <strong>New Folder</strong> resource (next section): that is only a label for grouping resources on the Resources tab, and its dialog says “Folders don’t affect cloud paths”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="new-folder" class="slide level2">
 <h2>New Folder</h2>
 <div class="columns">
@@ -2571,6 +2609,34 @@ Maximilian Wegener, MPH
 </div>
 <aside class="notes">
 <p>Example uses: point to a collaborator’s bucket, or to a shared file without copying it. The All of Us data collection resources you added earlier are references too. Deleting a reference removes the pointer, not the data. You can edit a reference’s name and description, but not the bucket name, project ID, dataset ID, or table ID; to fix those, delete the reference and add it again. Some outside buckets are “Requester Pays”: reading or browsing them is billed to your pod, and mounting them when an app starts can cost money too. The Workbench shows a warning when you add one.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="getting-and-reusing-data" class="slide level2 smaller">
+<h2>Getting and Reusing Data</h2>
+<p><strong>Someone else’s data.</strong> A <code>gs://</code> address says <em>where</em> data is, not that you may read it. The owner has to give you access:</p>
+<ul>
+<li><strong>Share the workspace</strong> (the expected route for All of Us data): the owner clicks <strong>Share</strong> and adds you as Reader or Writer. You get the buckets and datasets they created there, and you need your own All of Us access at the same tier.</li>
+<li><strong>A bucket outside a shared workspace:</strong> the owner grants your account access, then you add a <strong>reference</strong> to it.</li>
+<li>References inside a shared workspace <strong>aren’t passed on</strong>: the original data’s owner has to grant access separately.</li>
+</ul>
+<p><strong>Your own data from another workspace:</strong> add a <strong>reference</strong> to that workspace’s bucket or dataset. Limits:</p>
+<ul>
+<li>⚠️ Controlled Tier data, or anything made from it, can’t go to a Registered Tier workspace or outside the perimeter</li>
+<li>⚠️ Person IDs changed between <strong>v8 and v9</strong>: files saved from v8 (or the classic Workbench) can’t be joined to v9 data</li>
+<li>⚠️ Each workspace is one project with its own Research Use Statement: check with All of Us support before reusing participant-level results in another project</li>
+</ul>
+<aside class="notes">
+<p>To confirm before teaching: the exact Verily steps for granting someone access to a single bucket (Verily resource settings or Google Cloud permissions), and All of Us’s rule on reusing participant-level results across projects. Between two of your Controlled Tier workspaces, references should work, but the perimeter is enforced per workspace, so test with a small file first. For classes, rerunning the queries in each workspace is simplest. Source for the v8 to v9 ID change: CDR v9 release, All of Us Office Hours, 2026-07-24.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3109,14 +3175,14 @@ Maximilian Wegener, MPH
 <section id="inside-the-exported-r-notebook" class="slide level2">
 <h2>Inside the Exported R Notebook</h2>
 <p>The notebook has the <strong>SQL</strong> for each table, plus code to run it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">EXPORT_BUCKET =</span> <span class="st">"gs://&lt;your-bucket-name&gt;"</span>)   <span class="co"># ⚠️ not set for you</span></span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bq_table_save</span>(                                  <span class="co"># run the query (billed to your project)...</span></span>
-<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bq_dataset_query</span>(<span class="st">"&lt;data project&gt;.&lt;index dataset&gt;"</span>, person_sql,</span>
-<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>                   <span class="at">billing =</span> <span class="st">"&lt;your workspace project&gt;"</span>),</span>
-<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>  person_path, <span class="at">destination_format =</span> <span class="st">"CSV"</span>)      <span class="co"># ...and save it as CSVs in your bucket</span></span>
-<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a>person_df <span class="ot">&lt;-</span> <span class="fu">read_bq_export_from_workspace_bucket</span>(person_path)   <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">EXPORT_BUCKET =</span> <span class="st">"gs://&lt;your-bucket-name&gt;"</span>)   <span class="co"># ⚠️ not set for you</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">bq_table_save</span>(                                  <span class="co"># run the query (billed to your project)...</span></span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bq_dataset_query</span>(<span class="st">"&lt;data project&gt;.&lt;index dataset&gt;"</span>, person_sql,</span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>                   <span class="at">billing =</span> <span class="st">"&lt;your workspace project&gt;"</span>),</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a>  person_path, <span class="at">destination_format =</span> <span class="st">"CSV"</span>)      <span class="co"># ...and save it as CSVs in your bucket</span></span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>person_df <span class="ot">&lt;-</span> <span class="fu">read_bq_export_from_workspace_bucket</span>(person_path)   <span class="co"># read it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <ul>
 <li><strong>Set <code>EXPORT_BUCKET</code> first</strong>, using the bucket name from the <strong>Resources</strong> tab</li>
@@ -3573,16 +3639,16 @@ Maximilian Wegener, MPH
 <section id="saving-and-reading-files" class="slide level2">
 <h2>Saving and Reading Files</h2>
 <p><strong>R</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)</span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(clean_df, <span class="fu">file.path</span>(bucket, <span class="st">"clean_data.csv"</span>))   <span class="co"># save</span></span>
-<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(bucket, <span class="st">"clean_data.csv"</span>))  <span class="co"># read</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)</span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(clean_df, <span class="fu">file.path</span>(bucket, <span class="st">"clean_data.csv"</span>))   <span class="co"># save</span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">file.path</span>(bucket, <span class="st">"clean_data.csv"</span>))  <span class="co"># read</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, pandas <span class="im">as</span> pd</span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)</span>
-<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df.to_csv(<span class="ss">f"</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/clean_data.csv"</span>, index<span class="op">=</span><span class="va">False</span>)   <span class="co"># save</span></span>
-<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/clean_data.csv"</span>)         <span class="co"># read</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, pandas <span class="im">as</span> pd</span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)</span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df.to_csv(<span class="ss">f"</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/clean_data.csv"</span>, index<span class="op">=</span><span class="va">False</span>)   <span class="co"># save</span></span>
+<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>clean_df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/clean_data.csv"</span>)         <span class="co"># read</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Replace workspace-bucket with your bucket’s name as shown in the Resources tab. HOME / ~ points to /home/jupyter or /home/dataproc depending on the app, so this code works in both. The folder tree under ~/workspace matches the folders in the Resources tab. Apps use a standard disk, so files saved anywhere else on the app (e.g., the home directory) are lost if the app crashes or is deleted.</p>
 <style type="text/css">
@@ -3641,9 +3707,9 @@ Maximilian Wegener, MPH
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>project <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>)                              <span class="co"># set for you</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket  <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket</span></span>
-<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"&lt;project-id&gt;.&lt;dataset-id&gt;"</span>   <span class="co"># copy from a Data Explorer query (FROM line)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>project <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>)                              <span class="co"># set for you</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket  <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"&lt;project-id&gt;.&lt;dataset-id&gt;"</span>   <span class="co"># copy from a Data Explorer query (FROM line)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Checked in a new Workbench 2.0 workspace with env | grep -E ‘WORKSPACE|GOOGLE|PET_SA’. The tutorial workspaces define WORKSPACE_BUCKET and WORKSPACE_CDR in their setup scripts, so code copied from classic Workbench notebooks will find them empty (““) elsewhere. The CDR dataset path is in the queries Data Explorer generates (the FROM clause), and in the data collection’s BigQuery resources on the Resources tab.</p>
 <style type="text/css">
@@ -3810,18 +3876,18 @@ Maximilian Wegener, MPH
 <section id="dsub-jobs-from-an-app" class="slide level2">
 <h2>dsub: Jobs from an App</h2>
 <p>For <strong>one-step</strong> jobs, e.g., run a command on many files. It comes with apps created after <strong>June 2025</strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub_activate</span>                        <span class="co"># turn on dsub in the terminal</span></span>
-<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="dt">\</span></span>
-<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
-<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">${PET_SA_EMAIL}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
-<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
-<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
-<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="op">&lt;</span>container image with samtools<span class="op">&gt;</span> <span class="dt">\</span></span>
-<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
-<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub_activate</span>                        <span class="co"># turn on dsub in the terminal</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="dt">\</span></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">${PET_SA_EMAIL}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
+<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
+<span id="cb11-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="op">&lt;</span>container image with samtools<span class="op">&gt;</span> <span class="dt">\</span></span>
+<span id="cb11-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
+<span id="cb11-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>👉 More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
 </div>
@@ -3927,11 +3993,11 @@ Maximilian Wegener, MPH
 <li><strong>Dataset ID:</strong> <code>cms_synthetic_patient_data_omop</code></li>
 </ul>
 <p>Then query it from an app:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">"SELECT gender_concept_id, COUNT(*) AS n</span></span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">          FROM `bigquery-public-data.cms_synthetic_patient_data_omop.person`</span></span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">          GROUP BY gender_concept_id"</span></span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(<span class="fu">bq_project_query</span>(<span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>), query))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bigrquery)</span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">"SELECT gender_concept_id, COUNT(*) AS n</span></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">          FROM `bigquery-public-data.cms_synthetic_patient_data_omop.person`</span></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="st">          GROUP BY gender_concept_id"</span></span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">bq_table_download</span>(<span class="fu">bq_project_query</span>(<span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>), query))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
 <p>👉 Use a <strong>separate practice workspace</strong> with no All of Us data. Controlled Tier perimeters may block outside data.</p>
 </div>
@@ -4026,7 +4092,7 @@ Maximilian Wegener, MPH
 <li><strong>Private repo:</strong> use the <code>git@github.com:…</code> URL (needs your SSH key)</li>
 <li>It’s <strong>cloned automatically</strong> into apps you create <strong>afterward</strong>. For an app you already have, run this in its terminal:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> git clone <span class="at">--resource</span><span class="op">=&lt;</span>repo resource name<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> git clone <span class="at">--resource</span><span class="op">=&lt;</span>repo resource name<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then work as usual: <code>git add</code> → <code>git commit</code> → <code>git push</code></p>
 <div class="fragment">
 <p>⚠️ <strong>Commit code only.</strong> Clear notebook outputs first, e.g., <code>jupyter nbconvert --clear-output --inplace *.ipynb</code>. Never commit data files or results.</p>
