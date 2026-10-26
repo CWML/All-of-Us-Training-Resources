@@ -331,67 +331,99 @@ Maximilian Wegener, MPH
 <li><strong>Scalability and innovation:</strong> complex analyses, AI and machine learning</li>
 </ul>
 </section>
-<section id="data-sources" class="slide level2 scrollable">
+<section id="data-sources" class="slide level2 smaller">
 <h2>Data Sources</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 38%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
 <th></th>
 <th>Source</th>
 <th>Description</th>
+<th style="text-align: right;">Participants (v9)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><img data-src="images/ds_surveys.png" alt="Icon for survey data, a clipboard with a checklist." height="60"></td>
+<td><img data-src="images/ds_surveys.png" alt="Icon for survey data, a clipboard with a checklist." height="36"></td>
 <td><strong>Surveys</strong></td>
-<td>Lifestyle, medical history, healthcare access, etc.</td>
+<td>Lifestyle, medical and family history, health care access, social factors</td>
+<td style="text-align: right;">&gt; 747,000</td>
 </tr>
 <tr class="even">
-<td><img data-src="images/ds_ehr.png" alt="Icon for electronic health record data, a laptop showing a health chart." height="60"></td>
+<td><img data-src="images/ds_ehr.png" alt="Icon for electronic health record data, a laptop showing a health chart." height="36"></td>
 <td><strong>EHR</strong></td>
-<td>Standardized with the OMOP Common Data Model</td>
+<td>Diagnoses, medications, labs, procedures, and visits from health care providers, standardized with the OMOP Common Data Model</td>
+<td style="text-align: right;">&gt; 481,000</td>
 </tr>
 <tr class="odd">
-<td><img data-src="images/ds_wearables.png" alt="Icon for wearables data, a fitness wristband." height="60"></td>
-<td><strong>Wearables</strong></td>
-<td>Heart rate, activity, or sleep data from devices like Fitbit</td>
+<td><img data-src="images/ds_physical.png" alt="Icon for physical measurements, a heart with a heartbeat line." height="36"></td>
+<td><strong>Physical measurements</strong></td>
+<td>Height, weight, blood pressure, heart rate, and waist and hip measured at enrollment visits</td>
+<td style="text-align: right;">&gt; 600,000</td>
 </tr>
 <tr class="even">
-<td><img data-src="images/ds_physical.png" alt="Icon for physical measurements, a heart with a heartbeat line." height="60"></td>
-<td><strong>Physical measurements</strong></td>
-<td>EHRs, self-reported height and weight, in-person visits</td>
+<td><img data-src="images/ds_wearables.png" alt="Icon for wearables data, a fitness wristband." height="36"></td>
+<td><strong>Wearables</strong></td>
+<td>Steps, heart rate, and sleep (including sleep stages) from Fitbit; some Apple HealthKit data</td>
+<td style="text-align: right;">&gt; 68,000 (Fitbit)</td>
 </tr>
 <tr class="odd">
-<td><img data-src="images/ds_genomic.png" alt="Icon for genomic data, a DNA double helix." height="60"></td>
+<td><img data-src="images/ds_genomic.png" alt="Icon for genomic data, a DNA double helix." height="36"></td>
 <td><strong>Genomic</strong></td>
-<td>Whole genome sequencing and genotyping from blood, saliva, and urine</td>
+<td>Short-read and long-read whole genomes, and genotyping arrays, from blood or saliva</td>
+<td style="text-align: right;">&gt; 535,000 (short-read)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>Multi-omics</strong> <em>(new in v9)</em></td>
+<td>RNA-seq from whole blood; proteomics from plasma</td>
+<td style="text-align: right;">about 9,000 each</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>Clinical notes</strong> <em>(new in v9)</em></td>
+<td>Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables</td>
+<td style="text-align: right;">&gt; 99,000</td>
 </tr>
 </tbody>
 </table>
+<aside class="notes">
+<p>Source: All of Us Researcher Workbench Office Hours, “Release of the Curated Data Repository (CDR) v9 Dataset” (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="the-curated-data-repository-cdr" class="slide level2">
+<section id="the-curated-data-repository-cdr" class="slide level2 smaller">
 <h2>The Curated Data Repository (CDR)</h2>
 <ul>
-<li>Data are organized in a <strong>curated data repository (CDR)</strong>
+<li>Data are organized in a <strong>curated data repository (CDR)</strong>, released in numbered versions (current: <strong>CDR v9</strong>; refreshed every 1–2 years)
 <ul>
-<li>De-identified</li>
-<li>Cleaned, validated, standardized (OMOP CDM)</li>
-<li>Released in numbered versions (current: <strong>CDRv9</strong>)</li>
+<li>Participant identifiers removed; the Controlled Tier keeps more detail (e.g.&nbsp;real dates of health events)</li>
+<li>Cleaned, validated, and standardized to the <strong>OMOP Common Data Model</strong></li>
 </ul></li>
-<li>Hosted on <strong>Google Cloud Platform</strong>, queried with <strong>Google BigQuery</strong>
+<li><strong>Researcher Workbench 2.0 runs on Verily Workbench, on Google Cloud</strong>
 <ul>
-<li>SQL-based; usable from R or Python</li>
-<li>Billed for queries run and data processed (large genomic queries can be costly)</li>
+<li><strong>Tables</strong> (EHR, surveys, measurements, Fitbit) are in <strong>Google BigQuery</strong>: query them with SQL from R or Python, or with the Data Explorer</li>
+<li><strong>Genomic and multi-omics data</strong> are <strong>files</strong> in Cloud Storage buckets (e.g.&nbsp;PLINK, VCF, Hail formats)</li>
 </ul></li>
+<li><strong>Costs</strong> go to your Google Cloud billing account: BigQuery charges by the data a query scans, apps by the hour while running, and the genomic data bucket is <em>Requester Pays</em> (reading it is billed to you)</li>
 </ul>
 <aside class="notes">
-<p>CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace).</p>
+<p>CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace). Verily builds and runs Workbench 2.0; the data and computing are on Google Cloud. Version 9 of the Controlled Tier is the dataset C2025Q4R6.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
