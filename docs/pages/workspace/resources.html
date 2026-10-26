@@ -394,11 +394,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#resources-tab" id="toc-resources-tab" class="nav-link" data-scroll-target="#resources-tab">Resources Tab</a></li>
   <li><a href="#adding-new-resources" id="toc-adding-new-resources" class="nav-link" data-scroll-target="#adding-new-resources">Adding New Resources</a></li>
   <li><a href="#which-resource-do-i-need" id="toc-which-resource-do-i-need" class="nav-link" data-scroll-target="#which-resource-do-i-need">Which Resource Do I Need?</a></li>
+  <li><a href="#buckets-objects-datasets-and-tables" id="toc-buckets-objects-datasets-and-tables" class="nav-link" data-scroll-target="#buckets-objects-datasets-and-tables">Buckets, Objects, Datasets, and Tables</a></li>
   <li><a href="#new-folder" id="toc-new-folder" class="nav-link" data-scroll-target="#new-folder">New Folder</a></li>
   <li><a href="#new-cloud-storage-bucket" id="toc-new-cloud-storage-bucket" class="nav-link" data-scroll-target="#new-cloud-storage-bucket">New Cloud Storage Bucket</a></li>
   <li><a href="#bucket-names-good-practice" id="toc-bucket-names-good-practice" class="nav-link" data-scroll-target="#bucket-names-good-practice">Bucket Names: Good Practice</a></li>
   <li><a href="#new-bigquery-dataset" id="toc-new-bigquery-dataset" class="nav-link" data-scroll-target="#new-bigquery-dataset">New BigQuery Dataset</a></li>
   <li><a href="#referencing-existing-data" id="toc-referencing-existing-data" class="nav-link" data-scroll-target="#referencing-existing-data">Referencing Existing Data</a></li>
+  <li><a href="#getting-and-reusing-data" id="toc-getting-and-reusing-data" class="nav-link" data-scroll-target="#getting-and-reusing-data">Getting and Reusing Data</a></li>
   <li><a href="#reference-bucket-or-object" id="toc-reference-bucket-or-object" class="nav-link" data-scroll-target="#reference-bucket-or-object">Reference: Bucket or Object</a></li>
   <li><a href="#reference-bigquery-dataset-or-table" id="toc-reference-bigquery-dataset-or-table" class="nav-link" data-scroll-target="#reference-bigquery-dataset-or-table">Reference: BigQuery Dataset or Table</a></li>
   <li><a href="#viewing-your-bucket-in-google-cloud" id="toc-viewing-your-bucket-in-google-cloud" class="nav-link" data-scroll-target="#viewing-your-bucket-in-google-cloud">Viewing Your Bucket in Google Cloud</a></li>
@@ -652,6 +654,49 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
+<section id="buckets-objects-datasets-and-tables" class="level2">
+<h2 class="anchored" data-anchor-id="buckets-objects-datasets-and-tables">Buckets, Objects, Datasets, and Tables</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Cloud Storage: files</strong></p>
+<pre><code>bucket      my-workspace-bucket
+└── object  data/results.csv</code></pre>
+<ul>
+<li>A <strong>bucket</strong> is a container; an <strong>object</strong> is one file in it</li>
+<li>Address: <code>gs://my-workspace-bucket/data/results.csv</code></li>
+<li><strong>Folders aren’t real:</strong> <code>data/</code> is just the start of the file’s name, so an empty folder disappears</li>
+</ul>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>BigQuery: tables</strong></p>
+<pre><code>project         wb-silky-artichoke-2408
+└── dataset     C2025Q4R6
+    └── table   person</code></pre>
+<ul>
+<li>A <strong>dataset</strong> is a collection of tables; a <strong>table</strong> has rows and columns</li>
+<li>Address: <code>project.dataset.table</code>, used in SQL after <code>FROM</code></li>
+<li>You pay for the data a query <strong>reads</strong>, so select only the columns you need</li>
+</ul>
+</div>
+</div>
+<p>👉 All of Us data uses both: <strong>tables</strong> in BigQuery (EHR, surveys, measurements) and <strong>files</strong> in a bucket (genomic and multi-omics data).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Example: the Controlled Tier v9 tables are the dataset C2025Q4R6, which the notebooks call CURRENT_DATASET; the genomic files are objects in the vwb-aou-datasets-controlled bucket, mounted in apps under ~/workspace/. The Workbench and the Google Cloud console show object names containing “/” as folders to make browsing easier. Don’t confuse these with the Workbench’s <strong>New Folder</strong> resource (next section): that is only a label for grouping resources on the Resources tab, and its dialog says “Folders don’t affect cloud paths”.</p>
+</div>
+</div>
+</div>
+</section>
 <section id="new-folder" class="level2">
 <h2 class="anchored" data-anchor-id="new-folder">New Folder</h2>
 <div class="grid">
@@ -676,7 +721,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -685,7 +730,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Avoid spaces in folder names: they have to be quoted in file paths in code.</p>
 </div>
@@ -714,7 +759,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -723,7 +768,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Controlled resources like this bucket are shared with workspace collaborators and deleted when the workspace is deleted. Apps that were already running won’t see a new bucket until you restart the app or run wb resource mount. Mounted folders cache file info for about a minute, so two people writing at once may not see each other’s changes right away. Migrated 1.0 workspaces already have a bucket: rw-migration-aou-rw-…</p>
 </div>
@@ -743,7 +788,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>👉 Easiest: accept the <strong>generated name</strong>. It’s built from your <strong>Resource ID</strong> + the workspace’s project ID, so keep the Resource ID free of personal details too.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -752,7 +797,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Source: Google Cloud, “About Cloud Storage buckets” and “Create a bucket”. Files (objects) also can’t be renamed in place; renaming copies and deletes them. Avoid putting sensitive information in file names too.</p>
 </div>
@@ -780,7 +825,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -789,7 +834,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Optional for most class projects; a bucket with CSV files is usually enough. BigQuery storage and queries are billed to your pod.</p>
 </div>
@@ -832,7 +877,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Every reference also has a <strong>Resource ID</strong>, <strong>Folder path</strong>, and <strong>Description</strong>. Then click <strong>Add to resources</strong>.</p>
 <p>⚠️ <strong>Access isn’t shared automatically.</strong> The data’s owner controls it. In a Controlled Tier workspace, the <strong>perimeter</strong> may also block data from outside it.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -841,9 +886,40 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Example uses: point to a collaborator’s bucket, or to a shared file without copying it. The All of Us data collection resources you added earlier are references too. Deleting a reference removes the pointer, not the data. You can edit a reference’s name and description, but not the bucket name, project ID, dataset ID, or table ID; to fix those, delete the reference and add it again. Some outside buckets are “Requester Pays”: reading or browsing them is billed to your pod, and mounting them when an app starts can cost money too. The Workbench shows a warning when you add one.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-and-reusing-data" class="level2">
+<h2 class="anchored" data-anchor-id="getting-and-reusing-data">Getting and Reusing Data</h2>
+<p><strong>Someone else’s data.</strong> A <code>gs://</code> address says <em>where</em> data is, not that you may read it. The owner has to give you access:</p>
+<ul>
+<li><strong>Share the workspace</strong> (the expected route for All of Us data): the owner clicks <strong>Share</strong> and adds you as Reader or Writer. You get the buckets and datasets they created there, and you need your own All of Us access at the same tier.</li>
+<li><strong>A bucket outside a shared workspace:</strong> the owner grants your account access, then you add a <strong>reference</strong> to it.</li>
+<li>References inside a shared workspace <strong>aren’t passed on</strong>: the original data’s owner has to grant access separately.</li>
+</ul>
+<p><strong>Your own data from another workspace:</strong> add a <strong>reference</strong> to that workspace’s bucket or dataset. Limits:</p>
+<ul>
+<li>⚠️ Controlled Tier data, or anything made from it, can’t go to a Registered Tier workspace or outside the perimeter</li>
+<li>⚠️ Person IDs changed between <strong>v8 and v9</strong>: files saved from v8 (or the classic Workbench) can’t be joined to v9 data</li>
+<li>⚠️ Each workspace is one project with its own Research Use Statement: check with All of Us support before reusing participant-level results in another project</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To confirm before teaching: the exact Verily steps for granting someone access to a single bucket (Verily resource settings or Google Cloud permissions), and All of Us’s rule on reusing participant-level results across projects. Between two of your Controlled Tier workspaces, references should work, but the perimeter is enforced per workspace, so test with a small file first. For classes, rerunning the queries in each workspace is simplest. Source for the v8 to v9 ID change: CDR v9 release, All of Us Office Hours, 2026-07-24.</p>
 </div>
 </div>
 </div>
@@ -944,7 +1020,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>👉 Handy for checking that an export arrived, or finding a file’s path</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -953,7 +1029,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.</p>
 </div>
