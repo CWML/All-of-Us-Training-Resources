@@ -92,4 +92,28 @@ prepare_analysis_data <- function() {
     )
 }
 
+# ---- 4. HELPERS FOR THE OMICS NOTEBOOKS (notebooks/omics/) -------------------
+
+# The All of Us genomic and multi-omics files are mounted as a folder in
+# ~/workspace/. Its name depends on the workspace (e.g. vwb-aou-datasets-controlled-v8r9),
+# so this finds it and returns the folder for one data version (e.g. .../v9).
+aou_data_dir <- function(version = "v9") {
+  mounts <- list.files(file.path(Sys.getenv("HOME"), "workspace"),
+                       pattern = "^vwb-aou-datasets-controlled", full.names = TRUE)
+  found <- file.path(mounts, version)
+  found <- found[dir.exists(found)]
+  if (length(found) == 0) {
+    stop("Can't find the All of Us ", version, " data folder in ~/workspace/. ",
+         "Check that the Controlled Tier data collection is added to this workspace.",
+         call. = FALSE)
+  }
+  found[1]
+}
+
+# All of Us policy: never share counts of 1 to 20. This blanks them out (shows NA)
+# in a table with a count column called n, e.g. df %>% count(x) %>% hide_small_counts()
+hide_small_counts <- function(df) {
+  mutate(df, n = if_else(n <= 20, NA_integer_, as.integer(n)))
+}
+
 message("Setup done. Dataset: ", CURRENT_DATASET, " | Data folder: ", DATA_DIR)
