@@ -6,3 +6,7 @@ Cohort Notes.pptx
 /.quarto/
 
 **/*.quarto_ipynb
+
+# Files JupyterLab creates in the Workbench
+.ipynb_checkpoints/
+Untitled*.ipynb
