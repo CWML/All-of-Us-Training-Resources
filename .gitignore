@@ -10,3 +10,4 @@ Cohort Notes.pptx
 # Files JupyterLab creates in the Workbench
 .ipynb_checkpoints/
 Untitled*.ipynb
+hail-*.log
