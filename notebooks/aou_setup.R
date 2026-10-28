@@ -117,13 +117,11 @@ hide_small_counts <- function(df) {
   mutate(df, n = if_else(n <= 20, NA_integer_, as.integer(n)))
 }
 
-# The genomic sample for the omics notebooks: the same steps as 4.1 Parts 3 and 4.
-# Cases and controls from sql/t2d_cohort.sql who have a short-read genome, aren't on
-# the relatedness list, are 18 to 100, and have sex at birth Female or Male; then a
-# random sample of n_per_group of each, with genetic ancestry and PCs added.
-# The same seed gives the same people as 4.1. Runs the cohort query (cents to under $1).
-t2d_gwas_samples <- function(n_per_group = 2500, seed = 2026,
-                             sql_file = "../sql/t2d_cohort.sql") {
+# Everyone in sql/t2d_cohort.sql (cases, controls, and excluded) who can be used in a
+# genetic analysis: the same steps as 4.1 Parts 3 and 4. They have a short-read genome,
+# aren't on the relatedness list, are 18 to 100, and have sex at birth Female or Male;
+# genetic ancestry and PCs are added. Runs the cohort query (cents to under $1).
+genomic_people <- function(sql_file = "../sql/t2d_cohort.sql") {
   snpindel <- file.path(aou_data_dir("v9"), "wgs", "short_read", "snpindel")
 
   cohort <- run_query(str_glue(read_file(sql_file), AGE_DATE = "2025-01-01")) %>%
@@ -143,19 +141,27 @@ t2d_gwas_samples <- function(n_per_group = 2500, seed = 2026,
     separate_wider_delim(pca_features, delim = ",", names = paste0("PC", 1:n_pcs)) %>%
     mutate(across(starts_with("PC"), as.numeric))
 
-  set.seed(seed)
   cohort %>%
-    filter(cohort %in% c("case", "control"),
-           person_id %in% genome_ids,
+    filter(person_id %in% genome_ids,
            !person_id %in% related,
            between(age, 18, 100),
            sex_at_birth %in% c("Female", "Male")) %>%
     mutate(has_genome = TRUE) %>%
     arrange(person_id) %>%
+    left_join(pcs, by = "person_id")
+}
+
+# The genomic sample for the GWAS notebooks (4.1 to 4.3): a random sample of
+# n_per_group cases and n_per_group controls from genomic_people().
+# The same seed gives the same people as 4.1.
+t2d_gwas_samples <- function(n_per_group = 2500, seed = 2026,
+                             sql_file = "../sql/t2d_cohort.sql") {
+  people <- genomic_people(sql_file) %>% filter(cohort %in% c("case", "control"))
+  set.seed(seed)
+  people %>%
     group_by(cohort) %>%
     slice_sample(n = n_per_group) %>%
-    ungroup() %>%
-    left_join(pcs, by = "person_id")
+    ungroup()
 }
 
 message("Setup done. Dataset: ", CURRENT_DATASET, " | Data folder: ", DATA_DIR)
