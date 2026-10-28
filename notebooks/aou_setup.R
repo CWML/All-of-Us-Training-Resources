@@ -71,9 +71,10 @@ save_data <- function(df, file_name) {
   invisible(path)
 }
 
-# Read a CSV from your bucket's data/ folder
-load_data <- function(file_name) {
-  read_csv(file.path(DATA_DIR, file_name), show_col_types = FALSE)
+# Read a CSV from your bucket's data/ folder. Extra options go to read_csv(),
+# e.g. load_data("gwas_samples.csv", col_types = cols(person_id = "c"))
+load_data <- function(file_name, ...) {
+  read_csv(file.path(DATA_DIR, file_name), show_col_types = FALSE, ...)
 }
 
 # ---- 3. ANALYSIS HELPERS (used by notebooks 3.1-3.3) -------------------------
@@ -114,6 +115,47 @@ aou_data_dir <- function(version = "v9") {
 # in a table with a count column called n, e.g. df %>% count(x) %>% hide_small_counts()
 hide_small_counts <- function(df) {
   mutate(df, n = if_else(n <= 20, NA_integer_, as.integer(n)))
+}
+
+# The genomic sample for the omics notebooks: the same steps as 4.1 Parts 3 and 4.
+# Cases and controls from sql/t2d_cohort.sql who have a short-read genome, aren't on
+# the relatedness list, are 18 to 100, and have sex at birth Female or Male; then a
+# random sample of n_per_group of each, with genetic ancestry and PCs added.
+# The same seed gives the same people as 4.1. Runs the cohort query (cents to under $1).
+t2d_gwas_samples <- function(n_per_group = 2500, seed = 2026,
+                             sql_file = "../sql/t2d_cohort.sql") {
+  snpindel <- file.path(aou_data_dir("v9"), "wgs", "short_read", "snpindel")
+
+  cohort <- run_query(str_glue(read_file(sql_file), AGE_DATE = "2025-01-01")) %>%
+    mutate(person_id = as.character(person_id))
+  genome_ids <- read_tsv(file.path(snpindel, "acaf_threshold", "pgen", "acaf_threshold.chr10.psam"),
+                         col_types = cols(.default = "c"))[["#IID"]]
+  related <- read_tsv(file.path(snpindel, "aux", "relatedness", "relatedness_flagged_samples.tsv"),
+                      col_types = cols(.default = "c"))$sample_id
+  ancestry <- read_tsv(file.path(snpindel, "aux", "ancestry", "ancestry_preds.tsv"),
+                       col_types = cols(.default = "c"))
+
+  n_pcs <- str_count(ancestry$pca_features[1], ",") + 1
+  pcs <- ancestry %>%
+    transmute(person_id = research_id,
+              ancestry  = ancestry_pred,
+              pca_features = str_remove_all(pca_features, "\\[|\\]")) %>%
+    separate_wider_delim(pca_features, delim = ",", names = paste0("PC", 1:n_pcs)) %>%
+    mutate(across(starts_with("PC"), as.numeric))
+
+  set.seed(seed)
+  cohort %>%
+    filter(cohort %in% c("case", "control"),
+           person_id %in% genome_ids,
+           !person_id %in% related,
+           between(age, 18, 100),
+           sex_at_birth %in% c("Female", "Male")) %>%
+    mutate(has_genome = TRUE) %>%
+    arrange(person_id) %>%
+    group_by(cohort) %>%
+    slice_sample(n = n_per_group) %>%
+    ungroup() %>%
+    left_join(pcs, by = "person_id")
 }
 
 message("Setup done. Dataset: ", CURRENT_DATASET, " | Data folder: ", DATA_DIR)
