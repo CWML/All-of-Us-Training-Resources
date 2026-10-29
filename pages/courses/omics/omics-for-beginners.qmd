@@ -1,0 +1,173 @@
+---
+title: "Omics for Beginners"
+description: "The words, data types, statistics, and tools you'll meet in the omics series, in plain language"
+code-annotations: below
+---
+
+New to genetics and omics? This page explains everything the omics series assumes, in plain language. You don't need to read it all at once: each class links back to the parts it uses.
+
+## The big picture: DNA → RNA → protein
+
+Think of a cell as an **IKEA store**:
+
+| | At IKEA | In the cell | Measured in *All of Us* by |
+|---|---|---|---|
+| **DNA** | the **catalog**: instructions for every product, kept in the store. Every store has the same catalog | all the instructions, in the cell's **nucleus**. The same in nearly every cell, and **fixed from birth** | whole-genome sequencing, genotyping arrays (classes **4.1–4.4**) |
+| **RNA** (messenger RNA, **mRNA**) | a **copy of the assembly instructions** for one product, taken out to where the building happens. Popular products get many copies | a working copy of one gene, carried out of the nucleus. More copies = a more **active** gene | RNA sequencing (**RNA-seq**) of blood (class **4.5**) |
+| **Protein** | the **assembled furniture**, built by following the instructions from a box of **pieces** | built from **amino acids** (the pieces) by the cell's **ribosomes** (the people assembling), following the mRNA: hormones, enzymes, signals | **Olink** proteomics, blood plasma (class **4.6**) |
+
+The analogy also shows why the layers don't always agree (class 4.7): a store can print lots of instruction copies but run short of pieces; furniture can last for years after the instructions are thrown away; and some furniture in your home (**plasma proteins**) was built in a different store (another organ) than the one whose instructions you're counting (**blood cells**).
+
+```
+DNA ──(copied)──→ RNA ──(translated)──→ protein
+fixed             changes with          changes with
+from birth        time, disease,        time, disease,
+                  medicines             medicines
+```
+
+This is why the classes ask different questions of each layer:
+
+- **DNA** tells you about **lifelong risk**: a variant you're born with can't be caused by diabetes. That makes genetic results useful for asking about **cause**.
+- **RNA and proteins** show what's happening **now**, including the **consequences** of a disease and its **treatment**. They're harder to read as causes.
+
+## Genome vocabulary
+
+| Word | Means | Example in the series |
+|---|---|---|
+| **Genome** | all of a person's DNA: about 3 billion "letters" (A, C, G, T) on 23 pairs of **chromosomes** | |
+| **Gene** | a stretch of DNA with the instructions for one product | *TCF7L2*, on chromosome 10 |
+| **Position** | where a letter is: chromosome:position, on a **reference genome** map. *All of Us* uses **GRCh38** | `chr10:112998590` |
+| **Variant** | a place where people's DNA differs | rs7903146 |
+| **SNP** ("snip") | a variant where **one letter** differs | C or T at rs7903146 |
+| **Indel** | a few letters **inserted** or **deleted** | |
+| **STR** | a **short tandem repeat**: a short pattern repeated a different number of times in different people. Harder to sequence | the top hit in 4.2 |
+| **Allele** | one version of a variant. **REF** = the one in the reference genome; **ALT** = the other(s) | REF C, ALT T |
+| **Multi-allelic** | a variant with **more than one** ALT allele | rs7903146 is C, T, or G in *All of Us* |
+| **Genotype** | a person's two alleles (one from each parent), often counted as **0, 1, or 2** copies of one allele | C/T = 1 copy of T |
+| **Allele frequency** | how common an allele is in a group | T: about 28% of alleles in *All of Us* |
+| **rsID** | a standard name for a known variant. *All of Us* files name variants by **position** instead | rs7903146 = `chr10:112998590:C` |
+| **Linkage disequilibrium (LD)** | nearby variants are inherited together, so they move together. Measured by **r²** from 0 to 1 | why a GWAS peak has many variants |
+| **Genetic ancestry** | estimated from DNA; **not** the same as self-reported race or ethnicity | groups `afr`, `amr`, `eas`, `eur`, `mid`, `sas` |
+| **Principal components (PCs)** | a few numbers per person that summarise their genetic ancestry; used to **adjust** for it | PC1 to PC10 in the models |
+
+## The data in *All of Us* (v9)
+
+| Data | What it is | Participants | Classes |
+|---|---|---|---|
+| **Short-read whole genomes** | the whole genome, read in short pieces | about 535,000 | 4.1–4.4 |
+| **Long-read whole genomes** | long pieces: better for large, complex changes | about 14,500 | |
+| **Genotyping arrays** | a chip that checks about 1.9 million chosen positions | about 554,000 | |
+| **RNA-seq** | gene activity in **whole blood** | about 9,000 | 4.5, 4.7 |
+| **Proteomics** | about 5,400 proteins in **blood plasma** (Olink Explore HT) | about 10,000 | 4.6, 4.7 |
+
+Almost everyone with RNA-seq also has proteomics, so the two can be compared in the same people (class 4.7).
+
+*All of Us* also provides ready-made results:
+
+- **Genetic ancestry** and **PCs** for every genome, and a list of **related** people to remove
+- **eQTLs** and **pQTLs**: variants linked to gene activity and to protein levels
+- **All by All**: association results for thousands of phenotypes, in a free public browser ([allbyall.researchallofus.org](https://allbyall.researchallofus.org))
+
+## The analyses
+
+| Analysis | Asks | Class |
+|---|---|---|
+| **GWAS** (genome-wide association study) | which **variants** are linked to **one disease**? | 4.2, 4.3 |
+| **PheWAS** (phenome-wide association study) | which **diseases** are linked to **one variant**? | 4.4 |
+| **Differential expression** | which **genes** are more or less active in one group? | 4.5 |
+| **Differential abundance** | which **proteins** are higher or lower in one group? | 4.6 |
+| **eQTL / pQTL** | which **variants** change a gene's activity / a protein's level? | 4.5, 4.6 |
+
+They're all the same idea underneath: **one regression per thing tested** (per variant, disease, gene, or protein), then a correction for having done many tests.
+
+## Statistics you'll meet
+
+| Term | Means |
+|---|---|
+| **Logistic regression** | a model for a **yes/no** outcome (diabetes: yes or no). Used in the GWAS and PheWAS |
+| **Linear regression** | a model for a **number** (gene activity, protein level). Used for RNA and proteins |
+| **Odds ratio (OR)** | from logistic regression: how the odds of the outcome change **per copy** of an allele. 1 = no effect; 1.25 = 25% higher odds |
+| **Beta** | the effect on the **log** scale. For logistic regression, **OR = e^beta** (e.g. beta 0.22 → OR 1.25) |
+| **Log₂ scale** | each step of 1 means **twice as much**. RNA (log-CPM) and protein (NPX) values use it. A **logFC** of 1 = twice as high; −1 = half |
+| **p-value** | how surprising the result would be if there were **no** effect. Small = strong evidence |
+| **Multiple testing** | testing thousands of things gives some small p-values by chance alone |
+| **Bonferroni** | a strict fix: divide 0.05 by the number of tests |
+| **Genome-wide significance** | p < **5 × 10⁻⁸**: Bonferroni for about a million independent variants |
+| **FDR** (false discovery rate, adjusted p-value) | a gentler fix used for genes and proteins: among results with FDR < 0.05, about 5% are expected to be false |
+| **Covariate** | another variable in the model, to **adjust** for (age, sex, PCs) |
+| **Confounding** | a third variable that affects both things you're comparing, creating a misleading link. Ancestry is the classic one in genetics |
+| **Power** | the chance of detecting a real effect. Small samples + small effects = low power |
+| **Selection bias** | a misleading link created by **how the sample was chosen** (class 4.4) |
+| **Collider bias** | a misleading link created by **adjusting for a common effect** of two things (class 4.4) |
+
+## Normalization: what's done for you, and what you check
+
+**Normalization** removes technical differences between samples (how deeply each was sequenced, which plate it was on), so the differences left are biological. Each data type needs something different:
+
+| Layer | Done before you get the data | What you do in class | What you check |
+|---|---|---|---|
+| **Genotypes** (4.1–4.4) | quality control of samples and variants | variant QC (frequency, missingness, Hardy-Weinberg); adjust for ancestry PCs | that the known variant replicates; the Q-Q plot |
+| **RNA counts** (4.5) | reads aligned to the genome and counted per gene | **normalize yourself**: TMM factors (edgeR), log-CPM, voom weights | TMM factors near 1; boxplots line up after normalizing; the voom trend; PCA |
+| **Protein NPX** (4.6) | plate-control and batch normalization; already on a log₂ scale | use as is (don't normalize twice) | plates line up; how much plate explains of the main patterns; outliers; results with plate in the model |
+
+::: {.callout-important}
+## The statistics packages don't normalize for you
+
+**limma**, used for both RNA and proteins, fits a model to whatever numbers you give it. It does **not** normalize. If you skip normalization, or normalize the wrong way, limma will still run and still give p-values: they'll just be wrong. That's why the classes **show** the normalization and **check** it, rather than hiding it in one line.
+:::
+
+## The tools
+
+| Tool | What it is | Classes |
+|---|---|---|
+| **BigQuery** | Google's database, where the *All of Us* health records, surveys, and measurements live. Queried with **SQL** | all |
+| **PLINK 2** | a fast command-line program for genetic data. We run it from R with `system()` | 4.1, 4.2, 4.4, 4.5 |
+| **Hail** | a Python library for very large genomic data, built on **Spark**; *All of Us*'s own tool | 4.3 |
+| **edgeR** | an R package (Bioconductor) for RNA-seq counts: filtering and **TMM** normalization | 4.5 |
+| **limma** | an R package (Bioconductor) that fits a linear model for every gene or protein at once, sharing information between them | 4.5–4.7 |
+| **Bioconductor** | a collection of R packages for biology, installed with `BiocManager::install()` | 4.5–4.7 |
+
+## File formats
+
+| Format | Holds | Classes |
+|---|---|---|
+| `.pgen` / `.pvar` / `.psam` | **PLINK 2**: genotypes (compressed) / variants / samples | 4.1, 4.2 |
+| `.bed` / `.bim` / `.fam` | the older **PLINK 1** format, about 10 times bigger | 4.1 |
+| `.vcf.gz`, `.bgen` | other standard genotype formats | 4.1 |
+| Hail **MatrixTable** (`.mt`) | a folder: variants × people, for Hail | 4.3 |
+| `.gct.gz` | an expression matrix: genes × samples | 4.5 |
+| `.parquet` | a compressed table format that can be read in pieces | 4.5 |
+| `.tsv.gz` | a compressed tab-separated table | 4.5, 4.6 |
+
+## How to read the code
+
+The notebooks repeat a few patterns. Here's one PLINK command from class 4.1, line by line:
+
+```r
+plink_cmd <- str_glue(                                           # <1>
+  "plink2 --pfile {shQuote(file.path(pgen_dir, 'acaf_threshold.chr10'))} ", # <2>
+  "--keep {shQuote(keep_file)} ",                                # <3>
+  "--chr 10 --from-bp {REGION_START} --to-bp {REGION_END} ",     # <4>
+  "--make-pgen --freq ",                                         # <5>
+  "--out {shQuote(out_prefix)}"                                  # <6>
+)
+plink_output <- system(plink_cmd, intern = TRUE)                 # <7>
+```
+1. `str_glue()` builds one long piece of text (the command), filling in anything inside `{ }` with the value of an R variable.
+2. Read the PLINK 2 files for chromosome 10. `shQuote()` puts quotes around the file path, in case it contains spaces.
+3. Keep only the people listed in `keep_file`: our sample.
+4. Keep only the variants in this region of chromosome 10 (positions in base pairs).
+5. Save the result as new, small PLINK 2 files, and calculate each variant's allele frequency.
+6. The start of the new files' names.
+7. `system()` runs the command as if you'd typed it in the Terminal. `intern = TRUE` keeps what PLINK prints, so the notebook can show it.
+
+Other patterns you'll see:
+
+| Code | Means |
+|---|---|
+| `x %>% f()` | "take `x`, then do `f()` to it": the **pipe**, read as "then" |
+| `source("../aou_setup.R")` | load the shared settings and helper functions from the folder above |
+| `run_query(sql)` | send SQL to BigQuery, get a data frame back (a helper in `aou_setup.R`) |
+| `read_tsv(..., col_types = cols(.default = "c"))` | read a table with every column as **text**, so long IDs stay exact |
+| `hide_small_counts()` | blank out counts of 1 to 20, as *All of Us* requires before sharing |
+| `<details>` … **Show answer** | in the notebooks: a hidden answer you click to open |

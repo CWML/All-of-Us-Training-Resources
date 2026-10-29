@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Olink proteins in plasma: reading only what you need from a 2.6 GB file, QC and batch checks, differential abundance with limma, and pQTLs">
+
+<title>4.6 Proteomics: Blood Proteins in Type 2 Diabetes – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../pages/courses/omics/4-7-rnaseq-proteomics.html" rel="next">
+<link href="../../../pages/courses/omics/4-5-rnaseq.html" rel="prev">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/workspace/workspaces.html"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/index.html">
+ <span class="dropdown-text">All courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/omics/index.html">
+ <span class="dropdown-text">Omics series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/extras/extras.html"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../pages/courses/omics/index.html">Omics</a></li><li class="breadcrumb-item"><a href="../../../pages/courses/omics/4-6-proteomics.html">4.6 Proteomics: Blood Proteins in Type 2 Diabetes</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Courses</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Omics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omics Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/omics-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omics for Beginners</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-1-dna-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.1 Introduction to Genomic Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-2-gwas-plink.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.2 A GWAS with PLINK</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-3-gwas-hail.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.3 A GWAS with Hail (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-4-phewas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.4 A Phenome-Wide Association Study (PheWAS)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-5-rnaseq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.5 RNA-seq: Gene Activity in Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-6-proteomics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">4.6 Proteomics: Blood Proteins in Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-7-rnaseq-proteomics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.7 RNA and Protein Together</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#why-this-class-matters" id="toc-why-this-class-matters" class="nav-link" data-scroll-target="#why-this-class-matters">Why this class matters</a></li>
+  <li><a href="#by-the-end-youll-be-able-to" id="toc-by-the-end-youll-be-able-to" class="nav-link" data-scroll-target="#by-the-end-youll-be-able-to">By the end you’ll be able to</a></li>
+  <li><a href="#analysis-at-a-glance" id="toc-analysis-at-a-glance" class="nav-link" data-scroll-target="#analysis-at-a-glance">Analysis at a glance</a></li>
+  <li><a href="#time-and-cost" id="toc-time-and-cost" class="nav-link" data-scroll-target="#time-and-cost">Time and cost</a></li>
+  </ul></li>
+  <li><a href="#class-plan" id="toc-class-plan" class="nav-link" data-scroll-target="#class-plan">Class plan</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key concepts</a>
+  <ul class="collapse">
+  <li><a href="#how-olink-measures-proteins" id="toc-how-olink-measures-proteins" class="nav-link" data-scroll-target="#how-olink-measures-proteins">How Olink measures proteins</a></li>
+  <li><a href="#npx-and-whats-already-been-done" id="toc-npx-and-whats-already-been-done" class="nav-link" data-scroll-target="#npx-and-whats-already-been-done">NPX, and what’s already been done</a></li>
+  <li><a href="#limit-of-detection" id="toc-limit-of-detection" class="nav-link" data-scroll-target="#limit-of-detection">Limit of detection</a></li>
+  </ul></li>
+  <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
+  <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try It Out</a></li>
+  <li><a href="#code-walk-through" id="toc-code-walk-through" class="nav-link" data-scroll-target="#code-walk-through">Code walk-through</a>
+  <ul class="collapse">
+  <li><a href="#reading-only-our-peoples-rows" id="toc-reading-only-our-peoples-rows" class="nav-link" data-scroll-target="#reading-only-our-peoples-rows">Reading only our people’s rows</a></li>
+  <li><a href="#differential-abundance" id="toc-differential-abundance" class="nav-link" data-scroll-target="#differential-abundance">Differential abundance</a></li>
+  </ul></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
+  <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  <li><a href="#next" id="toc-next" class="nav-link" data-scroll-target="#next">Next</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../pages/courses/omics/index.html">Omics</a></li><li class="breadcrumb-item"><a href="../../../pages/courses/omics/4-6-proteomics.html">4.6 Proteomics: Blood Proteins in Type 2 Diabetes</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">4.6 Proteomics: Blood Proteins in Type 2 Diabetes</h1>
+</div>
+
+<div>
+  <div class="description">
+    Olink proteins in plasma: reading only what you need from a 2.6 GB file, QC and batch checks, differential abundance with limma, and pQTLs
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Omics series, class 6 of 7</strong> · R (limma) · 120 minutes</p>
+<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.6%20proteomics.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="../../../pages/courses/omics/index.html" class="btn btn-outline-secondary btn-sm">Omics series overview</a> <a href="../../../pages/courses/omics/omics-for-beginners.html" class="btn btn-outline-secondary btn-sm">Omics for Beginners</a></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p><strong>Proteins</strong> are what the body builds and uses: hormones, enzymes, signals. <em>All of Us</em> has measured about <strong>5,400 proteins</strong> in blood <strong>plasma</strong> from about <strong>10,000 participants</strong>, with the <strong>Olink</strong> platform. We ask which proteins are higher or lower in type 2 diabetes, check that the data’s normalization worked, and look at whether the proteins’ levels are set partly by <strong>genetics</strong> (pQTLs).</p>
+<section id="why-this-class-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-class-matters">Why this class matters</h3>
+<p>Blood proteins come from organs <strong>all over the body</strong>, so they can show what’s happening in the kidney, liver, or fat tissue, which blood RNA (4.5) can’t. That makes them promising <strong>biomarkers</strong>. The class also teaches practical skills for big data: reading only the rows you need from a huge file, and checking for <strong>batch effects</strong> in data that was normalized before you got it.</p>
+</section>
+<section id="by-the-end-youll-be-able-to" class="level3">
+<h3 class="anchored" data-anchor-id="by-the-end-youll-be-able-to">By the end you’ll be able to</h3>
+<ol type="1">
+<li>Explain how Olink measures proteins, and what an <strong>NPX</strong> value is</li>
+<li>Read only the rows you need from a very large file, with <code>awk</code></li>
+<li>Apply QC flags, reshape long data into a matrix, and <strong>check for batch effects</strong></li>
+<li>Run <strong>differential abundance</strong> with limma, and read the results</li>
+<li>Look up <strong>pQTLs</strong> in <em>All of Us</em>’s results</li>
+</ol>
+</section>
+<section id="analysis-at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-at-a-glance">Analysis at a glance</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>❓ <strong>Questions</strong></td>
+<td>Which plasma proteins differ in type 2 diabetes, and are their levels partly genetic?</td>
+</tr>
+<tr class="even">
+<td>🧪 <strong>The analysis</strong></td>
+<td>A <strong>linear model</strong> per protein with limma on NPX, adjusted for age and sex, after QC and checks of normalization and plate effects; then a <strong>pQTL</strong> lookup</td>
+</tr>
+<tr class="odd">
+<td>🎯 <strong>Why</strong></td>
+<td>NPX is already normalized and log₂, so linear models fit directly; but leftover plate effects can look like biology, so we check; ~5,400 proteins, so FDR</td>
+</tr>
+<tr class="even">
+<td>✅ <strong>What we conclude</strong></td>
+<td>Which proteins differ and which <strong>organs</strong> they point to; which have strong pQTLs</td>
+</tr>
+<tr class="odd">
+<td>⚠️ <strong>What it can’t tell us</strong></td>
+<td>Cause vs consequence vs treatment; for sure which organ a protein came from</td>
+</tr>
+<tr class="even">
+<td>🔗 <strong>Connections</strong></td>
+<td>RNA in <strong>4.5</strong>; both in <strong>4.7</strong>. pQTLs + GWAS = <strong>Mendelian randomization</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-and-cost" class="level3">
+<h3 class="anchored" data-anchor-id="time-and-cost">Time and cost</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>⏱️ <strong>Class time</strong></td>
+<td>120 minutes</td>
+</tr>
+<tr class="even">
+<td>⏱️ <strong>Run time</strong></td>
+<td>about 10 minutes. Slowest: loading the proteins (3–5 minutes)</td>
+</tr>
+<tr class="odd">
+<td>💰 <strong>Cost</strong></td>
+<td>about <strong>$1 to $2</strong> per student: one BigQuery query, reading a 2.6 GB file (pennies), plus the app</td>
+</tr>
+<tr class="even">
+<td>📋 <strong>Before class</strong></td>
+<td>nothing (limma installs quickly if you ran 4.5)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="class-plan" class="level2">
+<h2 class="anchored" data-anchor-id="class-plan">Class plan</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Part</th>
+<th>You do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0:00</td>
+<td><strong>1. Key concepts</strong>: DNA/RNA/protein, how Olink works, NPX, normalization, limit of detection</td>
+<td>listen, ask</td>
+</tr>
+<tr class="even">
+<td>0:15</td>
+<td><strong>2. Setup and a tour of the files</strong></td>
+<td>run the cells</td>
+</tr>
+<tr class="odd">
+<td>0:30</td>
+<td><strong>3. The cohort</strong></td>
+<td>run the cells</td>
+</tr>
+<tr class="even">
+<td>0:40</td>
+<td><strong>4. Load our people’s proteins</strong> with <code>awk</code> (3–5 min)</td>
+<td>☕ <strong>Break</strong> while it loads</td>
+</tr>
+<tr class="odd">
+<td>0:50</td>
+<td><strong>5. QC, reshape, explore</strong>: flags, long to wide, PCA, <strong>batch checks</strong></td>
+<td>✋ <strong>Try It Out 1</strong> (5 min)</td>
+</tr>
+<tr class="even">
+<td>1:15</td>
+<td><strong>6. Differential abundance</strong>: limma, volcano, sensitivity checks</td>
+<td>✋ <strong>Try It Out 2</strong> (10 min)</td>
+</tr>
+<tr class="odd">
+<td>1:40</td>
+<td><strong>7. pQTLs</strong></td>
+<td>discuss</td>
+</tr>
+<tr class="even">
+<td>1:55</td>
+<td><strong>Wrap-up</strong></td>
+<td>discuss</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key concepts</h2>
+<section id="how-olink-measures-proteins" class="level3">
+<h3 class="anchored" data-anchor-id="how-olink-measures-proteins">How Olink measures proteins</h3>
+<p><strong>Pairs of antibodies</strong>, each carrying a short <strong>DNA tag</strong>, bind the same protein. Only when both bind are their tags close enough to join into a DNA sequence, which is counted by <strong>sequencing</strong>. More protein, more counts. The <em>All of Us</em> platform, <strong>Olink Explore HT</strong>, measures about 5,400 proteins (<strong>assays</strong>) from one small sample.</p>
+</section>
+<section id="npx-and-whats-already-been-done" class="level3">
+<h3 class="anchored" data-anchor-id="npx-and-whats-already-been-done">NPX, and what’s already been done</h3>
+<p><strong>NPX</strong> (<em>Normalized Protein eXpression</em>) is on a <strong>log₂ scale</strong> (1 = twice as much) and is <strong>relative</strong>: compare the same protein between people, not two proteins. It’s already normalized twice: to <strong>control samples on each plate</strong> (by Olink’s software), and <strong>across batches</strong> of plates (by <em>All of Us</em>). So we don’t normalize again, but we <strong>check</strong> that no plate stands out.</p>
+</section>
+<section id="limit-of-detection" class="level3">
+<h3 class="anchored" data-anchor-id="limit-of-detection">Limit of detection</h3>
+<p>Below its <strong>limit of detection (LOD)</strong>, an assay can’t tell signal from noise. The <em>All of Us</em> file we use doesn’t seem to include an LOD column, so the class explains it rather than filtering on it: treat “significant” proteins with a very <strong>low</strong> average NPX with caution.</p>
+</section>
+</section>
+<section id="follow-along-in-the-workbench" class="level2">
+<h2 class="anchored" data-anchor-id="follow-along-in-the-workbench">Follow along in the Workbench</h2>
+<ol type="1">
+<li>Start your app and pull the newest notebooks, as in <a href="../../../pages/courses/omics/4-1-dna-intro.html#follow-along-in-the-workbench">4.1</a>.</li>
+<li>Open <code>notebooks/omics/4.6 proteomics.ipynb</code>, with the <strong>R</strong> kernel.</li>
+<li>Part 4 (loading the proteins) takes 3–5 minutes: the whole 2.6 GB file is read once.</li>
+</ol>
+</section>
+<section id="try-it-out" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out">Try It Out</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>✋ Try It Out 1 · 5 minutes · Part 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the <strong>batch checks</strong>. Do the plates line up? Does plate explain more of PC1 or PC2 than diabetes, age, or sex? How many outlier samples does the 5-SD rule flag?</p>
+<p><strong>✅ Check:</strong> plate’s adjusted R² should be near 0 for each PC.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>✋ Try It Out 2 · 10 minutes · Part 6, “Your turn”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Is <strong>leptin</strong> (<code>LEP</code>, made by fat tissue) higher in diabetes? Why might that be?</li>
+<li>Is <strong><em>TCF7L2</em></strong> on the Olink panel?</li>
+<li><em>Challenge:</em> add <strong>BMI</strong> to the model. What happens to leptin? (One more query, about $1.)</li>
+</ol>
+<p><strong>✅ Check:</strong> leptin’s link to diabetes shrinks with BMI in the model: it was mostly body size. <em>TCF7L2</em> isn’t measured: it works inside the cell’s nucleus, not in the blood.</p>
+</div>
+</div>
+</section>
+<section id="code-walk-through" class="level2">
+<h2 class="anchored" data-anchor-id="code-walk-through">Code walk-through</h2>
+<section id="reading-only-our-peoples-rows" class="level3">
+<h3 class="anchored" data-anchor-id="reading-only-our-peoples-rows">Reading only our people’s rows</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>wanted   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ResearchID"</span>, <span class="st">"SampleID"</span>, <span class="st">"PlateID"</span>, <span class="st">"OlinkID"</span>, <span class="st">"UniProt"</span>, <span class="st">"Assay"</span>, <span class="st">"NPX"</span>, <span class="st">"SampleQC"</span>, <span class="st">"AssayQC"</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>col_nums <span class="ot">&lt;-</span> <span class="fu">match</span>(wanted, npx_columns)</span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>awk_command <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gzip -dc {shQuote(NPX_FILE)} | "</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"awk -F'</span><span class="sc">\\</span><span class="st">t' -v OFS='</span><span class="sc">\\</span><span class="st">t' -v id={col_nums[1]} "</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"'NR==FNR {{keep[$1]; next}} FNR==1 || ($id in keep) {{print {str_c('$', col_nums, collapse = ', ')}}}' "</span>,</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"{shQuote(ids_file)} -"</span></span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>npx_long <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="at">cmd =</span> awk_command, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="1">The <strong>positions</strong> of the columns we need (awk refers to columns by number).</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="2">Uncompress the 2.6 GB file as it’s read, without saving an uncompressed copy.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="3">Tell awk the columns are separated by tabs, and which column holds the participant ID.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="4">First read our 600 IDs into a list called <code>keep</code>; then print the header, and every line whose ID is in <code>keep</code>, keeping only the columns we need. (<code>{ }</code> is how <code>str_glue()</code> writes a literal brace.)</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="10" data-code-annotation="5"><code>fread()</code> runs the command and reads the result into R: about 3 million rows instead of over 50 million.</span>
+</dd>
+</dl>
+</section>
+<section id="differential-abundance" class="level3">
+<h3 class="anchored" data-anchor-id="differential-abundance">Differential abundance</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> group <span class="sc">+</span> age <span class="sc">+</span> sex_at_birth, <span class="at">data =</span> samples)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>fit     <span class="ot">&lt;-</span> <span class="fu">eBayes</span>(<span class="fu">lmFit</span>(npx, design))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">topTable</span>(fit, <span class="at">coef =</span> <span class="st">"groupcase"</span>, <span class="at">number =</span> <span class="cn">Inf</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">The model for every protein: case vs control, adjusted for age and sex.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="2">Fit it to every protein at once. No <code>voom()</code>: NPX is already on a log scale and isn’t a count.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="3">Every protein’s result, sorted by p-value.</span>
+</dd>
+</dl>
+</section>
+</section>
+<section id="what-we-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
+<p>Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>People with proteomics</td>
+<td>1,446 cases, 6,154 controls</td>
+</tr>
+<tr class="even">
+<td>Loading</td>
+<td><strong>3.5 minutes</strong>; about 32.5 million rows read, <strong>5,420</strong> proteins</td>
+</tr>
+<tr class="odd">
+<td>QC</td>
+<td>over 99% of measurements passed; under 1% failed; a few <code>WARN</code> (kept, per Olink’s advice)</td>
+</tr>
+<tr class="even">
+<td>PCA</td>
+<td><strong>2</strong> people far from everyone else (outliers: checked with a sensitivity analysis, not deleted)</td>
+</tr>
+<tr class="odd">
+<td>Significant proteins</td>
+<td>about <strong>290</strong>, most of them <strong>higher</strong> in diabetes</td>
+</tr>
+<tr class="even">
+<td>Top protein</td>
+<td><strong><em>NFASC</em></strong> (higher in diabetes)</td>
+</tr>
+<tr class="odd">
+<td>pQTLs</td>
+<td>18 of the top 20 proteins had very strong pQTLs</td>
+</tr>
+<tr class="even">
+<td>rs7903146</td>
+<td>not in any fine-mapped pQTL</td>
+</tr>
+</tbody>
+</table>
+<p>The proteins point to <strong>organs</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Organ</th>
+<th>Proteins</th>
+<th>A possible story</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Kidney</strong></td>
+<td><em>HAVCR1</em> (KIM-1) and <em>PDZK1</em> higher; <em>UMOD</em> lower</td>
+<td>early diabetic kidney disease</td>
+</tr>
+<tr class="even">
+<td><strong>Fat tissue</strong></td>
+<td><em>FABP4</em> higher; <em>LPL</em> lower</td>
+<td>insulin resistance</td>
+</tr>
+<tr class="odd">
+<td><strong>Gut</strong></td>
+<td><em>LGALS4</em>, <em>MUC13</em>, <em>PRAP1</em> higher</td>
+<td>possibly medicines such as metformin</td>
+</tr>
+</tbody>
+</table>
+<p><strong>💬 Discuss:</strong> which of these are <strong>causes</strong> of diabetes, <strong>consequences</strong> (kidney damage), or <strong>treatment</strong> effects? <em>UMOD</em>’s pQTL sits in the <em>UMOD</em> gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (<strong>Mendelian randomization</strong>).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Screenshots to add (for the instructor)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Plots with one point per <strong>protein</strong> can be shared:</p>
+<ol type="1">
+<li>The volcano plot (Part 6)</li>
+<li>The plate check (median NPX by plate, Part 5): one box per plate</li>
+</ol>
+<p>The PCA plot and the top-protein boxplot show <strong>people</strong>: keep them in the notebook.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="instructor-notes" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip: timing and pitfalls
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Use the 3–5 minute load in Part 4 for a break or for questions about Olink.</li>
+<li>The protein IDs in the pQTL files look like <code>P09769_ENSG00000000938.13</code>: UniProt ID, then the gene’s Ensembl ID. The notebook matches on the UniProt part.</li>
+<li>The batch checks, sensitivity analyses, enrichment, and BMI challenge were added after our first Workbench run; their results aren’t in the table above yet.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
+<ul>
+<li><strong>Olink</strong> measures thousands of proteins with antibody pairs and DNA tags; <strong>NPX</strong> is relative and log₂</li>
+<li>Filter huge files on the command line (<strong>awk</strong>) before R reads them</li>
+<li>Data normalized for you still needs <strong>checking</strong> for batch effects</li>
+<li>Blood proteins come from the <strong>whole body</strong>, so they show more than blood RNA</li>
+<li><strong>pQTLs</strong> link genetics to protein levels, and help ask about cause</li>
+</ul>
+</section>
+<section id="further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://olink.com">Olink</a>: the company’s explanations of its technology and of NPX</li>
+<li><a href="https://allbyall.researchallofus.org">All by All browser</a>: genetic results for many phenotypes, to compare with pQTLs</li>
+</ul>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<p><strong><a href="../../../pages/courses/omics/4-7-rnaseq-proteomics.html">4.7 RNA and Protein Together</a></strong>: do a gene’s RNA and its protein go up and down together?</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../pages/courses/omics/4-5-rnaseq.html" class="pagination-link" aria-label="4.5 RNA-seq: Gene Activity in Type 2 Diabetes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4.5 RNA-seq: Gene Activity in Type 2 Diabetes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../pages/courses/omics/4-7-rnaseq-proteomics.html" class="pagination-link" aria-label="4.7 RNA and Protein Together">
+        <span class="nav-page-text">4.7 RNA and Protein Together</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

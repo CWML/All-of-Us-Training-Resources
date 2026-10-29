@@ -1,0 +1,190 @@
+---
+title: "4.7 RNA and Protein Together"
+description: "For people with both, does a gene's RNA go with its protein, and do the two layers tell the same story about type 2 diabetes? A summary of the omics series"
+code-annotations: below
+---
+
+**Omics series, class 7 of 7** · R · 120 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.7%20rnaseq_proteomics.ipynb){.btn .btn-outline-primary .btn-sm}
+[Omics series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+[Omics for Beginners](omics-for-beginners.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Almost everyone in *All of Us* with RNA-seq also has proteomics. In this class we put the two **side by side, for the same people**: for each gene, does a person's RNA level go with their protein level? And do RNA and protein tell the **same story** about type 2 diabetes? Then we pull together what the whole series showed.
+
+### Why this class matters
+
+It's tempting to assume more RNA means more protein. Often it doesn't, especially when RNA comes from blood cells and proteins from plasma. Seeing **where** the layers agree and disagree, and why, is the basic skill of **multi-omics integration**, and a guard against over-reading any single layer.
+
+### By the end you'll be able to
+
+1. Explain why RNA and protein levels often **don't** agree, especially in blood
+2. Load both layers for the same people, and match each protein to its gene with **stable IDs**
+3. Calculate and interpret RNA–protein **correlations**
+4. Compare differential results across two layers
+5. Summarise what each layer can and can't tell us about a disease
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Questions** | Does a gene's RNA go with its protein, across people? Do RNA and protein tell the same story about type 2 diabetes? |
+| 🧪 **The analysis** | A **Spearman correlation** for each gene–protein pair; the diabetes results from both layers (limma), compared pair by pair |
+| 🎯 **Why** | Spearman uses ranks, so extreme values don't dominate; comparing **t-statistics** combines each effect's size and certainty |
+| ✅ **What we conclude** | Which proteins track their blood RNA, and whether diabetes signals are shared |
+| ⚠️ **What it can't tell us** | Anything outside blood; which layer is closer to the cause |
+| 🔗 **Connections** | Combines **4.5** and **4.6**, and summarises the series |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 120 minutes |
+| ⏱️ **Run time** | about 15 minutes. Slowest: loading the proteins (3–5 min) and the RNA counts (a few min) |
+| 💰 **Cost** | about **$1 to $2** per student: one BigQuery query, reading two large files (pennies), plus the app |
+| 📋 **Before class** | easier after **4.5** and **4.6**; run the setup cell to install the packages |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: why RNA and protein disagree; correlation; multi-omics | listen, ask |
+| 0:15 | **2. Who has both, and the cohort** | run the cells |
+| 0:25 | **3. Load RNA and proteins** (about 10 minutes) | ☕ **Break** while they load |
+| 0:40 | **4. Match proteins to genes** | run the cells |
+| 0:50 | **5. RNA vs protein, gene by gene** | ✋ **Try It Out 1** (10 min) |
+| 1:15 | **6. Do the diabetes signals agree?** | discuss |
+| 1:40 | **7. The whole series** | ✋ **Try It Out 2** (10 min, discussion) |
+| 1:55 | **Wrap-up** | |
+
+## Key concepts
+
+### Why RNA and protein disagree
+
+Using the [IKEA analogy](omics-for-beginners.qmd#the-big-picture-dna-rna-protein): RNA is the copy of the assembly instructions, protein is the furniture.
+
+| Reason | In the analogy | In the body |
+|---|---|---|
+| **Different places** | furniture built in another store | many plasma proteins are made in the liver, kidney, or fat, not in the blood cells whose RNA we measured |
+| **Different timing** | furniture lasts years after the instructions are recycled | proteins can last hours to weeks; RNA minutes to hours |
+| **Control after RNA** | plenty of instructions, but not enough pieces | cells control how much protein each RNA makes |
+| **Different samples** | | RNA from whole blood; proteins from plasma |
+
+### Spearman correlation
+
+The usual correlation, but on **ranks**, so a few extreme values don't dominate. From −1 to 1; 0 means no relationship.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [4.1](4-1-dna-intro.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/omics/4.7 rnaseq_proteomics.ipynb`, with the **R** kernel.
+3. Part 3 loads both large files: about 10 minutes in total.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out 1 · 10 minutes · Part 5, "Your turn"
+
+Look up the RNA–protein correlations for proteins from 4.6 (*HAVCR1*, *UMOD*, *FABP4*, *LPL*) and neutrophil genes from 4.5 (*LTF*, *MMP8*, *CRISP3*, *HP*). Which agree?
+
+**✅ Check:** the kidney and fat proteins correlate little or are missing (blood cells barely make their RNA); neutrophil proteins have a better chance.
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 2 · 10 minutes · Part 7 (discussion)
+
+If you could design one more analysis with *All of Us* data to understand type 2 diabetes better, what would it be, and which layers (DNA, RNA, protein, health records) would it use?
+:::
+
+## Code walk-through
+
+### Matching proteins to genes
+
+```r
+uniprot_to_gene <- read_tsv(file.path(PROT_DIR, "pqtl", "cis_pqtl", "AoU_v9_COMB.cis_pqtl.txt.gz"),
+                            col_select = "phenotype_id", show_col_types = FALSE) %>%   # <1>
+  transmute(UniProt = str_remove(phenotype_id, "_.*"),                                  # <2>
+            gene_id = str_remove(str_remove(phenotype_id, "^[^_]*_"), "\\..*")) %>%     # <3>
+  distinct()
+```
+1. The pQTL file from 4.6 names each protein as `P09769_ENSG00000000938.13`: a ready-made lookup table from protein to gene. `col_select` reads only that column.
+2. The **UniProt** ID: everything before the underscore.
+3. The **Ensembl gene** ID: everything after the underscore, without the version number (`.13`), which can differ between files.
+
+### Correlation, pair by pair
+
+```r
+pairs <- pairs %>%
+  mutate(rho = map2_dbl(rna_row, OlinkID,                                                         # <1>
+                        ~ cor(logcpm[.x, ], npx[.y, ], method = "spearman", use = "pairwise.complete.obs")))  # <2>
+```
+1. `map2_dbl()` runs the next line once for each pair: `.x` is the gene's row in the RNA matrix, `.y` the protein's row in the protein matrix.
+2. The Spearman correlation across our people, using everyone with both values.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls with both layers.
+
+| | |
+|---|---|
+| People with both layers | **8,801** of 8,980 with RNA-seq |
+| Correlations | median about **0.01**: most pairs barely correlate |
+| Significant | **510** positive and 79 negative (FDR < 0.05) |
+| Best-agreeing pairs | **immune-cell** proteins: B cells (*TCL1A*, *FCRL1*, *FCRL3*), NK and T cells (*GZMH*, *GNLY*, *FCRL6*), neutrophils (*OLFM4*, *VSTM1*); also *MDGA1*, *SPESP1*, *PVALB* |
+| Diabetes effects, RNA vs protein | correlation of t-statistics about **0** (−0.04): the layers **don't** line up |
+| Proteins overall | shifted a little **higher** in diabetes, whatever their RNA did |
+
+**💬 Discuss:**
+
+- Why might proteins that aren't made by blood cells (*MDGA1*, *PVALB*) still correlate with their RNA? (A genetic variant that raises both: an eQTL and a pQTL at once.)
+- Why might many proteins be higher in diabetes regardless of RNA? (One idea: lower **kidney** clearance, since the kidneys remove many proteins from the blood. Test it by adjusting for kidney function, eGFR.)
+
+## The whole series
+
+| Class | Layer | Main finding (our test runs) | What it can't tell us |
+|---|---|---|---|
+| 4.1 | DNA | the T allele is more common in cases (OR ≈ 1.17, unadjusted) | cause or tissue |
+| 4.2–4.3 | DNA | adjusted OR ≈ **1.25**; a peak across *TCF7L2*; PLINK and Hail agree | which variant is causal |
+| 4.4 | DNA + EHR | rs7903146 goes with diabetes, its treatments and complications, and slightly less obesity | consequence vs direct effect; collider bias |
+| 4.5 | RNA (blood) | a few dozen genes differ, many from neutrophils; rs7903146 barely affects *TCF7L2* in blood | other tissues; cell mix |
+| 4.6 | Protein (plasma) | hundreds differ, pointing to the kidney, fat, and gut; strong pQTLs | cause vs consequence vs treatment |
+| 4.7 | Both | RNA and protein agree mainly for immune-cell proteins; diabetes effects don't line up | anything outside blood |
+
+**DNA** tells us about lifelong risk and can help argue about **cause**. **RNA and proteins** show what's happening **now**, including consequences and treatment. Each layer answers a different question; combining them carefully is how multi-omics studies get closer to how a disease works.
+
+::: {.callout-note collapse="true"}
+## Screenshots to add (for the instructor)
+
+Plots with one point per **gene–protein pair** can be shared:
+
+1. The histogram of RNA–protein correlations (Part 5)
+2. The RNA vs protein t-statistic scatter plot (Part 6)
+:::
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip: timing and pitfalls
+
+- Loading takes about 10 minutes: a good time for the "why RNA and protein disagree" discussion.
+- If students have little time, run Parts 2–4 before class and save the matrices.
+- End with the series table: it's the main takeaway of the whole omics series.
+:::
+
+## Key takeaways
+
+- **RNA and protein** often disagree, especially in blood: many plasma proteins are made elsewhere
+- Match layers with **stable IDs** (UniProt, Ensembl), not names
+- **Correlation across people** shows which genes' RNA and protein go together
+- Each omics layer answers a **different question**
+
+## Further reading
+
+- [All by All browser](https://allbyall.researchallofus.org)
+- [Omics for Beginners](omics-for-beginners.qmd): the vocabulary of the series in one place
+
+## Next
+
+That's the end of the omics series. Back to the [series overview](index.qmd), or the [Courses](../index.qmd) page for the other series.

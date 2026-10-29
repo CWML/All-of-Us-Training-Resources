@@ -1,0 +1,81 @@
+---
+title: "Omics Series"
+description: "Seven classes on the All of Us genomic, RNA-seq, and proteomics data, around one question: type 2 diabetes"
+---
+
+Seven classes on the *All of Us* **genomic and multi-omics** data. Together they ask: what can **DNA**, **RNA**, and **proteins** tell us about **type 2 diabetes**?
+
+The thread through the series is one genetic variant, **rs7903146**, in the gene *TCF7L2*: the strongest known genetic risk factor for type 2 diabetes. We find it, test it, follow its effects across hundreds of diseases, and then look for it in gene activity and blood proteins.
+
+**New to omics?** Start with [Omics for Beginners](omics-for-beginners.qmd): the words, the data types, and the tools, in plain language.
+
+## The classes
+
+| Class | Language | The question | Time |
+|---|---|---|---|
+| [**4.1 DNA intro**](4-1-dna-intro.qmd) | R + PLINK | What is the genomic data, and is rs7903146's T allele more common in type 2 diabetes? | 120 min |
+| [**4.2 GWAS with PLINK**](4-2-gwas-plink.qmd) | R + PLINK | Which variants in the *TCF7L2* region are linked to type 2 diabetes? | 120 min |
+| [**4.3 GWAS with Hail**](4-3-gwas-hail.qmd) | Python + Hail | Does a second tool give the same answer? | 120 min |
+| [**4.4 PheWAS**](4-4-phewas.qmd) | R | Which diseases are linked to rs7903146? | 120 min |
+| [**4.5 RNA-seq**](4-5-rnaseq.qmd) | R | Which genes are more or less active in blood in type 2 diabetes? | 120 min |
+| [**4.6 Proteomics**](4-6-proteomics.qmd) | R | Which blood proteins differ, and are they genetically controlled? | 120 min |
+| [**4.7 RNA and protein**](4-7-rnaseq-proteomics.qmd) | R | Do RNA and protein tell the same story? | 120 min |
+
+Each class has a page here (overview, class plan, Try It Out pauses, code walk-through, our results) and a notebook in the [`notebooks/omics/`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/omics) folder on GitHub.
+
+## How the classes connect
+
+```
+4.1 DNA intro ──→ 4.2 GWAS (PLINK) ──→ 4.4 PheWAS
+                  4.3 GWAS (Hail)
+                  (same analysis, a check)
+
+4.5 RNA ──────┐
+              ├──→ 4.7 RNA + protein
+4.6 Protein ──┘
+```
+
+- **4.2 and 4.3** reuse the sample that **4.1** saves. The other classes work on their own.
+- **4.4** starts from the variant found in **4.2**, and checks it against *All of Us*'s ready-made **All by All** results.
+- **4.5 and 4.6** ask what changes in **blood** in people with diabetes; **4.7** compares the two.
+
+## What you need
+
+- An *All of Us* **Controlled Tier** workspace with a **bucket**, and the course notebooks in your app (clone the repository: see the [Notebooks](../../examples/notebooks.qmd) page).
+- **Notebook 0.0 setup**, run once.
+- The default **AoU Jupyter** app (4 CPUs, 26 GB memory) is enough for every class. PLINK 2 and Hail are already installed.
+
+::: {.callout-warning}
+## Don't `pip install` into the shared app
+
+In our tests, installing the Python package PheTK replaced a package that Hail needs, and broke class 4.3. The notebooks install only what they need, in ways that don't replace anything. If you install something yourself, check what pip says it's **uninstalling**.
+:::
+
+## What it costs
+
+Each student pays for their own workspace. Per class, expect about **$1 to $2**:
+
+| | Cost |
+|---|---|
+| **Data** | One or two BigQuery queries (cents to about $1), and small parts of the genomic files |
+| **The app, while running** | About **$0.27 an hour**: about $0.55 for a 2-hour class |
+| **The app's disk** | About **$0.70 a day**, even while the app is **stopped** |
+
+**Stop** your app after each class. **Delete** it when you've finished the series (save anything you need to your bucket first).
+
+Prices are the Workbench's estimates for the default app, October 2026. You can see yours on the **Apps** tab when you create or edit an app.
+
+## Going further: combining the classes
+
+Each class answers one question. Combining them asks sharper ones. These methods are beyond the series, but the classes point to them:
+
+| Combine | To ask | Method |
+|---|---|---|
+| GWAS (4.2) + eQTLs (4.5) | Does the diabetes variant act by changing a gene's activity? | colocalization |
+| GWAS (4.2) + pQTLs (4.6) | Does a protein **cause** diabetes, or just go with it? | Mendelian randomization |
+| PheWAS (4.4) + All by All | Does the finding hold in a much bigger sample? | replication |
+| RNA (4.5) + protein (4.6) | Is a change seen in both layers? | multi-omics comparison (4.7) |
+
+## Keep All of Us data in the Workbench
+
+Don't download, screenshot, or share **participant-level data** (including genotypes, expression values, and IDs), or counts of **1 to 20**. The results shown on these pages are summary statistics from our test runs.
