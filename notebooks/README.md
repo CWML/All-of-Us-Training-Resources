@@ -12,6 +12,8 @@ notebooks/
 ├── sql/                   the shared type 2 diabetes cohort query
 ├── core/                  1.1 – 3.4: build a cohort, clean and join, analyse
 ├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics
+├── surveys/               5.1 – 5.3 (coming soon)
+├── wearables/             6.1 – 6.3 (coming soon)
 └── archive/               earlier versions
 ```
 
@@ -55,7 +57,7 @@ The queries in **1.1** and **1.2** run once and save their results to your bucke
 
 ## Omics series (`omics/`)
 
-Each class starts with a short cohort section, so it works on its own (4.2 and 4.3 build on 4.1). One research question runs through the series: **type 2 diabetes** and the *TCF7L2* variant **rs7903146**. Every notebook opens with an "Analysis at a glance" box and a time and cost estimate (about **$1 to $2** per student per class on the default app).
+Each class starts with a short cohort section, so it works on its own (4.2 and 4.3 build on 4.1). Details, costs, and setup notes: [`omics/README.md`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/README.md). One research question runs through the series: **type 2 diabetes** and the *TCF7L2* variant **rs7903146**. Every notebook opens with an "Analysis at a glance" box and a time and cost estimate (about **$1 to $2** per student per class on the default app).
 
 | Notebook | Language | What it does |
 |---|---|---|
