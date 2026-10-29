@@ -79,19 +79,17 @@ load_data <- function(file_name, ...) {
   read_csv(file.path(DATA_DIR, file_name), show_col_types = FALSE, ...)
 }
 
-# ---- 3. ANALYSIS HELPERS (used by notebooks 3.1-3.3) -------------------------
+# ---- 3. ANALYSIS HELPERS (used by notebooks 3.1-3.4) -------------------------
 
-# Read final_analysis.csv and set up variable types for modelling
+# Read final_analysis.csv (made in 2.3) and set up variable types for modelling
 prepare_analysis_data <- function() {
-  load_data("final_analysis.csv") %>%
+  load_data("final_analysis.csv", col_types = cols(person_id = "c")) %>%
     mutate(
-      gender    = factor(gender),
-      race      = factor(race),
-      ethnicity = factor(ethnicity),
-      # rebuilt from age, so files saved with older age-group labels still work
-      age_group = cut(age, breaks = c(25, 35, 45, 51), right = FALSE,
-                      labels = c("25-34", "35-44", "45-50")),
-      diabetes  = factor(diabetes, levels = c("No", "Yes"))   # the flagging variable
+      across(c(date_of_birth, death_date, first_ehr_date, last_ehr_date,
+               first_t2d_date, first_ckd_date), as.Date),
+      t2d          = factor(t2d, levels = c("No", "Yes")),     # the outcome; "No" is the reference
+      sex_at_birth = factor(sex_at_birth),
+      age_group    = factor(age_group, levels = c("18-39", "40-64", "65+"))
     )
 }
 
