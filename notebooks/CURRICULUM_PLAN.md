@@ -67,7 +67,7 @@ notebooks/
 
 Every notebook in a series folder loads `../aou_setup.R` (or `../aou_setup.py`) and `../sql/t2d_cohort.sql`. The core notebooks were moved into `core/` on 2026-10-29 (still the current versions, to be rewritten there).
 
-### Core series (R): rewrite of the current notebooks, in `notebooks/core/`
+### Core series (R): rewritten 2026-10-29 (round 1: 1.1, 1.2 tested in the Workbench; round 2: 2.1–3.4), in `notebooks/core/`
 
 | Notebook | What it does | Change from now |
 |---|---|---|

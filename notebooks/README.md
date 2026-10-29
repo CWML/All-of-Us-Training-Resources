@@ -10,7 +10,7 @@ notebooks/
 ├── aou_setup.R            settings you edit once + helper functions (R)
 ├── aou_setup.py           the same settings for Python notebooks (read from aou_setup.R)
 ├── sql/                   the shared type 2 diabetes cohort query
-├── core/                  1.1 – 3.4: build a cohort, clean and join, analyse
+├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse
 ├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics
 ├── surveys/               5.1 – 5.3 (coming soon)
 ├── wearables/             6.1 – 6.3 (coming soon)
@@ -21,39 +21,40 @@ Notebooks in a series folder load the shared files from the folder above (`sourc
 
 ## Core series (`core/`)
 
-> **Being rewritten.** The core notebooks below are the current versions. They're being updated to the same type 2 diabetes cohort as the omics series (see `CURRICULUM_PLAN.md`), with 2.0 split into 2.1 clean, 2.2 reshape, and 2.3 join_and_bind.
+Nine R notebooks that take one study from start to finish: people **with type 2 diabetes** (cases) compared with people **without diabetes** (controls), including **time to chronic kidney disease** (CKD) after diagnosis. They use the same cohort query as every other series (`sql/t2d_cohort.sql`) and a sample of 5,000 cases and 5,000 controls. Every notebook opens with an "Analysis at a glance" box and a time and cost estimate.
 
-| Notebook | What it does | Class |
+| Notebook | What it does | Time |
 |---|---|---|
 | [`aou_setup.R`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/aou_setup.R) | Settings you edit once (bucket and dataset) and shared helper functions | |
-| [`0.0 setup`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb) | Checks your settings and the connection to the data | Any |
-| [`1.1 build_cohorts`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.1%20build_cohorts.ipynb) | Cohort Builder SQL (updated for 2.0): demographics, PTSD survey answers, and measurements, saved separately for the study and control groups | 1 |
-| [`1.2 survival_data`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.2%20survival_data.ipynb) | Diabetes and CKD diagnoses, and visits | 1 or 5 |
-| [`2.0 clean_and_join`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.0%20clean_and_join.ipynb) | Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table | 2 |
-| [`3.1 table_one`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.1%20table_one.ipynb) | Descriptive statistics, chi-square and t-tests, and a small-count check | 3 |
-| [`3.2 logistic_regression`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.2%20logistic_regression.ipynb) | Univariable and multivariable models for the odds of diabetes | 4 |
-| [`3.3 linear_regression`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.3%20linear_regression.ipynb) | Models for systolic blood pressure, compared by fit | 4 |
-| [`3.4 survival_analysis`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.4%20survival_analysis.ipynb) | Kaplan–Meier curves and a Cox model with baseline predictors | 5 |
+| [`0.0 setup`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb) | Checks your settings and the connection to the data | |
+| [`1.1 build_cohorts`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.1%20build_cohorts.ipynb) | The OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements | 90 min |
+| [`1.2 survival_data`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.2%20survival_data.ipynb) | Time zero, event, and censoring; first CKD dates; follow-up | 60 min |
+| [`2.1 clean`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.1%20clean.ipynb) | Types, non-answers, messy text, duplicates, units, plausible ranges, missing data, a cleaning log | 105 min |
+| [`2.2 reshape`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.2%20reshape.ipynb) | Long vs wide; one value per person; `pivot_wider()` and `pivot_longer()` | 70 min |
+| [`2.3 join_and_bind`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.3%20join_and_bind.ipynb) | `bind_rows()`; left, inner, full, and anti joins; checks after every join; the analysis table | 75 min |
+| [`3.1 table_one`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.1%20table_one.ipynb) | A Table 1 with your own functions; missing data; the small-count check | 75 min |
+| [`3.2 logistic_regression`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.2%20logistic_regression.ipynb) | Odds ratios for type 2 diabetes; adjustment; reverse causation | 85 min |
+| [`3.3 linear_regression`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.3%20linear_regression.ipynb) | Systolic blood pressure; model comparison; residuals | 75 min |
+| [`3.4 survival_analysis`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.4%20survival_analysis.ipynb) | Kaplan–Meier curves (ggplot2), log-rank test, Cox model, proportional hazards | 90 min |
 
-**Variables used:** age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.
+**Variables used:** age, sex at birth, gender, race, ethnicity; two PTSD survey questions (asked only of people who reported PTSD); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; type 2 diabetes and CKD dates; EHR and death dates.
 
 ### How they fit together
 
 ```
-aou_setup.R          settings + helpers, loaded by every notebook
+sql/t2d_cohort.sql
      │
-1.1 build_cohorts ──► person_study.csv       person_control.csv
-                      survey_study.csv       survey_control.csv
-                      measurement_study.csv  measurement_control.csv
-1.2 survival_data ──► condition_arranged.csv, visit_arranged.csv
+1.1 build_cohorts ──► cohort_sample.csv, survey_raw.csv, measurement_raw.csv
+1.2 survival_data ──► ckd_dates.csv
      │
-2.0 clean_and_join ─► flag the groups (diabetes = Yes / No), stack them, clean, join
-                      ──► final_analysis.csv, measurements_wide.csv
+2.1 clean ─────────► cohort_clean.csv, survey_clean.csv, measurement_clean.csv
+2.2 reshape ───────► survey_wide.csv, measurements_wide.csv
+2.3 join_and_bind ─► final_analysis.csv
      │
 3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival
 ```
 
-The queries in **1.1** and **1.2** run once and save their results to your bucket's `data/` folder. Every later notebook reads those files, so a class can start at any notebook once the data is saved.
+Only **1.1** and **1.2** query BigQuery (about $2 to $3 in total); every later notebook reads the saved files, so a class can start at any notebook once the data is saved.
 
 ## Omics series (`omics/`)
 
@@ -82,70 +83,28 @@ You need an *All of Us* workspace with the **Controlled Tier** data collection a
 3. Open **`0.0 setup`** and follow it. It has you edit two lines in `aou_setup.R`:
    - `BUCKET_NAME`: your bucket's folder name
    - `CURRENT_DATASET`: the dataset, copied from the `FROM` line of any Data Explorer query (Controlled Tier CDR v9 is `C2025Q4R6`)
-4. Run a series in order: core `1.1` → `1.2` → `2.0` → `3.1` to `3.4`; or omics `4.1` → `4.7`.
+4. Run a series in order: core `1.1` → `1.2` → `2.1` → `2.2` → `2.3` → `3.1` to `3.4`; or omics `4.1` → `4.7`.
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 
 ## The study population
 
-Both groups come from the SQL in notebook **1.1**, generated by the classic Workbench's Cohort Builder and updated for Workbench 2.0 (every table is written as `` `{CURRENT_DATASET}.table` ``):
+Every series uses the cohort in `sql/t2d_cohort.sql`:
 
-- Age **25 to 50**, and **alive**
-- Race: **White**, **Black or African American**, or **Asian**
-- Ethnicity: **Hispanic or Latino** or **Not Hispanic or Latino**
-- Gender: **Man** or **Woman**
-- **Study group:** has a diagnosis of **diabetes mellitus** (any type). **Control group:** doesn't.
+- Adults (**18+** on 2025-01-01, the CDR v9 data cutoff, or at death) with at least one **EHR** visit
+- **Cases:** a type 2 diabetes diagnosis (concept 201826 or anything under it), and no type 1 diabetes diagnosis
+- **Controls:** no diabetes diagnosis of any type (concept 201820 or anything under it)
+- Race and ethnicity are **described**, not used to choose people
 
-## Build the cohorts in Data Explorer
+The core series takes a random sample of 5,000 cases and 5,000 controls (ages 18 to 100); the omics classes take their own samples among people with each data type.
 
-Prefer point-and-click? You can build the same two groups in **Data Explorer** instead of running the SQL in notebook 1.1. You'll make **two cohorts** (study and control) and save a **data snapshot** of each.
+## Point and click: Data Explorer
 
-### 1. Add a cohort
+The **Data Explorer**, Workbench 2.0's point-and-click tool, can build a similar cohort without SQL. Its rules work a little differently (e.g. how age and diagnosis codes are matched), so its counts won't match the SQL exactly. Step-by-step instructions for this cohort are being updated.
 
-**Resources** tab → **+ New resource** → **Cohort**:
+## Files from earlier versions of these notebooks
 
-1. **Select collection:** All of Us Controlled Tier, version **cdrv9** → **Next**
-2. **No new policies** → **Next**
-3. **Cohort name:** `diabetes_study` (and later `diabetes_control`) → **Add to your workspace**
-
-### 2. Add the criteria
-
-In the cohort view, use **Add criteria** to build these groups. Within a group, choose **Meet all criteria**. Groups combine with **AND**.
-
-| Group | Included / Excluded | Criteria (Add criteria → …) |
-|---|---|---|
-| 1. Demographics | Included, **meet all** | Demographics → **Current Age**: 25 to 50 · **Race**: White, Black or African American, Asian · **Ethnicity**: Hispanic or Latino, Not Hispanic or Latino · **Gender identity**: Man, Woman |
-| 2. Diabetes | **Study cohort: Included** / **Control cohort: Excluded** | Domains → **Condition** → 🔍 search *diabetes mellitus* → select **Diabetes mellitus** |
-| 3. Alive | **Excluded** | Demographics → **Deceased** |
-
-Click **Apply**. The participant count updates.
-
-### 3. Save a data snapshot
-
-**Save data snapshot** (top right), then:
-
-1. **Select data:**
-   - **Demographics**
-   - **+ Browse more data** → **Surveys** → the two PTSD questions: *"Are you still seeing a doctor or health care provider for post-traumatic stress disorder (PTSD)?"* and *"Are you currently prescribed medications and/or receiving treatment for post-traumatic stress disorder (PTSD)?"*
-   - **+ Browse more data** → **Labs and Measurements** → **BMI**, **systolic blood pressure**, **LDL cholesterol**, **HbA1c**
-2. **File format:** *Queries for the cohort (IPYNB) with R Notebook*
-3. **Destination bucket:** your bucket → **Save**
-
-Repeat steps 1 to 3 for the **control** cohort (group 2 set to **Excluded**).
-
-### 4. Use the exports with these notebooks
-
-Run each exported notebook once: it saves CSV files to your bucket under `bq_exports/`. Then follow **"Optional: use a Data Explorer export instead"** at the end of notebook **1.1**: it renames the columns and saves each cohort with the same file names as the SQL version (`person_study.csv`, `person_control.csv`…), so notebooks 2.0 to 3.4 work unchanged.
-
-> **To confirm in the Workbench:** where the PTSD questions and the four measurements appear under **+ Browse more data**, and that **Deceased** can be used as an exclusion. Menus may differ slightly.
->
-> **Counts won't exactly match the SQL version.** Data Explorer and the Cohort Builder SQL in notebook 1.1 calculate age and match diagnosis codes in slightly different ways. Both are fine for learning; just use one method consistently.
-
-## Already have data from the earlier notebooks?
-
-If you ran the earlier (classic Workbench) versions of these notebooks, your saved CSV files **work as they are**: they use the same file names (`person_study.csv`, `survey_control.csv`, `condition_arranged.csv`…). Set `BUCKET_NAME` in `aou_setup.R` to the bucket that holds them (in a migrated workspace, the one named like `rw-migration-aou-rw-…`), run **0.0**, then **skip 1.1 and 1.2** and start at **2.0**.
-
-Those files come from the older dataset (CDR v8), so results won't match a fresh CDR v9 run. **Don't combine them with CDR v9 data:** participant IDs changed between v8 and v9, so v8 files can't be joined to v9 tables or files. The earlier notebooks themselves are in [`archive/`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive). The current core notebooks are in `core/`.
+Files saved by earlier versions (`person_study.csv`, `final_analysis.csv` with diabetes of any type, …) **don't work** with the current notebooks: the cohort, file names, and columns have changed. Files saved from CDR v8 also can't be combined with CDR v9 data, because participant IDs changed between v8 and v9. The earlier notebooks are in [`archive/`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive) and in the repository's history.
 
 ## Data use
 
