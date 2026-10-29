@@ -83,9 +83,15 @@ quarto render "Intro to workbench 2.0/Introduction.qmd"
 
 Styling is in `custom.scss`.
 
-## Notebooks: Example Analysis Workflow
+## Notebooks
 
-Short R notebooks that walk through a complete study comparing people **with** and **without diabetes**, including time to chronic kidney disease (CKD). Each notebook does one thing, so each can be taught as its own short class.
+R and Python notebooks in **series**, in `notebooks/`: each notebook does one thing, so each can be taught as its own class.
+
+- **`notebooks/core/`** (1.1–3.4): a complete study comparing people **with** and **without diabetes**, including time to chronic kidney disease (CKD). Being rewritten for one shared type 2 diabetes cohort.
+- **`notebooks/omics/`** (4.1–4.7): genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, and proteomics, around type 2 diabetes and the *TCF7L2* variant rs7903146.
+- Planned: **surveys** (5.x) and **wearables** (6.x).
+
+The core series:
 
 | Notebook | What it does | Class |
 |---|---|---|
@@ -101,7 +107,7 @@ Short R notebooks that walk through a complete study comparing people **with** a
 
 **Variables used:** age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.
 
-**Full instructions**, including how to build the same cohorts in **Data Explorer**, are in [`notebooks/README.md`](notebooks/README.md).
+**Full instructions**, the omics series, and how to build the same cohorts in **Data Explorer** are in [`notebooks/README.md`](notebooks/README.md).
 
 The earlier versions of the notebooks (classic Workbench) are in `notebooks/archive/`.
 
@@ -112,12 +118,12 @@ The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They
 1. Create a workspace on the [Researcher Workbench](https://workbench.verily.com/), add the *All of Us* Controlled Tier data collection, and create a **bucket** on the Resources tab.
 2. Get the notebooks into your workspace, either way:
    - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward.
-   - **Download and upload:** download the `notebooks/` files from GitHub, **including `aou_setup.R`**, and upload them to one folder in your app.
-3. Launch an R app (e.g., AoU Jupyter with an R kernel).
+   - **Download and upload:** download the whole `notebooks/` folder from GitHub and upload it **with its subfolders**: the notebooks in `core/` and `omics/` load `aou_setup.R` and `sql/` from the folder above.
+3. Launch an app (e.g., AoU Jupyter, which has R and Python kernels).
 4. Open **`0.0 setup`** and follow it: it has you edit two lines in `aou_setup.R`.
-5. Run the notebooks in order: `1.1` → `1.2` → `2.0` → `3.1` to `3.4`. The queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files.
+5. Run a series in order: core `1.1` → `1.2` → `2.0` → `3.1` to `3.4` (the queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files), or omics `4.1` → `4.7`.
 
-**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`, `survminer`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
+**R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 
 ## Data Use
 
