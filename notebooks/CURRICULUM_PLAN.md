@@ -51,7 +51,23 @@ The cohort SQL lives in **one shared file**, `notebooks/sql/t2d_cohort.sql`, tha
 
 ## 3. The notebooks
 
-### Core series (R): rewrite of the current notebooks
+### Folder layout (D19)
+
+```
+notebooks/
+├── 0.0 setup.ipynb        ← "start here", stays at the top
+├── README.md, CURRICULUM_PLAN.md
+├── aou_setup.R, aou_setup.py, sql/   ← shared by every series
+├── core/        1.1 – 3.4
+├── omics/       4.1 – 4.7
+├── surveys/     5.1 – 5.3
+├── wearables/   6.1 – 6.3
+└── archive/     old versions
+```
+
+Every notebook in a series folder loads `../aou_setup.R` (or `../aou_setup.py`) and `../sql/t2d_cohort.sql`. The core notebooks were moved into `core/` on 2026-10-29 (still the current versions, to be rewritten there).
+
+### Core series (R): rewrite of the current notebooks, in `notebooks/core/`
 
 | Notebook | What it does | Change from now |
 |---|---|---|
@@ -81,7 +97,7 @@ Each starts with a **short cohort section** (the shared SQL, limited to people w
 | **4.6 proteomics** | R | Protein levels in type 2 diabetes | `multiomics/` proteomics |
 | **4.7 rnaseq_proteomics** | R | Do genes and their proteins change together? | both |
 
-Supporting files: `notebooks/sql/t2d_cohort.sql` (shared query, used by every notebook); in `notebooks/omics/`: `aou_setup.py` (Python version of `aou_setup.R`), and `README.md` (the series overview, data map, and decisions log below).
+Supporting files: `notebooks/sql/t2d_cohort.sql` (shared query, used by every notebook); `notebooks/aou_setup.py` (Python settings, read from `aou_setup.R`); `notebooks/omics/README.md` (the series overview; to do).
 
 ### Series 5: survey data (new, in `notebooks/surveys/`)
 
@@ -106,6 +122,9 @@ Apple HealthKit data (fewer participants) can be added later.
 ### Every notebook includes
 
 - Learning objectives, time, and what it uses and saves
+- **Analysis at a glance** (question, the test, why this test, what we conclude, what it can't tell us, connections to other classes)
+- A **Time and cost** box: class time, run time with the slow steps, data cost, app cost ($0.27/hour running; disk about $0.70/day even when stopped), tips to spend less
+- For omics data: **check the normalization** (and batch effects), not just run it; sensitivity analyses for choices like outliers and covariates
 - A plain-language **concepts primer**
 - An explanation of **why** for every step, not just how
 - **Read the output** guides after each result
@@ -136,6 +155,7 @@ Apple HealthKit data (fewer participants) can be added later.
 | D15 | Follow-up from **EHR dates**: entry at the first relevant date, censoring at the earlier of the last EHR date and death | Follow-up should only count time when a diagnosis could have been recorded; `observation_period` also counts survey dates | Decided (details below this table) |
 | D12 | Rewrite the existing classes' queries too | They haven't been taught or shared yet, so every class can use one cohort | Decided |
 | D13 | Split 2.0 into **2.1 clean, 2.2 reshape, 2.3 join_and_bind** | Fills gaps (join types, deduplication, pivot longer, non-answer codes, impossible values) in short, single-purpose notebooks | Decided |
+| D19 | **One folder per series** (`core/`, `omics/`, `surveys/`, `wearables/`); 0.0 setup and the shared files stay in `notebooks/` | Each series works on its own; every notebook loads setup the same way (`../`) | Decided and done 2026-10-29 |
 
 ### Follow-up dates (for 3.4, and as background in 1.2)
 

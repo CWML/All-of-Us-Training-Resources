@@ -1,8 +1,10 @@
 # =============================================================================
 # aou_setup.R: shared settings and helper functions for the example notebooks
 #
-# Every notebook starts with:  source("aou_setup.R")
-# Keep this file in the same folder as the notebooks.
+# Notebooks in the series folders (core/, omics/, ...) start with:
+#   source("../aou_setup.R")
+# and 0.0 setup, next to this file, with source("aou_setup.R").
+# Keep this file in notebooks/, with sql/ and the series folders.
 # =============================================================================
 
 # ---- 1. EDIT THESE TWO SETTINGS ---------------------------------------------
