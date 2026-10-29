@@ -30,6 +30,12 @@ website:
         href: pages/workspace/workspaces.qmd
       - text: "Data"
         href: pages/data/data-collections.qmd
+      - text: "Courses"
+        menu:
+          - text: "All courses"
+            href: pages/courses/index.qmd
+          - text: "Omics series"
+            href: pages/courses/omics/index.qmd
       - text: "Learn by Example"
         href: pages/examples/tutorial-workspaces.qmd
       - text: "Optional Extras"
@@ -76,6 +82,16 @@ website:
       contents:
         - pages/examples/tutorial-workspaces.qmd
         - pages/examples/notebooks.qmd
+    - id: courses
+      title: "Courses"
+      style: docked
+      contents:
+        - pages/courses/index.qmd
+        - section: "Omics"
+          contents:
+            - pages/courses/omics/index.qmd
+            - pages/courses/omics/omics-for-beginners.qmd
+            - pages/courses/omics/4-1-dna-intro.qmd
     - id: extras
       title: "Optional Extras"
       style: docked

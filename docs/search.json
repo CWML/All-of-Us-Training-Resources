@@ -880,6 +880,248 @@
     ]
   },
   {
+    "objectID": "pages/courses/omics/omics-for-beginners.html",
+    "href": "pages/courses/omics/omics-for-beginners.html",
+    "title": "Omics for Beginners",
+    "section": "",
+    "text": "New to genetics and omics? This page explains everything the omics series assumes, in plain language. You don’t need to read it all at once: each class links back to the parts it uses.",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#the-big-picture-dna-rna-protein",
+    "href": "pages/courses/omics/omics-for-beginners.html#the-big-picture-dna-rna-protein",
+    "title": "Omics for Beginners",
+    "section": "The big picture: DNA → RNA → protein",
+    "text": "The big picture: DNA → RNA → protein\nThink of a cell as a kitchen:\n\n\n\n\n\n\n\n\n\n\nIn the kitchen\nIn the cell\nMeasured in All of Us by\n\n\n\n\nDNA\nthe cookbook: every recipe, the same in every kitchen of the house\nall the instructions, the same in nearly every cell, fixed from birth\nwhole-genome sequencing, genotyping arrays (classes 4.1–4.4)\n\n\nRNA\na photocopy of one recipe, made when it’s needed\na working copy of one gene; more copies = a more active gene\nRNA sequencing (RNA-seq) of blood (class 4.5)\n\n\nProtein\nthe dish that gets made\nthe product: hormones, enzymes, signals\nOlink proteomics, blood plasma (class 4.6)\n\n\n\nDNA ──(copied)──→ RNA ──(translated)──→ protein\nfixed             changes with          changes with\nfrom birth        time, disease,        time, disease,\n                  medicines             medicines\nThis is why the classes ask different questions of each layer:\n\nDNA tells you about lifelong risk: a variant you’re born with can’t be caused by diabetes. That makes genetic results useful for asking about cause.\nRNA and proteins show what’s happening now, including the consequences of a disease and its treatment. They’re harder to read as causes.",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#genome-vocabulary",
+    "href": "pages/courses/omics/omics-for-beginners.html#genome-vocabulary",
+    "title": "Omics for Beginners",
+    "section": "Genome vocabulary",
+    "text": "Genome vocabulary\n\n\n\n\n\n\n\n\nWord\nMeans\nExample in the series\n\n\n\n\nGenome\nall of a person’s DNA: about 3 billion “letters” (A, C, G, T) on 23 pairs of chromosomes\n\n\n\nGene\na stretch of DNA with the instructions for one product\nTCF7L2, on chromosome 10\n\n\nPosition\nwhere a letter is: chromosome:position, on a reference genome map. All of Us uses GRCh38\nchr10:112998590\n\n\nVariant\na place where people’s DNA differs\nrs7903146\n\n\nSNP (“snip”)\na variant where one letter differs\nC or T at rs7903146\n\n\nIndel\na few letters inserted or deleted\n\n\n\nSTR\na short tandem repeat: a short pattern repeated a different number of times in different people. Harder to sequence\nthe top hit in 4.2\n\n\nAllele\none version of a variant. REF = the one in the reference genome; ALT = the other(s)\nREF C, ALT T\n\n\nMulti-allelic\na variant with more than one ALT allele\nrs7903146 is C, T, or G in All of Us\n\n\nGenotype\na person’s two alleles (one from each parent), often counted as 0, 1, or 2 copies of one allele\nC/T = 1 copy of T\n\n\nAllele frequency\nhow common an allele is in a group\nT: about 28% of alleles in All of Us\n\n\nrsID\na standard name for a known variant. All of Us files name variants by position instead\nrs7903146 = chr10:112998590:C\n\n\nLinkage disequilibrium (LD)\nnearby variants are inherited together, so they move together. Measured by r² from 0 to 1\nwhy a GWAS peak has many variants\n\n\nGenetic ancestry\nestimated from DNA; not the same as self-reported race or ethnicity\ngroups afr, amr, eas, eur, mid, sas\n\n\nPrincipal components (PCs)\na few numbers per person that summarise their genetic ancestry; used to adjust for it\nPC1 to PC10 in the models",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#the-data-in-all-of-us-v9",
+    "href": "pages/courses/omics/omics-for-beginners.html#the-data-in-all-of-us-v9",
+    "title": "Omics for Beginners",
+    "section": "The data in All of Us (v9)",
+    "text": "The data in All of Us (v9)\n\n\n\n\n\n\n\n\n\nData\nWhat it is\nParticipants\nClasses\n\n\n\n\nShort-read whole genomes\nthe whole genome, read in short pieces\nabout 535,000\n4.1–4.4\n\n\nLong-read whole genomes\nlong pieces: better for large, complex changes\nabout 14,500\n\n\n\nGenotyping arrays\na chip that checks about 1.9 million chosen positions\nabout 554,000\n\n\n\nRNA-seq\ngene activity in whole blood\nabout 9,000\n4.5, 4.7\n\n\nProteomics\nabout 5,400 proteins in blood plasma (Olink Explore HT)\nabout 10,000\n4.6, 4.7\n\n\n\nAlmost everyone with RNA-seq also has proteomics, so the two can be compared in the same people (class 4.7).\nAll of Us also provides ready-made results:\n\nGenetic ancestry and PCs for every genome, and a list of related people to remove\neQTLs and pQTLs: variants linked to gene activity and to protein levels\nAll by All: association results for thousands of phenotypes, in a free public browser (allbyall.researchallofus.org)",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#the-analyses",
+    "href": "pages/courses/omics/omics-for-beginners.html#the-analyses",
+    "title": "Omics for Beginners",
+    "section": "The analyses",
+    "text": "The analyses\n\n\n\n\n\n\n\n\nAnalysis\nAsks\nClass\n\n\n\n\nGWAS (genome-wide association study)\nwhich variants are linked to one disease?\n4.2, 4.3\n\n\nPheWAS (phenome-wide association study)\nwhich diseases are linked to one variant?\n4.4\n\n\nDifferential expression\nwhich genes are more or less active in one group?\n4.5\n\n\nDifferential abundance\nwhich proteins are higher or lower in one group?\n4.6\n\n\neQTL / pQTL\nwhich variants change a gene’s activity / a protein’s level?\n4.5, 4.6\n\n\n\nThey’re all the same idea underneath: one regression per thing tested (per variant, disease, gene, or protein), then a correction for having done many tests.",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#statistics-youll-meet",
+    "href": "pages/courses/omics/omics-for-beginners.html#statistics-youll-meet",
+    "title": "Omics for Beginners",
+    "section": "Statistics you’ll meet",
+    "text": "Statistics you’ll meet\n\n\n\n\n\n\n\nTerm\nMeans\n\n\n\n\nLogistic regression\na model for a yes/no outcome (diabetes: yes or no). Used in the GWAS and PheWAS\n\n\nLinear regression\na model for a number (gene activity, protein level). Used for RNA and proteins\n\n\nOdds ratio (OR)\nfrom logistic regression: how the odds of the outcome change per copy of an allele. 1 = no effect; 1.25 = 25% higher odds\n\n\nBeta\nthe effect on the log scale. For logistic regression, OR = e^beta (e.g. beta 0.22 → OR 1.25)\n\n\nLog₂ scale\neach step of 1 means twice as much. RNA (log-CPM) and protein (NPX) values use it. A logFC of 1 = twice as high; −1 = half\n\n\np-value\nhow surprising the result would be if there were no effect. Small = strong evidence\n\n\nMultiple testing\ntesting thousands of things gives some small p-values by chance alone\n\n\nBonferroni\na strict fix: divide 0.05 by the number of tests\n\n\nGenome-wide significance\np &lt; 5 × 10⁻⁸: Bonferroni for about a million independent variants\n\n\nFDR (false discovery rate, adjusted p-value)\na gentler fix used for genes and proteins: among results with FDR &lt; 0.05, about 5% are expected to be false\n\n\nCovariate\nanother variable in the model, to adjust for (age, sex, PCs)\n\n\nConfounding\na third variable that affects both things you’re comparing, creating a misleading link. Ancestry is the classic one in genetics\n\n\nPower\nthe chance of detecting a real effect. Small samples + small effects = low power\n\n\nSelection bias\na misleading link created by how the sample was chosen (class 4.4)\n\n\nCollider bias\na misleading link created by adjusting for a common effect of two things (class 4.4)",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#normalization-whats-done-for-you-and-what-you-check",
+    "href": "pages/courses/omics/omics-for-beginners.html#normalization-whats-done-for-you-and-what-you-check",
+    "title": "Omics for Beginners",
+    "section": "Normalization: what’s done for you, and what you check",
+    "text": "Normalization: what’s done for you, and what you check\nNormalization removes technical differences between samples (how deeply each was sequenced, which plate it was on), so the differences left are biological. Each data type needs something different:\n\n\n\n\n\n\n\n\n\nLayer\nDone before you get the data\nWhat you do in class\nWhat you check\n\n\n\n\nGenotypes (4.1–4.4)\nquality control of samples and variants\nvariant QC (frequency, missingness, Hardy-Weinberg); adjust for ancestry PCs\nthat the known variant replicates; the Q-Q plot\n\n\nRNA counts (4.5)\nreads aligned to the genome and counted per gene\nnormalize yourself: TMM factors (edgeR), log-CPM, voom weights\nTMM factors near 1; boxplots line up after normalizing; the voom trend; PCA\n\n\nProtein NPX (4.6)\nplate-control and batch normalization; already on a log₂ scale\nuse as is (don’t normalize twice)\nplates line up; how much plate explains of the main patterns; outliers; results with plate in the model\n\n\n\n\n\n\n\n\n\nImportantThe statistics packages don’t normalize for you\n\n\n\nlimma, used for both RNA and proteins, fits a model to whatever numbers you give it. It does not normalize. If you skip normalization, or normalize the wrong way, limma will still run and still give p-values: they’ll just be wrong. That’s why the classes show the normalization and check it, rather than hiding it in one line.",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#the-tools",
+    "href": "pages/courses/omics/omics-for-beginners.html#the-tools",
+    "title": "Omics for Beginners",
+    "section": "The tools",
+    "text": "The tools\n\n\n\n\n\n\n\n\nTool\nWhat it is\nClasses\n\n\n\n\nBigQuery\nGoogle’s database, where the All of Us health records, surveys, and measurements live. Queried with SQL\nall\n\n\nPLINK 2\na fast command-line program for genetic data. We run it from R with system()\n4.1, 4.2, 4.4, 4.5\n\n\nHail\na Python library for very large genomic data, built on Spark; All of Us’s own tool\n4.3\n\n\nedgeR\nan R package (Bioconductor) for RNA-seq counts: filtering and TMM normalization\n4.5\n\n\nlimma\nan R package (Bioconductor) that fits a linear model for every gene or protein at once, sharing information between them\n4.5–4.7\n\n\nBioconductor\na collection of R packages for biology, installed with BiocManager::install()\n4.5–4.7",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#file-formats",
+    "href": "pages/courses/omics/omics-for-beginners.html#file-formats",
+    "title": "Omics for Beginners",
+    "section": "File formats",
+    "text": "File formats\n\n\n\n\n\n\n\n\nFormat\nHolds\nClasses\n\n\n\n\n.pgen / .pvar / .psam\nPLINK 2: genotypes (compressed) / variants / samples\n4.1, 4.2\n\n\n.bed / .bim / .fam\nthe older PLINK 1 format, about 10 times bigger\n4.1\n\n\n.vcf.gz, .bgen\nother standard genotype formats\n4.1\n\n\nHail MatrixTable (.mt)\na folder: variants × people, for Hail\n4.3\n\n\n.gct.gz\nan expression matrix: genes × samples\n4.5\n\n\n.parquet\na compressed table format that can be read in pieces\n4.5\n\n\n.tsv.gz\na compressed tab-separated table\n4.5, 4.6",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/omics-for-beginners.html#how-to-read-the-code",
+    "href": "pages/courses/omics/omics-for-beginners.html#how-to-read-the-code",
+    "title": "Omics for Beginners",
+    "section": "How to read the code",
+    "text": "How to read the code\nThe notebooks repeat a few patterns. Here’s one PLINK command from class 4.1, line by line:\n1plink_cmd &lt;- str_glue(\n2  \"plink2 --pfile {shQuote(file.path(pgen_dir, 'acaf_threshold.chr10'))} \",\n3  \"--keep {shQuote(keep_file)} \",\n4  \"--chr 10 --from-bp {REGION_START} --to-bp {REGION_END} \",\n5  \"--make-pgen --freq \",\n6  \"--out {shQuote(out_prefix)}\"\n)\n7plink_output &lt;- system(plink_cmd, intern = TRUE)\n\n1\n\nstr_glue() builds one long piece of text (the command), filling in anything inside { } with the value of an R variable.\n\n2\n\nRead the PLINK 2 files for chromosome 10. shQuote() puts quotes around the file path, in case it contains spaces.\n\n3\n\nKeep only the people listed in keep_file: our sample.\n\n4\n\nKeep only the variants in this region of chromosome 10 (positions in base pairs).\n\n5\n\nSave the result as new, small PLINK 2 files, and calculate each variant’s allele frequency.\n\n6\n\nThe start of the new files’ names.\n\n7\n\nsystem() runs the command as if you’d typed it in the Terminal. intern = TRUE keeps what PLINK prints, so the notebook can show it.\n\n\nOther patterns you’ll see:\n\n\n\n\n\n\n\nCode\nMeans\n\n\n\n\nx %&gt;% f()\n“take x, then do f() to it”: the pipe, read as “then”\n\n\nsource(\"../aou_setup.R\")\nload the shared settings and helper functions from the folder above\n\n\nrun_query(sql)\nsend SQL to BigQuery, get a data frame back (a helper in aou_setup.R)\n\n\nread_tsv(..., col_types = cols(.default = \"c\"))\nread a table with every column as text, so long IDs stay exact\n\n\nhide_small_counts()\nblank out counts of 1 to 20, as All of Us requires before sharing\n\n\n&lt;details&gt; … Show answer\nin the notebooks: a hidden answer you click to open",
+    "crumbs": [
+      "Omics",
+      "Omics for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html",
+    "href": "pages/courses/omics/4-1-dna-intro.html",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "",
+    "text": "Omics series, class 1 of 7 · R + PLINK · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#overview",
+    "href": "pages/courses/omics/4-1-dna-intro.html#overview",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Overview",
+    "text": "Overview\nAll of Us has sequenced the genomes of more than 535,000 participants. This class answers the first questions anyone has about that data: what is it, where is it, who has it, and how do I connect it to people’s health records? It ends with a first look at rs7903146, the variant in the gene TCF7L2 that is the strongest known genetic risk factor for type 2 diabetes.\n\nWhy this class matters\nEvery later genetics class (4.2–4.4) depends on what happens here: the cohort linked to genomes, the related people removed, the genetic ancestry that every model adjusts for, and a small extract of the genome that’s cheap to work with. Doing these steps carefully once, and understanding them, prevents the most common mistakes in genetic studies.\n\n\nBy the end you’ll be able to\n\nExplain DNA, variants, alleles, and genotypes in plain language\nDescribe the All of Us genomic data and its file formats\nFind the genomic files, and the ready-made ancestry and relatedness files\nLink genomes to the type 2 diabetes cohort and choose a fair sample\nUse PLINK 2 to extract one region of the genome, and look at one famous variant\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhere is the genomic data, who in our cohort has it, and is the T allele of rs7903146 more common in people with type 2 diabetes?\n\n\n🧪 The analysis\nCounts and allele frequencies in cases and controls; a first logistic regression of case status on the number of T alleles (unadjusted)\n\n\n🎯 Why\nBefore any genome-wide analysis, check that the genomes link to the cohort and that a known signal shows up. Logistic regression, because the outcome is yes/no\n\n\n✅ What we conclude\nThe direction and rough size of a well-known association, and a sample ready for 4.2\n\n\n⚠️ What it can’t tell us\nThe effect after accounting for age, sex, and ancestry; anything about other variants; whether the variant causes diabetes\n\n\n🔗 Connections\nSaves the sample and files used by 4.2 and 4.3; its ancestry PCs are used in 4.2–4.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 5 minutes to run every cell. Slowest: the cohort query (1–2 minutes)\n\n\n💰 Cost\nabout $1 to $2 per student: one BigQuery query (under $1) plus the app (about $0.27 an hour)\n\n\n📋 Before class\na Controlled Tier workspace with a bucket; the course notebooks in the app; 0.0 setup run once",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#class-plan",
+    "href": "pages/courses/omics/4-1-dna-intro.html#class-plan",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: DNA, variants, genotypes, the All of Us genomic data, TCF7L2\nlisten, ask\n\n\n0:20\n2. A tour of the genomic data: folders, formats, file sizes\n✋ Try It Out 1 (5 min)\n\n\n0:35\n3. The cohort, and who has a genome: the cohort query, matching IDs, removing related people, the sample\nrun the cells; ✋ Try It Out 2 (5 min)\n\n\n1:00\n☕ Break (5 min)\n\n\n\n1:05\n4. Genetic ancestry: PCs, why ancestry matters, the PC plot\nrun the cells\n\n\n1:20\n5. Extract one region with PLINK\n✋ Try It Out 3 (5 min)\n\n\n1:40\n6. One famous variant: rs7903146\nrun the cells; ✋ Try It Out 4 (5 min)\n\n\n1:55\nWrap-up: what we found, what’s next\ndiscuss",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#key-concepts",
+    "href": "pages/courses/omics/4-1-dna-intro.html#key-concepts",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Key concepts",
+    "text": "Key concepts\nThe essentials are below. Omics for Beginners has the full glossary.\n\nVariants and genotypes\nPeople’s DNA is 99.9% the same. The places where it differs are variants. At rs7903146, people have a C or a T (and, very rarely, a G). Each person has two copies (one from each parent), so their genotype is counted as 0, 1, or 2 copies of the T allele:\n\n\n\nGenotype\nCopies of T\n\n\n\n\nC/C\n0\n\n\nC/T\n1\n\n\nT/T\n2\n\n\n\nEach extra copy of T raises the odds of type 2 diabetes by about 30 to 40% in large published studies. TCF7L2 affects how the pancreas releases insulin.\n\n\nHow the genomic files are organised\nAll of Us provides the genomes in several formats, one set of files per chromosome. We use the PLINK 2 format, a set of three files:\nacaf_threshold.chr10.pgen   genotypes (compressed): 80 GB\nacaf_threshold.chr10.pvar   the variants: one row each\nacaf_threshold.chr10.psam   the people: one row each\nACAF is the subset of common variants (above about 1% frequency in at least one ancestry group).\nOne chromosome is 80 GB, so the class never reads a whole one: PLINK jumps to the region we need and reads only that.\n\n\nWhy remove related people, and adjust for ancestry?\n\nRelatives share long stretches of DNA, which makes results look more certain than they are. All of Us provides a list of people to remove so that no two remaining people are closely related.\nGenetic ancestry affects both allele frequencies and disease rates. Without accounting for it, a variant can look linked to a disease just because both are more common in one group (confounding). All of Us provides each person’s ancestry group and principal components (PCs): a few numbers that summarise their genetic ancestry, used as covariates from 4.2 on.",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-1-dna-intro.html#follow-along-in-the-workbench",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nOpen your workspace on the Researcher Workbench → Apps tab → start your AoU Jupyter app (or create one with the default settings) → Open.\nGet the newest notebooks: in JupyterLab, File → New → Terminal, then:\ncd ~/repos/All-of-Us-Training-Resources\ngit checkout -- notebooks/\ngit stash && git pull && git stash pop\nThe first line discards any outputs saved in your copy of the notebooks; the stash keeps your bucket name in aou_setup.R.\nIn the file browser on the left, open repos → All-of-Us-Training-Resources → notebooks → omics → 4.1 dna_intro.ipynb.\nCheck the kernel (top right of the notebook) says R. If it doesn’t, click it and choose R.\nRun the first code cell (Shift + Enter). It should end with Setup done, followed by your dataset and data folder.\n\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\nThese steps will get screenshots once we capture them, with names, the app name, and emails painted out:\n\nThe Apps tab with the app running, and its Open button\nJupyterLab’s File → New → Terminal\nThe file browser opened to notebooks/omics/\nThe kernel name, top right of the notebook\nThe output of the setup cell",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#try-it-out",
+    "href": "pages/courses/omics/4-1-dna-intro.html#try-it-out",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 2\n\n\n\nRun the cells in Part 2 up to the file-size table. How big is chromosome 10 in the PLINK 2 format, and in the PLINK 1 format? Why might a format matter for cost?\n✅ Check: the table has two rows, both in GB, and PLINK 1 is about 10 times bigger.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 3, “Your turn”\n\n\n\nHow many eligible people were removed because they’re on the relatedness list? This is the exercise at the end of Part 3 in the notebook.\nHint: count cases and controls with a genome, split by whether their ID is in related$sample_id.\n✅ Check: your table has a TRUE row (removed) and a FALSE row (kept). The answer is under Show answer in the notebook.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 3 · 5 minutes · Part 5\n\n\n\nRun the PLINK cells. In the log lines PLINK prints, find how many samples it kept and how many variants are in the region.\n✅ Check: 5,000 samples (or slightly fewer), and roughly 14,000 variants.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 4 · 5 minutes · Part 6, “Your turn”\n\n\n\nIs the T allele equally common in every ancestry group? This is the exercise at the end of Part 6 in the notebook.\n✅ Check: one row per ancestry group, with an allele frequency between 0 and 1. Don’t share rows where people is 1 to 20.",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#code-walk-through",
+    "href": "pages/courses/omics/4-1-dna-intro.html#code-walk-through",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Code walk-through",
+    "text": "Code walk-through\nThe key steps, line by line. The notebook explains every cell; these are the ones beginners most often ask about.\n\nLinking genomes to the cohort\n1cohort &lt;- run_query(str_glue(cohort_sql, AGE_DATE = \"2025-01-01\")) %&gt;%\n2  mutate(person_id = as.character(person_id))\n\npsam &lt;- read_tsv(file.path(pgen_dir, \"acaf_threshold.chr10.psam\"),\n3                 col_types = cols(.default = \"c\"))\n4genome_ids &lt;- psam[[\"#IID\"]]\n\n5cohort &lt;- cohort %&gt;% mutate(has_genome = person_id %in% genome_ids)\n\n1\n\nRun the shared type 2 diabetes query (in notebooks/sql/t2d_cohort.sql), with age calculated on 2025-01-01, the v9 data cutoff.\n\n2\n\nTurn person_id into text. The genome files store IDs as text, and a number never matches text in R, even with the same digits.\n\n3\n\nRead the .psam file (one row per person with a genome), with every column as text.\n\n4\n\nThe ID column is called #IID. The # is part of its name, so it’s written in quotes inside [[ ]].\n\n5\n\n%in% asks, for each person in the cohort: is your ID in the genome list? The answer (TRUE or FALSE) becomes a new column.\n\n\n\n\nChoosing a fair sample\neligible &lt;- cohort %&gt;%\n1  filter(cohort %in% c(\"case\", \"control\"),\n2         has_genome,\n3         !person_id %in% related$sample_id,\n4         between(age, 18, 100),\n5         sex_at_birth %in% c(\"Female\", \"Male\"))\n\n6set.seed(2026)\ngwas_samples &lt;- eligible %&gt;%\n7  arrange(person_id) %&gt;%\n  group_by(cohort) %&gt;%\n8  slice_sample(n = 2500) %&gt;%\n  ungroup()\n\n1\n\nKeep cases and controls (drop the “excluded” group, e.g. people with type 1 diabetes).\n\n2\n\nKeep people with a genome.\n\n3\n\nDrop people on the relatedness list (! means “not”).\n\n4\n\nAges 18 to 100: a few recorded ages above 100 are probably data errors.\n\n5\n\nSex at birth is a covariate later, so it must be recorded as Female or Male.\n\n6\n\nFix the random number generator, so everyone gets the same “random” sample.\n\n7\n\nSort first: BigQuery doesn’t return rows in a fixed order, and the same seed only gives the same sample if the rows start in the same order.\n\n8\n\nPick 2,500 at random within each group (because of group_by()).\n\n\n\n\nCounting the T allele\n1write_lines(\"chr10:112998590:C\\tT\", allele_file)\n\nsystem(str_glue(\n  \"plink2 --pfile {shQuote(out_prefix)} \",\n2  \"--chr 10 --from-bp 112998590 --to-bp 112998590 \",\n3  \"--export A --export-allele {shQuote(allele_file)} \",\n  \"--out {shQuote(lead_prefix)}\"\n), intern = TRUE)\n\n1\n\nA one-line file: the variant’s ID and the allele to count. \\t is a tab.\n\n2\n\nJust one position: rs7903146.\n\n3\n\n--export A writes each person’s genotype as 0, 1, or 2 copies of an allele. Because rs7903146 has two ALT alleles (T and G), PLINK would count the REF allele (C) by default; --export-allele tells it to count T.\n\n\nThe PLINK command that extracts the region is explained line by line on the Omics for Beginners page.",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#what-we-found",
+    "href": "pages/courses/omics/4-1-dna-intro.html#what-we-found",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9). Your numbers will be similar, but not identical if your sample differs.\n\nThe cohort and the genomes\n\n\n\n\nCases\nControls\n\n\n\n\nIn the cohort, with a genome\n70,020\n287,628\n\n\nEligible (unrelated, 18–100, sex recorded)\n63,310\n264,250\n\n\nOur sample\n2,500\n2,500\n\n\n\n535,662 people had a short-read genome. Chromosome 10 was 80 GB in the PLINK 2 format and 846 GB in PLINK 1. PLINK extracted the TCF7L2 region for our 5,000 people in about 10 seconds: 14,430 variants.\n💬 Discuss: most people in our cohort have a genome, but not all. Who might be missing, and could that matter?\n\n\nGenetic ancestry of our sample\n\n\n\nAncestry group\nCases\nControls\n\n\n\n\nAfrican (afr)\n569\n393\n\n\nAdmixed American (amr)\n518\n372\n\n\nEast Asian (eas)\n65\n77\n\n\nEuropean (eur)\n1,323\n1,622\n\n\nSouth Asian (sas)\n20 or fewer\n29\n\n\nMiddle Eastern (mid)\n20 or fewer\n20 or fewer\n\n\n\n💬 Discuss: cases include more people of African and Admixed American ancestry than controls do. Why does that make adjusting for ancestry important in 4.2?\n\n\nrs7903146\n\nIn All of Us as a whole, rs7903146 is multi-allelic: REF C, ALT T or G. About 28% of alleles are T; G is extremely rare.\nVariant IDs in the files are chromosome:position:REF (chr10:112998590:C), not rsIDs.\n\n\n\n\n\nCases\nControls\n\n\n\n\nT allele frequency\n0.301\n0.270\n\n\n\nOdds ratio per T allele (unadjusted): 1.17 (95% confidence interval 1.07 to 1.27; p = 0.0006).\n💬 Discuss: large published studies report about 1.3 to 1.4, mostly in people of European ancestry. Why might our first estimate be smaller? (Mixed ancestry, no adjustment, diagnosis codes as the case definition, younger controls who may develop diabetes later.) In 4.2, after adjustment, it rises to about 1.25.\n\n\n\n\n\n\nNoteWhy the first odds ratio was 0.86 (a lesson from testing)\n\n\n\n\n\nThe first time we ran this notebook, the odds ratio came out below 1 (0.86). The variant hadn’t changed: PLINK was counting the C allele, because for a multi-allelic variant it counts REF by default. 1 ÷ 0.857 = 1.17, the same result counted the other way. Always check which allele a result is “per copy” of: the column name in PLINK’s output ends with it (_T).",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#instructor-notes",
+    "href": "pages/courses/omics/4-1-dna-intro.html#instructor-notes",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nRun Part 3’s cohort query during Part 2’s discussion if the class is short on time: it takes 1–2 minutes.\nThe most common error is IDs stored as numbers. If --keep: 0 samples remaining, check that person_id was turned into text before keep.txt was written.\nStuck git pull: in our testing, a pull that looked stuck had actually finished. Press Enter before assuming it’s frozen.\nQuestions to expect: “Is genetic ancestry the same as race?” (No: one is estimated from DNA, the other is a social category people report.) “Why not use everyone?” (Cost and time: 5,000 people are enough to see the TCF7L2 signal.)\n\n\n\n\n\n\n\n\n\n\nTipInstructor tip: a newer approach to ancestry\n\n\n\n\n\nA newer method, genomic-relatedness-matched association (GRMA), compares people with their closest genetic relatives instead of adjusting for PCs (All of Us Office Hours, 2026-08-28). It’s a good discussion point on whether PCs remove all confounding.",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#key-takeaways",
+    "href": "pages/courses/omics/4-1-dna-intro.html#key-takeaways",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA variant is a place where people’s DNA differs; a genotype counts copies of an allele (0, 1, 2)\nAll of Us genomes are huge: read only the region you need\nThe participant ID links genomes to health records; IDs must be the same type (text) to match\nUse the ready-made relatedness and ancestry files instead of computing your own\nAlways check which allele a result counts",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#further-reading",
+    "href": "pages/courses/omics/4-1-dna-intro.html#further-reading",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Further reading",
+    "text": "Further reading\n\nAll by All browser: ready-made association results; search chr10-112998590-C-T for rs7903146\nPLINK 2 documentation\nAll of Us Data Browser: public summary counts\nThe All of Us CDR v9 data dictionary: the Genomic and Multi-omics File Paths tab lists where every file is",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-1-dna-intro.html#next",
+    "href": "pages/courses/omics/4-1-dna-intro.html#next",
+    "title": "4.1 Introduction to Genomic Data",
+    "section": "Next",
+    "text": "Next\n4.2 GWAS with PLINK: test every variant in the TCF7L2 region, adjusted for age, sex, and ancestry. The notebook is notebooks/omics/4.2 gwas_plink.ipynb; its companion page is coming.",
+    "crumbs": [
+      "Omics",
+      "4.1 Introduction to Genomic Data"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "All of Us Researcher Workbench 2.0",
@@ -920,6 +1162,103 @@
     "title": "All of Us Researcher Workbench 2.0",
     "section": "Contact",
     "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine\nEmail: maximilian.wegener@yale.edu\nFeedback is welcome. Found something unclear, out of date, or broken? Send us your feedback, or use the Feedback link at the top of every page.\n\n\nNext section: Get Started →"
+  },
+  {
+    "objectID": "pages/courses/index.html",
+    "href": "pages/courses/index.html",
+    "title": "Courses",
+    "section": "",
+    "text": "Each course is a series of classes. Every class is a Jupyter notebook you run in your own All of Us workspace, plus a page on this site with the overview, class plan, concepts, step-by-step Workbench instructions, and the results we found when we ran it.\nAll the series share one research question, type 2 diabetes, and one cohort definition, so what you learn in one carries over to the next.",
+    "crumbs": [
+      "Courses"
+    ]
+  },
+  {
+    "objectID": "pages/courses/index.html#how-a-class-works",
+    "href": "pages/courses/index.html#how-a-class-works",
+    "title": "Courses",
+    "section": "How a class works",
+    "text": "How a class works\n\nBefore class: set up your workspace and app once (see Get Started and Your Workspace), and run 0.0 setup.\nIn class: the instructor walks through the notebook. At each ✋ Try It Out you run the next cells or an exercise yourself.\nAfter class: stop your app, so it stops costing money.\n\n\n\n\n\n\n\nNoteThe notebooks and this site work together\n\n\n\nThe notebooks are self-contained: you can work through them on your own. This site adds what a notebook can’t do well: the class plan, diagrams, Workbench walk-throughs, “Try It Out” pauses, our results to compare with, and instructor notes.",
+    "crumbs": [
+      "Courses"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html",
+    "href": "pages/courses/omics/index.html",
+    "title": "Omics Series",
+    "section": "",
+    "text": "Seven classes on the All of Us genomic and multi-omics data. Together they ask: what can DNA, RNA, and proteins tell us about type 2 diabetes?\nThe thread through the series is one genetic variant, rs7903146, in the gene TCF7L2: the strongest known genetic risk factor for type 2 diabetes. We find it, test it, follow its effects across hundreds of diseases, and then look for it in gene activity and blood proteins.\nNew to omics? Start with Omics for Beginners: the words, the data types, and the tools, in plain language.",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html#the-classes",
+    "href": "pages/courses/omics/index.html#the-classes",
+    "title": "Omics Series",
+    "section": "The classes",
+    "text": "The classes\n\n\n\nClass\nLanguage\nThe question\nTime\n\n\n\n\n4.1 DNA intro\nR + PLINK\nWhat is the genomic data, and is rs7903146’s T allele more common in type 2 diabetes?\n120 min\n\n\n4.2 GWAS with PLINK\nR + PLINK\nWhich variants in the TCF7L2 region are linked to type 2 diabetes?\n120 min\n\n\n4.3 GWAS with Hail\nPython + Hail\nDoes a second tool give the same answer?\n120 min\n\n\n4.4 PheWAS\nR\nWhich diseases are linked to rs7903146?\n120 min\n\n\n4.5 RNA-seq\nR\nWhich genes are more or less active in blood in type 2 diabetes?\n120 min\n\n\n4.6 Proteomics\nR\nWhich blood proteins differ, and are they genetically controlled?\n120 min\n\n\n4.7 RNA and protein\nR\nDo RNA and protein tell the same story?\n120 min\n\n\n\nCompanion pages for 4.2–4.7 are coming. Their notebooks are ready now in the notebooks/omics/ folder on GitHub.",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html#how-the-classes-connect",
+    "href": "pages/courses/omics/index.html#how-the-classes-connect",
+    "title": "Omics Series",
+    "section": "How the classes connect",
+    "text": "How the classes connect\n4.1 DNA intro ──→ 4.2 GWAS (PLINK) ──→ 4.4 PheWAS\n                  4.3 GWAS (Hail)\n                  (same analysis, a check)\n\n4.5 RNA ──────┐\n              ├──→ 4.7 RNA + protein\n4.6 Protein ──┘\n\n4.2 and 4.3 reuse the sample that 4.1 saves. The other classes work on their own.\n4.4 starts from the variant found in 4.2, and checks it against All of Us’s ready-made All by All results.\n4.5 and 4.6 ask what changes in blood in people with diabetes; 4.7 compares the two.",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html#what-you-need",
+    "href": "pages/courses/omics/index.html#what-you-need",
+    "title": "Omics Series",
+    "section": "What you need",
+    "text": "What you need\n\nAn All of Us Controlled Tier workspace with a bucket, and the course notebooks in your app (clone the repository: see the Notebooks page).\nNotebook 0.0 setup, run once.\nThe default AoU Jupyter app (4 CPUs, 26 GB memory) is enough for every class. PLINK 2 and Hail are already installed.\n\n\n\n\n\n\n\nWarningDon’t pip install into the shared app\n\n\n\nIn our tests, installing the Python package PheTK replaced a package that Hail needs, and broke class 4.3. The notebooks install only what they need, in ways that don’t replace anything. If you install something yourself, check what pip says it’s uninstalling.",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html#what-it-costs",
+    "href": "pages/courses/omics/index.html#what-it-costs",
+    "title": "Omics Series",
+    "section": "What it costs",
+    "text": "What it costs\nEach student pays for their own workspace. Per class, expect about $1 to $2:\n\n\n\n\n\n\n\n\nCost\n\n\n\n\nData\nOne or two BigQuery queries (cents to about $1), and small parts of the genomic files\n\n\nThe app, while running\nAbout $0.27 an hour: about $0.55 for a 2-hour class\n\n\nThe app’s disk\nAbout $0.70 a day, even while the app is stopped\n\n\n\nStop your app after each class. Delete it when you’ve finished the series (save anything you need to your bucket first).\nPrices are the Workbench’s estimates for the default app, October 2026. You can see yours on the Apps tab when you create or edit an app.",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html#going-further-combining-the-classes",
+    "href": "pages/courses/omics/index.html#going-further-combining-the-classes",
+    "title": "Omics Series",
+    "section": "Going further: combining the classes",
+    "text": "Going further: combining the classes\nEach class answers one question. Combining them asks sharper ones. These methods are beyond the series, but the classes point to them:\n\n\n\n\n\n\n\n\nCombine\nTo ask\nMethod\n\n\n\n\nGWAS (4.2) + eQTLs (4.5)\nDoes the diabetes variant act by changing a gene’s activity?\ncolocalization\n\n\nGWAS (4.2) + pQTLs (4.6)\nDoes a protein cause diabetes, or just go with it?\nMendelian randomization\n\n\nPheWAS (4.4) + All by All\nDoes the finding hold in a much bigger sample?\nreplication\n\n\nRNA (4.5) + protein (4.6)\nIs a change seen in both layers?\nmulti-omics comparison (4.7)",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/index.html#keep-all-of-us-data-in-the-workbench",
+    "href": "pages/courses/omics/index.html#keep-all-of-us-data-in-the-workbench",
+    "title": "Omics Series",
+    "section": "Keep All of Us data in the Workbench",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data (including genotypes, expression values, and IDs), or counts of 1 to 20. The results shown on these pages are summary statistics from our test runs.",
+    "crumbs": [
+      "Omics",
+      "Omics Series"
+    ]
   },
   {
     "objectID": "pages/data/data-collections.html",

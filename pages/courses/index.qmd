@@ -1,0 +1,27 @@
+---
+title: "Courses"
+description: "Hands-on classes with All of Us data, taught with R and Python notebooks in the Researcher Workbench 2.0"
+---
+
+Each course is a **series of classes**. Every class is a Jupyter notebook you run in your own *All of Us* workspace, plus a page on this site with the overview, class plan, concepts, step-by-step Workbench instructions, and the results we found when we ran it.
+
+All the series share **one research question**, type 2 diabetes, and one cohort definition, so what you learn in one carries over to the next.
+
+| Series | Classes | Status |
+|---|---|---|
+| **Core: Cohorts to Analysis** | 1.1–3.4: build a cohort with SQL; clean, reshape, and join; Table One, regression, survival analysis | Being rewritten; the current notebooks are on the [Notebooks](../examples/notebooks.qmd) page |
+| [**Omics**](omics/index.qmd) | 4.1–4.7: genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, proteomics | Notebooks ready; companion pages in progress |
+| **Surveys** | 5.1–5.3: survey structure, family history and lifestyle, social factors | Planned |
+| **Wearables** | 6.1–6.3: Fitbit basics, steps, sleep and heart rate | Planned |
+
+## How a class works
+
+1. **Before class:** set up your workspace and app once (see [Get Started](../get-started/about.qmd) and [Your Workspace](../workspace/workspaces.qmd)), and run **0.0 setup**.
+2. **In class:** the instructor walks through the notebook. At each **✋ Try It Out** you run the next cells or an exercise yourself.
+3. **After class:** stop your app, so it stops costing money.
+
+::: {.callout-note}
+## The notebooks and this site work together
+
+The **notebooks** are self-contained: you can work through them on your own. This **site** adds what a notebook can't do well: the class plan, diagrams, Workbench walk-throughs, "Try It Out" pauses, our results to compare with, and instructor notes.
+:::
