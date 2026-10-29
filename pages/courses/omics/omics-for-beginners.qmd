@@ -8,13 +8,15 @@ New to genetics and omics? This page explains everything the omics series assume
 
 ## The big picture: DNA → RNA → protein
 
-Think of a cell as a kitchen:
+Think of a cell as an **IKEA store**:
 
-| | In the kitchen | In the cell | Measured in *All of Us* by |
+| | At IKEA | In the cell | Measured in *All of Us* by |
 |---|---|---|---|
-| **DNA** | the **cookbook**: every recipe, the same in every kitchen of the house | all the instructions, the same in nearly every cell, **fixed from birth** | whole-genome sequencing, genotyping arrays (classes **4.1–4.4**) |
-| **RNA** | a **photocopy** of one recipe, made when it's needed | a working copy of one gene; more copies = a more **active** gene | RNA sequencing (**RNA-seq**) of blood (class **4.5**) |
-| **Protein** | the **dish** that gets made | the product: hormones, enzymes, signals | **Olink** proteomics, blood plasma (class **4.6**) |
+| **DNA** | the **catalog**: instructions for every product, kept in the store. Every store has the same catalog | all the instructions, in the cell's **nucleus**. The same in nearly every cell, and **fixed from birth** | whole-genome sequencing, genotyping arrays (classes **4.1–4.4**) |
+| **RNA** (messenger RNA, **mRNA**) | a **copy of the assembly instructions** for one product, taken out to where the building happens. Popular products get many copies | a working copy of one gene, carried out of the nucleus. More copies = a more **active** gene | RNA sequencing (**RNA-seq**) of blood (class **4.5**) |
+| **Protein** | the **assembled furniture**, built by following the instructions from a box of **pieces** | built from **amino acids** (the pieces) by the cell's **ribosomes** (the people assembling), following the mRNA: hormones, enzymes, signals | **Olink** proteomics, blood plasma (class **4.6**) |
+
+The analogy also shows why the layers don't always agree (class 4.7): a store can print lots of instruction copies but run short of pieces; furniture can last for years after the instructions are thrown away; and some furniture in your home (**plasma proteins**) was built in a different store (another organ) than the one whose instructions you're counting (**blood cells**).
 
 ```
 DNA ──(copied)──→ RNA ──(translated)──→ protein
