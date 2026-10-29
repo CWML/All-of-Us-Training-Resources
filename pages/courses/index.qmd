@@ -9,8 +9,8 @@ All the series share **one research question**, type 2 diabetes, and one cohort 
 
 | Series | Classes | Status |
 |---|---|---|
-| **Core: Cohorts to Analysis** | 1.1–3.4: build a cohort with SQL; clean, reshape, and join; Table One, regression, survival analysis | Being rewritten; the current notebooks are on the [Notebooks](../examples/notebooks.qmd) page |
-| [**Omics**](omics/index.qmd) | 4.1–4.7: genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, proteomics | Notebooks ready; companion pages in progress |
+| **Core: Cohorts to Analysis** | 1.1–3.4: build a cohort with SQL; clean, reshape, and join; Table One, regression, survival analysis | Notebooks ready (see the [Notebooks](../examples/notebooks.qmd) page); companion pages coming |
+| [**Omics**](omics/index.qmd) | 4.1–4.7: genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, proteomics | Notebooks and companion pages ready |
 | **Surveys** | 5.1–5.3: survey structure, family history and lifestyle, social factors | Planned |
 | **Wearables** | 6.1–6.3: Fitbit basics, steps, sleep and heart rate | Planned |
 

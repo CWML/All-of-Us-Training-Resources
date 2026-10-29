@@ -990,6 +990,413 @@
     ]
   },
   {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html",
+    "title": "4.7 RNA and Protein Together",
+    "section": "",
+    "text": "Omics series, class 7 of 7 · R · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#overview",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#overview",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Overview",
+    "text": "Overview\nAlmost everyone in All of Us with RNA-seq also has proteomics. In this class we put the two side by side, for the same people: for each gene, does a person’s RNA level go with their protein level? And do RNA and protein tell the same story about type 2 diabetes? Then we pull together what the whole series showed.\n\nWhy this class matters\nIt’s tempting to assume more RNA means more protein. Often it doesn’t, especially when RNA comes from blood cells and proteins from plasma. Seeing where the layers agree and disagree, and why, is the basic skill of multi-omics integration, and a guard against over-reading any single layer.\n\n\nBy the end you’ll be able to\n\nExplain why RNA and protein levels often don’t agree, especially in blood\nLoad both layers for the same people, and match each protein to its gene with stable IDs\nCalculate and interpret RNA–protein correlations\nCompare differential results across two layers\nSummarise what each layer can and can’t tell us about a disease\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Questions\nDoes a gene’s RNA go with its protein, across people? Do RNA and protein tell the same story about type 2 diabetes?\n\n\n🧪 The analysis\nA Spearman correlation for each gene–protein pair; the diabetes results from both layers (limma), compared pair by pair\n\n\n🎯 Why\nSpearman uses ranks, so extreme values don’t dominate; comparing t-statistics combines each effect’s size and certainty\n\n\n✅ What we conclude\nWhich proteins track their blood RNA, and whether diabetes signals are shared\n\n\n⚠️ What it can’t tell us\nAnything outside blood; which layer is closer to the cause\n\n\n🔗 Connections\nCombines 4.5 and 4.6, and summarises the series\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 15 minutes. Slowest: loading the proteins (3–5 min) and the RNA counts (a few min)\n\n\n💰 Cost\nabout $1 to $2 per student: one BigQuery query, reading two large files (pennies), plus the app\n\n\n📋 Before class\neasier after 4.5 and 4.6; run the setup cell to install the packages",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#class-plan",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#class-plan",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: why RNA and protein disagree; correlation; multi-omics\nlisten, ask\n\n\n0:15\n2. Who has both, and the cohort\nrun the cells\n\n\n0:25\n3. Load RNA and proteins (about 10 minutes)\n☕ Break while they load\n\n\n0:40\n4. Match proteins to genes\nrun the cells\n\n\n0:50\n5. RNA vs protein, gene by gene\n✋ Try It Out 1 (10 min)\n\n\n1:15\n6. Do the diabetes signals agree?\ndiscuss\n\n\n1:40\n7. The whole series\n✋ Try It Out 2 (10 min, discussion)\n\n\n1:55\nWrap-up",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#key-concepts",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#key-concepts",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nWhy RNA and protein disagree\nUsing the IKEA analogy: RNA is the copy of the assembly instructions, protein is the furniture.\n\n\n\n\n\n\n\n\nReason\nIn the analogy\nIn the body\n\n\n\n\nDifferent places\nfurniture built in another store\nmany plasma proteins are made in the liver, kidney, or fat, not in the blood cells whose RNA we measured\n\n\nDifferent timing\nfurniture lasts years after the instructions are recycled\nproteins can last hours to weeks; RNA minutes to hours\n\n\nControl after RNA\nplenty of instructions, but not enough pieces\ncells control how much protein each RNA makes\n\n\nDifferent samples\n\nRNA from whole blood; proteins from plasma\n\n\n\n\n\nSpearman correlation\nThe usual correlation, but on ranks, so a few extreme values don’t dominate. From −1 to 1; 0 means no relationship.",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#follow-along-in-the-workbench",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 4.1.\nOpen notebooks/omics/4.7 rnaseq_proteomics.ipynb, with the R kernel.\nPart 3 loads both large files: about 10 minutes in total.",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#try-it-out",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#try-it-out",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 10 minutes · Part 5, “Your turn”\n\n\n\nLook up the RNA–protein correlations for proteins from 4.6 (HAVCR1, UMOD, FABP4, LPL) and neutrophil genes from 4.5 (LTF, MMP8, CRISP3, HP). Which agree?\n✅ Check: the kidney and fat proteins correlate little or are missing (blood cells barely make their RNA); neutrophil proteins have a better chance.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 10 minutes · Part 7 (discussion)\n\n\n\nIf you could design one more analysis with All of Us data to understand type 2 diabetes better, what would it be, and which layers (DNA, RNA, protein, health records) would it use?",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#code-walk-through",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#code-walk-through",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nMatching proteins to genes\nuniprot_to_gene &lt;- read_tsv(file.path(PROT_DIR, \"pqtl\", \"cis_pqtl\", \"AoU_v9_COMB.cis_pqtl.txt.gz\"),\n1                            col_select = \"phenotype_id\", show_col_types = FALSE) %&gt;%\n2  transmute(UniProt = str_remove(phenotype_id, \"_.*\"),\n3            gene_id = str_remove(str_remove(phenotype_id, \"^[^_]*_\"), \"\\\\..*\")) %&gt;%\n  distinct()\n\n1\n\nThe pQTL file from 4.6 names each protein as P09769_ENSG00000000938.13: a ready-made lookup table from protein to gene. col_select reads only that column.\n\n2\n\nThe UniProt ID: everything before the underscore.\n\n3\n\nThe Ensembl gene ID: everything after the underscore, without the version number (.13), which can differ between files.\n\n\n\n\nCorrelation, pair by pair\npairs &lt;- pairs %&gt;%\n1  mutate(rho = map2_dbl(rna_row, OlinkID,\n2                        ~ cor(logcpm[.x, ], npx[.y, ], method = \"spearman\", use = \"pairwise.complete.obs\")))\n\n1\n\nmap2_dbl() runs the next line once for each pair: .x is the gene’s row in the RNA matrix, .y the protein’s row in the protein matrix.\n\n2\n\nThe Spearman correlation across our people, using everyone with both values.",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#what-we-found",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#what-we-found",
+    "title": "4.7 RNA and Protein Together",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 300 cases and 300 controls with both layers.\n\n\n\n\n\n\n\nPeople with both layers\n8,801 of 8,980 with RNA-seq\n\n\nCorrelations\nmedian about 0.01: most pairs barely correlate\n\n\nSignificant\n510 positive and 79 negative (FDR &lt; 0.05)\n\n\nBest-agreeing pairs\nimmune-cell proteins: B cells (TCL1A, FCRL1, FCRL3), NK and T cells (GZMH, GNLY, FCRL6), neutrophils (OLFM4, VSTM1); also MDGA1, SPESP1, PVALB\n\n\nDiabetes effects, RNA vs protein\ncorrelation of t-statistics about 0 (−0.04): the layers don’t line up\n\n\nProteins overall\nshifted a little higher in diabetes, whatever their RNA did\n\n\n\n💬 Discuss:\n\nWhy might proteins that aren’t made by blood cells (MDGA1, PVALB) still correlate with their RNA? (A genetic variant that raises both: an eQTL and a pQTL at once.)\nWhy might many proteins be higher in diabetes regardless of RNA? (One idea: lower kidney clearance, since the kidneys remove many proteins from the blood. Test it by adjusting for kidney function, eGFR.)",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#the-whole-series",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#the-whole-series",
+    "title": "4.7 RNA and Protein Together",
+    "section": "The whole series",
+    "text": "The whole series\n\n\n\n\n\n\n\n\n\nClass\nLayer\nMain finding (our test runs)\nWhat it can’t tell us\n\n\n\n\n4.1\nDNA\nthe T allele is more common in cases (OR ≈ 1.17, unadjusted)\ncause or tissue\n\n\n4.2–4.3\nDNA\nadjusted OR ≈ 1.25; a peak across TCF7L2; PLINK and Hail agree\nwhich variant is causal\n\n\n4.4\nDNA + EHR\nrs7903146 goes with diabetes, its treatments and complications, and slightly less obesity\nconsequence vs direct effect; collider bias\n\n\n4.5\nRNA (blood)\na few dozen genes differ, many from neutrophils; rs7903146 barely affects TCF7L2 in blood\nother tissues; cell mix\n\n\n4.6\nProtein (plasma)\nhundreds differ, pointing to the kidney, fat, and gut; strong pQTLs\ncause vs consequence vs treatment\n\n\n4.7\nBoth\nRNA and protein agree mainly for immune-cell proteins; diabetes effects don’t line up\nanything outside blood\n\n\n\nDNA tells us about lifelong risk and can help argue about cause. RNA and proteins show what’s happening now, including consequences and treatment. Each layer answers a different question; combining them carefully is how multi-omics studies get closer to how a disease works.\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\nPlots with one point per gene–protein pair can be shared:\n\nThe histogram of RNA–protein correlations (Part 5)\nThe RNA vs protein t-statistic scatter plot (Part 6)",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#instructor-notes",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#instructor-notes",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nLoading takes about 10 minutes: a good time for the “why RNA and protein disagree” discussion.\nIf students have little time, run Parts 2–4 before class and save the matrices.\nEnd with the series table: it’s the main takeaway of the whole omics series.",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#key-takeaways",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#key-takeaways",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nRNA and protein often disagree, especially in blood: many plasma proteins are made elsewhere\nMatch layers with stable IDs (UniProt, Ensembl), not names\nCorrelation across people shows which genes’ RNA and protein go together\nEach omics layer answers a different question",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#further-reading",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#further-reading",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Further reading",
+    "text": "Further reading\n\nAll by All browser\nOmics for Beginners: the vocabulary of the series in one place",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-7-rnaseq-proteomics.html#next",
+    "href": "pages/courses/omics/4-7-rnaseq-proteomics.html#next",
+    "title": "4.7 RNA and Protein Together",
+    "section": "Next",
+    "text": "Next\nThat’s the end of the omics series. Back to the series overview, or the Courses page for the other series.",
+    "crumbs": [
+      "Omics",
+      "4.7 RNA and Protein Together"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html",
+    "href": "pages/courses/omics/4-5-rnaseq.html",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "",
+    "text": "Omics series, class 5 of 7 · R (edgeR, limma) · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#overview",
+    "href": "pages/courses/omics/4-5-rnaseq.html#overview",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Overview",
+    "text": "Overview\nDNA is the same in every cell and fixed from birth. RNA shows which genes are active, and how much, when a sample was taken. All of Us has measured gene activity (RNA sequencing, RNA-seq) in whole blood for about 9,000 participants. We ask which genes are more or less active in people with type 2 diabetes, then connect back to DNA: does the T allele of rs7903146 change how much TCF7L2 is made in blood?\n\nWhy this class matters\nRNA-seq is one of the most common omics measurements, and its analysis has a step that’s easy to get wrong without noticing: normalization. The statistics package (limma) doesn’t normalize for you; it will happily give p-values for badly normalized data. This class shows each step, checks it, and ends by linking DNA to RNA with an eQTL.\n\n\nBy the end you’ll be able to\n\nExplain what RNA-seq measures, and counts vs TPM\nUse the RNA quality measures, and add RNA quality to the model\nNormalize counts (TMM, log-CPM), and check that it worked\nRun differential expression with limma-voom, and read a volcano plot\nTest whether a variant is linked to a gene’s activity (an eQTL), and look it up in All of Us’s results\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Questions\nWhich genes are more or less active in the blood of people with type 2 diabetes? Does rs7903146 change TCF7L2 activity in blood?\n\n\n🧪 The analysis\nCounts normalized (TMM) and log-transformed; a linear model per gene with limma-voom, adjusted for age, sex, and RNA quality; then an eQTL test\n\n\n🎯 Why\nRaw counts can’t be compared until normalized; expression is a number, so linear models; ~29,000 genes, so an adjusted p-value (FDR)\n\n\n✅ What we conclude\nWhich genes and processes differ, and whether the variant acts through blood\n\n\n⚠️ What it can’t tell us\nCause vs consequence vs treatment; other tissues; whether cells changed or the mix of cells changed\n\n\n🔗 Connections\nThe variant from 4.1–4.4; proteins in 4.6; both in 4.7. GWAS + eQTL = colocalization\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 10 minutes (plus 5–10 the first time, to install limma and edgeR). Slowest: loading the counts\n\n\n💰 Cost\nabout $1 to $2 per student: one BigQuery query, reading files (pennies), plus the app\n\n\n📋 Before class\nrun the setup cell once, to install the packages",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#class-plan",
+    "href": "pages/courses/omics/4-5-rnaseq.html#class-plan",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: genes to reads, counts and normalization, log scale, whole blood\nlisten, ask\n\n\n0:15\n2. Setup and a tour of the files: RNA quality columns\nrun the cells\n\n\n0:30\n3. The cohort\nrun the cells\n\n\n0:40\n4. Load the counts (a few minutes)\n☕ Break while it loads\n\n\n0:50\n5. Normalize, check, explore: TMM, before/after boxplots, PCA\n✋ Try It Out 1 (5 min)\n\n\n1:10\n6. Differential expression: voom, limma, volcano, optional pathways\n✋ Try It Out 2 (10 min)\n\n\n1:35\n7. Back to TCF7L2 and rs7903146: eQTLs\n✋ Try It Out 3 (5 min)\n\n\n1:55\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#key-concepts",
+    "href": "pages/courses/omics/4-5-rnaseq.html#key-concepts",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nCounts need normalizing\n\n\n\n\n\n\n\n\nProblem\nExample\nFixed by\n\n\n\n\nSequencing depth\nperson A sequenced twice as deeply: every gene has twice the reads\ncounts per million (CPM)\n\n\nComposition\na few hugely active genes “use up” reads, making every other gene look lower\nTMM (edgeR): assumes most genes don’t change, and scales each person so they line up\n\n\nSkew\na few genes have huge counts\nthe log₂ scale (a step of 1 = twice as much)\n\n\nLow counts are noisy\ngenes with few reads vary a lot by chance\nvoom: gives each value a weight\n\n\n\nAll of Us did the processing (aligning reads, counting them per gene), but not the normalization: that’s our job, and limma doesn’t do it.\n\n\nWhole blood\nThe RNA comes from blood: a mix of cell types, mostly white blood cells. Much of type 2 diabetes happens in the pancreas, liver, muscle, and fat, which blood doesn’t show. And a difference between groups can come from a change in the mix of cells, not each cell’s activity.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-5-rnaseq.html#follow-along-in-the-workbench",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 4.1.\nOpen notebooks/omics/4.5 rnaseq.ipynb, with the R kernel.\nThe setup cell installs limma and edgeR the first time (5–10 minutes). They install only into your own R library.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#try-it-out",
+    "href": "pages/courses/omics/4-5-rnaseq.html#try-it-out",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 5, “Your turn”\n\n\n\nColour the PCA plot by sex at birth, then by RNA quality (rqs). Which explains the two big clusters?\n✅ Check: sex: genes on the Y chromosome and XIST separate the groups.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 10 minutes · Part 6, “Your turn”\n\n\n\n\nFind TXNIP (a gene that responds to blood sugar) in the results.\nRun the model without RNA quality. How many genes are significant now?\nChallenge: add each person’s neutrophil count from their lab results. Do the neutrophil genes stay significant? (One more query, about $1.)\n\n✅ Check: the answers are under Show answer in the notebook.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 3 · 5 minutes · Part 7, “Your turn”\n\n\n\nWhich of your significant genes also have a strong eQTL in blood?\n✅ Check: a table of genes with their strongest variant and its qval.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#code-walk-through",
+    "href": "pages/courses/omics/4-5-rnaseq.html#code-walk-through",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nFilter and normalize\n1dge &lt;- DGEList(counts = counts, genes = genes, samples = samples)\n\n2keep_genes &lt;- filterByExpr(dge, group = samples$group)\ndge &lt;- dge[keep_genes, , keep.lib.sizes = FALSE]\n3dge &lt;- calcNormFactors(dge)\n\n4logcpm &lt;- cpm(dge, log = TRUE)\n\n1\n\nOne object holding the counts (genes × people), the gene names, and the sample table.\n\n2\n\nKeep genes with enough reads, in enough people, to analyse (about 29,000 of 78,000).\n\n3\n\nTMM normalization: one factor per person, correcting for composition. The notebook then checks these factors and shows boxplots before and after.\n\n4\n\nNormalized log₂ counts per million, for plots and PCA.\n\n\n\n\nDifferential expression\n1design &lt;- model.matrix(~ group + age + sex_at_birth + rqs, data = samples)\n\n2v   &lt;- voom(dge, design, plot = TRUE)\n3fit &lt;- eBayes(lmFit(v, design))\n\n4results &lt;- topTable(fit, coef = \"groupcase\", number = Inf)\n\n1\n\nThe model for every gene: group (case vs control), adjusted for age, sex, and RNA quality (rqs), a technical covariate.\n\n2\n\nvoom turns counts into log values with a weight each, and draws the mean-variance trend (a smooth downward curve is what you want).\n\n3\n\nFit the model to every gene; eBayes() shares information across genes, which makes each test more reliable.\n\n4\n\nThe results for the case-vs-control term, every gene, sorted by p-value.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#what-we-found",
+    "href": "pages/courses/omics/4-5-rnaseq.html#what-we-found",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 300 cases and 300 controls.\n\n\n\n\n\n\n\nPeople with RNA-seq\n1,312 cases, 5,538 controls\n\n\nCases vs controls\nolder (64 vs 52); RNA quality almost identical (7.7 vs 7.8)\n\n\nGenes kept\n28,902 of 77,814\n\n\nPCA\nPC1 split everyone into two clusters: sex, not diabetes\n\n\nSignificant genes\na few dozen (adjusted p &lt; 0.05)\n\n\nHigher in diabetes\nmany neutrophil genes: MMP8, LTF, CRISP3, HP, ANXA3\n\n\nLower in diabetes\nABCG1 (cholesterol transport), NRCAM (the top gene)\n\n\nTCF7L2\nnot different between groups (adjusted p ≈ 0.95)\n\n\nOur eQTL test\nno effect of the T allele on TCF7L2 (estimate ≈ −0.01, p ≈ 0.6)\n\n\nAll of Us eQTLs (~9,000 people)\nTCF7L2’s strongest eQTL is a different variant (chr10:112951996_C_T, slope −0.25); rs7903146’s effect is tiny (slope 0.02, p ≈ 0.004)\n\n\n\n💬 Discuss:\n\nAre the neutrophil genes higher because each neutrophil changed, or because people with diabetes have more neutrophils (inflammation)? How would you tell? (Adjust for neutrophil counts: the challenge exercise.)\nrs7903146 is one of the strongest diabetes risk variants, yet it barely touches TCF7L2 in blood. What does that say about tissue? (Its known effects are in the pancreas, where insulin is made.)\n\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\nPlots with one point per gene can be shared:\n\nThe volcano plot (Part 6)\nThe voom mean-variance plot (Part 6)\n\nThe PCA plot, the before/after normalization boxplots (one box per person), and the genotype boxplot show people: keep them in the notebook.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#instructor-notes",
+    "href": "pages/courses/omics/4-5-rnaseq.html#instructor-notes",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nRun the setup cell before class: installing limma and edgeR takes 5–10 minutes.\nLoading the counts reads one large compressed file; use the time for questions or a break.\nThe optional enrichment section installs two more Bioconductor packages (a few minutes the first time).\nThe sections on normalization checks, enrichment, and the neutrophil challenge were added after our first Workbench run; their results aren’t in the table above yet.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#key-takeaways",
+    "href": "pages/courses/omics/4-5-rnaseq.html#key-takeaways",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nRNA-seq counts reads per gene; normalize (TMM, log-CPM) and check it before testing\nlimma doesn’t normalize; voom adds weights for noisy low counts\nAdjust for technical factors such as RNA quality\nBlood RNA can reflect a change in the cell mix\nAn eQTL links DNA to RNA, but only in the tissue measured",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#further-reading",
+    "href": "pages/courses/omics/4-5-rnaseq.html#further-reading",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Further reading",
+    "text": "Further reading\n\nRNA-seq analysis is easy as 1-2-3 with limma, Glimma and edgeR (Bioconductor workflow)\nGTEx portal: gene activity and eQTLs in many tissues, to compare with blood",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-5-rnaseq.html#next",
+    "href": "pages/courses/omics/4-5-rnaseq.html#next",
+    "title": "4.5 RNA-seq: Gene Activity in Type 2 Diabetes",
+    "section": "Next",
+    "text": "Next\n4.6 Proteomics: from RNA to proteins in blood plasma.",
+    "crumbs": [
+      "Omics",
+      "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html",
+    "href": "pages/courses/omics/4-3-gwas-hail.html",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "",
+    "text": "Omics series, class 3 of 7 · Python + Hail · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#overview",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#overview",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Overview",
+    "text": "Overview\nHail is the Python library All of Us uses for its own large genomic analyses, including the All by All results. In this class we run the same GWAS as 4.2 in Hail, on the same people, and check that the two tools agree. You don’t need to know Python already: the notebook has a guide for R users.\n\nWhy this class matters\nTwo reasons. Reproducibility: a result that changes with the software is a warning sign, and checking a key finding with a second tool is good practice. Scale: PLINK is fast on one computer, but genome-wide analyses of hundreds of thousands of genomes need a tool that can spread the work over a cluster, and Hail is built for that.\n\n\nBy the end you’ll be able to\n\nExplain what Hail is, and how a MatrixTable holds genomic data\nRead part of the All of Us genomes with Hail, and save a small working copy (a checkpoint)\nRun QC and a logistic-regression GWAS with Hail\nTurn Hail results into a pandas table, and plot them\nCompare Hail’s results with PLINK’s, and explain the small differences\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nDoes a second tool, Hail, give the same GWAS results as PLINK?\n\n\n🧪 The analysis\nThe same QC and logistic regression per variant as 4.2, in Hail; then a variant-by-variant comparison with PLINK\n\n\n🎯 Why\nReproducibility, and learning the tool All of Us uses at scale\n\n\n✅ What we conclude\nWhether the tools agree, and why small differences arise\n\n\n⚠️ What it can’t tell us\nNothing new about diabetes: this class is about tools and data structures\n\n\n🔗 Connections\nCompares with 4.2; the approach behind the All by All results in 4.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 5 minutes. Slowest: reading the genomes into the checkpoint (2–3 minutes)\n\n\n💰 Cost\nabout $1 per student: no BigQuery query; the app (about $0.27 an hour)\n\n\n📋 Before class\nrun 4.1 and 4.2 (this class uses their sample and PLINK results)",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#class-plan",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#class-plan",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: Hail and Spark, MatrixTables, lazy evaluation, splitMT, Python for R users\nlisten, ask\n\n\n0:25\n2. Setup and samples\nrun the cells\n\n\n0:35\n3. Read the genomes with Hail: start the checkpoint (2–3 min), talk while it runs\n✋ Try It Out 1 (5 min)\n\n\n0:55\n4. Quality control\nrun the cells\n\n\n1:10\n☕ Break (5 min)\n\n\n\n1:15\n5. Run the GWAS\nrun the cells\n\n\n1:25\n6. Results and plots\n✋ Try It Out 2 (5 min)\n\n\n1:40\n7. Compare with PLINK; scaling up\n✋ Try It Out 3 (5 min)\n\n\n1:55\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#key-concepts",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#key-concepts",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nThe MatrixTable\n\n\n\nPart\nIn All of Us\nExample fields\n\n\n\n\nRows\nvariants\nlocus, alleles\n\n\nColumns\npeople\ns (the participant’s ID)\n\n\nEntries\none person’s genotype at one variant\nGT\n\n\nGlobals\nfacts about the whole dataset\n\n\n\n\n\n\nLazy evaluation\nHail plans first and works later: filtering and annotating only add to the plan, and finish instantly. Nothing is read until you ask for an answer (a count, a table, a file). So one cell, the checkpoint, does all the slow work: it reads our window for all 535,000 people, keeps our 5,000, and saves a small copy that every later step reads in seconds.\n\n\nsplitMT: one row per ALT allele\nAll of Us provides Hail genomes in two versions. multiMT keeps a variant with several ALT alleles in one row; splitMT, which we use, splits it into one row per ALT allele, because regression needs one allele per row. So Hail has more rows than PLINK for the same window.\n\n\nPython for R users\n\n\n\n\n\n\n\n\nIdea\nR\nPython\n\n\n\n\nLoad a package\nlibrary(dplyr)\nimport pandas as pd\n\n\nData frame\ntibble\npandas DataFrame\n\n\nUse a function on an object\ndf %&gt;% filter(...)\na method: mt.filter_rows(...)\n\n\nText with values\nstr_glue(\"{x} people\")\nf\"{x} people\"\n\n\nCounting from\n1\n0",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#follow-along-in-the-workbench",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 4.1.\nOpen notebooks/omics/4.3 gwas_hail.ipynb. Check the kernel says Python 3.\nRun the setup cell. Hail prints a lot, including two expected warnings (about Java 17 and the Spark version): both are harmless.\n\n\n\n\n\n\n\nWarningDon’t pip install into this app\n\n\n\nInstalling other Python packages can replace ones Hail needs. In our tests, installing PheTK downgraded numpy and stopped Hail from loading. If it happens, ask your instructor for the repair commands.",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#try-it-out",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#try-it-out",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 3, “Your turn”\n\n\n\nThe repeat (STR) that topped 4.2 is at position 113,036,665. How many rows does it have in Hail’s MatrixTable?\n✅ Check: about 15 rows: one per ALT allele. In PLINK’s files it was one row.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nHow many rows pass the region threshold, and how many the genome-wide threshold?\n✅ Check: the region threshold is a little stricter than in 4.2, because splitting gives more rows to test.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 3 · 5 minutes · Part 7, “Your turn”\n\n\n\nRerun the GWAS with test=\"firth\" instead of \"wald\". Does rs7903146’s p-value change?\n✅ Check: almost no change: Firth regression matters for rare alleles, and rs7903146’s T allele is common.",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#code-walk-through",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#code-walk-through",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nKeep our window and our people\n1mt = hl.filter_intervals(mt, [hl.parse_locus_interval(WINDOW)])\n2mt = mt.semi_join_cols(samples_ht)\n3mt = mt.annotate_cols(pheno = samples_ht[mt.s])\n\n1\n\nKeep only variants in our 200,000-letter window (like PLINK’s --chr --from-bp --to-bp).\n\n2\n\nKeep only the people in our sample table (like a semi-join in R, or PLINK’s --keep).\n\n3\n\nAdd each person’s phenotype and covariates: samples_ht[mt.s] means “the row of the sample table matching this person’s ID”. All three lines are instant: they only add to the plan.\n\n\n\n\nThe checkpoint\nif REBUILD or not os.path.exists(CHECKPOINT_PATH):\n1    mt = mt.checkpoint(CHECKPOINT_PATH, overwrite=True)\nelse:\n2    mt = hl.read_matrix_table(CHECKPOINT_PATH)\n\n1\n\nRun the plan and save the result to the app’s disk: the slow step (150 seconds in our test).\n\n2\n\nIf the copy already exists (e.g. when rerunning), just open it.\n\n\n\n\nThe GWAS\n1covariates = [1.0, mt.pheno.age, mt.pheno.sex_male] + [mt.pheno[pc] for pc in PCS]\n\ngwas = hl.logistic_regression_rows(\n2    test=\"wald\",\n3    y=mt.pheno.is_case,\n4    x=mt.GT.n_alt_alleles(),\n    covariates=covariates,\n)\n\n1\n\nThe covariates. 1.0 is the intercept: Hail needs it written out (R and PLINK add it for you). [... for pc in PCS] builds a list of the 10 PCs.\n\n2\n\nThe standard Wald test.\n\n3\n\nThe outcome: case or control.\n\n4\n\nThe genotype as 0, 1, or 2 copies of the ALT allele.",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#what-we-found",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#what-we-found",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\n\n\n\n\nCheckpoint\n150 seconds; 12,054 rows × 5,000 people\n\n\nQC: rows failing each filter\nfrequency 10,970; call rate 4,405; Hardy-Weinberg 129 (a row can fail several)\n\n\nTests\n765, of which 488 matched a PLINK variant\n\n\nAgreement with PLINK\ncorrelation 0.9998 for log odds ratios, 0.9999 for −log₁₀(p)\n\n\nrs7903146 (T allele)\nOR 1.2512 in Hail vs 1.2511 in PLINK; p = 3 × 10⁻⁶ in both\n\n\n\n💬 Discuss:\n\nWhy do only 488 of 765 tests match PLINK? (Split multi-allelic rows, especially repeats, are trimmed differently; and the frequency filter works per allele in Hail, per variant in PLINK.)\nThe regional plot showed two clusters: one at rs7903146 and one a little to the right, with the top hit. One signal or two? A conditional analysis (adding rs7903146 as a covariate) would tell.\n\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\n\nThe regional plot (Part 6)\nThe two PLINK-vs-Hail scatter plots (Part 7)",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#instructor-notes",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#instructor-notes",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nStart the checkpoint cell before explaining lazy evaluation, so the 2–3 minutes pass while you talk.\nIf the checkpoint is interrupted, a half-written copy is left behind: set REBUILD = True and rerun.\nExpect the question “why learn Hail if PLINK is faster here?” Answer: scale, and All of Us’s own tools and tutorials use it.",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#key-takeaways",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#key-takeaways",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nHail works with genomes as a MatrixTable: variants × people\nHail is lazy: it plans until you ask for a result; checkpoint after the expensive step\nsplitMT gives one row per ALT allele\nThe same model in PLINK and Hail gives the same answers: a reproducibility check\nHail scales to the whole genome on a cluster",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#further-reading",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#further-reading",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Further reading",
+    "text": "Further reading\n\nHail documentation\nHail’s logistic_regression_rows",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-3-gwas-hail.html#next",
+    "href": "pages/courses/omics/4-3-gwas-hail.html#next",
+    "title": "4.3 A GWAS with Hail (Python)",
+    "section": "Next",
+    "text": "Next\n4.4 PheWAS: flip the question. Which diseases are linked to rs7903146?",
+    "crumbs": [
+      "Omics",
+      "4.3 A GWAS with Hail (Python)"
+    ]
+  },
+  {
     "objectID": "pages/courses/omics/4-1-dna-intro.html",
     "href": "pages/courses/omics/4-1-dna-intro.html",
     "title": "4.1 Introduction to Genomic Data",
@@ -1115,7 +1522,7 @@
     "href": "pages/courses/omics/4-1-dna-intro.html#next",
     "title": "4.1 Introduction to Genomic Data",
     "section": "Next",
-    "text": "Next\n4.2 GWAS with PLINK: test every variant in the TCF7L2 region, adjusted for age, sex, and ancestry. The notebook is notebooks/omics/4.2 gwas_plink.ipynb; its companion page is coming.",
+    "text": "Next\n4.2 GWAS with PLINK: test every variant in the TCF7L2 region, adjusted for age, sex, and ancestry.",
     "crumbs": [
       "Omics",
       "4.1 Introduction to Genomic Data"
@@ -1184,6 +1591,402 @@
     ]
   },
   {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html",
+    "href": "pages/courses/omics/4-2-gwas-plink.html",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "",
+    "text": "Omics series, class 2 of 7 · R + PLINK · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#overview",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#overview",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Overview",
+    "text": "Overview\nIn 4.1 we saw that people with type 2 diabetes carry the T allele of rs7903146 a little more often. A genome-wide association study (GWAS) does that for every variant, one at a time, adjusted for age, sex, and genetic ancestry. To keep it fast and cheap, we test every variant in one region (around the gene TCF7L2) instead of the whole genome. The steps are the same.\n\nWhy this class matters\nGWAS is the main tool for finding genetic risk factors, and its results appear in thousands of papers. Knowing what goes into one (quality control, covariates, the significance threshold, linkage disequilibrium) is what lets you read those papers critically, and run your own.\n\n\nBy the end you’ll be able to\n\nExplain what a GWAS tests, and why it adjusts for covariates such as ancestry\nApply standard quality-control filters to variants, and say why each matters\nPrepare phenotype and covariate files, and run plink2 --glm\nRead GWAS results: odds ratios, p-values, and the genome-wide threshold\nMake and read a regional plot (coloured by linkage disequilibrium) and a Q-Q plot\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhich variants in the TCF7L2 region are linked to type 2 diabetes?\n\n\n🧪 The analysis\nLogistic regression once per variant: case/control ~ copies of the allele + age + sex + 10 ancestry PCs, after variant QC\n\n\n🎯 Why\nThe outcome is yes/no; one test per variant because we don’t know in advance which matters; adjusted so age, sex, or ancestry don’t masquerade as genetic effects\n\n\n✅ What we conclude\nWhich variants pass the thresholds, their odds ratios, and whether the known variant replicates\n\n\n⚠️ What it can’t tell us\nWhich variant is causal (neighbours in LD move together), or how it acts; small samples miss real effects\n\n\n🔗 Connections\nBuilds on 4.1; repeated in Hail in 4.3; its top variant starts 4.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 3 minutes; every PLINK step takes seconds\n\n\n💰 Cost\nabout $1 per student: no BigQuery query if 4.1’s sample is saved, plus the app (about $0.27 an hour)\n\n\n📋 Before class\nrun 4.1, which saves the sample this class reuses",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#class-plan",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#class-plan",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: what a GWAS tests, covariates, multiple testing, LD, the plots\nlisten, ask\n\n\n0:25\n2. Setup and samples: load 4.1’s sample, extract the region\nrun the cells\n\n\n0:35\n3. Quality control\nrun the cells; ✋ Try It Out 1 (5 min)\n\n\n0:50\n4. Run the GWAS: phenotype and covariate files, plink2 --glm\nrun the cells\n\n\n1:10\n☕ Break (5 min)\n\n\n\n1:15\n5. Read the results: top variants, rs7903146, the regional plot\n✋ Try It Out 2 (5 min)\n\n\n1:40\n6. Why adjust? Adjusted vs unadjusted, the Q-Q plot\n✋ Try It Out 3 (10 min)\n\n\n1:55\n7. Scaling up; wrap-up\ndiscuss",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#key-concepts",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#key-concepts",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nOne regression per variant\n\\[\\text{log odds of type 2 diabetes} = \\beta_0 + \\beta_1 \\times \\text{copies of the allele} + \\beta_2 \\times \\text{age} + \\dots\\]\nThe odds ratio per copy is \\(e^{\\beta_1}\\). The covariates (age, sex, 10 genetic PCs) are there because each differs between cases and controls and could create a misleading link. Ancestry matters most: allele frequencies and diabetes rates differ between ancestry groups.\n\n\nMany tests, a strict threshold\nTesting about a million independent variants at p &lt; 0.05 would give about 50,000 false positives. So a GWAS uses p &lt; 5 × 10⁻⁸ (genome-wide significance). For our region we also show a Bonferroni threshold: 0.05 divided by the number of variants tested.\n\n\nLinkage disequilibrium (LD)\nNearby variants are inherited together, so when one is truly linked to diabetes, its neighbours show a signal too. A GWAS finds regions; finding the causal variant (fine-mapping) is a separate step. The regional plot colours each variant by its r² with rs7903146.\n\n\nQuality control\n\n\n\n\n\n\n\n\nFilter\nRemoves\nWhy\n\n\n\n\n--maf 0.01\nalleles carried by under 1%\ntoo few carriers give unstable results\n\n\n--geno 0.1\nvariants missing in over 10% of people\nhard-to-measure variants; missingness can differ by group\n\n\n--hwe 1e-10\ngenotype counts extremely far from Hardy-Weinberg equilibrium\nusually genotyping errors (lenient, because our sample mixes ancestries)",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#follow-along-in-the-workbench",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 4.1.\nOpen notebooks/omics/4.2 gwas_plink.ipynb, with the R kernel.\nRun the setup cell: it ends with Setup done.\nThe samples cell should say “Loaded the sample saved in 4.1”. If it says “Built a new sample”, 4.1’s file wasn’t found, and the notebook rebuilt it (one cohort query, under $1).",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#try-it-out",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#try-it-out",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 3\n\n\n\nRun the QC cell. Which filter removed the most variants, and is rs7903146 still there?\n✅ Check: most variants are removed by the frequency filter (--maf); the lead_variant table has one row at position 112,998,590.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 5, “Your turn”\n\n\n\nHow many variants pass the region threshold, and how many the genome-wide threshold?\n✅ Check: a small number pass the region threshold and at most one or two the genome-wide one. The answer is under Show answer in the notebook.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 3 · 10 minutes · Part 6, “Your turn”\n\n\n\nRerun the GWAS for people of European genetic ancestry only. Is rs7903146’s odds ratio closer to the published 1.3–1.4? What happened to its p-value, and why?\n✅ Check: about 3,000 people in the model; a p-value larger than in the full sample (less power).",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#code-walk-through",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#code-walk-through",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nQuality control\nqc_output &lt;- system(str_glue(\n1  \"plink2 --pfile {shQuote(region_prefix)} \",\n2  \"--maf 0.01 --geno 0.1 --hwe 1e-10 \",\n3  \"--make-pgen --out {shQuote(qc_prefix)}\"\n), intern = TRUE)\n\n4str_subset(read_lines(paste0(qc_prefix, \".log\")), \"removed|remaining\")\n\n1\n\nStart from the region files extracted earlier (5,000 people, about 14,000 variants).\n\n2\n\nThe three filters, in one command. PLINK applies them all and reports each one’s effect.\n\n3\n\nSave the variants that pass as new PLINK 2 files.\n\n4\n\nPLINK writes a .log file; str_subset() keeps only the lines saying how many variants each filter removed and how many remain.\n\n\n\n\nThe association test\nglm_output &lt;- system(str_glue(\n  \"plink2 --pfile {shQuote(qc_prefix)} \",\n1  \"--pheno {shQuote(pheno_file)} --pheno-name t2d \",\n2  \"--covar {shQuote(covar_file)} --covar-variance-standardize \",\n3  \"--glm hide-covar firth-fallback \",\n  \"--out {shQuote(gwas_prefix)}\"\n), intern = TRUE)\n\n1\n\nThe phenotype file: one row per person, t2d coded 2 = case, 1 = control (PLINK’s convention).\n\n2\n\nThe covariates (age, sex, PC1–PC10). Standardizing puts them on similar scales, which avoids a common multicollinearity error.\n\n3\n\n--glm runs logistic regression for every variant. hide-covar reports only the variant’s result; firth-fallback switches to Firth regression when the standard fit fails (e.g. a rare allele).",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#what-we-found",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#what-we-found",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 2,500 cases and 2,500 controls.\n\n\n\n\n\n\n\nRegion extracted\n5,000 people, 14,430 variants\n\n\nTop variant\na short tandem repeat (STR) at 113,036,665 inside TCF7L2: OR 1.41, p = 2.4 × 10⁻⁸, just past genome-wide significance\n\n\nrs7903146 (T allele)\nadjusted OR 1.25, p = 3.3 × 10⁻⁶; 8th smallest p-value in the region\n\n\nUnadjusted vs adjusted (rs7903146)\nOR 1.17 → 1.25; p 5.6 × 10⁻⁴ → 3.3 × 10⁻⁶\n\n\n\n💬 Discuss:\n\nThe top hit is a repeat, which is harder to sequence than single-letter variants. Why should a result like that be treated with caution? (Check that nearby SNPs show the same signal: here they did.)\nAdjusting raised the odds ratio. How? Cases include more people of African and Admixed American ancestry, and the T allele’s frequency differs by ancestry: mixing groups pulled the unadjusted estimate toward 1. Adding a strong predictor (age) also sharpens the other estimates.\nIn the Q-Q plot, the unadjusted p-values were inflated across the board (confounding by ancestry); the adjusted ones followed the diagonal until the real signal at the end.\nrs7903146 isn’t genome-wide significant with 5,000 people. The published finding came from tens of thousands: power.\n\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\nPlots in this class show one point per variant, not per person, so they can be shared:\n\nThe regional association plot (Part 5)\nThe Q-Q plot, adjusted vs unadjusted (Part 6)\nThe top-10 table (Part 5)",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#instructor-notes",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#instructor-notes",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nIf 4.1 wasn’t run, the samples cell rebuilds the sample: allow 2 extra minutes.\nThe regional plot needs the LD step (exporting everyone’s genotypes in the region); on a small app it can take a minute.\nExpect “is the top hit the cause?”: no, a GWAS finds regions. Point to fine-mapping, and to the eQTL check in 4.5.\nThe plot is often called a LocusZoom plot, after the tool that popularised it.",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#key-takeaways",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#key-takeaways",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA GWAS runs one regression per variant, adjusted for covariates\nQC first: remove rare, poorly measured, and suspicious variants\nAdjust for ancestry with PCs; compare models with a Q-Q plot\nWith millions of tests, the threshold is p &lt; 5 × 10⁻⁸; small samples have little power\nNearby variants move together (LD): a GWAS finds regions",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#further-reading",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#further-reading",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Further reading",
+    "text": "Further reading\n\nPLINK 2: --glm\nAll by All browser: All of Us’s genome-wide results for thousands of phenotypes",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-2-gwas-plink.html#next",
+    "href": "pages/courses/omics/4-2-gwas-plink.html#next",
+    "title": "4.2 A GWAS with PLINK",
+    "section": "Next",
+    "text": "Next\n4.3 GWAS with Hail: the same analysis in Python, and a check that two tools agree.",
+    "crumbs": [
+      "Omics",
+      "4.2 A GWAS with PLINK"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html",
+    "href": "pages/courses/omics/4-4-phewas.html",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "",
+    "text": "Omics series, class 4 of 7 · R · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#overview",
+    "href": "pages/courses/omics/4-4-phewas.html#overview",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Overview",
+    "text": "Overview\nA GWAS asks which variants are linked to one disease? A PheWAS flips it: which diseases are linked to one variant? We take rs7903146 and test it against hundreds of diseases in the health records: first in All of Us’s free All by All browser, then ourselves, in R, on a random sample of 20,000 participants.\n\nWhy this class matters\nA PheWAS shows everything a variant is linked to: its main disease, that disease’s treatments and complications, and sometimes surprises. It also teaches two of the most important ideas in observational research, through real examples: selection bias (why the sample must be random) and collider bias (why adjusting can create a link that isn’t there).\n\n\nBy the end you’ll be able to\n\nExplain what a PheWAS tests, and how it differs from a GWAS\nExplain phecodes: how diagnosis codes become diseases, with case and control rules\nRead results in the All by All browser, including converting a beta to an odds ratio\nBuild phecode phenotypes from the EHR, and run a PheWAS with glm()\nExplain why a PheWAS needs a random sample, and why many hits are consequences\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhich diseases are linked to rs7903146?\n\n\n🧪 The analysis\nLogistic regression once per disease (phecode, with at least 100 cases), adjusted for age, sex, and 10 PCs, in a random sample of 20,000; Bonferroni correction\n\n\n🎯 Why\nOne variant can affect several traits, and a disease’s consequences show up too. A random sample, because one chosen by diabetes status creates false links\n\n\n✅ What we conclude\nWhich diseases are linked, and whether they look like consequences of diabetes\n\n\n⚠️ What it can’t tell us\nDirect effects vs consequences, without care: adjusting for diabetes can create associations\n\n\n🔗 Connections\nThe variant comes from 4.2; All by All checks our results in a much bigger sample; 4.5 asks whether it changes gene activity\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 15 minutes. Slowest: the diagnosis-code query and download, and the PheWAS loop (about 5 minutes)\n\n\n💰 Cost\nabout $1 to $2 per student: two BigQuery queries, plus the app\n\n\n📋 Before class\nnothing: this class works on its own",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#class-plan",
+    "href": "pages/courses/omics/4-4-phewas.html#class-plan",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: PheWAS vs GWAS, phecodes, why a random sample\nlisten, ask\n\n\n0:20\n2. All by All, in the browser (no code)\n✋ Try It Out 1 (10 min)\n\n\n0:40\n3. A random sample and its genotypes: start the queries\nrun the cells\n\n\n0:55\n4. Diagnosis codes and phecodes\nrun the cells\n\n\n1:15\n5. Run the PheWAS: start the loop (about 5 min), then a break\n☕ Break while it runs\n\n\n1:25\n6. Read the results: top phecodes, the PheWAS plot, consequences, collider bias\n✋ Try It Out 2 (5 min)\n\n\n1:55\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#key-concepts",
+    "href": "pages/courses/omics/4-4-phewas.html#key-concepts",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nPhecodes\nDiagnoses are recorded as ICD codes: tens of thousands, very specific, in two systems (ICD-9-CM and ICD-10-CM). Phecodes group them into about 1,800 research diseases. For example, ICD-10 E11.9 and E11.65 and ICD-9 250.00 all map to phecode 250.2, Type 2 diabetes.\n\n\n\n\n\n\n\nRule\nMeans\n\n\n\n\nCase\nat least 2 days with a code for the phecode\n\n\nExcluded\nonly 1 day, or a related phecode (e.g. type 1 when testing type 2)\n\n\nControl\neveryone else\n\n\nRoll-up\na specific phecode also counts for its parent (250.2 → 250)\n\n\n\n\n\nWhy a random sample?\nThe case-control sample from 4.1–4.3 is half diabetes cases. In it, anything that goes with diabetes (blood pressure, kidney disease, obesity, diabetes medicines) also goes with the T allele, just because of how the sample was chosen: selection bias. So this class takes a random 20,000, with diabetes at its natural rate (about 1 in 5).",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-4-phewas.html#follow-along-in-the-workbench",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 4.1.\nOpen notebooks/omics/4.4 phewas.ipynb, with the R kernel.\nFor Part 2, open allbyall.researchallofus.org in a new browser tab. It’s public: no login needed.\n\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\n\nThe All by All search box with chr10-112998590-C-T\nThe rs7903146 variant page: the PheWAS plot and the top of the table\nThe TCF7L2 gene page (burden tests)\nOur PheWAS plot (Part 6): one point per disease, so it can be shared",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#try-it-out",
+    "href": "pages/courses/omics/4-4-phewas.html#try-it-out",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 10 minutes · Part 2 (in the browser)\n\n\n\n\nIn All by All, search for chr10-112998590-C-T and sort the table by p-value. Convert type 2 diabetes’s beta to an odds ratio (OR = e^beta).\nFind waist circumference. Is its beta positive or negative? What does that mean?\nSearch for the gene TCF7L2. Are any of the burden tests (rare variants that break the gene) significant?\n\n✅ Check: beta ≈ 0.22, so OR ≈ 1.24; waist circumference has a negative beta; no burden test is significant.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nTest rs7903146 against phecode 278.1, Obesity. Is the T allele linked to obesity? Does adding extra_covariates = \"has_t2d\" change the answer, and should you trust the adjusted version?\n✅ Check: an OR below 1; adjusting for diabetes pushes it further below 1, which is collider bias, so prefer the unadjusted result.",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#code-walk-through",
+    "href": "pages/courses/omics/4-4-phewas.html#code-walk-through",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nFrom ICD codes to phecodes\nperson_phecodes &lt;- icd %&gt;%\n1  inner_join(phecode_map, by = c(\"vocabulary_id\", \"code\"), relationship = \"many-to-many\") %&gt;%\n2  inner_join(phecode_rollup_map, by = c(\"phecode\" = \"code\"), relationship = \"many-to-many\") %&gt;%\n  group_by(person_id, phecode = phecode_unrolled) %&gt;%\n3  summarise(n_days = sum(n_days), .groups = \"drop\")\n\n1\n\nLook up each person’s ICD codes in the phecode map. Codes with no phecode drop out; a few codes map to more than one phecode.\n\n2\n\nAdd each phecode’s parents (e.g. 250.2 also counts for 250).\n\n3\n\nOne row per person per phecode, with the number of days it was coded.\n\n\n\n\nCases, controls, and excluded\nphecode_status &lt;- function(pc) {\n  cases &lt;- person_phecodes %&gt;%\n1    filter(phecode == pc, n_days &gt;= 2) %&gt;%\n    pull(person_id)\n\n2  related  &lt;- phecode_exclude %&gt;% filter(code == pc) %&gt;% pull(exclusion_criteria)\n  excluded &lt;- person_phecodes %&gt;%\n    filter(phecode %in% c(pc, related)) %&gt;%\n    pull(person_id)\n\n3  case_when(phewas_samples$person_id %in% cases    ~ 1,\n            phewas_samples$person_id %in% excluded ~ NA_real_,\n            TRUE                                   ~ 0)\n}\n\n1\n\nCases: at least 2 days with a code for this phecode.\n\n2\n\nRelated phecodes, from the PheWAS project’s exclusion table.\n\n3\n\nFor everyone in the sample: 1 = case, NA = excluded (one code day, or a related phecode), 0 = control. case_when() uses the first rule that matches, so cases come first.",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#what-we-found",
+    "href": "pages/courses/omics/4-4-phewas.html#what-we-found",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\nIn All by All (hundreds of thousands of participants): type 2 diabetes p = 2 × 10⁻¹⁵², beta 0.22 (OR ≈ 1.24); also blood glucose, HbA1c, diabetes medicines (metformin, insulins, sulfonylureas); and waist circumference with a negative beta (−0.015, p = 4 × 10⁻⁸). The TCF7L2 rare-variant burden tests: nothing significant.\nOur PheWAS (20,000 random participants; 18.7% with type 2 diabetes):\n\n\n\n\n\n\n\nDiagnosis codes\nabout 1.6 million person–code rows\n\n\nPhecodes tested\n992, in 4.8 minutes\n\n\nType 2 diabetes (250.2)\nOR 1.20, p = 2.8 × 10⁻⁹\n\n\nAlso significant\ninsulin pump user (OR 1.28); type 2 diabetes with circulatory (1.39) and neurological (1.25) complications\n\n\nJust below the line\ndiabetic retinopathy, polyneuropathy, gastroparesis\n\n\nMorbid obesity (278.11)\nOR 0.90 (p = 0.003); 0.85 (p = 8 × 10⁻⁶) after adjusting for diabetes\n\n\n\n💬 Discuss:\n\nThe complications have larger ORs than diabetes itself. Why? (They come with longer or harder-to-control diabetes.)\nMorbid obesity got more significant after adjusting for diabetes. Both the T allele and obesity cause diabetes, so diabetes is a collider; comparing people within diabetes groups creates a negative link between them. The unadjusted 0.90 is the cleaner estimate, and it agrees with All by All’s smaller waist.\n\nT allele ──→ type 2 diabetes ←── obesity",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#instructor-notes",
+    "href": "pages/courses/omics/4-4-phewas.html#instructor-notes",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nStart the diagnosis-code query and the PheWAS loop at natural pauses: together they take 10 minutes or more.\nPheTK (a Python PheWAS tool) breaks Hail if installed into the shared app; the PheWAS R package doesn’t install (a dependency fails to build). The notebook loads only the PheWAS project’s lookup tables.\nThe collider example is the most memorable part of the class: draw the arrows on the board.",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#key-takeaways",
+    "href": "pages/courses/omics/4-4-phewas.html#key-takeaways",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA PheWAS tests one variant against many phenotypes, with the same regression as a GWAS\nPhecodes turn thousands of ICD codes into about 1,800 research diseases\nA PheWAS needs a random sample: choosing by disease creates selection bias\nMany hits are consequences of the main disease; adjusting for it can create collider bias\nAll by All has free, ready-made results: look there first",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#further-reading",
+    "href": "pages/courses/omics/4-4-phewas.html#further-reading",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Further reading",
+    "text": "Further reading\n\nAll by All browser\nPheWAS resources (phecodes), Vanderbilt",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-4-phewas.html#next",
+    "href": "pages/courses/omics/4-4-phewas.html#next",
+    "title": "4.4 A Phenome-Wide Association Study (PheWAS)",
+    "section": "Next",
+    "text": "Next\n4.5 RNA-seq: from DNA to gene activity. Does rs7903146 change how much TCF7L2 is made in blood?",
+    "crumbs": [
+      "Omics",
+      "4.4 A Phenome-Wide Association Study (PheWAS)"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html",
+    "href": "pages/courses/omics/4-6-proteomics.html",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "",
+    "text": "Omics series, class 6 of 7 · R (limma) · 120 minutes\nOpen the notebook on GitHub Omics series overview Omics for Beginners",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#overview",
+    "href": "pages/courses/omics/4-6-proteomics.html#overview",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Overview",
+    "text": "Overview\nProteins are what the body builds and uses: hormones, enzymes, signals. All of Us has measured about 5,400 proteins in blood plasma from about 10,000 participants, with the Olink platform. We ask which proteins are higher or lower in type 2 diabetes, check that the data’s normalization worked, and look at whether the proteins’ levels are set partly by genetics (pQTLs).\n\nWhy this class matters\nBlood proteins come from organs all over the body, so they can show what’s happening in the kidney, liver, or fat tissue, which blood RNA (4.5) can’t. That makes them promising biomarkers. The class also teaches practical skills for big data: reading only the rows you need from a huge file, and checking for batch effects in data that was normalized before you got it.\n\n\nBy the end you’ll be able to\n\nExplain how Olink measures proteins, and what an NPX value is\nRead only the rows you need from a very large file, with awk\nApply QC flags, reshape long data into a matrix, and check for batch effects\nRun differential abundance with limma, and read the results\nLook up pQTLs in All of Us’s results\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Questions\nWhich plasma proteins differ in type 2 diabetes, and are their levels partly genetic?\n\n\n🧪 The analysis\nA linear model per protein with limma on NPX, adjusted for age and sex, after QC and checks of normalization and plate effects; then a pQTL lookup\n\n\n🎯 Why\nNPX is already normalized and log₂, so linear models fit directly; but leftover plate effects can look like biology, so we check; ~5,400 proteins, so FDR\n\n\n✅ What we conclude\nWhich proteins differ and which organs they point to; which have strong pQTLs\n\n\n⚠️ What it can’t tell us\nCause vs consequence vs treatment; for sure which organ a protein came from\n\n\n🔗 Connections\nRNA in 4.5; both in 4.7. pQTLs + GWAS = Mendelian randomization\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n120 minutes\n\n\n⏱️ Run time\nabout 10 minutes. Slowest: loading the proteins (3–5 minutes)\n\n\n💰 Cost\nabout $1 to $2 per student: one BigQuery query, reading a 2.6 GB file (pennies), plus the app\n\n\n📋 Before class\nnothing (limma installs quickly if you ran 4.5)",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#class-plan",
+    "href": "pages/courses/omics/4-6-proteomics.html#class-plan",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: DNA/RNA/protein, how Olink works, NPX, normalization, limit of detection\nlisten, ask\n\n\n0:15\n2. Setup and a tour of the files\nrun the cells\n\n\n0:30\n3. The cohort\nrun the cells\n\n\n0:40\n4. Load our people’s proteins with awk (3–5 min)\n☕ Break while it loads\n\n\n0:50\n5. QC, reshape, explore: flags, long to wide, PCA, batch checks\n✋ Try It Out 1 (5 min)\n\n\n1:15\n6. Differential abundance: limma, volcano, sensitivity checks\n✋ Try It Out 2 (10 min)\n\n\n1:40\n7. pQTLs\ndiscuss\n\n\n1:55\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#key-concepts",
+    "href": "pages/courses/omics/4-6-proteomics.html#key-concepts",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nHow Olink measures proteins\nPairs of antibodies, each carrying a short DNA tag, bind the same protein. Only when both bind are their tags close enough to join into a DNA sequence, which is counted by sequencing. More protein, more counts. The All of Us platform, Olink Explore HT, measures about 5,400 proteins (assays) from one small sample.\n\n\nNPX, and what’s already been done\nNPX (Normalized Protein eXpression) is on a log₂ scale (1 = twice as much) and is relative: compare the same protein between people, not two proteins. It’s already normalized twice: to control samples on each plate (by Olink’s software), and across batches of plates (by All of Us). So we don’t normalize again, but we check that no plate stands out.\n\n\nLimit of detection\nBelow its limit of detection (LOD), an assay can’t tell signal from noise. The All of Us file we use doesn’t seem to include an LOD column, so the class explains it rather than filtering on it: treat “significant” proteins with a very low average NPX with caution.",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#follow-along-in-the-workbench",
+    "href": "pages/courses/omics/4-6-proteomics.html#follow-along-in-the-workbench",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 4.1.\nOpen notebooks/omics/4.6 proteomics.ipynb, with the R kernel.\nPart 4 (loading the proteins) takes 3–5 minutes: the whole 2.6 GB file is read once.",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#try-it-out",
+    "href": "pages/courses/omics/4-6-proteomics.html#try-it-out",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 5\n\n\n\nRun the batch checks. Do the plates line up? Does plate explain more of PC1 or PC2 than diabetes, age, or sex? How many outlier samples does the 5-SD rule flag?\n✅ Check: plate’s adjusted R² should be near 0 for each PC.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 10 minutes · Part 6, “Your turn”\n\n\n\n\nIs leptin (LEP, made by fat tissue) higher in diabetes? Why might that be?\nIs TCF7L2 on the Olink panel?\nChallenge: add BMI to the model. What happens to leptin? (One more query, about $1.)\n\n✅ Check: leptin’s link to diabetes shrinks with BMI in the model: it was mostly body size. TCF7L2 isn’t measured: it works inside the cell’s nucleus, not in the blood.",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#code-walk-through",
+    "href": "pages/courses/omics/4-6-proteomics.html#code-walk-through",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nReading only our people’s rows\nwanted   &lt;- c(\"ResearchID\", \"SampleID\", \"PlateID\", \"OlinkID\", \"UniProt\", \"Assay\", \"NPX\", \"SampleQC\", \"AssayQC\")\n1col_nums &lt;- match(wanted, npx_columns)\n\nawk_command &lt;- str_glue(\n2  \"gzip -dc {shQuote(NPX_FILE)} | \",\n3  \"awk -F'\\\\t' -v OFS='\\\\t' -v id={col_nums[1]} \",\n4  \"'NR==FNR {{keep[$1]; next}} FNR==1 || ($id in keep) {{print {str_c('$', col_nums, collapse = ', ')}}}' \",\n  \"{shQuote(ids_file)} -\"\n)\n5npx_long &lt;- data.table::fread(cmd = awk_command, sep = \"\\t\", header = TRUE)\n\n1\n\nThe positions of the columns we need (awk refers to columns by number).\n\n2\n\nUncompress the 2.6 GB file as it’s read, without saving an uncompressed copy.\n\n3\n\nTell awk the columns are separated by tabs, and which column holds the participant ID.\n\n4\n\nFirst read our 600 IDs into a list called keep; then print the header, and every line whose ID is in keep, keeping only the columns we need. ({ } is how str_glue() writes a literal brace.)\n\n5\n\nfread() runs the command and reads the result into R: about 3 million rows instead of over 50 million.\n\n\n\n\nDifferential abundance\n1design &lt;- model.matrix(~ group + age + sex_at_birth, data = samples)\n2fit     &lt;- eBayes(lmFit(npx, design))\n3results &lt;- topTable(fit, coef = \"groupcase\", number = Inf)\n\n1\n\nThe model for every protein: case vs control, adjusted for age and sex.\n\n2\n\nFit it to every protein at once. No voom(): NPX is already on a log scale and isn’t a count.\n\n3\n\nEvery protein’s result, sorted by p-value.",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#what-we-found",
+    "href": "pages/courses/omics/4-6-proteomics.html#what-we-found",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 300 cases and 300 controls.\n\n\n\n\n\n\n\nPeople with proteomics\n1,446 cases, 6,154 controls\n\n\nLoading\n3.5 minutes; about 32.5 million rows read, 5,420 proteins\n\n\nQC\nover 99% of measurements passed; under 1% failed; a few WARN (kept, per Olink’s advice)\n\n\nPCA\n2 people far from everyone else (outliers: checked with a sensitivity analysis, not deleted)\n\n\nSignificant proteins\nabout 290, most of them higher in diabetes\n\n\nTop protein\nNFASC (higher in diabetes)\n\n\npQTLs\n18 of the top 20 proteins had very strong pQTLs\n\n\nrs7903146\nnot in any fine-mapped pQTL\n\n\n\nThe proteins point to organs:\n\n\n\n\n\n\n\n\nOrgan\nProteins\nA possible story\n\n\n\n\nKidney\nHAVCR1 (KIM-1) and PDZK1 higher; UMOD lower\nearly diabetic kidney disease\n\n\nFat tissue\nFABP4 higher; LPL lower\ninsulin resistance\n\n\nGut\nLGALS4, MUC13, PRAP1 higher\npossibly medicines such as metformin\n\n\n\n💬 Discuss: which of these are causes of diabetes, consequences (kidney damage), or treatment effects? UMOD’s pQTL sits in the UMOD gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (Mendelian randomization).\n\n\n\n\n\n\nNoteScreenshots to add (for the instructor)\n\n\n\n\n\nPlots with one point per protein can be shared:\n\nThe volcano plot (Part 6)\nThe plate check (median NPX by plate, Part 5): one box per plate\n\nThe PCA plot and the top-protein boxplot show people: keep them in the notebook.",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#instructor-notes",
+    "href": "pages/courses/omics/4-6-proteomics.html#instructor-notes",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nUse the 3–5 minute load in Part 4 for a break or for questions about Olink.\nThe protein IDs in the pQTL files look like P09769_ENSG00000000938.13: UniProt ID, then the gene’s Ensembl ID. The notebook matches on the UniProt part.\nThe batch checks, sensitivity analyses, enrichment, and BMI challenge were added after our first Workbench run; their results aren’t in the table above yet.",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#key-takeaways",
+    "href": "pages/courses/omics/4-6-proteomics.html#key-takeaways",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nOlink measures thousands of proteins with antibody pairs and DNA tags; NPX is relative and log₂\nFilter huge files on the command line (awk) before R reads them\nData normalized for you still needs checking for batch effects\nBlood proteins come from the whole body, so they show more than blood RNA\npQTLs link genetics to protein levels, and help ask about cause",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#further-reading",
+    "href": "pages/courses/omics/4-6-proteomics.html#further-reading",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Further reading",
+    "text": "Further reading\n\nOlink: the company’s explanations of its technology and of NPX\nAll by All browser: genetic results for many phenotypes, to compare with pQTLs",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/omics/4-6-proteomics.html#next",
+    "href": "pages/courses/omics/4-6-proteomics.html#next",
+    "title": "4.6 Proteomics: Blood Proteins in Type 2 Diabetes",
+    "section": "Next",
+    "text": "Next\n4.7 RNA and Protein Together: do a gene’s RNA and its protein go up and down together?",
+    "crumbs": [
+      "Omics",
+      "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+    ]
+  },
+  {
     "objectID": "pages/courses/omics/index.html",
     "href": "pages/courses/omics/index.html",
     "title": "Omics Series",
@@ -1199,7 +2002,7 @@
     "href": "pages/courses/omics/index.html#the-classes",
     "title": "Omics Series",
     "section": "The classes",
-    "text": "The classes\n\n\n\nClass\nLanguage\nThe question\nTime\n\n\n\n\n4.1 DNA intro\nR + PLINK\nWhat is the genomic data, and is rs7903146’s T allele more common in type 2 diabetes?\n120 min\n\n\n4.2 GWAS with PLINK\nR + PLINK\nWhich variants in the TCF7L2 region are linked to type 2 diabetes?\n120 min\n\n\n4.3 GWAS with Hail\nPython + Hail\nDoes a second tool give the same answer?\n120 min\n\n\n4.4 PheWAS\nR\nWhich diseases are linked to rs7903146?\n120 min\n\n\n4.5 RNA-seq\nR\nWhich genes are more or less active in blood in type 2 diabetes?\n120 min\n\n\n4.6 Proteomics\nR\nWhich blood proteins differ, and are they genetically controlled?\n120 min\n\n\n4.7 RNA and protein\nR\nDo RNA and protein tell the same story?\n120 min\n\n\n\nCompanion pages for 4.2–4.7 are coming. Their notebooks are ready now in the notebooks/omics/ folder on GitHub.",
+    "text": "The classes\n\n\n\nClass\nLanguage\nThe question\nTime\n\n\n\n\n4.1 DNA intro\nR + PLINK\nWhat is the genomic data, and is rs7903146’s T allele more common in type 2 diabetes?\n120 min\n\n\n4.2 GWAS with PLINK\nR + PLINK\nWhich variants in the TCF7L2 region are linked to type 2 diabetes?\n120 min\n\n\n4.3 GWAS with Hail\nPython + Hail\nDoes a second tool give the same answer?\n120 min\n\n\n4.4 PheWAS\nR\nWhich diseases are linked to rs7903146?\n120 min\n\n\n4.5 RNA-seq\nR\nWhich genes are more or less active in blood in type 2 diabetes?\n120 min\n\n\n4.6 Proteomics\nR\nWhich blood proteins differ, and are they genetically controlled?\n120 min\n\n\n4.7 RNA and protein\nR\nDo RNA and protein tell the same story?\n120 min\n\n\n\nEach class has a page here (overview, class plan, Try It Out pauses, code walk-through, our results) and a notebook in the notebooks/omics/ folder on GitHub.",
     "crumbs": [
       "Omics",
       "Omics Series"

@@ -14,14 +14,14 @@ The thread through the series is one genetic variant, **rs7903146**, in the gene
 | Class | Language | The question | Time |
 |---|---|---|---|
 | [**4.1 DNA intro**](4-1-dna-intro.qmd) | R + PLINK | What is the genomic data, and is rs7903146's T allele more common in type 2 diabetes? | 120 min |
-| **4.2 GWAS with PLINK** | R + PLINK | Which variants in the *TCF7L2* region are linked to type 2 diabetes? | 120 min |
-| **4.3 GWAS with Hail** | Python + Hail | Does a second tool give the same answer? | 120 min |
-| **4.4 PheWAS** | R | Which diseases are linked to rs7903146? | 120 min |
-| **4.5 RNA-seq** | R | Which genes are more or less active in blood in type 2 diabetes? | 120 min |
-| **4.6 Proteomics** | R | Which blood proteins differ, and are they genetically controlled? | 120 min |
-| **4.7 RNA and protein** | R | Do RNA and protein tell the same story? | 120 min |
+| [**4.2 GWAS with PLINK**](4-2-gwas-plink.qmd) | R + PLINK | Which variants in the *TCF7L2* region are linked to type 2 diabetes? | 120 min |
+| [**4.3 GWAS with Hail**](4-3-gwas-hail.qmd) | Python + Hail | Does a second tool give the same answer? | 120 min |
+| [**4.4 PheWAS**](4-4-phewas.qmd) | R | Which diseases are linked to rs7903146? | 120 min |
+| [**4.5 RNA-seq**](4-5-rnaseq.qmd) | R | Which genes are more or less active in blood in type 2 diabetes? | 120 min |
+| [**4.6 Proteomics**](4-6-proteomics.qmd) | R | Which blood proteins differ, and are they genetically controlled? | 120 min |
+| [**4.7 RNA and protein**](4-7-rnaseq-proteomics.qmd) | R | Do RNA and protein tell the same story? | 120 min |
 
-Companion pages for 4.2–4.7 are coming. Their notebooks are ready now in the [`notebooks/omics/`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/omics) folder on GitHub.
+Each class has a page here (overview, class plan, Try It Out pauses, code walk-through, our results) and a notebook in the [`notebooks/omics/`](https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/omics) folder on GitHub.
 
 ## How the classes connect
 

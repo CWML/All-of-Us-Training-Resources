@@ -1,0 +1,205 @@
+---
+title: "4.5 RNA-seq: Gene Activity in Type 2 Diabetes"
+description: "Normalize RNA-seq counts, find genes that differ in type 2 diabetes with limma-voom, and check whether rs7903146 changes TCF7L2 activity in blood"
+code-annotations: below
+---
+
+**Omics series, class 5 of 7** · R (edgeR, limma) · 120 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.5%20rnaseq.ipynb){.btn .btn-outline-primary .btn-sm}
+[Omics series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+[Omics for Beginners](omics-for-beginners.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+DNA is the same in every cell and fixed from birth. **RNA** shows which genes are **active**, and how much, when a sample was taken. *All of Us* has measured gene activity (**RNA sequencing**, RNA-seq) in **whole blood** for about 9,000 participants. We ask which genes are more or less active in people with type 2 diabetes, then connect back to DNA: does the **T** allele of rs7903146 change how much *TCF7L2* is made in blood?
+
+### Why this class matters
+
+RNA-seq is one of the most common omics measurements, and its analysis has a step that's easy to get wrong without noticing: **normalization**. The statistics package (limma) doesn't normalize for you; it will happily give p-values for badly normalized data. This class shows each step, checks it, and ends by linking DNA to RNA with an **eQTL**.
+
+### By the end you'll be able to
+
+1. Explain what RNA-seq measures, and **counts** vs **TPM**
+2. Use the RNA **quality** measures, and add RNA quality to the model
+3. **Normalize** counts (TMM, log-CPM), and **check** that it worked
+4. Run **differential expression** with limma-voom, and read a volcano plot
+5. Test whether a variant is linked to a gene's activity (an **eQTL**), and look it up in *All of Us*'s results
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Questions** | Which genes are more or less active in the blood of people with type 2 diabetes? Does rs7903146 change *TCF7L2* activity in blood? |
+| 🧪 **The analysis** | Counts normalized (TMM) and log-transformed; a **linear model** per gene with limma-voom, adjusted for age, sex, and RNA quality; then an **eQTL** test |
+| 🎯 **Why** | Raw counts can't be compared until normalized; expression is a number, so linear models; ~29,000 genes, so an adjusted p-value (FDR) |
+| ✅ **What we conclude** | Which genes and processes differ, and whether the variant acts through blood |
+| ⚠️ **What it can't tell us** | Cause vs consequence vs treatment; other **tissues**; whether cells changed or the **mix** of cells changed |
+| 🔗 **Connections** | The variant from **4.1–4.4**; proteins in **4.6**; both in **4.7**. GWAS + eQTL = **colocalization** |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 120 minutes |
+| ⏱️ **Run time** | about 10 minutes (plus 5–10 the first time, to install limma and edgeR). Slowest: loading the counts |
+| 💰 **Cost** | about **$1 to $2** per student: one BigQuery query, reading files (pennies), plus the app |
+| 📋 **Before class** | run the setup cell once, to install the packages |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: genes to reads, counts and normalization, log scale, whole blood | listen, ask |
+| 0:15 | **2. Setup and a tour of the files**: RNA quality columns | run the cells |
+| 0:30 | **3. The cohort** | run the cells |
+| 0:40 | **4. Load the counts** (a few minutes) | ☕ **Break** while it loads |
+| 0:50 | **5. Normalize, check, explore**: TMM, before/after boxplots, PCA | ✋ **Try It Out 1** (5 min) |
+| 1:10 | **6. Differential expression**: voom, limma, volcano, optional pathways | ✋ **Try It Out 2** (10 min) |
+| 1:35 | **7. Back to *TCF7L2* and rs7903146**: eQTLs | ✋ **Try It Out 3** (5 min) |
+| 1:55 | **Wrap-up** | discuss |
+
+## Key concepts
+
+### Counts need normalizing
+
+| Problem | Example | Fixed by |
+|---|---|---|
+| **Sequencing depth** | person A sequenced twice as deeply: every gene has twice the reads | counts per million (CPM) |
+| **Composition** | a few hugely active genes "use up" reads, making every other gene look lower | **TMM** (edgeR): assumes most genes don't change, and scales each person so they line up |
+| **Skew** | a few genes have huge counts | the **log₂** scale (a step of 1 = twice as much) |
+| **Low counts are noisy** | genes with few reads vary a lot by chance | **voom**: gives each value a weight |
+
+*All of Us* did the **processing** (aligning reads, counting them per gene), but **not** the normalization: that's our job, and limma doesn't do it.
+
+### Whole blood
+
+The RNA comes from **blood**: a mix of cell types, mostly white blood cells. Much of type 2 diabetes happens in the pancreas, liver, muscle, and fat, which blood doesn't show. And a difference between groups can come from a change in the **mix** of cells, not each cell's activity.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [4.1](4-1-dna-intro.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/omics/4.5 rnaseq.ipynb`, with the **R** kernel.
+3. The setup cell installs **limma** and **edgeR** the first time (5–10 minutes). They install only into your own R library.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out 1 · 5 minutes · Part 5, "Your turn"
+
+Colour the PCA plot by **sex at birth**, then by **RNA quality** (`rqs`). Which explains the two big clusters?
+
+**✅ Check:** sex: genes on the Y chromosome and *XIST* separate the groups.
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 2 · 10 minutes · Part 6, "Your turn"
+
+1. Find ***TXNIP*** (a gene that responds to blood sugar) in the results.
+2. Run the model **without** RNA quality. How many genes are significant now?
+3. *Challenge:* add each person's **neutrophil count** from their lab results. Do the neutrophil genes stay significant? (One more query, about $1.)
+
+**✅ Check:** the answers are under **Show answer** in the notebook.
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 3 · 5 minutes · Part 7, "Your turn"
+
+Which of your **significant** genes also have a strong eQTL in blood?
+
+**✅ Check:** a table of genes with their strongest variant and its `qval`.
+:::
+
+## Code walk-through
+
+### Filter and normalize
+
+```r
+dge <- DGEList(counts = counts, genes = genes, samples = samples)   # <1>
+
+keep_genes <- filterByExpr(dge, group = samples$group)              # <2>
+dge <- dge[keep_genes, , keep.lib.sizes = FALSE]
+dge <- calcNormFactors(dge)                                         # <3>
+
+logcpm <- cpm(dge, log = TRUE)                                      # <4>
+```
+1. One object holding the counts (genes × people), the gene names, and the sample table.
+2. Keep genes with enough reads, in enough people, to analyse (about 29,000 of 78,000).
+3. **TMM** normalization: one factor per person, correcting for composition. The notebook then **checks** these factors and shows boxplots before and after.
+4. Normalized **log₂ counts per million**, for plots and PCA.
+
+### Differential expression
+
+```r
+design <- model.matrix(~ group + age + sex_at_birth + rqs, data = samples)   # <1>
+
+v   <- voom(dge, design, plot = TRUE)                                         # <2>
+fit <- eBayes(lmFit(v, design))                                               # <3>
+
+results <- topTable(fit, coef = "groupcase", number = Inf)                    # <4>
+```
+1. The model for every gene: group (case vs control), adjusted for age, sex, and RNA quality (`rqs`), a **technical** covariate.
+2. **voom** turns counts into log values with a **weight** each, and draws the mean-variance trend (a smooth downward curve is what you want).
+3. Fit the model to every gene; `eBayes()` shares information across genes, which makes each test more reliable.
+4. The results for the case-vs-control term, every gene, sorted by p-value.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls.
+
+| | |
+|---|---|
+| People with RNA-seq | 1,312 cases, 5,538 controls |
+| Cases vs controls | older (64 vs 52); RNA quality almost identical (7.7 vs 7.8) |
+| Genes kept | **28,902** of 77,814 |
+| PCA | PC1 split everyone into **two clusters**: sex, not diabetes |
+| Significant genes | a few dozen (adjusted p < 0.05) |
+| Higher in diabetes | many **neutrophil** genes: *MMP8*, *LTF*, *CRISP3*, *HP*, *ANXA3* |
+| Lower in diabetes | *ABCG1* (cholesterol transport), *NRCAM* (the top gene) |
+| *TCF7L2* | not different between groups (adjusted p ≈ 0.95) |
+| Our eQTL test | no effect of the T allele on *TCF7L2* (estimate ≈ −0.01, p ≈ 0.6) |
+| *All of Us* eQTLs (~9,000 people) | *TCF7L2*'s strongest eQTL is a **different** variant (`chr10:112951996_C_T`, slope −0.25); rs7903146's effect is tiny (slope 0.02, p ≈ 0.004) |
+
+**💬 Discuss:**
+
+- Are the neutrophil genes higher because each neutrophil changed, or because people with diabetes have **more** neutrophils (inflammation)? How would you tell? (Adjust for neutrophil counts: the challenge exercise.)
+- rs7903146 is one of the strongest diabetes risk variants, yet it barely touches *TCF7L2* in **blood**. What does that say about **tissue**? (Its known effects are in the pancreas, where insulin is made.)
+
+::: {.callout-note collapse="true"}
+## Screenshots to add (for the instructor)
+
+Plots with one point per **gene** can be shared:
+
+1. The volcano plot (Part 6)
+2. The voom mean-variance plot (Part 6)
+
+The PCA plot, the before/after normalization boxplots (one box per person), and the genotype boxplot show **people**: keep them in the notebook.
+:::
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip: timing and pitfalls
+
+- Run the **setup cell before class**: installing limma and edgeR takes 5–10 minutes.
+- Loading the counts reads one large compressed file; use the time for questions or a break.
+- The **optional enrichment** section installs two more Bioconductor packages (a few minutes the first time).
+- The sections on normalization checks, enrichment, and the neutrophil challenge were added after our first Workbench run; their results aren't in the table above yet.
+:::
+
+## Key takeaways
+
+- RNA-seq counts reads per gene; **normalize** (TMM, log-CPM) and **check** it before testing
+- **limma** doesn't normalize; voom adds weights for noisy low counts
+- Adjust for **technical** factors such as RNA quality
+- Blood RNA can reflect a change in the **cell mix**
+- An **eQTL** links DNA to RNA, but only in the tissue measured
+
+## Further reading
+
+- [RNA-seq analysis is easy as 1-2-3 with limma, Glimma and edgeR](https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/limmaWorkflow.html) (Bioconductor workflow)
+- [GTEx portal](https://gtexportal.org): gene activity and eQTLs in many tissues, to compare with blood
+
+## Next
+
+**[4.6 Proteomics](4-6-proteomics.qmd)**: from RNA to proteins in blood plasma.

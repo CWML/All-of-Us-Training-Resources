@@ -1,0 +1,196 @@
+---
+title: "4.6 Proteomics: Blood Proteins in Type 2 Diabetes"
+description: "Olink proteins in plasma: reading only what you need from a 2.6 GB file, QC and batch checks, differential abundance with limma, and pQTLs"
+code-annotations: below
+---
+
+**Omics series, class 6 of 7** · R (limma) · 120 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.6%20proteomics.ipynb){.btn .btn-outline-primary .btn-sm}
+[Omics series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+[Omics for Beginners](omics-for-beginners.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+**Proteins** are what the body builds and uses: hormones, enzymes, signals. *All of Us* has measured about **5,400 proteins** in blood **plasma** from about **10,000 participants**, with the **Olink** platform. We ask which proteins are higher or lower in type 2 diabetes, check that the data's normalization worked, and look at whether the proteins' levels are set partly by **genetics** (pQTLs).
+
+### Why this class matters
+
+Blood proteins come from organs **all over the body**, so they can show what's happening in the kidney, liver, or fat tissue, which blood RNA (4.5) can't. That makes them promising **biomarkers**. The class also teaches practical skills for big data: reading only the rows you need from a huge file, and checking for **batch effects** in data that was normalized before you got it.
+
+### By the end you'll be able to
+
+1. Explain how Olink measures proteins, and what an **NPX** value is
+2. Read only the rows you need from a very large file, with `awk`
+3. Apply QC flags, reshape long data into a matrix, and **check for batch effects**
+4. Run **differential abundance** with limma, and read the results
+5. Look up **pQTLs** in *All of Us*'s results
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Questions** | Which plasma proteins differ in type 2 diabetes, and are their levels partly genetic? |
+| 🧪 **The analysis** | A **linear model** per protein with limma on NPX, adjusted for age and sex, after QC and checks of normalization and plate effects; then a **pQTL** lookup |
+| 🎯 **Why** | NPX is already normalized and log₂, so linear models fit directly; but leftover plate effects can look like biology, so we check; ~5,400 proteins, so FDR |
+| ✅ **What we conclude** | Which proteins differ and which **organs** they point to; which have strong pQTLs |
+| ⚠️ **What it can't tell us** | Cause vs consequence vs treatment; for sure which organ a protein came from |
+| 🔗 **Connections** | RNA in **4.5**; both in **4.7**. pQTLs + GWAS = **Mendelian randomization** |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 120 minutes |
+| ⏱️ **Run time** | about 10 minutes. Slowest: loading the proteins (3–5 minutes) |
+| 💰 **Cost** | about **$1 to $2** per student: one BigQuery query, reading a 2.6 GB file (pennies), plus the app |
+| 📋 **Before class** | nothing (limma installs quickly if you ran 4.5) |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: DNA/RNA/protein, how Olink works, NPX, normalization, limit of detection | listen, ask |
+| 0:15 | **2. Setup and a tour of the files** | run the cells |
+| 0:30 | **3. The cohort** | run the cells |
+| 0:40 | **4. Load our people's proteins** with `awk` (3–5 min) | ☕ **Break** while it loads |
+| 0:50 | **5. QC, reshape, explore**: flags, long to wide, PCA, **batch checks** | ✋ **Try It Out 1** (5 min) |
+| 1:15 | **6. Differential abundance**: limma, volcano, sensitivity checks | ✋ **Try It Out 2** (10 min) |
+| 1:40 | **7. pQTLs** | discuss |
+| 1:55 | **Wrap-up** | discuss |
+
+## Key concepts
+
+### How Olink measures proteins
+
+**Pairs of antibodies**, each carrying a short **DNA tag**, bind the same protein. Only when both bind are their tags close enough to join into a DNA sequence, which is counted by **sequencing**. More protein, more counts. The *All of Us* platform, **Olink Explore HT**, measures about 5,400 proteins (**assays**) from one small sample.
+
+### NPX, and what's already been done
+
+**NPX** (*Normalized Protein eXpression*) is on a **log₂ scale** (1 = twice as much) and is **relative**: compare the same protein between people, not two proteins. It's already normalized twice: to **control samples on each plate** (by Olink's software), and **across batches** of plates (by *All of Us*). So we don't normalize again, but we **check** that no plate stands out.
+
+### Limit of detection
+
+Below its **limit of detection (LOD)**, an assay can't tell signal from noise. The *All of Us* file we use doesn't seem to include an LOD column, so the class explains it rather than filtering on it: treat "significant" proteins with a very **low** average NPX with caution.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [4.1](4-1-dna-intro.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/omics/4.6 proteomics.ipynb`, with the **R** kernel.
+3. Part 4 (loading the proteins) takes 3–5 minutes: the whole 2.6 GB file is read once.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out 1 · 5 minutes · Part 5
+
+Run the **batch checks**. Do the plates line up? Does plate explain more of PC1 or PC2 than diabetes, age, or sex? How many outlier samples does the 5-SD rule flag?
+
+**✅ Check:** plate's adjusted R² should be near 0 for each PC.
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 2 · 10 minutes · Part 6, "Your turn"
+
+1. Is **leptin** (`LEP`, made by fat tissue) higher in diabetes? Why might that be?
+2. Is ***TCF7L2*** on the Olink panel?
+3. *Challenge:* add **BMI** to the model. What happens to leptin? (One more query, about $1.)
+
+**✅ Check:** leptin's link to diabetes shrinks with BMI in the model: it was mostly body size. *TCF7L2* isn't measured: it works inside the cell's nucleus, not in the blood.
+:::
+
+## Code walk-through
+
+### Reading only our people's rows
+
+```r
+wanted   <- c("ResearchID", "SampleID", "PlateID", "OlinkID", "UniProt", "Assay", "NPX", "SampleQC", "AssayQC")
+col_nums <- match(wanted, npx_columns)                                       # <1>
+
+awk_command <- str_glue(
+  "gzip -dc {shQuote(NPX_FILE)} | ",                                          # <2>
+  "awk -F'\\t' -v OFS='\\t' -v id={col_nums[1]} ",                            # <3>
+  "'NR==FNR {{keep[$1]; next}} FNR==1 || ($id in keep) {{print {str_c('$', col_nums, collapse = ', ')}}}' ",   # <4>
+  "{shQuote(ids_file)} -"
+)
+npx_long <- data.table::fread(cmd = awk_command, sep = "\t", header = TRUE)   # <5>
+```
+1. The **positions** of the columns we need (awk refers to columns by number).
+2. Uncompress the 2.6 GB file as it's read, without saving an uncompressed copy.
+3. Tell awk the columns are separated by tabs, and which column holds the participant ID.
+4. First read our 600 IDs into a list called `keep`; then print the header, and every line whose ID is in `keep`, keeping only the columns we need. (`{{ }}` is how `str_glue()` writes a literal brace.)
+5. `fread()` runs the command and reads the result into R: about 3 million rows instead of over 50 million.
+
+### Differential abundance
+
+```r
+design <- model.matrix(~ group + age + sex_at_birth, data = samples)   # <1>
+fit     <- eBayes(lmFit(npx, design))                                   # <2>
+results <- topTable(fit, coef = "groupcase", number = Inf)              # <3>
+```
+1. The model for every protein: case vs control, adjusted for age and sex.
+2. Fit it to every protein at once. No `voom()`: NPX is already on a log scale and isn't a count.
+3. Every protein's result, sorted by p-value.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls.
+
+| | |
+|---|---|
+| People with proteomics | 1,446 cases, 6,154 controls |
+| Loading | **3.5 minutes**; about 32.5 million rows read, **5,420** proteins |
+| QC | over 99% of measurements passed; under 1% failed; a few `WARN` (kept, per Olink's advice) |
+| PCA | **2** people far from everyone else (outliers: checked with a sensitivity analysis, not deleted) |
+| Significant proteins | about **290**, most of them **higher** in diabetes |
+| Top protein | ***NFASC*** (higher in diabetes) |
+| pQTLs | 18 of the top 20 proteins had very strong pQTLs |
+| rs7903146 | not in any fine-mapped pQTL |
+
+The proteins point to **organs**:
+
+| Organ | Proteins | A possible story |
+|---|---|---|
+| **Kidney** | *HAVCR1* (KIM-1) and *PDZK1* higher; *UMOD* lower | early diabetic kidney disease |
+| **Fat tissue** | *FABP4* higher; *LPL* lower | insulin resistance |
+| **Gut** | *LGALS4*, *MUC13*, *PRAP1* higher | possibly medicines such as metformin |
+
+**💬 Discuss:** which of these are **causes** of diabetes, **consequences** (kidney damage), or **treatment** effects? *UMOD*'s pQTL sits in the *UMOD* gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (**Mendelian randomization**).
+
+::: {.callout-note collapse="true"}
+## Screenshots to add (for the instructor)
+
+Plots with one point per **protein** can be shared:
+
+1. The volcano plot (Part 6)
+2. The plate check (median NPX by plate, Part 5): one box per plate
+
+The PCA plot and the top-protein boxplot show **people**: keep them in the notebook.
+:::
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip: timing and pitfalls
+
+- Use the 3–5 minute load in Part 4 for a break or for questions about Olink.
+- The protein IDs in the pQTL files look like `P09769_ENSG00000000938.13`: UniProt ID, then the gene's Ensembl ID. The notebook matches on the UniProt part.
+- The batch checks, sensitivity analyses, enrichment, and BMI challenge were added after our first Workbench run; their results aren't in the table above yet.
+:::
+
+## Key takeaways
+
+- **Olink** measures thousands of proteins with antibody pairs and DNA tags; **NPX** is relative and log₂
+- Filter huge files on the command line (**awk**) before R reads them
+- Data normalized for you still needs **checking** for batch effects
+- Blood proteins come from the **whole body**, so they show more than blood RNA
+- **pQTLs** link genetics to protein levels, and help ask about cause
+
+## Further reading
+
+- [Olink](https://olink.com): the company's explanations of its technology and of NPX
+- [All by All browser](https://allbyall.researchallofus.org): genetic results for many phenotypes, to compare with pQTLs
+
+## Next
+
+**[4.7 RNA and Protein Together](4-7-rnaseq-proteomics.qmd)**: do a gene's RNA and its protein go up and down together?

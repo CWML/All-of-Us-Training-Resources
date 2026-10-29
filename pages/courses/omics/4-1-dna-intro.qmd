@@ -304,4 +304,4 @@ A newer method, **genomic-relatedness-matched association (GRMA)**, compares peo
 
 ## Next
 
-**4.2 GWAS with PLINK**: test every variant in the *TCF7L2* region, adjusted for age, sex, and ancestry. The notebook is [`notebooks/omics/4.2 gwas_plink.ipynb`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.2%20gwas_plink.ipynb); its companion page is coming.
+**[4.2 GWAS with PLINK](4-2-gwas-plink.qmd)**: test every variant in the *TCF7L2* region, adjusted for age, sex, and ancestry.
