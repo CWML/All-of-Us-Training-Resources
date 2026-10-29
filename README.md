@@ -87,27 +87,29 @@ Styling is in `custom.scss`.
 
 R and Python notebooks in **series**, in `notebooks/`: each notebook does one thing, so each can be taught as its own class.
 
-- **`notebooks/core/`** (1.1–3.4): a complete study comparing people **with** and **without diabetes**, including time to chronic kidney disease (CKD). Being rewritten for one shared type 2 diabetes cohort.
+- **`notebooks/core/`** (1.1–3.4): one study from start to finish, people **with type 2 diabetes** vs **without diabetes**, including time to chronic kidney disease (CKD): build the cohort with SQL; clean, reshape, and join; Table 1, logistic and linear regression, survival analysis.
 - **`notebooks/omics/`** (4.1–4.7): genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, and proteomics, around type 2 diabetes and the *TCF7L2* variant rs7903146.
 - Planned: **surveys** (5.x) and **wearables** (6.x).
 
+Every series uses the same cohort query, `notebooks/sql/t2d_cohort.sql`.
+
 The core series:
 
-| Notebook | What it does | Class |
-|---|---|---|
-| `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions | |
-| `0.0 setup` | Checks your settings and the connection to the data | Any |
-| `1.1 build_cohorts` | Cohort Builder SQL (updated for 2.0) for the study population: demographics, PTSD survey answers, and measurements. Also shows how to use a Data Explorer export instead. | 1 |
-| `1.2 survival_data` | Diabetes and CKD diagnosis dates, and last visits | 1 or 5 |
-| `2.0 clean_and_join` | Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table | 2 |
-| `3.1 table_one` | Descriptive statistics, chi-square and t-tests, and a small-count check | 3 |
-| `3.2 logistic_regression` | Univariable and multivariable models for the odds of diabetes | 4 |
-| `3.3 linear_regression` | Models for systolic blood pressure, compared by fit | 4 |
-| `3.4 survival_analysis` | Kaplan–Meier curves and a Cox model with baseline predictors | 5 |
+| Notebook | What it does |
+|---|---|
+| `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions |
+| `0.0 setup` | Checks your settings and the connection to the data |
+| `1.1 build_cohorts` | The OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements |
+| `1.2 survival_data` | Time zero, event, and censoring; first CKD dates; follow-up |
+| `2.1 clean` | Non-answers, messy text, duplicates, units, plausible ranges, missing data |
+| `2.2 reshape` | Long vs wide; one value per person |
+| `2.3 join_and_bind` | Binding rows; join types; checks after every join |
+| `3.1 table_one` | A Table 1 with your own functions; the small-count check |
+| `3.2 logistic_regression` | Odds ratios for type 2 diabetes; adjustment; reverse causation |
+| `3.3 linear_regression` | Systolic blood pressure; model comparison; residuals |
+| `3.4 survival_analysis` | Kaplan–Meier curves, log-rank test, Cox model |
 
-**Variables used:** age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.
-
-**Full instructions**, the omics series, and how to build the same cohorts in **Data Explorer** are in [`notebooks/README.md`](notebooks/README.md).
+**Full instructions** and the omics series are in [`notebooks/README.md`](notebooks/README.md).
 
 The earlier versions of the notebooks (classic Workbench) are in `notebooks/archive/`.
 
@@ -121,7 +123,7 @@ The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They
    - **Download and upload:** download the whole `notebooks/` folder from GitHub and upload it **with its subfolders**: the notebooks in `core/` and `omics/` load `aou_setup.R` and `sql/` from the folder above.
 3. Launch an app (e.g., AoU Jupyter, which has R and Python kernels).
 4. Open **`0.0 setup`** and follow it: it has you edit two lines in `aou_setup.R`.
-5. Run a series in order: core `1.1` → `1.2` → `2.0` → `3.1` to `3.4` (the queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files), or omics `4.1` → `4.7`.
+5. Run a series in order: core `1.1` → `1.2` → `2.1` → `2.2` → `2.3` → `3.1` to `3.4` (the queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files), or omics `4.1` → `4.7`.
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 

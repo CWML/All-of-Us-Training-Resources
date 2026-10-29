@@ -381,14 +381,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#omics-series-omics" id="toc-omics-series-omics" class="nav-link" data-scroll-target="#omics-series-omics">Omics series (<code>omics/</code>)</a></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a></li>
   <li><a href="#the-study-population" id="toc-the-study-population" class="nav-link" data-scroll-target="#the-study-population">The study population</a></li>
-  <li><a href="#build-the-cohorts-in-data-explorer" id="toc-build-the-cohorts-in-data-explorer" class="nav-link" data-scroll-target="#build-the-cohorts-in-data-explorer">Build the cohorts in Data Explorer</a>
-  <ul class="collapse">
-  <li><a href="#add-a-cohort" id="toc-add-a-cohort" class="nav-link" data-scroll-target="#add-a-cohort">1. Add a cohort</a></li>
-  <li><a href="#add-the-criteria" id="toc-add-the-criteria" class="nav-link" data-scroll-target="#add-the-criteria">2. Add the criteria</a></li>
-  <li><a href="#save-a-data-snapshot" id="toc-save-a-data-snapshot" class="nav-link" data-scroll-target="#save-a-data-snapshot">3. Save a data snapshot</a></li>
-  <li><a href="#use-the-exports-with-these-notebooks" id="toc-use-the-exports-with-these-notebooks" class="nav-link" data-scroll-target="#use-the-exports-with-these-notebooks">4. Use the exports with these notebooks</a></li>
-  </ul></li>
-  <li><a href="#already-have-data-from-the-earlier-notebooks" id="toc-already-have-data-from-the-earlier-notebooks" class="nav-link" data-scroll-target="#already-have-data-from-the-earlier-notebooks">Already have data from the earlier notebooks?</a></li>
+  <li><a href="#point-and-click-data-explorer" id="toc-point-and-click-data-explorer" class="nav-link" data-scroll-target="#point-and-click-data-explorer">Point and click: Data Explorer</a></li>
+  <li><a href="#files-from-earlier-versions-of-these-notebooks" id="toc-files-from-earlier-versions-of-these-notebooks" class="nav-link" data-scroll-target="#files-from-earlier-versions-of-these-notebooks">Files from earlier versions of these notebooks</a></li>
   <li><a href="#data-use" id="toc-data-use" class="nav-link" data-scroll-target="#data-use">Data use</a></li>
   </ul>
 </nav>
@@ -430,7 +424,7 @@ ul.task-list li input[type="checkbox"] {
 ├── aou_setup.R            settings you edit once + helper functions (R)
 ├── aou_setup.py           the same settings for Python notebooks (read from aou_setup.R)
 ├── sql/                   the shared type 2 diabetes cohort query
-├── core/                  1.1 – 3.4: build a cohort, clean and join, analyse
+├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse
 ├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics
 ├── surveys/               5.1 – 5.3 (coming soon)
 ├── wearables/             6.1 – 6.3 (coming soon)
@@ -439,15 +433,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="core-series-core" class="level2">
 <h2 class="anchored" data-anchor-id="core-series-core">Core series (<code>core/</code>)</h2>
-<blockquote class="blockquote">
-<p><strong>Being rewritten.</strong> The core notebooks below are the current versions. They’re being updated to the same type 2 diabetes cohort as the omics series (see <code>CURRICULUM_PLAN.md</code>), with 2.0 split into 2.1 clean, 2.2 reshape, and 2.3 join_and_bind.</p>
-</blockquote>
+<p>Nine R notebooks that take one study from start to finish: people <strong>with type 2 diabetes</strong> (cases) compared with people <strong>without diabetes</strong> (controls), including <strong>time to chronic kidney disease</strong> (CKD) after diagnosis. They use the same cohort query as every other series (<code>sql/t2d_cohort.sql</code>) and a sample of 5,000 cases and 5,000 controls. Every notebook opens with an “Analysis at a glance” box and a time and cost estimate.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Notebook</th>
 <th>What it does</th>
-<th>Class</th>
+<th>Time</th>
 </tr>
 </thead>
 <tbody>
@@ -459,60 +451,69 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb"><code>0.0 setup</code></a></td>
 <td>Checks your settings and the connection to the data</td>
-<td>Any</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.1%20build_cohorts.ipynb"><code>1.1 build_cohorts</code></a></td>
-<td>Cohort Builder SQL (updated for 2.0): demographics, PTSD survey answers, and measurements, saved separately for the study and control groups</td>
-<td>1</td>
+<td>The OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements</td>
+<td>90 min</td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.2%20survival_data.ipynb"><code>1.2 survival_data</code></a></td>
-<td>Diabetes and CKD diagnoses, and visits</td>
-<td>1 or 5</td>
+<td>Time zero, event, and censoring; first CKD dates; follow-up</td>
+<td>60 min</td>
 </tr>
 <tr class="odd">
-<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.0%20clean_and_join.ipynb"><code>2.0 clean_and_join</code></a></td>
-<td>Flags each group, stacks them, then cleans, reshapes, and joins everything into one analysis table</td>
-<td>2</td>
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.1%20clean.ipynb"><code>2.1 clean</code></a></td>
+<td>Types, non-answers, messy text, duplicates, units, plausible ranges, missing data, a cleaning log</td>
+<td>105 min</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.2%20reshape.ipynb"><code>2.2 reshape</code></a></td>
+<td>Long vs wide; one value per person; <code>pivot_wider()</code> and <code>pivot_longer()</code></td>
+<td>70 min</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.3%20join_and_bind.ipynb"><code>2.3 join_and_bind</code></a></td>
+<td><code>bind_rows()</code>; left, inner, full, and anti joins; checks after every join; the analysis table</td>
+<td>75 min</td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.1%20table_one.ipynb"><code>3.1 table_one</code></a></td>
-<td>Descriptive statistics, chi-square and t-tests, and a small-count check</td>
-<td>3</td>
+<td>A Table 1 with your own functions; missing data; the small-count check</td>
+<td>75 min</td>
 </tr>
 <tr class="odd">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.2%20logistic_regression.ipynb"><code>3.2 logistic_regression</code></a></td>
-<td>Univariable and multivariable models for the odds of diabetes</td>
-<td>4</td>
+<td>Odds ratios for type 2 diabetes; adjustment; reverse causation</td>
+<td>85 min</td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.3%20linear_regression.ipynb"><code>3.3 linear_regression</code></a></td>
-<td>Models for systolic blood pressure, compared by fit</td>
-<td>4</td>
+<td>Systolic blood pressure; model comparison; residuals</td>
+<td>75 min</td>
 </tr>
 <tr class="odd">
 <td><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.4%20survival_analysis.ipynb"><code>3.4 survival_analysis</code></a></td>
-<td>Kaplan–Meier curves and a Cox model with baseline predictors</td>
-<td>5</td>
+<td>Kaplan–Meier curves (ggplot2), log-rank test, Cox model, proportional hazards</td>
+<td>90 min</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Variables used:</strong> age, gender, race, ethnicity; two PTSD survey questions (seeing a doctor, receiving treatment); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; diabetes and CKD diagnoses; visit dates.</p>
+<p><strong>Variables used:</strong> age, sex at birth, gender, race, ethnicity; two PTSD survey questions (asked only of people who reported PTSD); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; type 2 diabetes and CKD dates; EHR and death dates.</p>
 <section id="how-they-fit-together" class="level3">
 <h3 class="anchored" data-anchor-id="how-they-fit-together">How they fit together</h3>
-<pre><code>aou_setup.R          settings + helpers, loaded by every notebook
+<pre><code>sql/t2d_cohort.sql
      │
-1.1 build_cohorts ──► person_study.csv       person_control.csv
-                      survey_study.csv       survey_control.csv
-                      measurement_study.csv  measurement_control.csv
-1.2 survival_data ──► condition_arranged.csv, visit_arranged.csv
+1.1 build_cohorts ──► cohort_sample.csv, survey_raw.csv, measurement_raw.csv
+1.2 survival_data ──► ckd_dates.csv
      │
-2.0 clean_and_join ─► flag the groups (diabetes = Yes / No), stack them, clean, join
-                      ──► final_analysis.csv, measurements_wide.csv
+2.1 clean ─────────► cohort_clean.csv, survey_clean.csv, measurement_clean.csv
+2.2 reshape ───────► survey_wide.csv, measurements_wide.csv
+2.3 join_and_bind ─► final_analysis.csv
      │
 3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival</code></pre>
-<p>The queries in <strong>1.1</strong> and <strong>1.2</strong> run once and save their results to your bucket’s <code>data/</code> folder. Every later notebook reads those files, so a class can start at any notebook once the data is saved.</p>
+<p>Only <strong>1.1</strong> and <strong>1.2</strong> query BigQuery (about $2 to $3 in total); every later notebook reads the saved files, so a class can start at any notebook once the data is saved.</p>
 </section>
 </section>
 <section id="omics-series-omics" class="level2">
@@ -581,97 +582,28 @@ ul.task-list li input[type="checkbox"] {
 <li><code>BUCKET_NAME</code>: your bucket’s folder name</li>
 <li><code>CURRENT_DATASET</code>: the dataset, copied from the <code>FROM</code> line of any Data Explorer query (Controlled Tier CDR v9 is <code>C2025Q4R6</code>)</li>
 </ul></li>
-<li>Run a series in order: core <code>1.1</code> → <code>1.2</code> → <code>2.0</code> → <code>3.1</code> to <code>3.4</code>; or omics <code>4.1</code> → <code>4.7</code>.</li>
+<li>Run a series in order: core <code>1.1</code> → <code>1.2</code> → <code>2.1</code> → <code>2.2</code> → <code>2.3</code> → <code>3.1</code> to <code>3.4</code>; or omics <code>4.1</code> → <code>4.7</code>.</li>
 </ol>
 <p><strong>R packages:</strong> <code>tidyverse</code>, <code>lubridate</code>, <code>bigrquery</code>, <code>broom</code>, <code>survival</code>. <code>aou_setup.R</code> installs any that are missing the first time it runs (this can take a few minutes).</p>
 </section>
 <section id="the-study-population" class="level2">
 <h2 class="anchored" data-anchor-id="the-study-population">The study population</h2>
-<p>Both groups come from the SQL in notebook <strong>1.1</strong>, generated by the classic Workbench’s Cohort Builder and updated for Workbench 2.0 (every table is written as <code>`{CURRENT_DATASET}.table`</code>):</p>
+<p>Every series uses the cohort in <code>sql/t2d_cohort.sql</code>:</p>
 <ul>
-<li>Age <strong>25 to 50</strong>, and <strong>alive</strong></li>
-<li>Race: <strong>White</strong>, <strong>Black or African American</strong>, or <strong>Asian</strong></li>
-<li>Ethnicity: <strong>Hispanic or Latino</strong> or <strong>Not Hispanic or Latino</strong></li>
-<li>Gender: <strong>Man</strong> or <strong>Woman</strong></li>
-<li><strong>Study group:</strong> has a diagnosis of <strong>diabetes mellitus</strong> (any type). <strong>Control group:</strong> doesn’t.</li>
+<li>Adults (<strong>18+</strong> on 2025-01-01, the CDR v9 data cutoff, or at death) with at least one <strong>EHR</strong> visit</li>
+<li><strong>Cases:</strong> a type 2 diabetes diagnosis (concept 201826 or anything under it), and no type 1 diabetes diagnosis</li>
+<li><strong>Controls:</strong> no diabetes diagnosis of any type (concept 201820 or anything under it)</li>
+<li>Race and ethnicity are <strong>described</strong>, not used to choose people</li>
 </ul>
+<p>The core series takes a random sample of 5,000 cases and 5,000 controls (ages 18 to 100); the omics classes take their own samples among people with each data type.</p>
 </section>
-<section id="build-the-cohorts-in-data-explorer" class="level2">
-<h2 class="anchored" data-anchor-id="build-the-cohorts-in-data-explorer">Build the cohorts in Data Explorer</h2>
-<p>Prefer point-and-click? You can build the same two groups in <strong>Data Explorer</strong> instead of running the SQL in notebook 1.1. You’ll make <strong>two cohorts</strong> (study and control) and save a <strong>data snapshot</strong> of each.</p>
-<section id="add-a-cohort" class="level3">
-<h3 class="anchored" data-anchor-id="add-a-cohort">1. Add a cohort</h3>
-<p><strong>Resources</strong> tab → <strong>+ New resource</strong> → <strong>Cohort</strong>:</p>
-<ol type="1">
-<li><strong>Select collection:</strong> All of Us Controlled Tier, version <strong>cdrv9</strong> → <strong>Next</strong></li>
-<li><strong>No new policies</strong> → <strong>Next</strong></li>
-<li><strong>Cohort name:</strong> <code>diabetes_study</code> (and later <code>diabetes_control</code>) → <strong>Add to your workspace</strong></li>
-</ol>
+<section id="point-and-click-data-explorer" class="level2">
+<h2 class="anchored" data-anchor-id="point-and-click-data-explorer">Point and click: Data Explorer</h2>
+<p>The <strong>Data Explorer</strong>, Workbench 2.0’s point-and-click tool, can build a similar cohort without SQL. Its rules work a little differently (e.g.&nbsp;how age and diagnosis codes are matched), so its counts won’t match the SQL exactly. Step-by-step instructions for this cohort are being updated.</p>
 </section>
-<section id="add-the-criteria" class="level3">
-<h3 class="anchored" data-anchor-id="add-the-criteria">2. Add the criteria</h3>
-<p>In the cohort view, use <strong>Add criteria</strong> to build these groups. Within a group, choose <strong>Meet all criteria</strong>. Groups combine with <strong>AND</strong>.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Group</th>
-<th>Included / Excluded</th>
-<th>Criteria (Add criteria → …)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1. Demographics</td>
-<td>Included, <strong>meet all</strong></td>
-<td>Demographics → <strong>Current Age</strong>: 25 to 50 · <strong>Race</strong>: White, Black or African American, Asian · <strong>Ethnicity</strong>: Hispanic or Latino, Not Hispanic or Latino · <strong>Gender identity</strong>: Man, Woman</td>
-</tr>
-<tr class="even">
-<td>2. Diabetes</td>
-<td><strong>Study cohort: Included</strong> / <strong>Control cohort: Excluded</strong></td>
-<td>Domains → <strong>Condition</strong> → 🔍 search <em>diabetes mellitus</em> → select <strong>Diabetes mellitus</strong></td>
-</tr>
-<tr class="odd">
-<td>3. Alive</td>
-<td><strong>Excluded</strong></td>
-<td>Demographics → <strong>Deceased</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Click <strong>Apply</strong>. The participant count updates.</p>
-</section>
-<section id="save-a-data-snapshot" class="level3">
-<h3 class="anchored" data-anchor-id="save-a-data-snapshot">3. Save a data snapshot</h3>
-<p><strong>Save data snapshot</strong> (top right), then:</p>
-<ol type="1">
-<li><strong>Select data:</strong>
-<ul>
-<li><strong>Demographics</strong></li>
-<li><strong>+ Browse more data</strong> → <strong>Surveys</strong> → the two PTSD questions: <em>“Are you still seeing a doctor or health care provider for post-traumatic stress disorder (PTSD)?”</em> and <em>“Are you currently prescribed medications and/or receiving treatment for post-traumatic stress disorder (PTSD)?”</em></li>
-<li><strong>+ Browse more data</strong> → <strong>Labs and Measurements</strong> → <strong>BMI</strong>, <strong>systolic blood pressure</strong>, <strong>LDL cholesterol</strong>, <strong>HbA1c</strong></li>
-</ul></li>
-<li><strong>File format:</strong> <em>Queries for the cohort (IPYNB) with R Notebook</em></li>
-<li><strong>Destination bucket:</strong> your bucket → <strong>Save</strong></li>
-</ol>
-<p>Repeat steps 1 to 3 for the <strong>control</strong> cohort (group 2 set to <strong>Excluded</strong>).</p>
-</section>
-<section id="use-the-exports-with-these-notebooks" class="level3">
-<h3 class="anchored" data-anchor-id="use-the-exports-with-these-notebooks">4. Use the exports with these notebooks</h3>
-<p>Run each exported notebook once: it saves CSV files to your bucket under <code>bq_exports/</code>. Then follow <strong>“Optional: use a Data Explorer export instead”</strong> at the end of notebook <strong>1.1</strong>: it renames the columns and saves each cohort with the same file names as the SQL version (<code>person_study.csv</code>, <code>person_control.csv</code>…), so notebooks 2.0 to 3.4 work unchanged.</p>
-<blockquote class="blockquote">
-<p><strong>To confirm in the Workbench:</strong> where the PTSD questions and the four measurements appear under <strong>+ Browse more data</strong>, and that <strong>Deceased</strong> can be used as an exclusion. Menus may differ slightly.</p>
-<p><strong>Counts won’t exactly match the SQL version.</strong> Data Explorer and the Cohort Builder SQL in notebook 1.1 calculate age and match diagnosis codes in slightly different ways. Both are fine for learning; just use one method consistently.</p>
-</blockquote>
-</section>
-</section>
-<section id="already-have-data-from-the-earlier-notebooks" class="level2">
-<h2 class="anchored" data-anchor-id="already-have-data-from-the-earlier-notebooks">Already have data from the earlier notebooks?</h2>
-<p>If you ran the earlier (classic Workbench) versions of these notebooks, your saved CSV files <strong>work as they are</strong>: they use the same file names (<code>person_study.csv</code>, <code>survey_control.csv</code>, <code>condition_arranged.csv</code>…). Set <code>BUCKET_NAME</code> in <code>aou_setup.R</code> to the bucket that holds them (in a migrated workspace, the one named like <code>rw-migration-aou-rw-…</code>), run <strong>0.0</strong>, then <strong>skip 1.1 and 1.2</strong> and start at <strong>2.0</strong>.</p>
-<p>Those files come from the older dataset (CDR v8), so results won’t match a fresh CDR v9 run. <strong>Don’t combine them with CDR v9 data:</strong> participant IDs changed between v8 and v9, so v8 files can’t be joined to v9 tables or files. The earlier notebooks themselves are in <a href="https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive"><code>archive/</code></a>. The current core notebooks are in <code>core/</code>.</p>
+<section id="files-from-earlier-versions-of-these-notebooks" class="level2">
+<h2 class="anchored" data-anchor-id="files-from-earlier-versions-of-these-notebooks">Files from earlier versions of these notebooks</h2>
+<p>Files saved by earlier versions (<code>person_study.csv</code>, <code>final_analysis.csv</code> with diabetes of any type, …) <strong>don’t work</strong> with the current notebooks: the cohort, file names, and columns have changed. Files saved from CDR v8 also can’t be combined with CDR v9 data, because participant IDs changed between v8 and v9. The earlier notebooks are in <a href="https://github.com/CWML/All-of-Us-Training-Resources/tree/main/notebooks/archive"><code>archive/</code></a> and in the repository’s history.</p>
 </section>
 <section id="data-use" class="level2">
 <h2 class="anchored" data-anchor-id="data-use">Data use</h2>
