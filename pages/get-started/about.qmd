@@ -30,26 +30,34 @@ description: "The All of Us Research Program, its data sources, the CDR, and dat
 
 ## Data Sources
 
-|   | Source | Description |
-|------------------------|------------------------|------------------------|
-| ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60" fig-alt="Icon for survey data, a clipboard with a checklist."} | **Surveys** | Lifestyle, medical history, healthcare access, etc. |
-| ![](<../../Intro to workbench 2.0/images/ds_ehr.png>){height="60" fig-alt="Icon for electronic health record data, a laptop showing a health chart."} | **EHR** | Standardized with the OMOP Common Data Model |
-| ![](<../../Intro to workbench 2.0/images/ds_wearables.png>){height="60" fig-alt="Icon for wearables data, a fitness wristband."} | **Wearables** | Heart rate, activity, or sleep data from devices like Fitbit |
-| ![](<../../Intro to workbench 2.0/images/ds_physical.png>){height="60" fig-alt="Icon for physical measurements, a heart with a heartbeat line."} | **Physical measurements** | EHRs, self-reported height and weight, in-person visits |
-| ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60" fig-alt="Icon for genomic data, a DNA double helix."} | **Genomic** | Whole genome sequencing and genotyping from blood, saliva, and urine |
+|   | Source | Description | Participants (v9) |
+|------------------|------------------|------------------------------|-----------:|
+| ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60" fig-alt="Icon for survey data, a clipboard with a checklist."} | **Surveys** | Lifestyle, medical and family history, health care access, social factors | > 747,000 |
+| ![](<../../Intro to workbench 2.0/images/ds_ehr.png>){height="60" fig-alt="Icon for electronic health record data, a laptop showing a health chart."} | **EHR** | Diagnoses, medications, labs, procedures, and visits from health care providers, standardized with the OMOP Common Data Model | > 481,000 |
+| ![](<../../Intro to workbench 2.0/images/ds_physical.png>){height="60" fig-alt="Icon for physical measurements, a heart with a heartbeat line."} | **Physical measurements** | Height, weight, blood pressure, heart rate, and waist and hip measured at enrollment visits | > 600,000 |
+| ![](<../../Intro to workbench 2.0/images/ds_wearables.png>){height="60" fig-alt="Icon for wearables data, a fitness wristband."} | **Wearables** | Steps, heart rate, and sleep (including sleep stages) from Fitbit; some Apple HealthKit data | > 68,000 (Fitbit) |
+| ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60" fig-alt="Icon for genomic data, a DNA double helix."} | **Genomic** | Short-read and long-read whole genomes, and genotyping arrays, from blood or saliva | > 535,000 (short-read) |
+| ![](<../../Intro to workbench 2.0/images/ds_genomic.png>){height="60" fig-alt="Icon for multi-omics data, a DNA double helix."} | **Multi-omics** *(new in v9)* | RNA-seq from whole blood; proteomics from plasma | about 9,000 each |
+| ![](<../../Intro to workbench 2.0/images/ds_surveys.png>){height="60" fig-alt="Icon for clinical notes, a clipboard with a checklist."} | **Clinical notes** *(new in v9)* | Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables | > 99,000 |
+
+**Not available:** medical images (e.g. X-rays, MRI or CT scans). EHR procedure records only show **that** an imaging exam happened (e.g. *radiologic examination of knee*) and when; some of these codes are removed for privacy.
+
+::: {.callout-tip collapse="true" title="Instructor tip"}
+Source: All of Us Researcher Workbench Office Hours, "Release of the Curated Data Repository (CDR) v9 Dataset" (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA. Medical imaging (X-rays, MRI, CT) is not part of v9: the data dictionary has no imaging tables, and the v9 release talk doesn't list it among current or upcoming data types. EHR procedure records only show that an imaging exam happened.
+:::
 
 ## The Curated Data Repository (CDR)
 
-- Data are organized in a **curated data repository (CDR)**
-  - De-identified
-  - Cleaned, validated, standardized (OMOP CDM)
-  - Released in numbered versions (current: **CDRv9**)
-- Hosted on **Google Cloud Platform**, queried with **Google BigQuery**
-  - SQL-based; usable from R or Python
-  - Billed for queries run and data processed (large genomic queries can be costly)
+- Data are organized in a **curated data repository (CDR)**, released in numbered versions (current: **CDR v9**; refreshed every 1–2 years)
+  - Participant identifiers removed; the Controlled Tier keeps more detail (e.g. real dates of health events)
+  - Cleaned, validated, and standardized to the **OMOP Common Data Model**
+- **Researcher Workbench 2.0 runs on Verily Workbench, on Google Cloud**
+  - **Tables** (EHR, surveys, measurements, Fitbit) are in **Google BigQuery**: query them with SQL from R or Python, or with the Data Explorer
+  - **Genomic and multi-omics data** are **files** in Cloud Storage buckets (e.g. PLINK, VCF, Hail formats)
+- **Costs** go to your Google Cloud billing account: BigQuery charges by the data a query scans, apps by the hour while running, and the genomic data bucket is *Requester Pays* (reading it is billed to you)
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace).
+CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace). Verily builds and runs Workbench 2.0; the data and computing are on Google Cloud. Version 9 of the Controlled Tier is the dataset C2025Q4R6.
 :::
 
 ## What's in CDR v9?

@@ -445,61 +445,65 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 38%">
+<col style="width: 15%">
 </colgroup>
 <thead>
 <tr class="header">
 <th></th>
 <th>Source</th>
 <th>Description</th>
+<th style="text-align: right;">Participants (v9)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><img src="../../Intro to workbench 2.0/images/ds_surveys.png" alt="Icon for survey data, a clipboard with a checklist." height="60"></td>
 <td><strong>Surveys</strong></td>
-<td>Lifestyle, medical history, healthcare access, etc.</td>
+<td>Lifestyle, medical and family history, health care access, social factors</td>
+<td style="text-align: right;">&gt; 747,000</td>
 </tr>
 <tr class="even">
 <td><img src="../../Intro to workbench 2.0/images/ds_ehr.png" alt="Icon for electronic health record data, a laptop showing a health chart." height="60"></td>
 <td><strong>EHR</strong></td>
-<td>Standardized with the OMOP Common Data Model</td>
+<td>Diagnoses, medications, labs, procedures, and visits from health care providers, standardized with the OMOP Common Data Model</td>
+<td style="text-align: right;">&gt; 481,000</td>
 </tr>
 <tr class="odd">
-<td><img src="../../Intro to workbench 2.0/images/ds_wearables.png" alt="Icon for wearables data, a fitness wristband." height="60"></td>
-<td><strong>Wearables</strong></td>
-<td>Heart rate, activity, or sleep data from devices like Fitbit</td>
-</tr>
-<tr class="even">
 <td><img src="../../Intro to workbench 2.0/images/ds_physical.png" alt="Icon for physical measurements, a heart with a heartbeat line." height="60"></td>
 <td><strong>Physical measurements</strong></td>
-<td>EHRs, self-reported height and weight, in-person visits</td>
+<td>Height, weight, blood pressure, heart rate, and waist and hip measured at enrollment visits</td>
+<td style="text-align: right;">&gt; 600,000</td>
+</tr>
+<tr class="even">
+<td><img src="../../Intro to workbench 2.0/images/ds_wearables.png" alt="Icon for wearables data, a fitness wristband." height="60"></td>
+<td><strong>Wearables</strong></td>
+<td>Steps, heart rate, and sleep (including sleep stages) from Fitbit; some Apple HealthKit data</td>
+<td style="text-align: right;">&gt; 68,000 (Fitbit)</td>
 </tr>
 <tr class="odd">
 <td><img src="../../Intro to workbench 2.0/images/ds_genomic.png" alt="Icon for genomic data, a DNA double helix." height="60"></td>
 <td><strong>Genomic</strong></td>
-<td>Whole genome sequencing and genotyping from blood, saliva, and urine</td>
+<td>Short-read and long-read whole genomes, and genotyping arrays, from blood or saliva</td>
+<td style="text-align: right;">&gt; 535,000 (short-read)</td>
+</tr>
+<tr class="even">
+<td><img src="../../Intro to workbench 2.0/images/ds_genomic.png" alt="Icon for multi-omics data, a DNA double helix." height="60"></td>
+<td><strong>Multi-omics</strong> <em>(new in v9)</em></td>
+<td>RNA-seq from whole blood; proteomics from plasma</td>
+<td style="text-align: right;">about 9,000 each</td>
+</tr>
+<tr class="odd">
+<td><img src="../../Intro to workbench 2.0/images/ds_surveys.png" alt="Icon for clinical notes, a clipboard with a checklist." height="60"></td>
+<td><strong>Clinical notes</strong> <em>(new in v9)</em></td>
+<td>Conditions extracted from clinical notes; a separate Controlled Tier release, not in the main tables</td>
+<td style="text-align: right;">&gt; 99,000</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="the-curated-data-repository-cdr" class="level2">
-<h2 class="anchored" data-anchor-id="the-curated-data-repository-cdr">The Curated Data Repository (CDR)</h2>
-<ul>
-<li>Data are organized in a <strong>curated data repository (CDR)</strong>
-<ul>
-<li>De-identified</li>
-<li>Cleaned, validated, standardized (OMOP CDM)</li>
-<li>Released in numbered versions (current: <strong>CDRv9</strong>)</li>
-</ul></li>
-<li>Hosted on <strong>Google Cloud Platform</strong>, queried with <strong>Google BigQuery</strong>
-<ul>
-<li>SQL-based; usable from R or Python</li>
-<li>Billed for queries run and data processed (large genomic queries can be costly)</li>
-</ul></li>
-</ul>
+<p><strong>Not available:</strong> medical images (e.g.&nbsp;X-rays, MRI or CT scans). EHR procedure records only show <strong>that</strong> an imaging exam happened (e.g.&nbsp;<em>radiologic examination of knee</em>) and when; some of these codes are removed for privacy.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -512,7 +516,39 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace).</p>
+<p>Source: All of Us Researcher Workbench Office Hours, “Release of the Curated Data Repository (CDR) v9 Dataset” (2026-07-24), and the CDR v9 data dictionary. Counts change with every release. EHR data now comes from health care sites, from records participants share themselves, and from a health-information-exchange pilot. To verify on the Support Hub before relying on them: whether physical measurements also include self-reported height and weight, and the exact sample types used for DNA. Medical imaging (X-rays, MRI, CT) is not part of v9: the data dictionary has no imaging tables, and the v9 release talk doesn’t list it among current or upcoming data types. EHR procedure records only show that an imaging exam happened.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-curated-data-repository-cdr" class="level2">
+<h2 class="anchored" data-anchor-id="the-curated-data-repository-cdr">The Curated Data Repository (CDR)</h2>
+<ul>
+<li>Data are organized in a <strong>curated data repository (CDR)</strong>, released in numbered versions (current: <strong>CDR v9</strong>; refreshed every 1–2 years)
+<ul>
+<li>Participant identifiers removed; the Controlled Tier keeps more detail (e.g.&nbsp;real dates of health events)</li>
+<li>Cleaned, validated, and standardized to the <strong>OMOP Common Data Model</strong></li>
+</ul></li>
+<li><strong>Researcher Workbench 2.0 runs on Verily Workbench, on Google Cloud</strong>
+<ul>
+<li><strong>Tables</strong> (EHR, surveys, measurements, Fitbit) are in <strong>Google BigQuery</strong>: query them with SQL from R or Python, or with the Data Explorer</li>
+<li><strong>Genomic and multi-omics data</strong> are <strong>files</strong> in Cloud Storage buckets (e.g.&nbsp;PLINK, VCF, Hail formats)</li>
+</ul></li>
+<li><strong>Costs</strong> go to your Google Cloud billing account: BigQuery charges by the data a query scans, apps by the hour while running, and the genomic data bucket is <em>Requester Pays</em> (reading it is billed to you)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>CDRv9 is shown on the Workbench 2.0 home page (Controlled Tier tutorial workspace). Verily builds and runs Workbench 2.0; the data and computing are on Google Cloud. Version 9 of the Controlled Tier is the dataset C2025Q4R6.</p>
 </div>
 </div>
 </div>
@@ -599,7 +635,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -608,7 +644,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Not every participant has every data type: e.g., about two-thirds have EHR data, and Fitbit data covers fewer than 1 in 10. Check the data type you need before planning a study. Genomic data is Controlled Tier only.</p>
 </div>
