@@ -141,8 +141,12 @@ Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls.
 | People with proteomics | 1,446 cases, 6,154 controls |
 | Loading | **3.5 minutes**; about 32.5 million rows read, **5,420** proteins |
 | QC | over 99% of measurements passed; under 1% failed; a few `WARN` (kept, per Olink's advice) |
-| PCA | **2** people far from everyone else (outliers: checked with a sensitivity analysis, not deleted) |
-| Significant proteins | about **290**, most of them **higher** in diabetes |
+| Batch checks | 120 plates; plate explained essentially **none** of PC1–PC5 (adjusted R² ≤ 0); plate medians within about half an NPX unit |
+| Outliers | a few people (fewer than 20) flagged by the 5-SD rule: checked with a sensitivity analysis, not deleted |
+| Significant proteins | about **280–290**, most of them **higher** in diabetes |
+| Sensitivity: plate in the model | **182** significant; logFC correlation with the main analysis **0.93** |
+| Sensitivity: outliers removed | **533** significant; logFC correlation **0.995** |
+| Pathways (GO) | up in diabetes: **inflammation and defense** and **metabolism** (organic acid, small molecule metabolism) |
 | Top protein | ***NFASC*** (higher in diabetes) |
 | pQTLs | 18 of the top 20 proteins had very strong pQTLs |
 | rs7903146 | not in any fine-mapped pQTL |
@@ -154,6 +158,8 @@ The proteins point to **organs**:
 | **Kidney** | *HAVCR1* (KIM-1) and *PDZK1* higher; *UMOD* lower | early diabetic kidney disease |
 | **Fat tissue** | *FABP4* higher; *LPL* lower | insulin resistance |
 | **Gut** | *LGALS4*, *MUC13*, *PRAP1* higher | possibly medicines such as metformin |
+
+**💬 Discuss:** the effects barely changed in the sensitivity analyses, but the **number** of significant proteins ranged from 182 to 533. Which would you report, and why? (Choose the rule before looking; report the others as sensitivity analyses. Adding 119 plate terms to a 600-person model costs power.)
 
 **💬 Discuss:** which of these are **causes** of diabetes, **consequences** (kidney damage), or **treatment** effects? *UMOD*'s pQTL sits in the *UMOD* gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (**Mendelian randomization**).
 
@@ -175,7 +181,8 @@ The PCA plot and the top-protein boxplot show **people**: keep them in the noteb
 
 - Use the 3–5 minute load in Part 4 for a break or for questions about Olink.
 - The protein IDs in the pQTL files look like `P09769_ENSG00000000938.13`: UniProt ID, then the gene's Ensembl ID. The notebook matches on the UniProt part.
-- The batch checks, sensitivity analyses, enrichment, and BMI challenge were added after our first Workbench run; their results aren't in the table above yet.
+- The plate boxplot sorts plates by their median, so it **always** rises left to right: teach students to look at **how much**, not whether.
+- The BMI challenge hasn't been run yet; its result isn't in the table.
 :::
 
 ## Key takeaways
