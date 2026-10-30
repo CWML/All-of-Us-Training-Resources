@@ -60,7 +60,7 @@ Click **Next**
 ::::
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-An earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.
+As of October 2026, the Data Explorer offers only version v8r9, whose queries read dataset C2024Q3R9 (CDR v8). The course notebooks use CDR v9 (C2025Q4R6). Data Explorer cohorts are fine for learning the tool, but participant IDs changed between v8 and v9, so students shouldn't combine Data Explorer exports with the notebooks' files, or copy the dataset path from a Data Explorer query into aou_setup.R.
 :::
 
 ## Add a Cohort: Cohort Details

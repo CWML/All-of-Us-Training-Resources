@@ -2864,7 +2864,7 @@ Maximilian Wegener, MPH
 <p><strong>Step 2: No new policies.</strong> Your workspace already has this collection’s policies. Click <strong>Next</strong>.</p>
 </div></div>
 <aside class="notes">
-<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. An earlier test cohort used the older version v8r9, whose queries read dataset C2024Q3R9 (2024 Q3 data cutoff, CDR v8 generation); CDR v9 is C2025Q4R6 (release notes). Either way, students should copy dataset paths from their own Data Explorer query instead of typing them.</p>
+<p>The screenshot’s “Last modified … by” column showed a staff email; it has been painted out. As of October 2026, the Data Explorer offers only version v8r9, whose queries read dataset C2024Q3R9 (CDR v8). The course notebooks use CDR v9 (C2025Q4R6). Data Explorer cohorts are fine for learning the tool, but participant IDs changed between v8 and v9, so students shouldn’t combine Data Explorer exports with the notebooks’ files, or copy the dataset path from a Data Explorer query into aou_setup.R.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3709,7 +3709,7 @@ Maximilian Wegener, MPH
 </table>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>project <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"GOOGLE_CLOUD_PROJECT"</span>)                              <span class="co"># set for you</span></span>
 <span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>bucket  <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket</span></span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"&lt;project-id&gt;.&lt;dataset-id&gt;"</span>   <span class="co"># copy from a Data Explorer query (FROM line)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9 (not from a Data Explorer query: those use v8)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Checked in a new Workbench 2.0 workspace with env | grep -E ‘WORKSPACE|GOOGLE|PET_SA’. The tutorial workspaces define WORKSPACE_BUCKET and WORKSPACE_CDR in their setup scripts, so code copied from classic Workbench notebooks will find them empty (““) elsewhere. The CDR dataset path is in the queries Data Explorer generates (the FROM clause), and in the data collection’s BigQuery resources on the Resources tab.</p>
 <style type="text/css">

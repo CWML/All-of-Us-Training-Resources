@@ -69,7 +69,7 @@ Some settings are **already defined** in every app. Others you define yourself.
 ```{.r code-line-numbers="false"}
 project <- Sys.getenv("GOOGLE_CLOUD_PROJECT")                              # set for you
 bucket  <- file.path(Sys.getenv("HOME"), "workspace", "workspace-bucket")  # your bucket
-CURRENT_DATASET <- "<project-id>.<dataset-id>"   # copy from a Data Explorer query (FROM line)
+CURRENT_DATASET <- "wb-silky-artichoke-2408.C2025Q4R6"   # CDR v9 (not from a Data Explorer query: those use v8)
 ```
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}

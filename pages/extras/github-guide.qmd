@@ -311,14 +311,14 @@ No SSH key is needed to clone a public repo over HTTPS. They need the same data 
 ```r
 # R
 bucket <- file.path(Sys.getenv("HOME"), "workspace", "workspace-bucket")  # your bucket's name
-CURRENT_DATASET <- "<project-id>.<dataset-id>"   # copy from your Data Explorer query
+CURRENT_DATASET <- "wb-silky-artichoke-2408.C2025Q4R6"   # CDR v9
 ```
 
 ```python
 # Python
 import os
 bucket = os.path.expanduser("~/workspace/workspace-bucket")  # your bucket's name
-CURRENT_DATASET = "<project-id>.<dataset-id>"   # copy from your Data Explorer query
+CURRENT_DATASET = "wb-silky-artichoke-2408.C2025Q4R6"   # CDR v9
 ```
 
 `WORKSPACE_BUCKET` and `WORKSPACE_CDR` from the classic Workbench are **not set** in new Workbench 2.0 workspaces (see [Workspace Variables](../workspace/storage-costs.qmd#workspace-variables)).
