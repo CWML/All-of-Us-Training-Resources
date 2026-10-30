@@ -82,7 +82,7 @@ You need an *All of Us* workspace with the **Controlled Tier** data collection a
 2. **Launch an app**, e.g. AoU Jupyter (it has R and Python kernels).
 3. Open **`0.0 setup`** and follow it. It has you edit two lines in `aou_setup.R`:
    - `BUCKET_NAME`: your bucket's folder name
-   - `CURRENT_DATASET`: the dataset, copied from the `FROM` line of any Data Explorer query (Controlled Tier CDR v9 is `C2025Q4R6`)
+   - `CURRENT_DATASET`: the dataset. It's already set to Controlled Tier CDR v9 (`wb-silky-artichoke-2408.C2025Q4R6`). **Don't** copy it from a Data Explorer query: the Data Explorer currently uses CDR v8 (`C2024Q3R9`)
 4. Run a series in order: core `1.1` → `1.2` → `2.1` → `2.2` → `2.3` → `3.1` to `3.4`; or omics `4.1` → `4.7`.
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
@@ -100,7 +100,7 @@ The core series takes a random sample of 5,000 cases and 5,000 controls (ages 18
 
 ## Point and click: Data Explorer
 
-The **Data Explorer**, Workbench 2.0's point-and-click tool, can build a similar cohort without SQL. Its rules work a little differently (e.g. how age and diagnosis codes are matched), so its counts won't match the SQL exactly. Step-by-step instructions for this cohort are being updated.
+The **Data Explorer**, Workbench 2.0's point-and-click tool, can build a similar cohort without SQL. Two cautions: it currently uses **CDR v8** (`C2024Q3R9`), while these notebooks use **CDR v9**, and participant IDs changed between v8 and v9, so **Data Explorer exports can't be combined with the notebooks' files**. Its rules also differ a little (e.g. age today instead of on 2025-01-01), so its counts won't match. Step-by-step instructions for this cohort are being updated.
 
 ## Files from earlier versions of these notebooks
 

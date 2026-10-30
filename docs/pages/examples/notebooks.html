@@ -584,7 +584,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Open <strong><code>0.0 setup</code></strong> and follow it. It has you edit two lines in <code>aou_setup.R</code>:
 <ul>
 <li><code>BUCKET_NAME</code>: your bucket’s folder name</li>
-<li><code>CURRENT_DATASET</code>: the dataset, copied from the <code>FROM</code> line of any Data Explorer query (Controlled Tier CDR v9 is <code>C2025Q4R6</code>)</li>
+<li><code>CURRENT_DATASET</code>: the dataset. It’s already set to Controlled Tier CDR v9 (<code>wb-silky-artichoke-2408.C2025Q4R6</code>). <strong>Don’t</strong> copy it from a Data Explorer query: the Data Explorer currently uses CDR v8 (<code>C2024Q3R9</code>)</li>
 </ul></li>
 <li>Run a series in order: core <code>1.1</code> → <code>1.2</code> → <code>2.1</code> → <code>2.2</code> → <code>2.3</code> → <code>3.1</code> to <code>3.4</code>; or omics <code>4.1</code> → <code>4.7</code>.</li>
 </ol>
@@ -603,7 +603,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="point-and-click-data-explorer" class="level2">
 <h2 class="anchored" data-anchor-id="point-and-click-data-explorer">Point and click: Data Explorer</h2>
-<p>The <strong>Data Explorer</strong>, Workbench 2.0’s point-and-click tool, can build a similar cohort without SQL. Its rules work a little differently (e.g.&nbsp;how age and diagnosis codes are matched), so its counts won’t match the SQL exactly. Step-by-step instructions for this cohort are being updated.</p>
+<p>The <strong>Data Explorer</strong>, Workbench 2.0’s point-and-click tool, can build a similar cohort without SQL. Two cautions: it currently uses <strong>CDR v8</strong> (<code>C2024Q3R9</code>), while these notebooks use <strong>CDR v9</strong>, and participant IDs changed between v8 and v9, so <strong>Data Explorer exports can’t be combined with the notebooks’ files</strong>. Its rules also differ a little (e.g.&nbsp;age today instead of on 2025-01-01), so its counts won’t match. Step-by-step instructions for this cohort are being updated.</p>
 </section>
 <section id="files-from-earlier-versions-of-these-notebooks" class="level2">
 <h2 class="anchored" data-anchor-id="files-from-earlier-versions-of-these-notebooks">Files from earlier versions of these notebooks</h2>

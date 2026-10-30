@@ -15,7 +15,8 @@
 BUCKET_NAME <- "workspace-bucket"
 
 # The All of Us dataset (CDR) to query: "<project-id>.<dataset-id>".
-# Copy it from the FROM line of any Data Explorer query in your workspace.
+# Don't copy it from a Data Explorer query: in Workbench 2.0 the Data Explorer
+# currently uses CDR v8 (C2024Q3R9), and v8 participant IDs don't match v9.
 # Controlled Tier CDR v9 is C2025Q4R6.
 CURRENT_DATASET <- "wb-silky-artichoke-2408.C2025Q4R6"
 
