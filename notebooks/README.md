@@ -100,7 +100,7 @@ The core series takes a random sample of 5,000 cases and 5,000 controls (ages 18
 
 ## Point and click: Data Explorer
 
-The **Data Explorer**, Workbench 2.0's point-and-click tool, can build a similar cohort without SQL. Two cautions: it currently uses **CDR v8** (`C2024Q3R9`), while these notebooks use **CDR v9**, and participant IDs changed between v8 and v9, so **Data Explorer exports can't be combined with the notebooks' files**. Its rules also differ a little (e.g. age today instead of on 2025-01-01), so its counts won't match. Step-by-step instructions for this cohort are being updated.
+The **Data Explorer**, Workbench 2.0's point-and-click tool, can build a similar cohort without SQL. Two cautions: it currently uses **CDR v8** (`C2024Q3R9`), while these notebooks use **CDR v9**, and participant IDs changed between v8 and v9, so **Data Explorer exports can't be combined with the notebooks' files**. Its rules also differ a little (e.g. age today instead of on 2025-01-01), so its counts won't match. Step-by-step instructions, with screenshots, are on the course website: [Optional: build the cohort in the Data Explorer](https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/data-explorer-cohort.html).
 
 ## Files from earlier versions of these notebooks
 

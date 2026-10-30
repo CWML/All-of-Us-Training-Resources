@@ -93,6 +93,7 @@ website:
           contents:
             - pages/courses/core/index.qmd
             - pages/courses/core/1-1-build-cohorts.qmd
+            - pages/courses/core/data-explorer-cohort.qmd
             - pages/courses/core/1-2-survival-data.qmd
             - pages/courses/core/2-1-clean.qmd
             - pages/courses/core/2-2-reshape.qmd

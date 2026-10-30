@@ -12,6 +12,7 @@ Along the way you learn the skills almost every health data project needs: findi
 | Class | Time | What you learn |
 |---|---|---|
 | [**1.1 Build the cohort**](1-1-build-cohorts.qmd) | 90 min | OMOP tables, concept IDs, the concept hierarchy, SQL; the cohort query; survey answers and measurements |
+| [*Optional:* the cohort in the Data Explorer](data-explorer-cohort.qmd) | 30 min | The point-and-click way to build the cohort, save a snapshot, and use it in a notebook (CDR v8: a demonstration) |
 | [**1.2 Survival data**](1-2-survival-data.qmd) | 60 min | Time zero, event, and censoring; checking a concept ID; first CKD dates |
 | [**2.1 Clean**](2-1-clean.qmd) | 105 min | Non-answers, messy labels, duplicates, units, plausible ranges, a cleaning log, missing data |
 | [**2.2 Reshape**](2-2-reshape.qmd) | 70 min | Long vs wide; choosing one value per person |

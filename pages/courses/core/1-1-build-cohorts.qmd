@@ -222,6 +222,10 @@ Results from our test run in October 2026 (CDR v9).
 - Query **once**, save to your bucket, then load the files
 - **Check units** before using any measurement
 
+## Prefer point and click?
+
+The Data Explorer can build the same cohort without code, as a demonstration: see **[Optional: build the cohort in the Data Explorer](data-explorer-cohort.qmd)**. It currently uses CDR v8, so its cohorts can't be combined with this series' v9 files.
+
 ## Next
 
 **[1.2 Survival data](1-2-survival-data.qmd)**: the dates needed to study time to chronic kidney disease.

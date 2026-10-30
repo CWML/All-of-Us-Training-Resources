@@ -1544,7 +1544,7 @@
     "href": "pages/courses/core/index.html#the-classes",
     "title": "Core Series: Cohorts to Analysis",
     "section": "The classes",
-    "text": "The classes\n\n\n\nClass\nTime\nWhat you learn\n\n\n\n\n1.1 Build the cohort\n90 min\nOMOP tables, concept IDs, the concept hierarchy, SQL; the cohort query; survey answers and measurements\n\n\n1.2 Survival data\n60 min\nTime zero, event, and censoring; checking a concept ID; first CKD dates\n\n\n2.1 Clean\n105 min\nNon-answers, messy labels, duplicates, units, plausible ranges, a cleaning log, missing data\n\n\n2.2 Reshape\n70 min\nLong vs wide; choosing one value per person\n\n\n2.3 Join and bind\n75 min\nStacking tables; left, inner, full, and anti joins; checking every join\n\n\n3.1 Table One\n75 min\nDescribing groups; your own functions; small and derived counts\n\n\n3.2 Logistic regression\n85 min\nOdds ratios, adjustment, reverse causation\n\n\n3.3 Linear regression\n75 min\nA numeric outcome (blood pressure), model fit, residuals\n\n\n3.4 Survival analysis\n90 min\nKaplan–Meier curves, the log-rank test, the Cox model",
+    "text": "The classes\n\n\n\nClass\nTime\nWhat you learn\n\n\n\n\n1.1 Build the cohort\n90 min\nOMOP tables, concept IDs, the concept hierarchy, SQL; the cohort query; survey answers and measurements\n\n\nOptional: the cohort in the Data Explorer\n30 min\nThe point-and-click way to build the cohort, save a snapshot, and use it in a notebook (CDR v8: a demonstration)\n\n\n1.2 Survival data\n60 min\nTime zero, event, and censoring; checking a concept ID; first CKD dates\n\n\n2.1 Clean\n105 min\nNon-answers, messy labels, duplicates, units, plausible ranges, a cleaning log, missing data\n\n\n2.2 Reshape\n70 min\nLong vs wide; choosing one value per person\n\n\n2.3 Join and bind\n75 min\nStacking tables; left, inner, full, and anti joins; checking every join\n\n\n3.1 Table One\n75 min\nDescribing groups; your own functions; small and derived counts\n\n\n3.2 Logistic regression\n85 min\nOdds ratios, adjustment, reverse causation\n\n\n3.3 Linear regression\n75 min\nA numeric outcome (blood pressure), model fit, residuals\n\n\n3.4 Survival analysis\n90 min\nKaplan–Meier curves, the log-rank test, the Cox model",
     "crumbs": [
       "Core",
       "Core Series: Cohorts to Analysis"
@@ -1617,892 +1617,124 @@
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html",
-    "href": "pages/courses/core/3-3-linear-regression.html",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html",
+    "href": "pages/courses/core/3-4-survival-analysis.html",
+    "title": "3.4 Survival Analysis",
     "section": "",
-    "text": "Core series, class 8 of 9 · R · 75 minutes\nOpen the notebook on GitHub Core series overview",
+    "text": "Core series, class 9 of 9 · R (survival) · 90 minutes\nOpen the notebook on GitHub Core series overview",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#overview",
-    "href": "pages/courses/core/3-3-linear-regression.html#overview",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#overview",
+    "href": "pages/courses/core/3-4-survival-analysis.html#overview",
+    "title": "3.4 Survival Analysis",
     "section": "Overview",
-    "text": "Overview\nDiabetes and high blood pressure often go together. Here the outcome is a number, systolic blood pressure (SBP), so we use linear regression: how much higher, on average, is SBP for each year of age, each BMI unit, and in people with type 2 diabetes, holding the others constant?\n\nWhy this class matters\nLinear regression is the foundation of most statistical models, including the gene-by-gene models in 4.5 and 4.6. This class also shows that a model can explain little of the variation (a low R²) and still estimate a real difference well, and how to check a model with its residuals.\n\n\nBy the end you’ll be able to\n\nExplain a coefficient: the average change in the outcome per unit of a predictor\nFit and read models with lm(), tidy(), and glance()\nCompare models with R², adjusted R², and AIC\nCheck a model’s residuals\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nIs type 2 diabetes linked to higher SBP, after accounting for age, sex, BMI, and LDL?\n\n\n🧪 The analysis\nLinear regression, built up step by step, on the same people\n\n\n🎯 Why\nSBP is a number; adjusting separates diabetes from age and weight\n\n\n✅ What we conclude\nThe adjusted difference in SBP (mm Hg), and how much each model explains\n\n\n⚠️ What it can’t tell us\nCause, or untreated blood pressure: many people take medicine for it\n\n\n🔗 Connections\nThe logistic version is 3.2; the same kind of model is used per gene in 4.5\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n75 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 2.3",
+    "text": "Overview\nAmong people with type 2 diabetes, how long until chronic kidney disease (CKD), and who gets it sooner? With the dates gathered in 1.2 (time zero, the event, censoring), we draw Kaplan–Meier curves and fit a Cox model.\n\nWhy this class matters\n“How long until” questions are everywhere in health research: time to a complication, to a hospital readmission, to death. Survival methods are built for them, because they use everyone’s follow-up, including people who leave the records without the event. This class also lists the traps specific to health record data, which a tidy-looking curve can hide.\n\n\nBy the end you’ll be able to\n\nBuild time-to-event data with censoring\nEstimate and plot Kaplan–Meier curves with ggplot2, and compare them with a log-rank test\nFit a Cox model, and read hazard ratios\nCheck the proportional-hazards assumption\nExplain the pitfalls of survival analysis in health records\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAfter a type 2 diabetes diagnosis, how quickly do people develop CKD, and is it faster with higher HbA1c?\n\n\n🧪 The analysis\nKaplan–Meier curves by HbA1c group, a log-rank test, then a Cox model adjusted for age at diagnosis, sex, and BMI\n\n\n🎯 Why\nPeople are followed for different lengths of time; censoring uses all of it\n\n\n✅ What we conclude\nThe share CKD-free over time, and hazard ratios\n\n\n⚠️ What it can’t tell us\nCause. HbA1c and BMI are the latest values, often measured after time zero\n\n\n🔗 Connections\nDates from 1.2, joined in 2.3; builds on 3.2 and 3.3\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.40: no queries, only app time\n\n\n📋 Before class\nrun 2.3",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#class-plan",
-    "href": "pages/courses/core/3-3-linear-regression.html#class-plan",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#class-plan",
+    "href": "pages/courses/core/3-4-survival-analysis.html#class-plan",
+    "title": "3.4 Survival Analysis",
     "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: coefficients, R², AIC, assumptions\nlisten, ask\n\n\n0:15\n2. Load and look at the outcome\nrun the cells\n\n\n0:25\n3. One predictor\n✋ Try It Out (5 min)\n\n\n0:40\n4. Multivariable models\nrun the cells, discuss\n\n\n1:00\n5. Check the residuals\nrun the cells\n\n\n1:10\nWrap-up",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: survival curves, hazards, censoring\nlisten, ask\n\n\n0:15\n2. Build the survival data\nrun the cells\n\n\n0:30\n3. Kaplan–Meier curves, log-rank test, number at risk\n✋ Try It Out (5 min)\n\n\n0:55\n4. Cox model\nrun the cells\n\n\n1:10\n5. Check proportional hazards\nrun the cells\n\n\n1:20\n6. Discuss the pitfalls\ndiscuss",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#key-concepts",
-    "href": "pages/courses/core/3-3-linear-regression.html#key-concepts",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#key-concepts",
+    "href": "pages/courses/core/3-4-survival-analysis.html#key-concepts",
+    "title": "3.4 Survival Analysis",
     "section": "Key concepts",
-    "text": "Key concepts\n\\[\\text{SBP} = \\beta_0 + \\beta_1 \\times \\text{age} + \\beta_2 \\times \\text{BMI} + \\dots + \\text{error}\\]\n\nEach coefficient is the average change in SBP (mm Hg) per unit of that predictor, holding the others constant. For type 2 diabetes (yes/no), it’s the average difference between the groups.\nR²: the share of variation explained (0 to 1). AIC: fit vs complexity, lower is better, only on the same data.\nBlood pressure varies a lot from reading to reading, so R² is low here. That doesn’t make the coefficients wrong.",
+    "text": "Key concepts\n\n\n\n\n\n\n\nTerm\nMeans\n\n\n\n\nSurvival curve\nthe share still event-free over time\n\n\nCensored\nthe clock stopped without the event; counted for as long as we saw them\n\n\nHazard\nthe event rate at a moment, among those still at risk\n\n\nHazard ratio (HR)\nthe hazard in one group ÷ another: HR 1.5 = the event comes 50% faster\n\n\nProportional hazards\nthe Cox model’s assumption that each HR stays constant over time",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/3-3-linear-regression.html#follow-along-in-the-workbench",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/3-4-survival-analysis.html#follow-along-in-the-workbench",
+    "title": "3.4 Survival Analysis",
     "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/3.3 linear_regression.ipynb, with the R kernel.",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/3.4 survival_analysis.ipynb, with the R kernel.",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#try-it-out",
-    "href": "pages/courses/core/3-3-linear-regression.html#try-it-out",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#try-it-out",
+    "href": "pages/courses/core/3-4-survival-analysis.html#try-it-out",
+    "title": "3.4 Survival Analysis",
     "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 3, “Your turn”\n\n\n\nFit SBP ~ t2d on its own. How much higher is SBP in cases, before any adjustment?\n✅ Check: the t2dYes row: the crude difference in mm Hg. Compare it with the adjusted one in Part 4.",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 3, “Your turn”\n\n\n\nDraw Kaplan–Meier curves by sex at birth, and run the log-rank test. Do men and women differ?\n✅ Check: two curves and a log-rank p-value. Keep only the main categories, so each curve has enough people.",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#code-walk-through",
-    "href": "pages/courses/core/3-3-linear-regression.html#code-walk-through",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#code-walk-through",
+    "href": "pages/courses/core/3-4-survival-analysis.html#code-walk-through",
+    "title": "3.4 Survival Analysis",
     "section": "Code walk-through",
-    "text": "Code walk-through\n1model_data &lt;- fa %&gt;% drop_na(SBP, age10, sex_at_birth, BMI5, LDL10, t2d)\n\nm1 &lt;- lm(SBP ~ age10 + sex_at_birth,                      data = model_data)\nm2 &lt;- lm(SBP ~ age10 + sex_at_birth + BMI5 + LDL10,       data = model_data)\n2m3 &lt;- lm(SBP ~ age10 + sex_at_birth + BMI5 + LDL10 + t2d, data = model_data)\n\nbind_rows(\"1. Age + sex\" = glance(m1), \"2. + BMI, LDL\" = glance(m2),\n3          \"3. + type 2 diabetes\" = glance(m3), .id = \"model\")\n4tidy(m3, conf.int = TRUE)\n\n1\n\nEvery model on the same people, as in 3.2.\n\n2\n\nlm() fits a linear regression. Model 3 adds type 2 diabetes last, so its coefficient is adjusted for everything before it.\n\n3\n\nglance() gives one row of fit statistics per model (R², AIC); bind_rows(.id = \"model\") labels them.\n\n4\n\ntidy() gives each coefficient with its 95% confidence interval.",
+    "text": "Code walk-through\n1km_fit &lt;- survfit(Surv(time_years, status) ~ hba1c_group, data = surv_data)\n2km_df  &lt;- tidy(km_fit) %&gt;%\n  mutate(group = str_remove(strata, \"hba1c_group=\"))\n\nggplot(km_df, aes(time, estimate, colour = group)) +\n3  geom_step(linewidth = 0.9) +\n  geom_step(aes(y = conf.low),  linetype = \"dashed\", alpha = 0.6) +\n  geom_step(aes(y = conf.high), linetype = \"dashed\", alpha = 0.6)\n\n4survdiff(Surv(time_years, status) ~ hba1c_group, data = surv_data)\n\ncox_model &lt;- coxph(Surv(time_years, status) ~ age10_at_t2d + sex_at_birth + BMI5 + hba1c_group,\n5                   data = cox_data)\n\n1\n\nSurv(time, status) is the outcome: follow-up time, and 1 for CKD or 0 for censored. survfit() estimates one Kaplan–Meier curve per HbA1c group.\n\n2\n\ntidy() turns the curves into a table that ggplot2 can draw (the notebook also adds a starting point at 100%).\n\n3\n\nKaplan–Meier curves are steps, not smooth lines; the dashed steps are the 95% confidence limits. This replaces the survminer package, which doesn’t install in the app.\n\n4\n\nThe log-rank test: are the curves different?\n\n5\n\nThe Cox model: hazard ratios for several predictors at once, each adjusted for the others.",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#what-we-found",
-    "href": "pages/courses/core/3-3-linear-regression.html#what-we-found",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#what-we-found",
+    "href": "pages/courses/core/3-4-survival-analysis.html#what-we-found",
+    "title": "3.4 Survival Analysis",
     "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 6,397 people.\n\n\n\nModel 3 coefficient\nmm Hg (95% CI)\n\n\n\n\nAge, per 10 years\n+2.0 (1.7 to 2.3)\n\n\nMale (vs female)\n+2.4 (1.4 to 3.3)\n\n\nBMI, per 5 units\n+1.6 (1.3 to 1.9)\n\n\nLDL, per 10 mg/dL\n+0.4 (0.2 to 0.5)\n\n\nType 2 diabetes\n+2.8 (1.8 to 3.7)\n\n\n\n\n\n\nModel\nR²\nAIC\n\n\n\n\n1. Age + sex\n0.026\n55,334\n\n\n2. + BMI, LDL\n0.051\n55,170\n\n\n3. + type 2 diabetes\n0.056\n55,142\n\n\n\n\nType 2 diabetes goes with 2.8 mm Hg higher SBP, after adjustment: real, but modest.\nEven the best model explains only about 6% of the variation. Blood pressure depends on much more than these variables (and on the moment it was measured).\nThe residual plot was centred on zero with an even spread: the model’s assumptions look reasonable.\n\n💬 Discuss: many people with diabetes take blood pressure medicines. How does that affect the diabetes coefficient? (It makes it smaller than the untreated difference: treatment hides part of the link.)",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), cases with follow-up after diagnosis.\n\n\n\nYears since diagnosis\nShare CKD-free (95% CI)\n\n\n\n\n1\n95.6% (95.0 to 96.3)\n\n\n3\n90.6% (89.7 to 91.5)\n\n\n5\n85.4% (84.2 to 86.6)\n\n\n10\n73.0% (71.3 to 74.8)\n\n\n\n\nBy HbA1c group: the curve for HbA1c 7% or more dropped faster; log-rank p = 0.006. 977 people without an HbA1c result were left out of this comparison.\n\n\n\n\nCox model\nHazard ratio (95% CI)\n\n\n\n\nAge at diagnosis, per 10 years\n1.50 (1.40 to 1.61)\n\n\nMale (vs female)\n1.17 (1.01 to 1.35)\n\n\nBMI, per 5 units\n1.10 (1.04 to 1.15)\n\n\nHbA1c 7% or more\n1.28 (1.11 to 1.49)\n\n\n\n💬 Discuss the pitfalls:\n\nCovariate timing: HbA1c and BMI are the latest values, often measured after time zero, sometimes after CKD.\nLate time zero: records that start late make the first diabetes date too late.\nCompeting risks: people who die are censored as if they could still get CKD.\nWho gets tested: people who see doctors more often are diagnosed sooner (surveillance bias).\nThe outcome definition: one CKD code, or a lab-based definition?\n\n\nThe plot\n\nThe number-at-risk table uses hide_small_counts(), so it can be shared as text.",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#instructor-notes",
-    "href": "pages/courses/core/3-3-linear-regression.html#instructor-notes",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#instructor-notes",
+    "href": "pages/courses/core/3-4-survival-analysis.html#instructor-notes",
+    "title": "3.4 Survival Analysis",
     "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe scatter and residual plots show one dot per person: keep them in the notebook, not on slides.\nStudents often think a low R² means a useless model. Ask: “Is the 2.8 mm Hg wrong because R² is 0.06?” (No: R² measures prediction of individuals, not the accuracy of an average difference.)",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nStart with the “everyone together” curve before splitting by HbA1c: one curve is easier to read.\nThe pitfalls discussion is the most valuable part of the class for researchers new to EHR data. Leave at least 10 minutes.\nThe Cox model drops categories that were filtered out (droplevels()): without it, rare sex-at-birth categories show up as NA rows.",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#key-takeaways",
-    "href": "pages/courses/core/3-3-linear-regression.html#key-takeaways",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#key-takeaways",
+    "href": "pages/courses/core/3-4-survival-analysis.html#key-takeaways",
+    "title": "3.4 Survival Analysis",
     "section": "Key takeaways",
-    "text": "Key takeaways\n\nLinear regression is for numeric outcomes; coefficients are average changes per unit\nA low R² doesn’t make a coefficient wrong\nCompare models with AIC, on the same people\nCheck the residuals\nTreatment can hide a link in observational data",
+    "text": "Key takeaways\n\nSurvival analysis needs time zero, an event, and censoring\nKaplan–Meier curves show the share event-free; the log-rank test compares them\nThe Cox model gives adjusted hazard ratios; check proportional hazards\nIn health records, watch covariate timing, late time zero, competing risks, and who gets tested",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
+      "3.4 Survival Analysis"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-3-linear-regression.html#next",
-    "href": "pages/courses/core/3-3-linear-regression.html#next",
-    "title": "3.3 Linear Regression",
+    "objectID": "pages/courses/core/3-4-survival-analysis.html#next",
+    "href": "pages/courses/core/3-4-survival-analysis.html#next",
+    "title": "3.4 Survival Analysis",
     "section": "Next",
-    "text": "Next\n3.4 Survival analysis: time from type 2 diabetes to chronic kidney disease.",
+    "text": "Next\nThat’s the end of the core series. The omics series uses the same cohort with genetic, RNA, and protein data.",
     "crumbs": [
       "Core",
-      "3.3 Linear Regression"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html",
-    "href": "pages/courses/core/3-1-table-one.html",
-    "title": "3.1 Table One",
-    "section": "",
-    "text": "Core series, class 6 of 9 · R · 75 minutes\nOpen the notebook on GitHub Core series overview",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#overview",
-    "href": "pages/courses/core/3-1-table-one.html#overview",
-    "title": "3.1 Table One",
-    "section": "Overview",
-    "text": "Overview\nAlmost every health study starts with a Table 1: who is in each group, and how they differ. It describes the groups, shows differences that later models must account for (like age), and reveals missing data. We build one for our cases and controls, writing small functions to do it, and then make a version that’s safe to share.\n\nWhy this class matters\nA Table 1 is the first thing readers check, and the first place a study’s problems show: groups that differ in age, data missing mostly in one group. It’s also where the All of Us rule on small counts bites most often, including counts that aren’t printed but can be worked out from the others.\n\n\nBy the end you’ll be able to\n\nExplain what a Table 1 shows, and why every study has one\nSummarise categorical variables (n, %) and continuous ones (mean and SD, or median and IQR)\nChoose and read a chi-square test and a t-test\nWrite your own function, and run it on many variables with map()\nReport missing data, and make a table safe to share\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nHow do people with and without type 2 diabetes differ?\n\n\n🧪 The analysis\nn (%) with chi-square tests; mean (SD) with t-tests; percent missing by group\n\n\n🎯 Why\nTo describe the groups, and spot confounders (age, most of all)\n\n\n✅ What we conclude\nWhere the groups differ, and how much data each variable has\n\n\n⚠️ What it can’t tell us\nWhy they differ. And our sample is half cases, so percents describe the sample, not the population\n\n\n🔗 Connections\nUses final_analysis.csv from 2.3; guides the models in 3.2–3.4\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n75 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 2.1, 2.2, and 2.3",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#class-plan",
-    "href": "pages/courses/core/3-1-table-one.html#class-plan",
-    "title": "3.1 Table One",
-    "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: Table 1, tests, functions\nlisten, ask\n\n\n0:15\n2–3. Load; categorical variables\n✋ Try It Out 1 (5 min)\n\n\n0:40\n4. Continuous variables\nrun the cells, discuss\n\n\n0:55\n5. Missing data, the full table\nrun the cells\n\n\n1:05\n6. Small and derived counts; a shareable table\n✋ Try It Out 2 (5 min)\n\n\n1:15\nWrap-up",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#key-concepts",
-    "href": "pages/courses/core/3-1-table-one.html#key-concepts",
-    "title": "3.1 Table One",
-    "section": "Key concepts",
-    "text": "Key concepts\n\n\n\n\n\n\n\n\n\nVariable type\nExample\nSummary\nTest\n\n\n\n\nCategorical\nsex at birth, age group, race\nn (%) per group\nchi-square\n\n\nContinuous\nage, BMI\nmean (SD), or median (IQR) if skewed\nt-test (or Wilcoxon if skewed)\n\n\n\nWith thousands of people, even tiny differences give small p-values: judge the size of a difference, not just the p-value.\n\nSmall and derived counts\nAll of Us policy: no counts of 1 to 20 in anything you share, including counts that can be calculated. If a group has 5,000 people, 3,092 female and 1,858 male, then 50 people have another answer or a missing one. If the missing answers were left out of the table, the small count could be worked out exactly. So small categories are combined with the missing answers.",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/3-1-table-one.html#follow-along-in-the-workbench",
-    "title": "3.1 Table One",
-    "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/3.1 table_one.ipynb, with the R kernel.",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#try-it-out",
-    "href": "pages/courses/core/3-1-table-one.html#try-it-out",
-    "title": "3.1 Table One",
-    "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 3, “Your turn”\n\n\n\nAdd self_reported_category (All of Us’s combined race and ethnicity variable) to the table.\n✅ Check: one row per category; check the small-count rule before sharing.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nBMI is skewed. Report it as median (IQR), with a Wilcoxon test.\n✅ Check: medians and quartiles for each group.",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#code-walk-through",
-    "href": "pages/courses/core/3-1-table-one.html#code-walk-through",
-    "title": "3.1 Table One",
-    "section": "Code walk-through",
-    "text": "Code walk-through\n1summarise_categorical &lt;- function(data, var) {\n  counts &lt;- data %&gt;%\n2    filter(!is.na(.data[[var]])) %&gt;%\n    count(level = as.character(.data[[var]]), t2d) %&gt;%\n3    pivot_wider(names_from = t2d, values_from = n, values_fill = 0)\n\n4  p &lt;- suppressWarnings(chisq.test(as.matrix(counts[, c(\"No\", \"Yes\")]))$p.value)\n\n  counts %&gt;%\n5    mutate(`No diabetes` = sprintf(\"%d (%.1f%%)\", No,  100 * No  / sum(No)),\n           `Diabetes`    = sprintf(\"%d (%.1f%%)\", Yes, 100 * Yes / sum(Yes)), …)\n}\n\n6table_cat &lt;- map(categorical_vars, ~ summarise_categorical(fa, .x)) %&gt;% list_rbind()\n\n1\n\nA function: a named recipe with two inputs, the data and a column name.\n\n2\n\n.data[[var]] means “the column whose name is in var”, so one function works for any column.\n\n3\n\nOne row per level, with a column of counts for each group.\n\n4\n\nA chi-square test: are the groups’ distributions different?\n\n5\n\nText like 3,092 (62.4%): %d a whole number, %.1f one decimal, %% a percent sign.\n\n6\n\nRun the function once per variable and stack the results.",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#what-we-found",
-    "href": "pages/courses/core/3-1-table-one.html#what-we-found",
-    "title": "3.1 Table One",
-    "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls (the shareable version).\n\n\n\n\nNo diabetes\nDiabetes\n\n\n\n\nFemale\n62.4%\n57.0%\n\n\nAge 18–39\n23.8%\n5.1%\n\n\nAge 65+\n34.0%\n50.2%\n\n\nBlack or African American\n16.5%\n26.4%\n\n\nWhite\n69.8%\n59.2%\n\n\nHispanic or Latino\n15.1%\n19.9%\n\n\n\n\nAge is the biggest difference: it must be in every model.\nHbA1c and LDL were measured far more often in cases (their diabetes is monitored), so missing data differs by group.\nThe small-count check flagged four rows (rare sex-at-birth and race categories). The shareable table combines them: Another race, and Another answer or not reported for sex at birth, so no count of 1 to 20 is shown or derivable.\n\n💬 Discuss: if many controls never had an HbA1c test, who are the controls who did? (Often people whose doctor suspected diabetes: a selected group.)",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#instructor-notes",
-    "href": "pages/courses/core/3-1-table-one.html#instructor-notes",
-    "title": "3.1 Table One",
-    "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe derived counts point surprises even experienced researchers: work through the arithmetic on the board.\nRace and ethnicity are described, not used to choose people. Differences between groups reflect many things (access to care, diagnosis, where people live), not biology: worth saying explicitly.",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#key-takeaways",
-    "href": "pages/courses/core/3-1-table-one.html#key-takeaways",
-    "title": "3.1 Table One",
-    "section": "Key takeaways",
-    "text": "Key takeaways\n\nA Table 1 describes each group: n (%) for categories, mean (SD) or median (IQR) for numbers\nJudge the size of a difference, not just the p-value\nReport missing data by group: it’s often not random\nCheck for counts of 1 to 20, and counts that can be worked out, before sharing",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/3-1-table-one.html#next",
-    "href": "pages/courses/core/3-1-table-one.html#next",
-    "title": "3.1 Table One",
-    "section": "Next",
-    "text": "Next\n3.2 Logistic regression: which characteristics go with higher odds of type 2 diabetes, adjusted for each other?",
-    "crumbs": [
-      "Core",
-      "3.1 Table One"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html",
-    "href": "pages/courses/core/2-2-reshape.html",
-    "title": "2.2 Reshape",
-    "section": "",
-    "text": "Core series, class 4 of 9 · R · 70 minutes\nOpen the notebook on GitHub Core series overview",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#overview",
-    "href": "pages/courses/core/2-2-reshape.html#overview",
-    "title": "2.2 Reshape",
-    "section": "Overview",
-    "text": "Overview\nOur clean measurements have many rows per person: every blood pressure reading, every BMI. Models and tables need one row per person, with one column per variable. This class chooses one value per person for each measure, and turns tables from long to wide (and back).\n\nWhy this class matters\nReshaping looks like a technical step, but one part of it is a research decision: which value to keep when someone has 46 blood pressure readings. The choice changes the results, and the class shows exactly how (it explains the surprising LDL result in 3.2).\n\n\nBy the end you’ll be able to\n\nTell long from wide data, and say when each is useful\nChoose one value per person, and explain the choice\nUse pivot_wider() and pivot_longer()\nFix the most common pivot_wider() problem: values that aren’t unique\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nHow do we get from many measurements per person to one row per person?\n\n\n🧪 The analysis\nPer-person summaries (slice_max()), then pivot_wider(); pivot_longer() for plotting\n\n\n🎯 Why\nModels need one row per person; which value we keep is a research decision\n\n\n✅ What we conclude\nOne row per person with BMI, SBP, HbA1c, and LDL, and one with the PTSD answers\n\n\n⚠️ What it can’t tell us\nWhether the kept value was measured at a meaningful time (e.g. before diagnosis)\n\n\n🔗 Connections\nUses 2.1’s clean files; 2.3 joins the wide tables\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n70 minutes\n\n\n⏱️ Run time\nabout 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 2.1",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#class-plan",
-    "href": "pages/courses/core/2-2-reshape.html#class-plan",
-    "title": "2.2 Reshape",
-    "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: long and wide\nlisten, ask\n\n\n0:10\n2–3. Load; survey answers to wide\nrun the cells\n\n\n0:25\n4. One value per person: the choices and their pitfalls\ndiscuss\n\n\n0:45\n5. Measurements to wide\n✋ Try It Out (5 min)\n\n\n0:55\n6. Wide to long, for a plot\nrun the cells\n\n\n1:05\nWrap-up",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#key-concepts",
-    "href": "pages/courses/core/2-2-reshape.html#key-concepts",
-    "title": "2.2 Reshape",
-    "section": "Key concepts",
-    "text": "Key concepts\n\n\n\n\n\n\n\nLong: one row per observation\nWide: one row per person\n\n\n\n\nperson_id · measure · value\nperson_id · BMI · SBP · …\n\n\ngood for storing, summarising, and plots\ngood for tables and models\n\n\n\n\nWhich value?\n\n\n\n\n\n\n\n\nChoice\nGood for\nWatch out for\n\n\n\n\nLatest\n“current” status\nfor cases, usually after diagnosis and treatment\n\n\nFirst\nthe earliest picture\nold measurements, different eras\n\n\nMedian\na stable typical value\nmixes before and after events\n\n\nClosest before a date\na baseline before a diagnosis\nneeds a date for everyone\n\n\n\nThis series uses the latest value: simple, and everyone has one. Its weakness shows up in 3.2.",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/2-2-reshape.html#follow-along-in-the-workbench",
-    "title": "2.2 Reshape",
-    "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/2.2 reshape.ipynb, with the R kernel.",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#try-it-out",
-    "href": "pages/courses/core/2-2-reshape.html#try-it-out",
-    "title": "2.2 Reshape",
-    "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 5, “Your turn”\n\n\n\nWhat happens if you skip the one-value-per-person step and pivot the measurements directly? Try it on 5 people.\n✅ Check: a warning that values are not uniquely identified, and cells holding a list of values (&lt;dbl [37]&gt;).",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#code-walk-through",
-    "href": "pages/courses/core/2-2-reshape.html#code-walk-through",
-    "title": "2.2 Reshape",
-    "section": "Code walk-through",
-    "text": "Code walk-through\nmeasurement_latest &lt;- measurement_clean %&gt;%\n1  group_by(person_id, measure) %&gt;%\n2  slice_max(measurement_date, n = 1, with_ties = FALSE) %&gt;%\n  ungroup()\n\nmeasurements_wide &lt;- measurement_latest %&gt;%\n3  pivot_wider(id_cols = person_id, names_from = measure,\n              values_from = value_as_number)\n\n4nrow(measurements_wide) == n_distinct(measurements_wide$person_id)\n\n1\n\nOne group per person per measure.\n\n2\n\nKeep the row with the latest date in each group; with_ties = FALSE keeps just one if two share a date.\n\n3\n\nTurn the values of measure (BMI, SBP, …) into column names, filled with the values.\n\n4\n\nAlways check: one row per person (TRUE).",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#what-we-found",
-    "href": "pages/courses/core/2-2-reshape.html#what-we-found",
-    "title": "2.2 Reshape",
-    "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\n\n\n\n\n\n\nMeasure\nPeople with a value\nMedian results per person\nMost for one person\n\n\n\n\nBMI\n9,860\n13\nover 1,000\n\n\nSBP\n9,882\n46\nover 5,000\n\n\nHbA1c\n5,822\n4\nover 100\n\n\nLDL\n6,535\n5\nover 100\n\n\n\nKeeping the latest value took the clean measurements from 1,544,092 rows to 32,099: at most four per person.\n💬 Discuss: one person had over 5,000 blood pressure readings: probably continuous monitoring during hospital stays. Would their latest reading be typical of them? Would the median be a better choice?\n\n\n\n\n\n\nNoteScreenshots: none to share\n\n\n\n\n\nThe histograms in Part 6 count people, and their tails can include counts of 1 to 20. Keep them in the notebook.",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#instructor-notes",
-    "href": "pages/courses/core/2-2-reshape.html#instructor-notes",
-    "title": "2.2 Reshape",
-    "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe “which value?” table is worth a full discussion: ask students which they’d choose for a study of risk (baseline, before diagnosis) vs of current control (latest).\nThe Try It Out error (list-columns) is one of the most common R questions online: worth seeing once on purpose.",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#key-takeaways",
-    "href": "pages/courses/core/2-2-reshape.html#key-takeaways",
-    "title": "2.2 Reshape",
-    "section": "Key takeaways",
-    "text": "Key takeaways\n\nLong for storing, summarising, and plotting; wide for tables and models\nChoosing one value per person is a research decision: say which and why\nAfter pivot_wider(), check one row per person",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-2-reshape.html#next",
-    "href": "pages/courses/core/2-2-reshape.html#next",
-    "title": "2.2 Reshape",
-    "section": "Next",
-    "text": "Next\n2.3 Join and bind: combine everything into one analysis table.",
-    "crumbs": [
-      "Core",
-      "2.2 Reshape"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html",
-    "href": "pages/courses/core/1-2-survival-data.html",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "",
-    "text": "Core series, class 2 of 9 · R + SQL · 60 minutes\nOpen the notebook on GitHub Core series overview",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#overview",
-    "href": "pages/courses/core/1-2-survival-data.html#overview",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Overview",
-    "text": "Overview\nIn 3.4 we’ll ask: after a type 2 diabetes diagnosis, how long until people develop chronic kidney disease (CKD)? A “how long until” question needs more than who has the disease: it needs dates, and a careful idea of how long we could see each person in their health records. This class gathers those dates.\n\nWhy this class matters\nSurvival analysis is easy to run and easy to get wrong. Most mistakes happen before any model: a wrong start date, follow-up that runs past the end of someone’s records, or events that happened before the clock started. This class gets the ingredients right.\n\n\nBy the end you’ll be able to\n\nExplain time zero, event, censoring, and follow-up\nExplain why follow-up should end at the last health record\nFind the first date of a diagnosis with SQL (MIN(), GROUP BY)\nCheck a concept ID before using it\nDescribe how many people had the event, and how long they were followed\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAmong people with type 2 diabetes, who developed CKD after their diagnosis, and how long was everyone followed?\n\n\n🧪 The analysis\nA SQL query for each person’s first CKD date; then, for cases, time from diabetes to CKD or to the end of their records\n\n\n🎯 Why\nA survival analysis needs a clear start, a clear event, and a fair end for people without the event\n\n\n✅ What we conclude\nHow many cases had CKD after diabetes, how many before, and how long people were followed\n\n\n⚠️ What it can’t tell us\nRisk or what predicts it: that’s 3.4\n\n\n🔗 Connections\nUses the sample from 1.1; joined in 2.3; analysed in 3.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n60 minutes\n\n\n⏱️ Run time\nabout 3 minutes\n\n\n💰 Cost\nabout $1 per student: two small queries, plus the app\n\n\n📋 Before class\nrun 1.1",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#class-plan",
-    "href": "pages/courses/core/1-2-survival-data.html#class-plan",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: time zero, event, censoring; why EHR dates\nlisten, ask\n\n\n0:20\n2. Setup: load the sample\nrun the cells\n\n\n0:25\n3. Check the concept\nrun the cells\n\n\n0:30\n4. First CKD dates\nrun the cells\n\n\n0:40\n5. Time zero, event, censoring\n✋ Try It Out (5 min)\n\n\n0:55\nWrap-up\ndiscuss",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#key-concepts",
-    "href": "pages/courses/core/1-2-survival-data.html#key-concepts",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Key concepts",
-    "text": "Key concepts\n\n\n\n\n\n\n\n\nTerm\nMeans\nIn our study\n\n\n\n\nTime zero\nwhen each person’s clock starts\nthe first type 2 diabetes date\n\n\nEvent\nwhat we’re waiting for\nthe first CKD date, after time zero\n\n\nCensoring\nthe clock stops without the event\nthe earlier of the last EHR visit and death\n\n\nFollow-up\ntime zero to the event, or to censoring\nin years\n\n\n\ndiabetes      last EHR visit\n   │─────────────────│           censored: no CKD while we could see them\n   │──────────X                  event: CKD here\nCKD ──X  diabetes                excluded: CKD came first\nWhy the last EHR visit? A diagnosis can only appear while someone gets care at a site that shares data with All of Us. After their last visit, CKD elsewhere would be invisible. We don’t use All of Us’s observation_period table, because it also counts survey dates, which can stretch follow-up past the last health record.",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/1-2-survival-data.html#follow-along-in-the-workbench",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/1.2 survival_data.ipynb, with the R kernel.",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#try-it-out",
-    "href": "pages/courses/core/1-2-survival-data.html#try-it-out",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 5, “Your turn”\n\n\n\nHow many cases had CKD and diabetes recorded on the same day?\n✅ Check: a large share of the “before or on” group. Many records simply start with both diagnoses already present.",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#code-walk-through",
-    "href": "pages/courses/core/1-2-survival-data.html#code-walk-through",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Code walk-through",
-    "text": "Code walk-through\n\nFirst CKD dates\nckd_sql &lt;- str_glue(\"\nSELECT co.person_id,\n1       MIN(co.condition_start_date)            AS first_ckd_date,\n2       COUNT(DISTINCT co.condition_start_date) AS ckd_code_days\nFROM `{CURRENT_DATASET}.condition_occurrence` AS co\nJOIN `{CURRENT_DATASET}.concept_ancestor` AS ca\n  ON co.condition_concept_id = ca.descendant_concept_id\n3WHERE ca.ancestor_concept_id = {CKD_CONCEPT}\n4  AND co.person_id IN ({ids_sql})\n5GROUP BY co.person_id\n\")\n\n1\n\nEach person’s earliest CKD diagnosis.\n\n2\n\nHow many different days had a CKD code (useful for a stricter definition).\n\n3\n\nCKD (concept 46271022) and everything under it: stages, CKD due to diabetes, and so on.\n\n4\n\nOnly our 10,000 people.\n\n5\n\nOne row per person, like group_by() + summarise() in R.\n\n\n\n\nTime zero, event, censoring\ncases &lt;- cohort_sample %&gt;%\n  filter(cohort == \"case\") %&gt;%\n1  left_join(ckd_dates, by = \"person_id\") %&gt;%\n  mutate(\n2    end_of_records = pmin(last_ehr_date, death_date, na.rm = TRUE),\n    timing = case_when(\n      !is.na(first_ckd_date) & first_ckd_date &lt;= first_t2d_date ~ \"CKD before or on diabetes date\",\n      !is.na(first_ckd_date)                                     ~ \"CKD after diabetes\",\n3      TRUE                                                       ~ \"no CKD\"),\n    followup_end   = if_else(timing == \"CKD after diabetes\", first_ckd_date, end_of_records),\n4    followup_years = as.numeric(followup_end - first_t2d_date) / 365.25\n  )\n\n1\n\nAdd each case’s first CKD date (NA if they never had one).\n\n2\n\nThe end of what we can see: the earlier of the last EHR visit and death. na.rm = TRUE ignores a missing death date.\n\n3\n\nSort each case into one of three groups. case_when() uses the first rule that matches.\n\n4\n\nFollow-up in years, from the first diabetes date to CKD (events) or the end of records (censored).",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#what-we-found",
-    "href": "pages/courses/core/1-2-survival-data.html#what-we-found",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls.\n\n\n\n\n\n\n\nConcept 46271022\nChronic kidney disease (SNOMED, standard): confirmed before use\n\n\nCKD at any time\n28% of cases vs 7% of controls\n\n\nCases: CKD after diabetes (the events)\n925, a median of 4.4 years after diagnosis\n\n\nCases: CKD before or on the diabetes date (can’t be used)\n452\n\n\nCases: no CKD (censored)\n3,623, followed for a median of 5.2 years\n\n\nFollowed for less than a year\nabout 1 in 6 to 1 in 5\n\n\n\n💬 Discuss: why might someone’s first diabetes date in the records be years after their real diagnosis? (Records often start when someone joins a health system. This is left truncation, and it makes time zero uncertain.)",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#instructor-notes",
-    "href": "pages/courses/core/1-2-survival-data.html#instructor-notes",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nDraw the three timelines on the board before Part 5.\nExpect “why not use today’s date as the end?”: because we’d count years when the person may have been getting care elsewhere, unseen.\nThe 452 “before or on” cases are a good discussion: are they data errors, or real? (Mostly real: both conditions were already present when the records began.)",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#key-takeaways",
-    "href": "pages/courses/core/1-2-survival-data.html#key-takeaways",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Key takeaways",
-    "text": "Key takeaways\n\nA survival analysis needs time zero, an event, and censoring\nEnd follow-up at the last health record (or death)\nCheck every concept ID by name before using it\nEvents before time zero can’t be used\nLate-starting records make time zero uncertain",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-2-survival-data.html#next",
-    "href": "pages/courses/core/1-2-survival-data.html#next",
-    "title": "1.2 Data for the Survival Analysis",
-    "section": "Next",
-    "text": "Next\n2.1 Clean: tidy the survey answers and measurements from 1.1.",
-    "crumbs": [
-      "Core",
-      "1.2 Data for the Survival Analysis"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "All of Us Researcher Workbench 2.0",
-    "section": "",
-    "text": "These pages walk you through the All of Us Researcher Workbench 2.0 (powered by Verily), from logging in to running an analysis. They’re the reference version of our introductory training session."
-  },
-  {
-    "objectID": "index.html#what-youll-learn",
-    "href": "index.html#what-youll-learn",
-    "title": "All of Us Researcher Workbench 2.0",
-    "section": "What you’ll learn",
-    "text": "What you’ll learn\n\nExplain the All of Us Research Program and its key data sources\nDescribe what changed between the classic Workbench and Workbench 2.0\nCreate a workspace and add an All of Us data collection\nBuild a cohort and dataset with Data Explorer\nLaunch an analysis app and find your exported data\nManage storage and costs"
-  },
-  {
-    "objectID": "index.html#start-here",
-    "href": "index.html#start-here",
-    "title": "All of Us Researcher Workbench 2.0",
-    "section": "Start here",
-    "text": "Start here\n\nAbout All of Us: the program, its data, and the access tiers\nGetting Access and Billing: what to set up before you begin\nSetting Up a Workspace: create a workspace and add an All of Us data collection\nData Explorer: build a cohort and save a data snapshot\nApps: launch an analysis app and work with your data\n\nThroughout, we use an example workspace called intro-to-AoU, set up for instruction only. Some screenshots come from another training workspace, CWML_AoU_training. The steps are the same.\n\n\n\n\n\n\nNotePrefer slides?\n\n\n\nThe same material as a slide deck: Introduction to the Workbench 2.0 (slides). Press F for full screen and Esc for an overview."
-  },
-  {
-    "objectID": "index.html#how-to-read-the-screenshots",
-    "href": "index.html#how-to-read-the-screenshots",
-    "title": "All of Us Researcher Workbench 2.0",
-    "section": "How to read the screenshots",
-    "text": "How to read the screenshots\nScreenshots are marked up to show you what to do:\n\nRed circle or box: click here\nGreen box: your options\n\n\n\n\n\n\n\nTipInstructor tips\n\n\n\nBoxes like this one hold extra details from the training session. Click them to expand."
-  },
-  {
-    "objectID": "index.html#data-use",
-    "href": "index.html#data-use",
-    "title": "All of Us Researcher Workbench 2.0",
-    "section": "Data use",
-    "text": "Data use\n\n\n\n\n\n\nWarningKeep All of Us data in the Workbench\n\n\n\n\nDon’t download, screenshot, or share participant-level data\nDon’t publish participant counts of 1 to 20, or numbers they could be calculated from\nFollow the All of Us Data User Code of Conduct and the Data and Statistics Dissemination Policy"
-  },
-  {
-    "objectID": "index.html#contact",
-    "href": "index.html#contact",
-    "title": "All of Us Researcher Workbench 2.0",
-    "section": "Contact",
-    "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine\nEmail: maximilian.wegener@yale.edu\nFeedback is welcome. Found something unclear, out of date, or broken? Send us your feedback, or use the Feedback link at the top of every page.\n\n\nNext section: Get Started →"
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html",
-    "href": "pages/courses/core/1-1-build-cohorts.html",
-    "title": "1.1 Build the Cohort",
-    "section": "",
-    "text": "Core series, class 1 of 9 · R + SQL · 90 minutes\nOpen the notebook on GitHub Core series overview",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#overview",
-    "href": "pages/courses/core/1-1-build-cohorts.html#overview",
-    "title": "1.1 Build the Cohort",
-    "section": "Overview",
-    "text": "Overview\nA cohort is a group of people chosen by written rules. In this class we pull ours out of the All of Us database with SQL: adults with health records who either have type 2 diabetes (cases) or have no diabetes (controls). Then we take a sample, and download what the rest of the series needs: survey answers and measurements (BMI, blood pressure, cholesterol, HbA1c).\n\nWhy this class matters\nEvery later result depends on who is in the study. Writing the rules down once, in a query anyone can read and rerun, is what makes a study reproducible. And this class is where you first meet the real data: its tables, its codes, and its quirks.\n\n\nBy the end you’ll be able to\n\nExplain the CDR, the OMOP tables, and concept IDs\nUse the concept hierarchy to find a disease and everything more specific under it\nRead a SQL query: SELECT, FROM, JOIN, WHERE, GROUP BY, WITH\nRun the shared cohort query from R, and describe the result\nDownload survey answers and measurements for a sample, and save them to your bucket\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWho is in our type 2 diabetes cohort, and what data do we have for them?\n\n\n🧪 The analysis\nThree SQL queries (the cohort, survey answers, measurements); counts and summaries\n\n\n🎯 Why\nDefining cases and controls once, with written rules, keeps every analysis comparable\n\n\n✅ What we conclude\nHow many cases and controls there are, and how complete their data is\n\n\n⚠️ What it can’t tell us\nAnything about cause or risk: this class collects and describes\n\n\n🔗 Connections\n1.2 adds diagnosis dates; 2.1–2.3 clean and combine; the omics series uses the same query\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nabout 10 minutes. Slowest: the cohort query, and the measurement query and download\n\n\n💰 Cost\nabout $2 per student: three BigQuery queries, plus the app\n\n\n📋 Before class\na Controlled Tier workspace with a bucket; 0.0 setup run once",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#class-plan",
-    "href": "pages/courses/core/1-1-build-cohorts.html#class-plan",
-    "title": "1.1 Build the Cohort",
-    "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: the CDR, OMOP tables, concept IDs and the hierarchy, our cohort, SQL in one table\nlisten, ask\n\n\n0:20\n2. Setup: check the tables exist\nrun the cells\n\n\n0:25\n3. The cohort query: read it, run it, describe the groups\n✋ Try It Out 1 (5 min)\n\n\n0:50\n4. Choose a sample\nrun the cells\n\n\n1:00\n☕ Break (5 min)\n\n\n\n1:05\n5. Survey answers\nrun the cells\n\n\n1:15\n6. Measurements: concepts, units\n✋ Try It Out 2 (5 min)\n\n\n1:25\nWrap-up\ndiscuss",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#key-concepts",
-    "href": "pages/courses/core/1-1-build-cohorts.html#key-concepts",
-    "title": "1.1 Build the Cohort",
-    "section": "Key concepts",
-    "text": "Key concepts\n\nOMOP tables and concept IDs\nThe All of Us data is a set of tables in BigQuery, in a standard layout called the OMOP Common Data Model. Every table shares person_id, which links a person’s data across tables. Instead of text like “Type 2 diabetes”, the tables store a number, a concept ID (201826), that points to the concept dictionary. Look up any concept at athena.ohdsi.org.\n\n\nThe concept hierarchy\nType 2 diabetes mellitus has more specific concepts under it (e.g. with diabetic nephropathy), and a doctor may record any of them. The concept_ancestor table lists every “this is under that” pair, so one join finds them all:\nSELECT co.person_id\nFROM condition_occurrence AS co\nJOIN concept_ancestor AS ca ON co.condition_concept_id = ca.descendant_concept_id\nWHERE ca.ancestor_concept_id = 201826     -- type 2 diabetes, and everything under it\n\n\nSQL in one table\n\n\n\n\n\n\n\n\nSQL\nMeans\nR equivalent\n\n\n\n\nSELECT a, b\nthe columns to return\nselect()\n\n\nJOIN t2 ON t1.x = t2.x\ncombine matching rows\ninner_join()\n\n\nLEFT JOIN\nkeep every row of the first table\nleft_join()\n\n\nWHERE\nkeep rows that meet a condition\nfilter()\n\n\nGROUP BY + MIN(), COUNT()\none row per group, with a summary\ngroup_by() + summarise()\n\n\nWITH name AS (...)\na named step, used later in the query\nsaving a result with &lt;-",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/1-1-build-cohorts.html#follow-along-in-the-workbench",
-    "title": "1.1 Build the Cohort",
-    "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nOpen your workspace → Apps → start your AoU Jupyter app → Open.\nIn a Terminal (File → New → Terminal), get the newest notebooks:\ncd ~/repos/All-of-Us-Training-Resources\ngit checkout -- notebooks/\ngit stash && git pull && git stash pop\nOpen notebooks/core/1.1 build_cohorts.ipynb, with the R kernel.\nRun the first cell: it ends with Setup done, then a table where every row is TRUE.\n\n\nWhat you’ll see\n1. The Apps tab: your app is Running. Click the icon next to its name to open JupyterLab. The row also shows the app’s cost while running.\n\n\n\n\n\n\n2. Open a terminal: File → New → Terminal, or the Terminal tile on the Launcher (the page JupyterLab opens with).\n\n\n\n\n\n\n3. Find the notebook in the file browser on the left: repos → All-of-Us-Training-Resources → notebooks → core.\n4. Wrong kernel? The kernel’s name is at the top right of the notebook. If it isn’t the one you need, use Kernel → Change Kernel….",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#try-it-out",
-    "href": "pages/courses/core/1-1-build-cohorts.html#try-it-out",
-    "title": "1.1 Build the Cohort",
-    "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 3, “Your turn”\n\n\n\nHow many cases have a type 2 diabetes code on only one day, and how many on two or more?\n✅ Check: a two-row table. About 1 in 6 cases had a single code day in our full cohort.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nWhat range of values does BMI have? Do any look impossible?\n✅ Check: most values between about 18 and 45, but a minimum and maximum that can’t be real.",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#code-walk-through",
-    "href": "pages/courses/core/1-1-build-cohorts.html#code-walk-through",
-    "title": "1.1 Build the Cohort",
-    "section": "Code walk-through",
-    "text": "Code walk-through\n\nRunning the shared query\n1cohort_sql &lt;- read_file(\"../sql/t2d_cohort.sql\")\n\n2cohort &lt;- run_query(str_glue(cohort_sql, AGE_DATE = \"2025-01-01\")) %&gt;%\n3  mutate(person_id = as.character(person_id))\n\n4cohort %&gt;% count(cohort)\n\n1\n\nRead the SQL from the shared file in notebooks/sql/. The notebook prints it next, so you can read every step.\n\n2\n\nstr_glue() fills in the placeholders {CURRENT_DATASET} and {AGE_DATE}; run_query() (from aou_setup.R) sends the query to BigQuery and returns a data frame.\n\n3\n\nStore IDs as text: they’re labels, not numbers, and as text they match IDs in every other file.\n\n4\n\nOne row per group: case, control, excluded.\n\n\n\n\nA repeatable sample\n1set.seed(2026)\ncohort_sample &lt;- cohort %&gt;%\n2  filter(cohort %in% c(\"case\", \"control\"), between(age, 18, 100)) %&gt;%\n3  arrange(person_id) %&gt;%\n  group_by(cohort) %&gt;%\n4  slice_sample(n = 5000) %&gt;%\n  ungroup()\n\n5save_data(cohort_sample, \"cohort_sample.csv\")\n\n1\n\nFix the random number generator, so everyone gets the same “random” sample.\n\n2\n\nCases and controls only, aged 18 to 100 (a few recorded ages above 100 are probably errors).\n\n3\n\nSort first: BigQuery doesn’t return rows in a fixed order, and the seed only repeats if the rows start in the same order.\n\n4\n\n5,000 at random within each group.\n\n5\n\nSave to your bucket: later classes load this file instead of querying again.",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#what-we-found",
-    "href": "pages/courses/core/1-1-build-cohorts.html#what-we-found",
-    "title": "1.1 Build the Cohort",
-    "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\n\nCases\nControls\n\n\n\n\nIn the cohort (excluded: 13,765)\n80,919\n331,912\n\n\nMean age\n63.4\n54.8\n\n\nFemale\n56.0%\n62.7%\n\n\nDeceased\n3.8%\n1.3%\n\n\nMedian years of EHR history\n10.8\n8.3\n\n\n\n\n426,596 adults with EHR data in total.\nSurvey: about 500 of our 10,000 people answered each PTSD question: they’re follow-up questions, asked only of people who reported PTSD. Each answer repeats the question (“… (PTSD)? - Yes”), and the only non-answer was PMI: Skip.\nMeasurements: about 1.8 million rows. Systolic blood pressure alone had over a million, for about 9,800 people.\nUnits were messy: almost half of blood pressure rows had “No matching concept”; some BMI rows had the unit “link for Gunter’s chain (US)” (a surveying length!); some HbA1c rows were in grams or milligrams per deciliter. 2.1 deals with these.\n\n💬 Discuss: cases have longer health records. Why could that matter when comparing them with controls? (More visits, more chances for any diagnosis to be recorded.)",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#instructor-notes",
-    "href": "pages/courses/core/1-1-build-cohorts.html#instructor-notes",
-    "title": "1.1 Build the Cohort",
-    "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nStart the cohort query, then explain the printed SQL while it runs (1–2 minutes).\nThe PTSD question IDs are easy to mix up: 43528846 is currently receiving treatment, 43530361 is still seeing a doctor.\nThe units table is the best moment of the class: ask students what “Gunter’s chain” might be before telling them.\nOur sample is half cases by design. Remind students that percentages describe the sample, not the All of Us population.",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#key-takeaways",
-    "href": "pages/courses/core/1-1-build-cohorts.html#key-takeaways",
-    "title": "1.1 Build the Cohort",
-    "section": "Key takeaways",
-    "text": "Key takeaways\n\nAll of Us data is in OMOP tables, linked by person_id; codes are concept IDs\nconcept_ancestor finds a concept and everything under it\nOne shared query defines the cohort for every class\nQuery once, save to your bucket, then load the files\nCheck units before using any measurement",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/1-1-build-cohorts.html#next",
-    "href": "pages/courses/core/1-1-build-cohorts.html#next",
-    "title": "1.1 Build the Cohort",
-    "section": "Next",
-    "text": "Next\n1.2 Survival data: the dates needed to study time to chronic kidney disease.",
-    "crumbs": [
-      "Core",
-      "1.1 Build the Cohort"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html",
-    "href": "pages/courses/core/2-1-clean.html",
-    "title": "2.1 Clean",
-    "section": "",
-    "text": "Core series, class 3 of 9 · R · 105 minutes\nOpen the notebook on GitHub Core series overview",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#overview",
-    "href": "pages/courses/core/2-1-clean.html#overview",
-    "title": "2.1 Clean",
-    "section": "Overview",
-    "text": "Overview\nReal health data is messy: the same answer written several ways, people who skipped a question, the same measurement in different units, impossible values typed by mistake, and duplicate rows. Cleaning turns that into data you can analyse, with every decision written down. We clean the cohort, the survey answers, and the measurements from 1.1.\n\nWhy this class matters\nAn impossible BMI of 999, or “PMI: Skip” counted as an answer, can change a mean, a model, or a conclusion, and nobody would notice. Cleaning is where most of the real work of a study happens, and where the most judgment calls are made. Doing it carefully, and logging it, is what makes the rest of the analysis trustworthy.\n\n\nBy the end you’ll be able to\n\nCheck that every column has the right type\nTell real answers from non-answers, and turn non-answers into NA\nPull the useful part out of messy text with str_extract()\nFind and remove duplicates, and choose which of several answers to keep\nClean measurements with units and plausible ranges, after looking at the values unit by unit\nExplain what missing data costs, and keep a cleaning log\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhich values can we trust, and what do we do with the rest?\n\n\n🧪 The analysis\nCounting labels and values, then rules: recode non-answers, extract answers, remove duplicates, keep plausible measurements\n\n\n🎯 Why\nEvery later result depends on it\n\n\n✅ What we conclude\nClean versions of the three files, and a log of what was removed and why\n\n\n⚠️ What it can’t tell us\nWhether a plausible value is correct: cleaning removes the impossible, not every error\n\n\n🔗 Connections\nUses the files from 1.1; 2.2 reshapes them; 2.3 joins them\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n105 minutes\n\n\n⏱️ Run time\nabout 2 minutes\n\n\n💰 Cost\nabout $0.50: no queries, only app time\n\n\n📋 Before class\nrun 1.1",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#class-plan",
-    "href": "pages/courses/core/2-1-clean.html#class-plan",
-    "title": "2.1 Clean",
-    "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: the cleaning problems, NA is not “No”, write every decision down\nlisten, ask\n\n\n0:15\n2. Load and check types\nrun the cells\n\n\n0:25\n3. The cohort: non-answers\nrun the cells\n\n\n0:40\n4. The survey answers: extract, duplicates\n✋ Try It Out 1 (5 min)\n\n\n1:00\n☕ Break (5 min)\n\n\n\n1:05\n5. The measurements: units value by value, ranges, the cleaning log\n✋ Try It Out 2 (5 min)\n\n\n1:35\n6. Missing data\ndiscuss\n\n\n1:45\nWrap-up",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#key-concepts",
-    "href": "pages/courses/core/2-1-clean.html#key-concepts",
-    "title": "2.1 Clean",
-    "section": "Key concepts",
-    "text": "Key concepts\n\n\n\n\n\n\n\n\nProblem\nExample from our data\nWhat we do\n\n\n\n\nWrong type\nan ID read as a number\nset types when reading the file\n\n\nNon-answers\nPMI: Skip, I prefer not to answer, None Indicated\nturn into NA, and say so\n\n\nMessy text\n“Are you still seeing a doctor … (PTSD)? - Yes”\nextract the part we need: Yes\n\n\nDuplicates\nthe same measurement row twice; two answers to one question\nremove exact copies; a rule for the rest (the latest)\n\n\nUnits\nBMI with the unit “link for Gunter’s chain”; HbA1c in g/dL\nlook at the values for each unit; keep or drop\n\n\nImpossible values\nBMI of 0 or 999\nkeep a plausible range, chosen before the analysis\n\n\nMissing data\nno LDL test for a third of people\nkeep the NA; decide per analysis\n\n\n\n\nNA is not “No”\nSomeone may have no answer because they skipped the question, preferred not to answer, or were never asked (follow-up questions appear only after certain answers: skip logic). None of these means “No”.",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/2-1-clean.html#follow-along-in-the-workbench",
-    "title": "2.1 Clean",
-    "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/2.1 clean.ipynb, with the R kernel.",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#try-it-out",
-    "href": "pages/courses/core/2-1-clean.html#try-it-out",
-    "title": "2.1 Clean",
-    "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nWhat share of our 10,000 people answered the PTSD doctor question at all? What does that mean for using it in a model?\n✅ Check: about 5%. It was asked only of people who reported PTSD, so for 95% the answer is unknown, not “No”.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 5, “Your turn”\n\n\n\nWhat if the BMI range were narrower, 15 to 60? How many more rows would be removed? Would the median change?\n✅ Check: a small number of rows, and almost no change to the median: the median is robust to extreme values.",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#code-walk-through",
-    "href": "pages/courses/core/2-1-clean.html#code-walk-through",
-    "title": "2.1 Clean",
-    "section": "Code walk-through",
-    "text": "Code walk-through\n\nExtracting the survey answer\nsurvey_clean &lt;- survey_raw %&gt;%\n1  mutate(question = case_when(question_concept_id == 43528846 ~ \"ptsd_treatment\",\n                              question_concept_id == 43530361 ~ \"ptsd_doctor\"),\n2         answer_clean = str_extract(answer, \"(?&lt;= - ).*$\"))\n\n3survey_clean %&gt;% count(question, answer_clean)\n\n1\n\nA short name for each question, chosen by its concept ID, which never changes (the wording could).\n\n2\n\nA regular expression: (?&lt;= - ) means “just after ’ - ’”, .*$ “everything to the end”. PMI: Skip has no ” - “, so it becomes NA: exactly right for a non-answer.\n\n3\n\nAlways check a recoding by counting the new values: a typo in a pattern can silently turn everything into NA.\n\n\n\n\nThe measurement cleaning log\n1step1 &lt;- step0 %&gt;% anti_join(WRONG_UNITS, by = c(\"measure\", \"unit\"))\nstep2 &lt;- step1 %&gt;%\n  filter(!is.na(value_as_number)) %&gt;%\n  left_join(RANGES, by = \"measure\") %&gt;%\n2  filter(between(value_as_number, low, high))\nstep3 &lt;- step2 %&gt;%\n3  distinct(person_id, measure, measurement_date, value_as_number, .keep_all = TRUE)\n\ncleaning_log &lt;- tibble(step = c(\"Start\", \"1. …\", \"2. …\", \"3. …\"),\n                       rows = c(nrow(step0), nrow(step1), nrow(step2), nrow(step3))) %&gt;%\n4  mutate(removed = lag(rows) - rows)\n\n1\n\nDrop units that mean another measure: here, HbA1c in grams or milligrams per deciliter. anti_join() keeps rows that don’t match the list.\n\n2\n\nDrop missing values, then keep each measure’s plausible range (e.g. BMI 12 to 80), looked up from a small table.\n\n3\n\nDrop exact duplicates: the same person, measure, date, and value.\n\n4\n\nThe log: rows left after each step, and how many each removed. Report a table like this with your results.",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#what-we-found",
-    "href": "pages/courses/core/2-1-clean.html#what-we-found",
-    "title": "2.1 Clean",
-    "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\nThe cleaning log:\n\n\n\nStep\nRows\nRemoved\n\n\n\n\nStart\n1,786,613\n\n\n\n1. Drop units that mean another measure\n1,786,495\n118\n\n\n2. Keep plausible values\n1,779,356\n7,139\n\n\n3. Remove exact duplicates\n1,544,092\n235,264\n\n\n\n\nDuplicates were by far the biggest problem: 13% of all rows, likely the same result recorded by two systems.\nChecking values unit by unit changed a decision. We’d planned to drop BMI recorded in “percent”, assuming they were children’s BMI percentiles. The values were ordinary adult BMIs (median 28.6), so we kept them. HbA1c in “milligram per deciliter” had a median of 132: probably an estimated average glucose, so we dropped it.\nNon-answers were common in demographics: for race, None Indicated (about 1,400 people), PMI: Skip, and I prefer not to answer. Some odd-looking labels, such as Sex At Birth: Sex At Birth None Of These, are real answers (“none of these describe me”).\n\n💬 Discuss: cases had HbA1c and LDL results far more often than controls. Why is that a warning sign for any analysis that uses only people with those results?",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#instructor-notes",
-    "href": "pages/courses/core/2-1-clean.html#instructor-notes",
-    "title": "2.1 Clean",
-    "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nThe unit-check table (Part 5) is the heart of the class: give students two minutes to spot the odd units themselves before discussing.\nExpect “why not just drop every row with an odd unit?”: because many odd units hold perfectly good values (No matching concept was almost half of blood pressure rows).\nAsk students to predict the biggest step in the cleaning log before running it. Almost nobody guesses duplicates.",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#key-takeaways",
-    "href": "pages/courses/core/2-1-clean.html#key-takeaways",
-    "title": "2.1 Clean",
-    "section": "Key takeaways",
-    "text": "Key takeaways\n\nLook first: count every label and summarise every value before writing rules\nNon-answers become NA, never “No”\nA unit label alone can’t be trusted: check the values\nChoose plausible ranges before the analysis, and keep a cleaning log\nKeep missing values; decide how to handle them per analysis",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-1-clean.html#next",
-    "href": "pages/courses/core/2-1-clean.html#next",
-    "title": "2.1 Clean",
-    "section": "Next",
-    "text": "Next\n2.2 Reshape: from many rows per person to one row per person.",
-    "crumbs": [
-      "Core",
-      "2.1 Clean"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html",
-    "href": "pages/courses/core/2-3-join-and-bind.html",
-    "title": "2.3 Join and Bind",
-    "section": "",
-    "text": "Core series, class 5 of 9 · R · 75 minutes\nOpen the notebook on GitHub Core series overview",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#overview",
-    "href": "pages/courses/core/2-3-join-and-bind.html#overview",
-    "title": "2.3 Join and Bind",
-    "section": "Overview",
-    "text": "Overview\nOur data is in four tables: the cohort, the measurements, the survey answers, and the CKD dates. An analysis needs them together, one row per person. Binding stacks tables on top of each other; joining lines them up side by side by a shared key (person_id). We learn the join types on a tiny example first, then check every real join.\n\nWhy this class matters\nJoins are where analyses most often go silently wrong. An inner join where a left join was meant quietly drops people; a key that isn’t unique quietly duplicates them. The numbers still look reasonable, which is what makes these mistakes dangerous. A few routine checks catch nearly all of them.\n\n\nBy the end you’ll be able to\n\nStack tables with bind_rows()\nExplain left, inner, full, and anti joins, and choose the right one\nCheck a join: key types, unique keys, unmatched IDs, and row counts\nBuild the analysis table that 3.1–3.4 use\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nHow do we combine four tables without losing or duplicating people?\n\n\n🧪 The analysis\nbind_rows() to stack; left_join() by person_id; anti_join() and counts to check\n\n\n🎯 Why\nA wrong join can silently drop or duplicate people, changing every result after it\n\n\n✅ What we conclude\nOne analysis table: 10,000 rows, one per person\n\n\n⚠️ What it can’t tell us\nAnything about diabetes yet\n\n\n🔗 Connections\nUses files from 1.2, 2.1, 2.2; saves final_analysis.csv for 3.1–3.4\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n75 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 1.2, 2.1, and 2.2",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#class-plan",
-    "href": "pages/courses/core/2-3-join-and-bind.html#class-plan",
-    "title": "2.3 Join and Bind",
-    "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: bind vs join, the join types\nlisten, ask\n\n\n0:15\n2–3. Load; binding rows\nrun the cells\n\n\n0:30\n4. The join types, on a tiny example\n✋ Try It Out (5 min)\n\n\n0:45\n5. Checks before joining\nrun the cells\n\n\n0:55\n6. Build the analysis table\nrun the cells, discuss\n\n\n1:10\nWrap-up",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#key-concepts",
-    "href": "pages/courses/core/2-3-join-and-bind.html#key-concepts",
-    "title": "2.3 Join and Bind",
-    "section": "Key concepts",
-    "text": "Key concepts\n     x            y\n  ┌─────┐      ┌─────┐\n  │  A  │      │  A  │      A, B: in both\n  │  B  │      │  B  │      C: only in x\n  │  C  │      │  D  │      D: only in y\n  └─────┘      └─────┘\n\n\n\n\n\n\n\n\n\nJoin\nKeeps\nResult\nUse it when\n\n\n\n\nleft_join(x, y)\nevery row of x; y’s columns where they match\nA, B, C\nadding information without losing anyone: our default\n\n\ninner_join(x, y)\nrows in both\nA, B\nyou only want people with both, and know who you drop\n\n\nfull_join(x, y)\nrows in either\nA, B, C, D\ncombining two lists of people\n\n\nanti_join(x, y)\nrows of x with no match\nC\nchecking: who doesn’t match?\n\n\n\nIf the key appears more than once in y, each x row is repeated once per match (one-to-many): usually a sign you forgot to reshape first.",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/2-3-join-and-bind.html#follow-along-in-the-workbench",
-    "title": "2.3 Join and Bind",
-    "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/2.3 join_and_bind.ipynb, with the R kernel.",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#try-it-out",
-    "href": "pages/courses/core/2-3-join-and-bind.html#try-it-out",
-    "title": "2.3 Join and Bind",
-    "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 4, “Your turn”\n\n\n\nAdd a second BMI row for person A to the tiny labs table, then left_join() again. How many rows do you get, and why?\n✅ Check: 4 rows: A appears twice. The key wasn’t unique, so the join became one-to-many.",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#code-walk-through",
-    "href": "pages/courses/core/2-3-join-and-bind.html#code-walk-through",
-    "title": "2.3 Join and Bind",
-    "section": "Code walk-through",
-    "text": "Code walk-through\n1final_analysis &lt;- cohort_clean %&gt;%\n2  left_join(measurements_wide, by = \"person_id\") %&gt;%\n  left_join(survey_wide,       by = \"person_id\") %&gt;%\n  left_join(ckd_dates,         by = \"person_id\") %&gt;%\n  mutate(age_group = cut(age, breaks = c(18, 40, 65, Inf), right = FALSE,\n3                         labels = c(\"18-39\", \"40-64\", \"65+\")))\n\n4c(rows = nrow(final_analysis), people = n_distinct(final_analysis$person_id))\n\n1\n\nStart from the cohort: everyone we want in the analysis.\n\n2\n\nleft_join() each table onto it, so nobody is lost. People without measurements get NA. by = \"person_id\" names the key: always write it.\n\n3\n\nAge groups for tables. right = FALSE means each group includes its lower bound (18 is in “18-39”).\n\n4\n\nThe check that matters most: still one row per person?",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#what-we-found",
-    "href": "pages/courses/core/2-3-join-and-bind.html#what-we-found",
-    "title": "2.3 Join and Bind",
-    "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n10,000 rows, 10,000 people: nobody lost, nobody duplicated.\nThe share of people with each variable:\n\n\n\n\nBMI\nSBP\nLDL\nHbA1c\nPTSD answers\na CKD date\n\n\n\n\n98.6%\n98.8%\n65.3%\n58.2%\n5.2%\n17.0%\n\n\n\n💬 Discuss: the old version of this course ended this step with drop_na(), keeping only people with every variable. With these numbers, how many would that have left, and who would they be? (Only people who answered the PTSD questions, and had LDL and HbA1c tested: a few hundred, and a very unusual group.)",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#instructor-notes",
-    "href": "pages/courses/core/2-3-join-and-bind.html#instructor-notes",
-    "title": "2.3 Join and Bind",
-    "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nTeach the joins on the 3-person example before touching real data: it’s the only way to see every row.\nThe type-mismatch demo (Part 5) produces a clear error message. Point out that an error is the good outcome: a silent mismatch would be worse.",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#key-takeaways",
-    "href": "pages/courses/core/2-3-join-and-bind.html#key-takeaways",
-    "title": "2.3 Join and Bind",
-    "section": "Key takeaways",
-    "text": "Key takeaways\n\nBind stacks tables with the same columns; join combines tables by a key\nleft_join() from your main table keeps everyone; inner_join() silently drops people\nCheck every join: key types, unique keys, anti_join(), and row counts\nKeep NAs; decide per analysis",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
-    ]
-  },
-  {
-    "objectID": "pages/courses/core/2-3-join-and-bind.html#next",
-    "href": "pages/courses/core/2-3-join-and-bind.html#next",
-    "title": "2.3 Join and Bind",
-    "section": "Next",
-    "text": "Next\n3.1 Table One: describe cases and controls.",
-    "crumbs": [
-      "Core",
-      "2.3 Join and Bind"
+      "3.4 Survival Analysis"
     ]
   },
   {
@@ -2627,124 +1859,980 @@
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html",
-    "href": "pages/courses/core/3-4-survival-analysis.html",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html",
+    "href": "pages/courses/core/2-3-join-and-bind.html",
+    "title": "2.3 Join and Bind",
     "section": "",
-    "text": "Core series, class 9 of 9 · R (survival) · 90 minutes\nOpen the notebook on GitHub Core series overview",
+    "text": "Core series, class 5 of 9 · R · 75 minutes\nOpen the notebook on GitHub Core series overview",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#overview",
-    "href": "pages/courses/core/3-4-survival-analysis.html#overview",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#overview",
+    "href": "pages/courses/core/2-3-join-and-bind.html#overview",
+    "title": "2.3 Join and Bind",
     "section": "Overview",
-    "text": "Overview\nAmong people with type 2 diabetes, how long until chronic kidney disease (CKD), and who gets it sooner? With the dates gathered in 1.2 (time zero, the event, censoring), we draw Kaplan–Meier curves and fit a Cox model.\n\nWhy this class matters\n“How long until” questions are everywhere in health research: time to a complication, to a hospital readmission, to death. Survival methods are built for them, because they use everyone’s follow-up, including people who leave the records without the event. This class also lists the traps specific to health record data, which a tidy-looking curve can hide.\n\n\nBy the end you’ll be able to\n\nBuild time-to-event data with censoring\nEstimate and plot Kaplan–Meier curves with ggplot2, and compare them with a log-rank test\nFit a Cox model, and read hazard ratios\nCheck the proportional-hazards assumption\nExplain the pitfalls of survival analysis in health records\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAfter a type 2 diabetes diagnosis, how quickly do people develop CKD, and is it faster with higher HbA1c?\n\n\n🧪 The analysis\nKaplan–Meier curves by HbA1c group, a log-rank test, then a Cox model adjusted for age at diagnosis, sex, and BMI\n\n\n🎯 Why\nPeople are followed for different lengths of time; censoring uses all of it\n\n\n✅ What we conclude\nThe share CKD-free over time, and hazard ratios\n\n\n⚠️ What it can’t tell us\nCause. HbA1c and BMI are the latest values, often measured after time zero\n\n\n🔗 Connections\nDates from 1.2, joined in 2.3; builds on 3.2 and 3.3\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.40: no queries, only app time\n\n\n📋 Before class\nrun 2.3",
+    "text": "Overview\nOur data is in four tables: the cohort, the measurements, the survey answers, and the CKD dates. An analysis needs them together, one row per person. Binding stacks tables on top of each other; joining lines them up side by side by a shared key (person_id). We learn the join types on a tiny example first, then check every real join.\n\nWhy this class matters\nJoins are where analyses most often go silently wrong. An inner join where a left join was meant quietly drops people; a key that isn’t unique quietly duplicates them. The numbers still look reasonable, which is what makes these mistakes dangerous. A few routine checks catch nearly all of them.\n\n\nBy the end you’ll be able to\n\nStack tables with bind_rows()\nExplain left, inner, full, and anti joins, and choose the right one\nCheck a join: key types, unique keys, unmatched IDs, and row counts\nBuild the analysis table that 3.1–3.4 use\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nHow do we combine four tables without losing or duplicating people?\n\n\n🧪 The analysis\nbind_rows() to stack; left_join() by person_id; anti_join() and counts to check\n\n\n🎯 Why\nA wrong join can silently drop or duplicate people, changing every result after it\n\n\n✅ What we conclude\nOne analysis table: 10,000 rows, one per person\n\n\n⚠️ What it can’t tell us\nAnything about diabetes yet\n\n\n🔗 Connections\nUses files from 1.2, 2.1, 2.2; saves final_analysis.csv for 3.1–3.4\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n75 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 1.2, 2.1, and 2.2",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#class-plan",
-    "href": "pages/courses/core/3-4-survival-analysis.html#class-plan",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#class-plan",
+    "href": "pages/courses/core/2-3-join-and-bind.html#class-plan",
+    "title": "2.3 Join and Bind",
     "section": "Class plan",
-    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: survival curves, hazards, censoring\nlisten, ask\n\n\n0:15\n2. Build the survival data\nrun the cells\n\n\n0:30\n3. Kaplan–Meier curves, log-rank test, number at risk\n✋ Try It Out (5 min)\n\n\n0:55\n4. Cox model\nrun the cells\n\n\n1:10\n5. Check proportional hazards\nrun the cells\n\n\n1:20\n6. Discuss the pitfalls\ndiscuss",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: bind vs join, the join types\nlisten, ask\n\n\n0:15\n2–3. Load; binding rows\nrun the cells\n\n\n0:30\n4. The join types, on a tiny example\n✋ Try It Out (5 min)\n\n\n0:45\n5. Checks before joining\nrun the cells\n\n\n0:55\n6. Build the analysis table\nrun the cells, discuss\n\n\n1:10\nWrap-up",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#key-concepts",
-    "href": "pages/courses/core/3-4-survival-analysis.html#key-concepts",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#key-concepts",
+    "href": "pages/courses/core/2-3-join-and-bind.html#key-concepts",
+    "title": "2.3 Join and Bind",
     "section": "Key concepts",
-    "text": "Key concepts\n\n\n\n\n\n\n\nTerm\nMeans\n\n\n\n\nSurvival curve\nthe share still event-free over time\n\n\nCensored\nthe clock stopped without the event; counted for as long as we saw them\n\n\nHazard\nthe event rate at a moment, among those still at risk\n\n\nHazard ratio (HR)\nthe hazard in one group ÷ another: HR 1.5 = the event comes 50% faster\n\n\nProportional hazards\nthe Cox model’s assumption that each HR stays constant over time",
+    "text": "Key concepts\n     x            y\n  ┌─────┐      ┌─────┐\n  │  A  │      │  A  │      A, B: in both\n  │  B  │      │  B  │      C: only in x\n  │  C  │      │  D  │      D: only in y\n  └─────┘      └─────┘\n\n\n\n\n\n\n\n\n\nJoin\nKeeps\nResult\nUse it when\n\n\n\n\nleft_join(x, y)\nevery row of x; y’s columns where they match\nA, B, C\nadding information without losing anyone: our default\n\n\ninner_join(x, y)\nrows in both\nA, B\nyou only want people with both, and know who you drop\n\n\nfull_join(x, y)\nrows in either\nA, B, C, D\ncombining two lists of people\n\n\nanti_join(x, y)\nrows of x with no match\nC\nchecking: who doesn’t match?\n\n\n\nIf the key appears more than once in y, each x row is repeated once per match (one-to-many): usually a sign you forgot to reshape first.",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#follow-along-in-the-workbench",
-    "href": "pages/courses/core/3-4-survival-analysis.html#follow-along-in-the-workbench",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/2-3-join-and-bind.html#follow-along-in-the-workbench",
+    "title": "2.3 Join and Bind",
     "section": "Follow along in the Workbench",
-    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/3.4 survival_analysis.ipynb, with the R kernel.",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/2.3 join_and_bind.ipynb, with the R kernel.",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#try-it-out",
-    "href": "pages/courses/core/3-4-survival-analysis.html#try-it-out",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#try-it-out",
+    "href": "pages/courses/core/2-3-join-and-bind.html#try-it-out",
+    "title": "2.3 Join and Bind",
     "section": "Try It Out",
-    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 3, “Your turn”\n\n\n\nDraw Kaplan–Meier curves by sex at birth, and run the log-rank test. Do men and women differ?\n✅ Check: two curves and a log-rank p-value. Keep only the main categories, so each curve has enough people.",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 4, “Your turn”\n\n\n\nAdd a second BMI row for person A to the tiny labs table, then left_join() again. How many rows do you get, and why?\n✅ Check: 4 rows: A appears twice. The key wasn’t unique, so the join became one-to-many.",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#code-walk-through",
-    "href": "pages/courses/core/3-4-survival-analysis.html#code-walk-through",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#code-walk-through",
+    "href": "pages/courses/core/2-3-join-and-bind.html#code-walk-through",
+    "title": "2.3 Join and Bind",
     "section": "Code walk-through",
-    "text": "Code walk-through\n1km_fit &lt;- survfit(Surv(time_years, status) ~ hba1c_group, data = surv_data)\n2km_df  &lt;- tidy(km_fit) %&gt;%\n  mutate(group = str_remove(strata, \"hba1c_group=\"))\n\nggplot(km_df, aes(time, estimate, colour = group)) +\n3  geom_step(linewidth = 0.9) +\n  geom_step(aes(y = conf.low),  linetype = \"dashed\", alpha = 0.6) +\n  geom_step(aes(y = conf.high), linetype = \"dashed\", alpha = 0.6)\n\n4survdiff(Surv(time_years, status) ~ hba1c_group, data = surv_data)\n\ncox_model &lt;- coxph(Surv(time_years, status) ~ age10_at_t2d + sex_at_birth + BMI5 + hba1c_group,\n5                   data = cox_data)\n\n1\n\nSurv(time, status) is the outcome: follow-up time, and 1 for CKD or 0 for censored. survfit() estimates one Kaplan–Meier curve per HbA1c group.\n\n2\n\ntidy() turns the curves into a table that ggplot2 can draw (the notebook also adds a starting point at 100%).\n\n3\n\nKaplan–Meier curves are steps, not smooth lines; the dashed steps are the 95% confidence limits. This replaces the survminer package, which doesn’t install in the app.\n\n4\n\nThe log-rank test: are the curves different?\n\n5\n\nThe Cox model: hazard ratios for several predictors at once, each adjusted for the others.",
+    "text": "Code walk-through\n1final_analysis &lt;- cohort_clean %&gt;%\n2  left_join(measurements_wide, by = \"person_id\") %&gt;%\n  left_join(survey_wide,       by = \"person_id\") %&gt;%\n  left_join(ckd_dates,         by = \"person_id\") %&gt;%\n  mutate(age_group = cut(age, breaks = c(18, 40, 65, Inf), right = FALSE,\n3                         labels = c(\"18-39\", \"40-64\", \"65+\")))\n\n4c(rows = nrow(final_analysis), people = n_distinct(final_analysis$person_id))\n\n1\n\nStart from the cohort: everyone we want in the analysis.\n\n2\n\nleft_join() each table onto it, so nobody is lost. People without measurements get NA. by = \"person_id\" names the key: always write it.\n\n3\n\nAge groups for tables. right = FALSE means each group includes its lower bound (18 is in “18-39”).\n\n4\n\nThe check that matters most: still one row per person?",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#what-we-found",
-    "href": "pages/courses/core/3-4-survival-analysis.html#what-we-found",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#what-we-found",
+    "href": "pages/courses/core/2-3-join-and-bind.html#what-we-found",
+    "title": "2.3 Join and Bind",
     "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9), cases with follow-up after diagnosis.\n\n\n\nYears since diagnosis\nShare CKD-free (95% CI)\n\n\n\n\n1\n95.6% (95.0 to 96.3)\n\n\n3\n90.6% (89.7 to 91.5)\n\n\n5\n85.4% (84.2 to 86.6)\n\n\n10\n73.0% (71.3 to 74.8)\n\n\n\n\nBy HbA1c group: the curve for HbA1c 7% or more dropped faster; log-rank p = 0.006. 977 people without an HbA1c result were left out of this comparison.\n\n\n\n\nCox model\nHazard ratio (95% CI)\n\n\n\n\nAge at diagnosis, per 10 years\n1.50 (1.40 to 1.61)\n\n\nMale (vs female)\n1.17 (1.01 to 1.35)\n\n\nBMI, per 5 units\n1.10 (1.04 to 1.15)\n\n\nHbA1c 7% or more\n1.28 (1.11 to 1.49)\n\n\n\n💬 Discuss the pitfalls:\n\nCovariate timing: HbA1c and BMI are the latest values, often measured after time zero, sometimes after CKD.\nLate time zero: records that start late make the first diabetes date too late.\nCompeting risks: people who die are censored as if they could still get CKD.\nWho gets tested: people who see doctors more often are diagnosed sooner (surveillance bias).\nThe outcome definition: one CKD code, or a lab-based definition?\n\n\nThe plot\n\nThe number-at-risk table uses hide_small_counts(), so it can be shared as text.",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n10,000 rows, 10,000 people: nobody lost, nobody duplicated.\nThe share of people with each variable:\n\n\n\n\nBMI\nSBP\nLDL\nHbA1c\nPTSD answers\na CKD date\n\n\n\n\n98.6%\n98.8%\n65.3%\n58.2%\n5.2%\n17.0%\n\n\n\n💬 Discuss: the old version of this course ended this step with drop_na(), keeping only people with every variable. With these numbers, how many would that have left, and who would they be? (Only people who answered the PTSD questions, and had LDL and HbA1c tested: a few hundred, and a very unusual group.)",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#instructor-notes",
-    "href": "pages/courses/core/3-4-survival-analysis.html#instructor-notes",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#instructor-notes",
+    "href": "pages/courses/core/2-3-join-and-bind.html#instructor-notes",
+    "title": "2.3 Join and Bind",
     "section": "Instructor notes",
-    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nStart with the “everyone together” curve before splitting by HbA1c: one curve is easier to read.\nThe pitfalls discussion is the most valuable part of the class for researchers new to EHR data. Leave at least 10 minutes.\nThe Cox model drops categories that were filtered out (droplevels()): without it, rare sex-at-birth categories show up as NA rows.",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nTeach the joins on the 3-person example before touching real data: it’s the only way to see every row.\nThe type-mismatch demo (Part 5) produces a clear error message. Point out that an error is the good outcome: a silent mismatch would be worse.",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#key-takeaways",
-    "href": "pages/courses/core/3-4-survival-analysis.html#key-takeaways",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#key-takeaways",
+    "href": "pages/courses/core/2-3-join-and-bind.html#key-takeaways",
+    "title": "2.3 Join and Bind",
     "section": "Key takeaways",
-    "text": "Key takeaways\n\nSurvival analysis needs time zero, an event, and censoring\nKaplan–Meier curves show the share event-free; the log-rank test compares them\nThe Cox model gives adjusted hazard ratios; check proportional hazards\nIn health records, watch covariate timing, late time zero, competing risks, and who gets tested",
+    "text": "Key takeaways\n\nBind stacks tables with the same columns; join combines tables by a key\nleft_join() from your main table keeps everyone; inner_join() silently drops people\nCheck every join: key types, unique keys, anti_join(), and row counts\nKeep NAs; decide per analysis",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
     ]
   },
   {
-    "objectID": "pages/courses/core/3-4-survival-analysis.html#next",
-    "href": "pages/courses/core/3-4-survival-analysis.html#next",
-    "title": "3.4 Survival Analysis",
+    "objectID": "pages/courses/core/2-3-join-and-bind.html#next",
+    "href": "pages/courses/core/2-3-join-and-bind.html#next",
+    "title": "2.3 Join and Bind",
     "section": "Next",
-    "text": "Next\nThat’s the end of the core series. The omics series uses the same cohort with genetic, RNA, and protein data.",
+    "text": "Next\n3.1 Table One: describe cases and controls.",
     "crumbs": [
       "Core",
-      "3.4 Survival Analysis"
+      "2.3 Join and Bind"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html",
+    "href": "pages/courses/core/2-1-clean.html",
+    "title": "2.1 Clean",
+    "section": "",
+    "text": "Core series, class 3 of 9 · R · 105 minutes\nOpen the notebook on GitHub Core series overview",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#overview",
+    "href": "pages/courses/core/2-1-clean.html#overview",
+    "title": "2.1 Clean",
+    "section": "Overview",
+    "text": "Overview\nReal health data is messy: the same answer written several ways, people who skipped a question, the same measurement in different units, impossible values typed by mistake, and duplicate rows. Cleaning turns that into data you can analyse, with every decision written down. We clean the cohort, the survey answers, and the measurements from 1.1.\n\nWhy this class matters\nAn impossible BMI of 999, or “PMI: Skip” counted as an answer, can change a mean, a model, or a conclusion, and nobody would notice. Cleaning is where most of the real work of a study happens, and where the most judgment calls are made. Doing it carefully, and logging it, is what makes the rest of the analysis trustworthy.\n\n\nBy the end you’ll be able to\n\nCheck that every column has the right type\nTell real answers from non-answers, and turn non-answers into NA\nPull the useful part out of messy text with str_extract()\nFind and remove duplicates, and choose which of several answers to keep\nClean measurements with units and plausible ranges, after looking at the values unit by unit\nExplain what missing data costs, and keep a cleaning log\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhich values can we trust, and what do we do with the rest?\n\n\n🧪 The analysis\nCounting labels and values, then rules: recode non-answers, extract answers, remove duplicates, keep plausible measurements\n\n\n🎯 Why\nEvery later result depends on it\n\n\n✅ What we conclude\nClean versions of the three files, and a log of what was removed and why\n\n\n⚠️ What it can’t tell us\nWhether a plausible value is correct: cleaning removes the impossible, not every error\n\n\n🔗 Connections\nUses the files from 1.1; 2.2 reshapes them; 2.3 joins them\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n105 minutes\n\n\n⏱️ Run time\nabout 2 minutes\n\n\n💰 Cost\nabout $0.50: no queries, only app time\n\n\n📋 Before class\nrun 1.1",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#class-plan",
+    "href": "pages/courses/core/2-1-clean.html#class-plan",
+    "title": "2.1 Clean",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: the cleaning problems, NA is not “No”, write every decision down\nlisten, ask\n\n\n0:15\n2. Load and check types\nrun the cells\n\n\n0:25\n3. The cohort: non-answers\nrun the cells\n\n\n0:40\n4. The survey answers: extract, duplicates\n✋ Try It Out 1 (5 min)\n\n\n1:00\n☕ Break (5 min)\n\n\n\n1:05\n5. The measurements: units value by value, ranges, the cleaning log\n✋ Try It Out 2 (5 min)\n\n\n1:35\n6. Missing data\ndiscuss\n\n\n1:45\nWrap-up",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#key-concepts",
+    "href": "pages/courses/core/2-1-clean.html#key-concepts",
+    "title": "2.1 Clean",
+    "section": "Key concepts",
+    "text": "Key concepts\n\n\n\n\n\n\n\n\nProblem\nExample from our data\nWhat we do\n\n\n\n\nWrong type\nan ID read as a number\nset types when reading the file\n\n\nNon-answers\nPMI: Skip, I prefer not to answer, None Indicated\nturn into NA, and say so\n\n\nMessy text\n“Are you still seeing a doctor … (PTSD)? - Yes”\nextract the part we need: Yes\n\n\nDuplicates\nthe same measurement row twice; two answers to one question\nremove exact copies; a rule for the rest (the latest)\n\n\nUnits\nBMI with the unit “link for Gunter’s chain”; HbA1c in g/dL\nlook at the values for each unit; keep or drop\n\n\nImpossible values\nBMI of 0 or 999\nkeep a plausible range, chosen before the analysis\n\n\nMissing data\nno LDL test for a third of people\nkeep the NA; decide per analysis\n\n\n\n\nNA is not “No”\nSomeone may have no answer because they skipped the question, preferred not to answer, or were never asked (follow-up questions appear only after certain answers: skip logic). None of these means “No”.",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/2-1-clean.html#follow-along-in-the-workbench",
+    "title": "2.1 Clean",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/2.1 clean.ipynb, with the R kernel.",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#try-it-out",
+    "href": "pages/courses/core/2-1-clean.html#try-it-out",
+    "title": "2.1 Clean",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nWhat share of our 10,000 people answered the PTSD doctor question at all? What does that mean for using it in a model?\n✅ Check: about 5%. It was asked only of people who reported PTSD, so for 95% the answer is unknown, not “No”.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 5, “Your turn”\n\n\n\nWhat if the BMI range were narrower, 15 to 60? How many more rows would be removed? Would the median change?\n✅ Check: a small number of rows, and almost no change to the median: the median is robust to extreme values.",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#code-walk-through",
+    "href": "pages/courses/core/2-1-clean.html#code-walk-through",
+    "title": "2.1 Clean",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nExtracting the survey answer\nsurvey_clean &lt;- survey_raw %&gt;%\n1  mutate(question = case_when(question_concept_id == 43528846 ~ \"ptsd_treatment\",\n                              question_concept_id == 43530361 ~ \"ptsd_doctor\"),\n2         answer_clean = str_extract(answer, \"(?&lt;= - ).*$\"))\n\n3survey_clean %&gt;% count(question, answer_clean)\n\n1\n\nA short name for each question, chosen by its concept ID, which never changes (the wording could).\n\n2\n\nA regular expression: (?&lt;= - ) means “just after ’ - ’”, .*$ “everything to the end”. PMI: Skip has no ” - “, so it becomes NA: exactly right for a non-answer.\n\n3\n\nAlways check a recoding by counting the new values: a typo in a pattern can silently turn everything into NA.\n\n\n\n\nThe measurement cleaning log\n1step1 &lt;- step0 %&gt;% anti_join(WRONG_UNITS, by = c(\"measure\", \"unit\"))\nstep2 &lt;- step1 %&gt;%\n  filter(!is.na(value_as_number)) %&gt;%\n  left_join(RANGES, by = \"measure\") %&gt;%\n2  filter(between(value_as_number, low, high))\nstep3 &lt;- step2 %&gt;%\n3  distinct(person_id, measure, measurement_date, value_as_number, .keep_all = TRUE)\n\ncleaning_log &lt;- tibble(step = c(\"Start\", \"1. …\", \"2. …\", \"3. …\"),\n                       rows = c(nrow(step0), nrow(step1), nrow(step2), nrow(step3))) %&gt;%\n4  mutate(removed = lag(rows) - rows)\n\n1\n\nDrop units that mean another measure: here, HbA1c in grams or milligrams per deciliter. anti_join() keeps rows that don’t match the list.\n\n2\n\nDrop missing values, then keep each measure’s plausible range (e.g. BMI 12 to 80), looked up from a small table.\n\n3\n\nDrop exact duplicates: the same person, measure, date, and value.\n\n4\n\nThe log: rows left after each step, and how many each removed. Report a table like this with your results.",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#what-we-found",
+    "href": "pages/courses/core/2-1-clean.html#what-we-found",
+    "title": "2.1 Clean",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\nThe cleaning log:\n\n\n\nStep\nRows\nRemoved\n\n\n\n\nStart\n1,786,613\n\n\n\n1. Drop units that mean another measure\n1,786,495\n118\n\n\n2. Keep plausible values\n1,779,356\n7,139\n\n\n3. Remove exact duplicates\n1,544,092\n235,264\n\n\n\n\nDuplicates were by far the biggest problem: 13% of all rows, likely the same result recorded by two systems.\nChecking values unit by unit changed a decision. We’d planned to drop BMI recorded in “percent”, assuming they were children’s BMI percentiles. The values were ordinary adult BMIs (median 28.6), so we kept them. HbA1c in “milligram per deciliter” had a median of 132: probably an estimated average glucose, so we dropped it.\nNon-answers were common in demographics: for race, None Indicated (about 1,400 people), PMI: Skip, and I prefer not to answer. Some odd-looking labels, such as Sex At Birth: Sex At Birth None Of These, are real answers (“none of these describe me”).\n\n💬 Discuss: cases had HbA1c and LDL results far more often than controls. Why is that a warning sign for any analysis that uses only people with those results?",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#instructor-notes",
+    "href": "pages/courses/core/2-1-clean.html#instructor-notes",
+    "title": "2.1 Clean",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nThe unit-check table (Part 5) is the heart of the class: give students two minutes to spot the odd units themselves before discussing.\nExpect “why not just drop every row with an odd unit?”: because many odd units hold perfectly good values (No matching concept was almost half of blood pressure rows).\nAsk students to predict the biggest step in the cleaning log before running it. Almost nobody guesses duplicates.",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#key-takeaways",
+    "href": "pages/courses/core/2-1-clean.html#key-takeaways",
+    "title": "2.1 Clean",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nLook first: count every label and summarise every value before writing rules\nNon-answers become NA, never “No”\nA unit label alone can’t be trusted: check the values\nChoose plausible ranges before the analysis, and keep a cleaning log\nKeep missing values; decide how to handle them per analysis",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-1-clean.html#next",
+    "href": "pages/courses/core/2-1-clean.html#next",
+    "title": "2.1 Clean",
+    "section": "Next",
+    "text": "Next\n2.2 Reshape: from many rows per person to one row per person.",
+    "crumbs": [
+      "Core",
+      "2.1 Clean"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html",
+    "href": "pages/courses/core/1-1-build-cohorts.html",
+    "title": "1.1 Build the Cohort",
+    "section": "",
+    "text": "Core series, class 1 of 9 · R + SQL · 90 minutes\nOpen the notebook on GitHub Core series overview",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#overview",
+    "href": "pages/courses/core/1-1-build-cohorts.html#overview",
+    "title": "1.1 Build the Cohort",
+    "section": "Overview",
+    "text": "Overview\nA cohort is a group of people chosen by written rules. In this class we pull ours out of the All of Us database with SQL: adults with health records who either have type 2 diabetes (cases) or have no diabetes (controls). Then we take a sample, and download what the rest of the series needs: survey answers and measurements (BMI, blood pressure, cholesterol, HbA1c).\n\nWhy this class matters\nEvery later result depends on who is in the study. Writing the rules down once, in a query anyone can read and rerun, is what makes a study reproducible. And this class is where you first meet the real data: its tables, its codes, and its quirks.\n\n\nBy the end you’ll be able to\n\nExplain the CDR, the OMOP tables, and concept IDs\nUse the concept hierarchy to find a disease and everything more specific under it\nRead a SQL query: SELECT, FROM, JOIN, WHERE, GROUP BY, WITH\nRun the shared cohort query from R, and describe the result\nDownload survey answers and measurements for a sample, and save them to your bucket\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWho is in our type 2 diabetes cohort, and what data do we have for them?\n\n\n🧪 The analysis\nThree SQL queries (the cohort, survey answers, measurements); counts and summaries\n\n\n🎯 Why\nDefining cases and controls once, with written rules, keeps every analysis comparable\n\n\n✅ What we conclude\nHow many cases and controls there are, and how complete their data is\n\n\n⚠️ What it can’t tell us\nAnything about cause or risk: this class collects and describes\n\n\n🔗 Connections\n1.2 adds diagnosis dates; 2.1–2.3 clean and combine; the omics series uses the same query\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nabout 10 minutes. Slowest: the cohort query, and the measurement query and download\n\n\n💰 Cost\nabout $2 per student: three BigQuery queries, plus the app\n\n\n📋 Before class\na Controlled Tier workspace with a bucket; 0.0 setup run once",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#class-plan",
+    "href": "pages/courses/core/1-1-build-cohorts.html#class-plan",
+    "title": "1.1 Build the Cohort",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: the CDR, OMOP tables, concept IDs and the hierarchy, our cohort, SQL in one table\nlisten, ask\n\n\n0:20\n2. Setup: check the tables exist\nrun the cells\n\n\n0:25\n3. The cohort query: read it, run it, describe the groups\n✋ Try It Out 1 (5 min)\n\n\n0:50\n4. Choose a sample\nrun the cells\n\n\n1:00\n☕ Break (5 min)\n\n\n\n1:05\n5. Survey answers\nrun the cells\n\n\n1:15\n6. Measurements: concepts, units\n✋ Try It Out 2 (5 min)\n\n\n1:25\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#key-concepts",
+    "href": "pages/courses/core/1-1-build-cohorts.html#key-concepts",
+    "title": "1.1 Build the Cohort",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nOMOP tables and concept IDs\nThe All of Us data is a set of tables in BigQuery, in a standard layout called the OMOP Common Data Model. Every table shares person_id, which links a person’s data across tables. Instead of text like “Type 2 diabetes”, the tables store a number, a concept ID (201826), that points to the concept dictionary. Look up any concept at athena.ohdsi.org.\n\n\nThe concept hierarchy\nType 2 diabetes mellitus has more specific concepts under it (e.g. with diabetic nephropathy), and a doctor may record any of them. The concept_ancestor table lists every “this is under that” pair, so one join finds them all:\nSELECT co.person_id\nFROM condition_occurrence AS co\nJOIN concept_ancestor AS ca ON co.condition_concept_id = ca.descendant_concept_id\nWHERE ca.ancestor_concept_id = 201826     -- type 2 diabetes, and everything under it\n\n\nSQL in one table\n\n\n\n\n\n\n\n\nSQL\nMeans\nR equivalent\n\n\n\n\nSELECT a, b\nthe columns to return\nselect()\n\n\nJOIN t2 ON t1.x = t2.x\ncombine matching rows\ninner_join()\n\n\nLEFT JOIN\nkeep every row of the first table\nleft_join()\n\n\nWHERE\nkeep rows that meet a condition\nfilter()\n\n\nGROUP BY + MIN(), COUNT()\none row per group, with a summary\ngroup_by() + summarise()\n\n\nWITH name AS (...)\na named step, used later in the query\nsaving a result with &lt;-",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/1-1-build-cohorts.html#follow-along-in-the-workbench",
+    "title": "1.1 Build the Cohort",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nOpen your workspace → Apps → start your AoU Jupyter app → Open.\nIn a Terminal (File → New → Terminal), get the newest notebooks:\ncd ~/repos/All-of-Us-Training-Resources\ngit checkout -- notebooks/\ngit stash && git pull && git stash pop\nOpen notebooks/core/1.1 build_cohorts.ipynb, with the R kernel.\nRun the first cell: it ends with Setup done, then a table where every row is TRUE.\n\n\nWhat you’ll see\n1. The Apps tab: your app is Running. Click the icon next to its name to open JupyterLab. The row also shows the app’s cost while running.\n\n\n\n\n\n\n2. Open a terminal: File → New → Terminal, or the Terminal tile on the Launcher (the page JupyterLab opens with).\n\n\n\n\n\n\n3. Find the notebook in the file browser on the left: repos → All-of-Us-Training-Resources → notebooks → core.\n4. Wrong kernel? The kernel’s name is at the top right of the notebook. If it isn’t the one you need, use Kernel → Change Kernel….",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#try-it-out",
+    "href": "pages/courses/core/1-1-build-cohorts.html#try-it-out",
+    "title": "1.1 Build the Cohort",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 3, “Your turn”\n\n\n\nHow many cases have a type 2 diabetes code on only one day, and how many on two or more?\n✅ Check: a two-row table. About 1 in 6 cases had a single code day in our full cohort.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nWhat range of values does BMI have? Do any look impossible?\n✅ Check: most values between about 18 and 45, but a minimum and maximum that can’t be real.",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#code-walk-through",
+    "href": "pages/courses/core/1-1-build-cohorts.html#code-walk-through",
+    "title": "1.1 Build the Cohort",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nRunning the shared query\n1cohort_sql &lt;- read_file(\"../sql/t2d_cohort.sql\")\n\n2cohort &lt;- run_query(str_glue(cohort_sql, AGE_DATE = \"2025-01-01\")) %&gt;%\n3  mutate(person_id = as.character(person_id))\n\n4cohort %&gt;% count(cohort)\n\n1\n\nRead the SQL from the shared file in notebooks/sql/. The notebook prints it next, so you can read every step.\n\n2\n\nstr_glue() fills in the placeholders {CURRENT_DATASET} and {AGE_DATE}; run_query() (from aou_setup.R) sends the query to BigQuery and returns a data frame.\n\n3\n\nStore IDs as text: they’re labels, not numbers, and as text they match IDs in every other file.\n\n4\n\nOne row per group: case, control, excluded.\n\n\n\n\nA repeatable sample\n1set.seed(2026)\ncohort_sample &lt;- cohort %&gt;%\n2  filter(cohort %in% c(\"case\", \"control\"), between(age, 18, 100)) %&gt;%\n3  arrange(person_id) %&gt;%\n  group_by(cohort) %&gt;%\n4  slice_sample(n = 5000) %&gt;%\n  ungroup()\n\n5save_data(cohort_sample, \"cohort_sample.csv\")\n\n1\n\nFix the random number generator, so everyone gets the same “random” sample.\n\n2\n\nCases and controls only, aged 18 to 100 (a few recorded ages above 100 are probably errors).\n\n3\n\nSort first: BigQuery doesn’t return rows in a fixed order, and the seed only repeats if the rows start in the same order.\n\n4\n\n5,000 at random within each group.\n\n5\n\nSave to your bucket: later classes load this file instead of querying again.",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#what-we-found",
+    "href": "pages/courses/core/1-1-build-cohorts.html#what-we-found",
+    "title": "1.1 Build the Cohort",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\n\nCases\nControls\n\n\n\n\nIn the cohort (excluded: 13,765)\n80,919\n331,912\n\n\nMean age\n63.4\n54.8\n\n\nFemale\n56.0%\n62.7%\n\n\nDeceased\n3.8%\n1.3%\n\n\nMedian years of EHR history\n10.8\n8.3\n\n\n\n\n426,596 adults with EHR data in total.\nSurvey: about 500 of our 10,000 people answered each PTSD question: they’re follow-up questions, asked only of people who reported PTSD. Each answer repeats the question (“… (PTSD)? - Yes”), and the only non-answer was PMI: Skip.\nMeasurements: about 1.8 million rows. Systolic blood pressure alone had over a million, for about 9,800 people.\nUnits were messy: almost half of blood pressure rows had “No matching concept”; some BMI rows had the unit “link for Gunter’s chain (US)” (a surveying length!); some HbA1c rows were in grams or milligrams per deciliter. 2.1 deals with these.\n\n💬 Discuss: cases have longer health records. Why could that matter when comparing them with controls? (More visits, more chances for any diagnosis to be recorded.)",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#instructor-notes",
+    "href": "pages/courses/core/1-1-build-cohorts.html#instructor-notes",
+    "title": "1.1 Build the Cohort",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nStart the cohort query, then explain the printed SQL while it runs (1–2 minutes).\nThe PTSD question IDs are easy to mix up: 43528846 is currently receiving treatment, 43530361 is still seeing a doctor.\nThe units table is the best moment of the class: ask students what “Gunter’s chain” might be before telling them.\nOur sample is half cases by design. Remind students that percentages describe the sample, not the All of Us population.",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#key-takeaways",
+    "href": "pages/courses/core/1-1-build-cohorts.html#key-takeaways",
+    "title": "1.1 Build the Cohort",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nAll of Us data is in OMOP tables, linked by person_id; codes are concept IDs\nconcept_ancestor finds a concept and everything under it\nOne shared query defines the cohort for every class\nQuery once, save to your bucket, then load the files\nCheck units before using any measurement",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#prefer-point-and-click",
+    "href": "pages/courses/core/1-1-build-cohorts.html#prefer-point-and-click",
+    "title": "1.1 Build the Cohort",
+    "section": "Prefer point and click?",
+    "text": "Prefer point and click?\nThe Data Explorer can build the same cohort without code, as a demonstration: see Optional: build the cohort in the Data Explorer. It currently uses CDR v8, so its cohorts can’t be combined with this series’ v9 files.",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-1-build-cohorts.html#next",
+    "href": "pages/courses/core/1-1-build-cohorts.html#next",
+    "title": "1.1 Build the Cohort",
+    "section": "Next",
+    "text": "Next\n1.2 Survival data: the dates needed to study time to chronic kidney disease.",
+    "crumbs": [
+      "Core",
+      "1.1 Build the Cohort"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "",
+    "text": "These pages walk you through the All of Us Researcher Workbench 2.0 (powered by Verily), from logging in to running an analysis. They’re the reference version of our introductory training session."
+  },
+  {
+    "objectID": "index.html#what-youll-learn",
+    "href": "index.html#what-youll-learn",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "What you’ll learn",
+    "text": "What you’ll learn\n\nExplain the All of Us Research Program and its key data sources\nDescribe what changed between the classic Workbench and Workbench 2.0\nCreate a workspace and add an All of Us data collection\nBuild a cohort and dataset with Data Explorer\nLaunch an analysis app and find your exported data\nManage storage and costs"
+  },
+  {
+    "objectID": "index.html#start-here",
+    "href": "index.html#start-here",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Start here",
+    "text": "Start here\n\nAbout All of Us: the program, its data, and the access tiers\nGetting Access and Billing: what to set up before you begin\nSetting Up a Workspace: create a workspace and add an All of Us data collection\nData Explorer: build a cohort and save a data snapshot\nApps: launch an analysis app and work with your data\n\nThroughout, we use an example workspace called intro-to-AoU, set up for instruction only. Some screenshots come from another training workspace, CWML_AoU_training. The steps are the same.\n\n\n\n\n\n\nNotePrefer slides?\n\n\n\nThe same material as a slide deck: Introduction to the Workbench 2.0 (slides). Press F for full screen and Esc for an overview."
+  },
+  {
+    "objectID": "index.html#how-to-read-the-screenshots",
+    "href": "index.html#how-to-read-the-screenshots",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "How to read the screenshots",
+    "text": "How to read the screenshots\nScreenshots are marked up to show you what to do:\n\nRed circle or box: click here\nGreen box: your options\n\n\n\n\n\n\n\nTipInstructor tips\n\n\n\nBoxes like this one hold extra details from the training session. Click them to expand."
+  },
+  {
+    "objectID": "index.html#data-use",
+    "href": "index.html#data-use",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Data use",
+    "text": "Data use\n\n\n\n\n\n\nWarningKeep All of Us data in the Workbench\n\n\n\n\nDon’t download, screenshot, or share participant-level data\nDon’t publish participant counts of 1 to 20, or numbers they could be calculated from\nFollow the All of Us Data User Code of Conduct and the Data and Statistics Dissemination Policy"
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Contact",
+    "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine\nEmail: maximilian.wegener@yale.edu\nFeedback is welcome. Found something unclear, out of date, or broken? Send us your feedback, or use the Feedback link at the top of every page.\n\n\nNext section: Get Started →"
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html",
+    "href": "pages/courses/core/1-2-survival-data.html",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "",
+    "text": "Core series, class 2 of 9 · R + SQL · 60 minutes\nOpen the notebook on GitHub Core series overview",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#overview",
+    "href": "pages/courses/core/1-2-survival-data.html#overview",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Overview",
+    "text": "Overview\nIn 3.4 we’ll ask: after a type 2 diabetes diagnosis, how long until people develop chronic kidney disease (CKD)? A “how long until” question needs more than who has the disease: it needs dates, and a careful idea of how long we could see each person in their health records. This class gathers those dates.\n\nWhy this class matters\nSurvival analysis is easy to run and easy to get wrong. Most mistakes happen before any model: a wrong start date, follow-up that runs past the end of someone’s records, or events that happened before the clock started. This class gets the ingredients right.\n\n\nBy the end you’ll be able to\n\nExplain time zero, event, censoring, and follow-up\nExplain why follow-up should end at the last health record\nFind the first date of a diagnosis with SQL (MIN(), GROUP BY)\nCheck a concept ID before using it\nDescribe how many people had the event, and how long they were followed\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAmong people with type 2 diabetes, who developed CKD after their diagnosis, and how long was everyone followed?\n\n\n🧪 The analysis\nA SQL query for each person’s first CKD date; then, for cases, time from diabetes to CKD or to the end of their records\n\n\n🎯 Why\nA survival analysis needs a clear start, a clear event, and a fair end for people without the event\n\n\n✅ What we conclude\nHow many cases had CKD after diabetes, how many before, and how long people were followed\n\n\n⚠️ What it can’t tell us\nRisk or what predicts it: that’s 3.4\n\n\n🔗 Connections\nUses the sample from 1.1; joined in 2.3; analysed in 3.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n60 minutes\n\n\n⏱️ Run time\nabout 3 minutes\n\n\n💰 Cost\nabout $1 per student: two small queries, plus the app\n\n\n📋 Before class\nrun 1.1",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#class-plan",
+    "href": "pages/courses/core/1-2-survival-data.html#class-plan",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: time zero, event, censoring; why EHR dates\nlisten, ask\n\n\n0:20\n2. Setup: load the sample\nrun the cells\n\n\n0:25\n3. Check the concept\nrun the cells\n\n\n0:30\n4. First CKD dates\nrun the cells\n\n\n0:40\n5. Time zero, event, censoring\n✋ Try It Out (5 min)\n\n\n0:55\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#key-concepts",
+    "href": "pages/courses/core/1-2-survival-data.html#key-concepts",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Key concepts",
+    "text": "Key concepts\n\n\n\n\n\n\n\n\nTerm\nMeans\nIn our study\n\n\n\n\nTime zero\nwhen each person’s clock starts\nthe first type 2 diabetes date\n\n\nEvent\nwhat we’re waiting for\nthe first CKD date, after time zero\n\n\nCensoring\nthe clock stops without the event\nthe earlier of the last EHR visit and death\n\n\nFollow-up\ntime zero to the event, or to censoring\nin years\n\n\n\ndiabetes      last EHR visit\n   │─────────────────│           censored: no CKD while we could see them\n   │──────────X                  event: CKD here\nCKD ──X  diabetes                excluded: CKD came first\nWhy the last EHR visit? A diagnosis can only appear while someone gets care at a site that shares data with All of Us. After their last visit, CKD elsewhere would be invisible. We don’t use All of Us’s observation_period table, because it also counts survey dates, which can stretch follow-up past the last health record.",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/1-2-survival-data.html#follow-along-in-the-workbench",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/1.2 survival_data.ipynb, with the R kernel.",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#try-it-out",
+    "href": "pages/courses/core/1-2-survival-data.html#try-it-out",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 5, “Your turn”\n\n\n\nHow many cases had CKD and diabetes recorded on the same day?\n✅ Check: a large share of the “before or on” group. Many records simply start with both diagnoses already present.",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#code-walk-through",
+    "href": "pages/courses/core/1-2-survival-data.html#code-walk-through",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nFirst CKD dates\nckd_sql &lt;- str_glue(\"\nSELECT co.person_id,\n1       MIN(co.condition_start_date)            AS first_ckd_date,\n2       COUNT(DISTINCT co.condition_start_date) AS ckd_code_days\nFROM `{CURRENT_DATASET}.condition_occurrence` AS co\nJOIN `{CURRENT_DATASET}.concept_ancestor` AS ca\n  ON co.condition_concept_id = ca.descendant_concept_id\n3WHERE ca.ancestor_concept_id = {CKD_CONCEPT}\n4  AND co.person_id IN ({ids_sql})\n5GROUP BY co.person_id\n\")\n\n1\n\nEach person’s earliest CKD diagnosis.\n\n2\n\nHow many different days had a CKD code (useful for a stricter definition).\n\n3\n\nCKD (concept 46271022) and everything under it: stages, CKD due to diabetes, and so on.\n\n4\n\nOnly our 10,000 people.\n\n5\n\nOne row per person, like group_by() + summarise() in R.\n\n\n\n\nTime zero, event, censoring\ncases &lt;- cohort_sample %&gt;%\n  filter(cohort == \"case\") %&gt;%\n1  left_join(ckd_dates, by = \"person_id\") %&gt;%\n  mutate(\n2    end_of_records = pmin(last_ehr_date, death_date, na.rm = TRUE),\n    timing = case_when(\n      !is.na(first_ckd_date) & first_ckd_date &lt;= first_t2d_date ~ \"CKD before or on diabetes date\",\n      !is.na(first_ckd_date)                                     ~ \"CKD after diabetes\",\n3      TRUE                                                       ~ \"no CKD\"),\n    followup_end   = if_else(timing == \"CKD after diabetes\", first_ckd_date, end_of_records),\n4    followup_years = as.numeric(followup_end - first_t2d_date) / 365.25\n  )\n\n1\n\nAdd each case’s first CKD date (NA if they never had one).\n\n2\n\nThe end of what we can see: the earlier of the last EHR visit and death. na.rm = TRUE ignores a missing death date.\n\n3\n\nSort each case into one of three groups. case_when() uses the first rule that matches.\n\n4\n\nFollow-up in years, from the first diabetes date to CKD (events) or the end of records (censored).",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#what-we-found",
+    "href": "pages/courses/core/1-2-survival-data.html#what-we-found",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls.\n\n\n\n\n\n\n\nConcept 46271022\nChronic kidney disease (SNOMED, standard): confirmed before use\n\n\nCKD at any time\n28% of cases vs 7% of controls\n\n\nCases: CKD after diabetes (the events)\n925, a median of 4.4 years after diagnosis\n\n\nCases: CKD before or on the diabetes date (can’t be used)\n452\n\n\nCases: no CKD (censored)\n3,623, followed for a median of 5.2 years\n\n\nFollowed for less than a year\nabout 1 in 6 to 1 in 5\n\n\n\n💬 Discuss: why might someone’s first diabetes date in the records be years after their real diagnosis? (Records often start when someone joins a health system. This is left truncation, and it makes time zero uncertain.)",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#instructor-notes",
+    "href": "pages/courses/core/1-2-survival-data.html#instructor-notes",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip: timing and pitfalls\n\n\n\n\n\n\nDraw the three timelines on the board before Part 5.\nExpect “why not use today’s date as the end?”: because we’d count years when the person may have been getting care elsewhere, unseen.\nThe 452 “before or on” cases are a good discussion: are they data errors, or real? (Mostly real: both conditions were already present when the records began.)",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#key-takeaways",
+    "href": "pages/courses/core/1-2-survival-data.html#key-takeaways",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA survival analysis needs time zero, an event, and censoring\nEnd follow-up at the last health record (or death)\nCheck every concept ID by name before using it\nEvents before time zero can’t be used\nLate-starting records make time zero uncertain",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/1-2-survival-data.html#next",
+    "href": "pages/courses/core/1-2-survival-data.html#next",
+    "title": "1.2 Data for the Survival Analysis",
+    "section": "Next",
+    "text": "Next\n2.1 Clean: tidy the survey answers and measurements from 1.1.",
+    "crumbs": [
+      "Core",
+      "1.2 Data for the Survival Analysis"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html",
+    "href": "pages/courses/core/2-2-reshape.html",
+    "title": "2.2 Reshape",
+    "section": "",
+    "text": "Core series, class 4 of 9 · R · 70 minutes\nOpen the notebook on GitHub Core series overview",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#overview",
+    "href": "pages/courses/core/2-2-reshape.html#overview",
+    "title": "2.2 Reshape",
+    "section": "Overview",
+    "text": "Overview\nOur clean measurements have many rows per person: every blood pressure reading, every BMI. Models and tables need one row per person, with one column per variable. This class chooses one value per person for each measure, and turns tables from long to wide (and back).\n\nWhy this class matters\nReshaping looks like a technical step, but one part of it is a research decision: which value to keep when someone has 46 blood pressure readings. The choice changes the results, and the class shows exactly how (it explains the surprising LDL result in 3.2).\n\n\nBy the end you’ll be able to\n\nTell long from wide data, and say when each is useful\nChoose one value per person, and explain the choice\nUse pivot_wider() and pivot_longer()\nFix the most common pivot_wider() problem: values that aren’t unique\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nHow do we get from many measurements per person to one row per person?\n\n\n🧪 The analysis\nPer-person summaries (slice_max()), then pivot_wider(); pivot_longer() for plotting\n\n\n🎯 Why\nModels need one row per person; which value we keep is a research decision\n\n\n✅ What we conclude\nOne row per person with BMI, SBP, HbA1c, and LDL, and one with the PTSD answers\n\n\n⚠️ What it can’t tell us\nWhether the kept value was measured at a meaningful time (e.g. before diagnosis)\n\n\n🔗 Connections\nUses 2.1’s clean files; 2.3 joins the wide tables\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n70 minutes\n\n\n⏱️ Run time\nabout 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 2.1",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#class-plan",
+    "href": "pages/courses/core/2-2-reshape.html#class-plan",
+    "title": "2.2 Reshape",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: long and wide\nlisten, ask\n\n\n0:10\n2–3. Load; survey answers to wide\nrun the cells\n\n\n0:25\n4. One value per person: the choices and their pitfalls\ndiscuss\n\n\n0:45\n5. Measurements to wide\n✋ Try It Out (5 min)\n\n\n0:55\n6. Wide to long, for a plot\nrun the cells\n\n\n1:05\nWrap-up",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#key-concepts",
+    "href": "pages/courses/core/2-2-reshape.html#key-concepts",
+    "title": "2.2 Reshape",
+    "section": "Key concepts",
+    "text": "Key concepts\n\n\n\n\n\n\n\nLong: one row per observation\nWide: one row per person\n\n\n\n\nperson_id · measure · value\nperson_id · BMI · SBP · …\n\n\ngood for storing, summarising, and plots\ngood for tables and models\n\n\n\n\nWhich value?\n\n\n\n\n\n\n\n\nChoice\nGood for\nWatch out for\n\n\n\n\nLatest\n“current” status\nfor cases, usually after diagnosis and treatment\n\n\nFirst\nthe earliest picture\nold measurements, different eras\n\n\nMedian\na stable typical value\nmixes before and after events\n\n\nClosest before a date\na baseline before a diagnosis\nneeds a date for everyone\n\n\n\nThis series uses the latest value: simple, and everyone has one. Its weakness shows up in 3.2.",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/2-2-reshape.html#follow-along-in-the-workbench",
+    "title": "2.2 Reshape",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/2.2 reshape.ipynb, with the R kernel.",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#try-it-out",
+    "href": "pages/courses/core/2-2-reshape.html#try-it-out",
+    "title": "2.2 Reshape",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 5, “Your turn”\n\n\n\nWhat happens if you skip the one-value-per-person step and pivot the measurements directly? Try it on 5 people.\n✅ Check: a warning that values are not uniquely identified, and cells holding a list of values (&lt;dbl [37]&gt;).",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#code-walk-through",
+    "href": "pages/courses/core/2-2-reshape.html#code-walk-through",
+    "title": "2.2 Reshape",
+    "section": "Code walk-through",
+    "text": "Code walk-through\nmeasurement_latest &lt;- measurement_clean %&gt;%\n1  group_by(person_id, measure) %&gt;%\n2  slice_max(measurement_date, n = 1, with_ties = FALSE) %&gt;%\n  ungroup()\n\nmeasurements_wide &lt;- measurement_latest %&gt;%\n3  pivot_wider(id_cols = person_id, names_from = measure,\n              values_from = value_as_number)\n\n4nrow(measurements_wide) == n_distinct(measurements_wide$person_id)\n\n1\n\nOne group per person per measure.\n\n2\n\nKeep the row with the latest date in each group; with_ties = FALSE keeps just one if two share a date.\n\n3\n\nTurn the values of measure (BMI, SBP, …) into column names, filled with the values.\n\n4\n\nAlways check: one row per person (TRUE).",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#what-we-found",
+    "href": "pages/courses/core/2-2-reshape.html#what-we-found",
+    "title": "2.2 Reshape",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\n\n\n\n\n\n\nMeasure\nPeople with a value\nMedian results per person\nMost for one person\n\n\n\n\nBMI\n9,860\n13\nover 1,000\n\n\nSBP\n9,882\n46\nover 5,000\n\n\nHbA1c\n5,822\n4\nover 100\n\n\nLDL\n6,535\n5\nover 100\n\n\n\nKeeping the latest value took the clean measurements from 1,544,092 rows to 32,099: at most four per person.\n💬 Discuss: one person had over 5,000 blood pressure readings: probably continuous monitoring during hospital stays. Would their latest reading be typical of them? Would the median be a better choice?\n\n\n\n\n\n\nNoteScreenshots: none to share\n\n\n\n\n\nThe histograms in Part 6 count people, and their tails can include counts of 1 to 20. Keep them in the notebook.",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#instructor-notes",
+    "href": "pages/courses/core/2-2-reshape.html#instructor-notes",
+    "title": "2.2 Reshape",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe “which value?” table is worth a full discussion: ask students which they’d choose for a study of risk (baseline, before diagnosis) vs of current control (latest).\nThe Try It Out error (list-columns) is one of the most common R questions online: worth seeing once on purpose.",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#key-takeaways",
+    "href": "pages/courses/core/2-2-reshape.html#key-takeaways",
+    "title": "2.2 Reshape",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nLong for storing, summarising, and plotting; wide for tables and models\nChoosing one value per person is a research decision: say which and why\nAfter pivot_wider(), check one row per person",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/2-2-reshape.html#next",
+    "href": "pages/courses/core/2-2-reshape.html#next",
+    "title": "2.2 Reshape",
+    "section": "Next",
+    "text": "Next\n2.3 Join and bind: combine everything into one analysis table.",
+    "crumbs": [
+      "Core",
+      "2.2 Reshape"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html",
+    "href": "pages/courses/core/3-1-table-one.html",
+    "title": "3.1 Table One",
+    "section": "",
+    "text": "Core series, class 6 of 9 · R · 75 minutes\nOpen the notebook on GitHub Core series overview",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#overview",
+    "href": "pages/courses/core/3-1-table-one.html#overview",
+    "title": "3.1 Table One",
+    "section": "Overview",
+    "text": "Overview\nAlmost every health study starts with a Table 1: who is in each group, and how they differ. It describes the groups, shows differences that later models must account for (like age), and reveals missing data. We build one for our cases and controls, writing small functions to do it, and then make a version that’s safe to share.\n\nWhy this class matters\nA Table 1 is the first thing readers check, and the first place a study’s problems show: groups that differ in age, data missing mostly in one group. It’s also where the All of Us rule on small counts bites most often, including counts that aren’t printed but can be worked out from the others.\n\n\nBy the end you’ll be able to\n\nExplain what a Table 1 shows, and why every study has one\nSummarise categorical variables (n, %) and continuous ones (mean and SD, or median and IQR)\nChoose and read a chi-square test and a t-test\nWrite your own function, and run it on many variables with map()\nReport missing data, and make a table safe to share\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nHow do people with and without type 2 diabetes differ?\n\n\n🧪 The analysis\nn (%) with chi-square tests; mean (SD) with t-tests; percent missing by group\n\n\n🎯 Why\nTo describe the groups, and spot confounders (age, most of all)\n\n\n✅ What we conclude\nWhere the groups differ, and how much data each variable has\n\n\n⚠️ What it can’t tell us\nWhy they differ. And our sample is half cases, so percents describe the sample, not the population\n\n\n🔗 Connections\nUses final_analysis.csv from 2.3; guides the models in 3.2–3.4\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n75 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 2.1, 2.2, and 2.3",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#class-plan",
+    "href": "pages/courses/core/3-1-table-one.html#class-plan",
+    "title": "3.1 Table One",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: Table 1, tests, functions\nlisten, ask\n\n\n0:15\n2–3. Load; categorical variables\n✋ Try It Out 1 (5 min)\n\n\n0:40\n4. Continuous variables\nrun the cells, discuss\n\n\n0:55\n5. Missing data, the full table\nrun the cells\n\n\n1:05\n6. Small and derived counts; a shareable table\n✋ Try It Out 2 (5 min)\n\n\n1:15\nWrap-up",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#key-concepts",
+    "href": "pages/courses/core/3-1-table-one.html#key-concepts",
+    "title": "3.1 Table One",
+    "section": "Key concepts",
+    "text": "Key concepts\n\n\n\n\n\n\n\n\n\nVariable type\nExample\nSummary\nTest\n\n\n\n\nCategorical\nsex at birth, age group, race\nn (%) per group\nchi-square\n\n\nContinuous\nage, BMI\nmean (SD), or median (IQR) if skewed\nt-test (or Wilcoxon if skewed)\n\n\n\nWith thousands of people, even tiny differences give small p-values: judge the size of a difference, not just the p-value.\n\nSmall and derived counts\nAll of Us policy: no counts of 1 to 20 in anything you share, including counts that can be calculated. If a group has 5,000 people, 3,092 female and 1,858 male, then 50 people have another answer or a missing one. If the missing answers were left out of the table, the small count could be worked out exactly. So small categories are combined with the missing answers.",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/3-1-table-one.html#follow-along-in-the-workbench",
+    "title": "3.1 Table One",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/3.1 table_one.ipynb, with the R kernel.",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#try-it-out",
+    "href": "pages/courses/core/3-1-table-one.html#try-it-out",
+    "title": "3.1 Table One",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 3, “Your turn”\n\n\n\nAdd self_reported_category (All of Us’s combined race and ethnicity variable) to the table.\n✅ Check: one row per category; check the small-count rule before sharing.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nBMI is skewed. Report it as median (IQR), with a Wilcoxon test.\n✅ Check: medians and quartiles for each group.",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#code-walk-through",
+    "href": "pages/courses/core/3-1-table-one.html#code-walk-through",
+    "title": "3.1 Table One",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n1summarise_categorical &lt;- function(data, var) {\n  counts &lt;- data %&gt;%\n2    filter(!is.na(.data[[var]])) %&gt;%\n    count(level = as.character(.data[[var]]), t2d) %&gt;%\n3    pivot_wider(names_from = t2d, values_from = n, values_fill = 0)\n\n4  p &lt;- suppressWarnings(chisq.test(as.matrix(counts[, c(\"No\", \"Yes\")]))$p.value)\n\n  counts %&gt;%\n5    mutate(`No diabetes` = sprintf(\"%d (%.1f%%)\", No,  100 * No  / sum(No)),\n           `Diabetes`    = sprintf(\"%d (%.1f%%)\", Yes, 100 * Yes / sum(Yes)), …)\n}\n\n6table_cat &lt;- map(categorical_vars, ~ summarise_categorical(fa, .x)) %&gt;% list_rbind()\n\n1\n\nA function: a named recipe with two inputs, the data and a column name.\n\n2\n\n.data[[var]] means “the column whose name is in var”, so one function works for any column.\n\n3\n\nOne row per level, with a column of counts for each group.\n\n4\n\nA chi-square test: are the groups’ distributions different?\n\n5\n\nText like 3,092 (62.4%): %d a whole number, %.1f one decimal, %% a percent sign.\n\n6\n\nRun the function once per variable and stack the results.",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#what-we-found",
+    "href": "pages/courses/core/3-1-table-one.html#what-we-found",
+    "title": "3.1 Table One",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls (the shareable version).\n\n\n\n\nNo diabetes\nDiabetes\n\n\n\n\nFemale\n62.4%\n57.0%\n\n\nAge 18–39\n23.8%\n5.1%\n\n\nAge 65+\n34.0%\n50.2%\n\n\nBlack or African American\n16.5%\n26.4%\n\n\nWhite\n69.8%\n59.2%\n\n\nHispanic or Latino\n15.1%\n19.9%\n\n\n\n\nAge is the biggest difference: it must be in every model.\nHbA1c and LDL were measured far more often in cases (their diabetes is monitored), so missing data differs by group.\nThe small-count check flagged four rows (rare sex-at-birth and race categories). The shareable table combines them: Another race, and Another answer or not reported for sex at birth, so no count of 1 to 20 is shown or derivable.\n\n💬 Discuss: if many controls never had an HbA1c test, who are the controls who did? (Often people whose doctor suspected diabetes: a selected group.)",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#instructor-notes",
+    "href": "pages/courses/core/3-1-table-one.html#instructor-notes",
+    "title": "3.1 Table One",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe derived counts point surprises even experienced researchers: work through the arithmetic on the board.\nRace and ethnicity are described, not used to choose people. Differences between groups reflect many things (access to care, diagnosis, where people live), not biology: worth saying explicitly.",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#key-takeaways",
+    "href": "pages/courses/core/3-1-table-one.html#key-takeaways",
+    "title": "3.1 Table One",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA Table 1 describes each group: n (%) for categories, mean (SD) or median (IQR) for numbers\nJudge the size of a difference, not just the p-value\nReport missing data by group: it’s often not random\nCheck for counts of 1 to 20, and counts that can be worked out, before sharing",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-1-table-one.html#next",
+    "href": "pages/courses/core/3-1-table-one.html#next",
+    "title": "3.1 Table One",
+    "section": "Next",
+    "text": "Next\n3.2 Logistic regression: which characteristics go with higher odds of type 2 diabetes, adjusted for each other?",
+    "crumbs": [
+      "Core",
+      "3.1 Table One"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html",
+    "href": "pages/courses/core/3-3-linear-regression.html",
+    "title": "3.3 Linear Regression",
+    "section": "",
+    "text": "Core series, class 8 of 9 · R · 75 minutes\nOpen the notebook on GitHub Core series overview",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#overview",
+    "href": "pages/courses/core/3-3-linear-regression.html#overview",
+    "title": "3.3 Linear Regression",
+    "section": "Overview",
+    "text": "Overview\nDiabetes and high blood pressure often go together. Here the outcome is a number, systolic blood pressure (SBP), so we use linear regression: how much higher, on average, is SBP for each year of age, each BMI unit, and in people with type 2 diabetes, holding the others constant?\n\nWhy this class matters\nLinear regression is the foundation of most statistical models, including the gene-by-gene models in 4.5 and 4.6. This class also shows that a model can explain little of the variation (a low R²) and still estimate a real difference well, and how to check a model with its residuals.\n\n\nBy the end you’ll be able to\n\nExplain a coefficient: the average change in the outcome per unit of a predictor\nFit and read models with lm(), tidy(), and glance()\nCompare models with R², adjusted R², and AIC\nCheck a model’s residuals\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nIs type 2 diabetes linked to higher SBP, after accounting for age, sex, BMI, and LDL?\n\n\n🧪 The analysis\nLinear regression, built up step by step, on the same people\n\n\n🎯 Why\nSBP is a number; adjusting separates diabetes from age and weight\n\n\n✅ What we conclude\nThe adjusted difference in SBP (mm Hg), and how much each model explains\n\n\n⚠️ What it can’t tell us\nCause, or untreated blood pressure: many people take medicine for it\n\n\n🔗 Connections\nThe logistic version is 3.2; the same kind of model is used per gene in 4.5\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n75 minutes\n\n\n⏱️ Run time\nunder 1 minute\n\n\n💰 Cost\nabout $0.35: no queries, only app time\n\n\n📋 Before class\nrun 2.3",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#class-plan",
+    "href": "pages/courses/core/3-3-linear-regression.html#class-plan",
+    "title": "3.3 Linear Regression",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: coefficients, R², AIC, assumptions\nlisten, ask\n\n\n0:15\n2. Load and look at the outcome\nrun the cells\n\n\n0:25\n3. One predictor\n✋ Try It Out (5 min)\n\n\n0:40\n4. Multivariable models\nrun the cells, discuss\n\n\n1:00\n5. Check the residuals\nrun the cells\n\n\n1:10\nWrap-up",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#key-concepts",
+    "href": "pages/courses/core/3-3-linear-regression.html#key-concepts",
+    "title": "3.3 Linear Regression",
+    "section": "Key concepts",
+    "text": "Key concepts\n\\[\\text{SBP} = \\beta_0 + \\beta_1 \\times \\text{age} + \\beta_2 \\times \\text{BMI} + \\dots + \\text{error}\\]\n\nEach coefficient is the average change in SBP (mm Hg) per unit of that predictor, holding the others constant. For type 2 diabetes (yes/no), it’s the average difference between the groups.\nR²: the share of variation explained (0 to 1). AIC: fit vs complexity, lower is better, only on the same data.\nBlood pressure varies a lot from reading to reading, so R² is low here. That doesn’t make the coefficients wrong.",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#follow-along-in-the-workbench",
+    "href": "pages/courses/core/3-3-linear-regression.html#follow-along-in-the-workbench",
+    "title": "3.3 Linear Regression",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/core/3.3 linear_regression.ipynb, with the R kernel.",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#try-it-out",
+    "href": "pages/courses/core/3-3-linear-regression.html#try-it-out",
+    "title": "3.3 Linear Regression",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 3, “Your turn”\n\n\n\nFit SBP ~ t2d on its own. How much higher is SBP in cases, before any adjustment?\n✅ Check: the t2dYes row: the crude difference in mm Hg. Compare it with the adjusted one in Part 4.",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#code-walk-through",
+    "href": "pages/courses/core/3-3-linear-regression.html#code-walk-through",
+    "title": "3.3 Linear Regression",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n1model_data &lt;- fa %&gt;% drop_na(SBP, age10, sex_at_birth, BMI5, LDL10, t2d)\n\nm1 &lt;- lm(SBP ~ age10 + sex_at_birth,                      data = model_data)\nm2 &lt;- lm(SBP ~ age10 + sex_at_birth + BMI5 + LDL10,       data = model_data)\n2m3 &lt;- lm(SBP ~ age10 + sex_at_birth + BMI5 + LDL10 + t2d, data = model_data)\n\nbind_rows(\"1. Age + sex\" = glance(m1), \"2. + BMI, LDL\" = glance(m2),\n3          \"3. + type 2 diabetes\" = glance(m3), .id = \"model\")\n4tidy(m3, conf.int = TRUE)\n\n1\n\nEvery model on the same people, as in 3.2.\n\n2\n\nlm() fits a linear regression. Model 3 adds type 2 diabetes last, so its coefficient is adjusted for everything before it.\n\n3\n\nglance() gives one row of fit statistics per model (R², AIC); bind_rows(.id = \"model\") labels them.\n\n4\n\ntidy() gives each coefficient with its 95% confidence interval.",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#what-we-found",
+    "href": "pages/courses/core/3-3-linear-regression.html#what-we-found",
+    "title": "3.3 Linear Regression",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 6,397 people.\n\n\n\nModel 3 coefficient\nmm Hg (95% CI)\n\n\n\n\nAge, per 10 years\n+2.0 (1.7 to 2.3)\n\n\nMale (vs female)\n+2.4 (1.4 to 3.3)\n\n\nBMI, per 5 units\n+1.6 (1.3 to 1.9)\n\n\nLDL, per 10 mg/dL\n+0.4 (0.2 to 0.5)\n\n\nType 2 diabetes\n+2.8 (1.8 to 3.7)\n\n\n\n\n\n\nModel\nR²\nAIC\n\n\n\n\n1. Age + sex\n0.026\n55,334\n\n\n2. + BMI, LDL\n0.051\n55,170\n\n\n3. + type 2 diabetes\n0.056\n55,142\n\n\n\n\nType 2 diabetes goes with 2.8 mm Hg higher SBP, after adjustment: real, but modest.\nEven the best model explains only about 6% of the variation. Blood pressure depends on much more than these variables (and on the moment it was measured).\nThe residual plot was centred on zero with an even spread: the model’s assumptions look reasonable.\n\n💬 Discuss: many people with diabetes take blood pressure medicines. How does that affect the diabetes coefficient? (It makes it smaller than the untreated difference: treatment hides part of the link.)",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#instructor-notes",
+    "href": "pages/courses/core/3-3-linear-regression.html#instructor-notes",
+    "title": "3.3 Linear Regression",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe scatter and residual plots show one dot per person: keep them in the notebook, not on slides.\nStudents often think a low R² means a useless model. Ask: “Is the 2.8 mm Hg wrong because R² is 0.06?” (No: R² measures prediction of individuals, not the accuracy of an average difference.)",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#key-takeaways",
+    "href": "pages/courses/core/3-3-linear-regression.html#key-takeaways",
+    "title": "3.3 Linear Regression",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nLinear regression is for numeric outcomes; coefficients are average changes per unit\nA low R² doesn’t make a coefficient wrong\nCompare models with AIC, on the same people\nCheck the residuals\nTreatment can hide a link in observational data",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/3-3-linear-regression.html#next",
+    "href": "pages/courses/core/3-3-linear-regression.html#next",
+    "title": "3.3 Linear Regression",
+    "section": "Next",
+    "text": "Next\n3.4 Survival analysis: time from type 2 diabetes to chronic kidney disease.",
+    "crumbs": [
+      "Core",
+      "3.3 Linear Regression"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html",
+    "href": "pages/courses/core/data-explorer-cohort.html",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "",
+    "text": "Core series, optional demonstration · no code to build; R to use it · about 30 minutes\nCore series overview 1.1 Build the cohort (with SQL)",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html#overview",
+    "href": "pages/courses/core/data-explorer-cohort.html#overview",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "Overview",
+    "text": "Overview\nIn 1.1 we build the cohort with SQL. Workbench 2.0 also has a point-and-click tool, the Data Explorer, that builds a cohort from a menu of criteria: no code needed. This page shows how to build our type 2 diabetes cases with it, how to save a data snapshot, and how to read a Data Explorer cohort into a notebook.\n\n\n\n\n\n\nImportantThe Data Explorer uses CDR v8; the course notebooks use CDR v9\n\n\n\nAs of October 2026, the Data Explorer offers only version v8r9, the All of Us Controlled Tier CDR v8 (BigQuery dataset C2024Q3R9). The course notebooks use CDR v9 (C2025Q4R6). Participant IDs changed between v8 and v9, so:\n\nUse the Data Explorer to learn the tool, and to explore quickly.\nDon’t combine a Data Explorer cohort with the course notebooks’ files: the IDs won’t match.\nDon’t copy the dataset name from a Data Explorer query into aou_setup.R.\n\n\n\n\nWhy it’s worth knowing\n\nIt’s the fastest way to see how many people meet a set of rules, and to try changes, without writing a query.\nIts Summary and Queries tabs show the SQL it writes: a good way to learn how a cohort turns into a query.\nCollaborators who don’t code can build and share cohorts in the same workspace.\n\n\n\nSame rules, different numbers\nBuilt in the Data Explorer, our cases came to 65,710 people. The SQL in 1.1 found 80,919. Same rules, different counts:\n\n\n\n\n\n\n\n\n\nData Explorer\n1.1 (SQL)\n\n\n\n\nData\nCDR v8 (2024 data cutoff)\nCDR v9 (2025 cutoff): more participants, more years of records\n\n\nAge\n18+ today\n18+ on 2025-01-01\n\n\n“Has EHR data”\nAll of Us’s ready-made flag\nat least one EHR visit, including records participants share themselves\n\n\nCases\n65,710\n80,919\n\n\n\n💬 Discuss: the same rules on different data, or with slightly different definitions, give different counts. What should you always report with a count? (The data version, and the exact definitions.)",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html#build-the-cases",
+    "href": "pages/courses/core/data-explorer-cohort.html#build-the-cases",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "Build the cases",
+    "text": "Build the cases\n\n1. Create the cohort\nOn the Resources tab: + New resource → New Cohort.\n\nSelect collection: All of Us Controlled Tier. Its version shows as v8r9, the only one offered. Next, then Next again (no new policies are needed: the workspace already has this data collection).\n\nEnter cohort details:\n\n\n\n\n\n\n\nField\nEnter\n\n\n\n\nCohort name\nt2d_cases\n\n\nDescription\nType 2 diabetes cases for the CWML training series (Data Explorer demonstration, CDR v8): adults (18+) with EHR data and a type 2 diabetes diagnosis, and no type 1 diabetes diagnosis. Same rules as notebooks/sql/t2d_cohort.sql.\n\n\nFolder\nCreate a new folder called cohorts, so your cohorts stay together\n\n\n\n\nClick Add to your workspace. The cohort opens with an empty Cohort filter: everyone in the data collection.\n\n\n\n2. Add the criteria\nEach group is a set of criteria; groups combine with AND. Within a group, choose Meet any criteria. Click Add some criteria to open the list:\n\n\n\n\n\n\n\n\n\nGroup\nIncluded or Excluded\nCriteria\n\n\n\n\n1\nIncluded\nDemographics → Current Age: 18 to 125\n\n\n2\nIncluded\nDomains → Condition → search type 2 diabetes → tick Type 2 diabetes mellitus (concept 201826)\n\n\n3\nExcluded\nDomains → Condition → Type 1 diabetes mellitus (concept 201254)\n\n\n4\nIncluded\nDomains → Has EHR Data\n\n\n\nFor group 2, ticking Type 2 diabetes mellitus also includes every more specific concept under it: the rows below it in the list are ticked automatically (the same idea as concept_ancestor in 1.1). View in hierarchy shows the tree.\n\nFor group 3, change Included to Excluded, then add Type 1 diabetes mellitus:\n\nThe top of the finished filter, with the groups joined by AND (scroll down for groups 3 and 4):\n\nClick Apply. The participant count at the top updates: 65,710 in our test.\n\n\n3. The controls (optional)\nThe same steps, with a cohort called t2d_controls and these groups:\n\n\n\n\n\n\n\n\nGroup\nIncluded or Excluded\nCriteria\n\n\n\n\n1\nIncluded\nCurrent Age: 18 to 125\n\n\n2\nIncluded\nHas EHR Data\n\n\n3\nExcluded\nCondition → Diabetes mellitus (concept 201820): every type of diabetes",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html#save-a-data-snapshot",
+    "href": "pages/courses/core/data-explorer-cohort.html#save-a-data-snapshot",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "Save a data snapshot",
+    "text": "Save a data snapshot\nA data snapshot saves the cohort’s data (as CSV files) and/or the queries that produce it (as a notebook) to a bucket. Click Save data snapshot at the top right of the cohort.\n\nSelect data: Demographics is ticked by default; + Browse more data adds other tables (e.g. measurements). In each table, untick the columns you don’t need.\n\nThe Summary tab lists the criteria and the tables, in plain words: a good check before saving.\n\nThe Queries for each table and Queries for the cohort tabs show the SQL and the code (R or Python) that the snapshot uses. You can Copy them.\nSelect file format: CSV tables (zipped), and/or a notebook with the queries, in R or Python.\n\nSelect destination bucket: pick your workspace bucket, then Save.\n\nThe cohort appears on the Resources tab, in the folder you chose:",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html#use-a-data-explorer-cohort-in-a-notebook",
+    "href": "pages/courses/core/data-explorer-cohort.html#use-a-data-explorer-cohort-in-a-notebook",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "Use a Data Explorer cohort in a notebook",
+    "text": "Use a Data Explorer cohort in a notebook\nTwo ways. The first is simpler, and works with the course’s aou_setup.R.\n\nA. Run its query from R (simplest)\n\nIn Save data snapshot → Queries for each table → person, click Copy.\nIn an R notebook in notebooks/core/, paste it between r\"---( and )---\":\n\nsource(\"../aou_setup.R\")   # run_query() and BILLING_PROJECT\n\nde_person_sql &lt;- r\"---(\n  -- paste the query here: it starts with SELECT and ends with the WHERE clause\n)---\"\n\nde_cases &lt;- run_query(de_person_sql) %&gt;%\n  mutate(person_id = as.character(person_id))\n\nnrow(de_cases)                    # should match the Data Explorer's count\nde_cases %&gt;% count(T_DISP_sex_at_birth)\n\nr\"---( … )---\" is a raw string: R keeps everything inside as it is, quotes and backslashes included, so the SQL needs no editing.\nThe query reads the Data Explorer’s own tables (C2024Q3R9 and C2024Q3R9_index_…), so the people are CDR v8 participants.\nColumns starting T_DISP_ are the display names of concept IDs (e.g. T_DISP_race for race_concept_id).\n💰 A few cents: it reads the person table and the Data Explorer’s index tables.\n\n\n\nB. Use the snapshot’s own notebook\nIf you chose Queries for the cohort (IPYNB) with R Notebook, the snapshot saves a notebook to your bucket that exports each table to CSV files and reads them back. Two things to know:\n\nIt needs your bucket’s Cloud Storage address in a setting called EXPORT_BUCKET, which Workbench 2.0 doesn’t set for you. Find the address on the Resources tab (your bucket’s details, starting gs://), then uncomment and edit the line near the top: Sys.setenv(EXPORT_BUCKET = \"gs://…\").\nThe code includes your workspace’s project ID for billing. That’s fine in your workspace, but don’t publish it.",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html#key-takeaways",
+    "href": "pages/courses/core/data-explorer-cohort.html#key-takeaways",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nThe Data Explorer builds a cohort from criteria, with no code: groups combine with AND; a group can be Excluded\nChoosing a condition includes everything under it in the hierarchy\nA data snapshot saves CSV files and/or the queries as a notebook\nThe Data Explorer currently uses CDR v8: don’t combine its cohorts with the course’s v9 files\nThe same rules on different data give different counts: always report the version and definitions",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
+    ]
+  },
+  {
+    "objectID": "pages/courses/core/data-explorer-cohort.html#next",
+    "href": "pages/courses/core/data-explorer-cohort.html#next",
+    "title": "Optional: Build the Cohort in the Data Explorer",
+    "section": "Next",
+    "text": "Next\nBack to 1.1 Build the cohort, which builds the same cohort with SQL on CDR v9.",
+    "crumbs": [
+      "Core",
+      "Optional: Build the Cohort in the Data Explorer"
     ]
   },
   {
@@ -3399,7 +3487,7 @@
     "href": "pages/examples/notebooks.html#point-and-click-data-explorer",
     "title": "Example Notebooks",
     "section": "Point and click: Data Explorer",
-    "text": "Point and click: Data Explorer\nThe Data Explorer, Workbench 2.0’s point-and-click tool, can build a similar cohort without SQL. Two cautions: it currently uses CDR v8 (C2024Q3R9), while these notebooks use CDR v9, and participant IDs changed between v8 and v9, so Data Explorer exports can’t be combined with the notebooks’ files. Its rules also differ a little (e.g. age today instead of on 2025-01-01), so its counts won’t match. Step-by-step instructions for this cohort are being updated.",
+    "text": "Point and click: Data Explorer\nThe Data Explorer, Workbench 2.0’s point-and-click tool, can build a similar cohort without SQL. Two cautions: it currently uses CDR v8 (C2024Q3R9), while these notebooks use CDR v9, and participant IDs changed between v8 and v9, so Data Explorer exports can’t be combined with the notebooks’ files. Its rules also differ a little (e.g. age today instead of on 2025-01-01), so its counts won’t match. Step-by-step instructions, with screenshots, are on the course website: Optional: build the cohort in the Data Explorer.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
