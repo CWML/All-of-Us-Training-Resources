@@ -168,7 +168,7 @@ Results from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 contro
 
 ![](images/5-2-forest.png){fig-alt="Forest plot of odds ratios for type 2 diabetes, adjusted for age and sex, on a log scale with a dashed line at 1. Former and current smoking are a little above 1, about 1.2 and 1.3. The four alcohol groups fall below 1, decreasing with drinking frequency from about 0.87 for none in the past year to 0.26 for 2 or more times a week. Family history of a parent or sibling with type 2 diabetes is highest, about 2.5."}
 
-- **Family history** had the strongest link: about two and a half times the odds.
+- **Family history** had the strongest link: about two and a half times the odds. Counting a skipped answer as "no family history" instead of unknown raised it to **2.95** (2.59 to 3.36), because controls skipped more often. The link is strong either way, but its size depends on the coding choice: report both.
 - **Current smoking** rose from 1.32 to **1.71** with cases who answered before diagnosis, as reverse causation predicts: some smokers quit after diagnosis, which hides part of the link in later answers.
 - **Alcohol:** the more often people drank, the lower their odds, and this **barely changed** with answers given before diagnosis. So it isn't mainly people cutting down after diagnosis. It still doesn't show that alcohol prevents diabetes: **confounding** by income, education, and health is a likely explanation, which **5.3** examines.
 
