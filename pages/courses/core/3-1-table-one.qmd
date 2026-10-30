@@ -1,0 +1,157 @@
+---
+title: "3.1 Table One"
+description: "Describe cases and controls: counts and percents, means and SDs, tests, missing data by group, your own functions, and small and derived counts"
+code-annotations: below
+---
+
+**Core series, class 6 of 9** · R · 75 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.1%20table_one.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Almost every health study starts with a **Table 1**: who is in each group, and how they differ. It describes the groups, shows differences that later models must account for (like age), and reveals **missing data**. We build one for our cases and controls, writing small **functions** to do it, and then make a version that's safe to **share**.
+
+### Why this class matters
+
+A Table 1 is the first thing readers check, and the first place a study's problems show: groups that differ in age, data missing mostly in one group. It's also where the *All of Us* rule on **small counts** bites most often, including counts that aren't printed but can be **worked out** from the others.
+
+### By the end you'll be able to
+
+1. Explain what a Table 1 shows, and why every study has one
+2. Summarise **categorical** variables (n, %) and **continuous** ones (mean and SD, or median and IQR)
+3. Choose and read a **chi-square test** and a **t-test**
+4. Write your own **function**, and run it on many variables with `map()`
+5. Report **missing data**, and make a table safe to share
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | How do people with and without type 2 diabetes differ? |
+| 🧪 **The analysis** | n (%) with chi-square tests; mean (SD) with t-tests; percent missing by group |
+| 🎯 **Why** | To describe the groups, and spot **confounders** (age, most of all) |
+| ✅ **What we conclude** | Where the groups differ, and how much data each variable has |
+| ⚠️ **What it can't tell us** | **Why** they differ. And our sample is half cases, so percents describe the **sample**, not the population |
+| 🔗 **Connections** | Uses `final_analysis.csv` from **2.3**; guides the models in **3.2–3.4** |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 75 minutes |
+| ⏱️ **Run time** | under 1 minute |
+| 💰 **Cost** | about **$0.35**: no queries, only app time |
+| 📋 **Before class** | run **2.1**, **2.2**, and **2.3** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: Table 1, tests, functions | listen, ask |
+| 0:15 | **2–3. Load; categorical variables** | ✋ **Try It Out 1** (5 min) |
+| 0:40 | **4. Continuous variables** | run the cells, discuss |
+| 0:55 | **5. Missing data, the full table** | run the cells |
+| 1:05 | **6. Small and derived counts; a shareable table** | ✋ **Try It Out 2** (5 min) |
+| 1:15 | **Wrap-up** | |
+
+## Key concepts
+
+| Variable type | Example | Summary | Test |
+|---|---|---|---|
+| **Categorical** | sex at birth, age group, race | **n (%)** per group | **chi-square** |
+| **Continuous** | age, BMI | **mean (SD)**, or **median (IQR)** if skewed | **t-test** (or Wilcoxon if skewed) |
+
+With **thousands** of people, even tiny differences give small p-values: judge the **size** of a difference, not just the p-value.
+
+### Small and derived counts
+
+*All of Us* policy: no counts of **1 to 20** in anything you share, **including counts that can be calculated**. If a group has 5,000 people, 3,092 female and 1,858 male, then 50 people have another answer **or** a missing one. If the missing answers were left out of the table, the small count could be worked out exactly. So small categories are combined **with the missing answers**.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/3.1 table_one.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out 1 · 5 minutes · Part 3, "Your turn"
+
+Add `self_reported_category` (*All of Us*'s combined race and ethnicity variable) to the table.
+
+**✅ Check:** one row per category; check the small-count rule before sharing.
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 2 · 5 minutes · Part 6, "Your turn"
+
+BMI is **skewed**. Report it as **median (IQR)**, with a Wilcoxon test.
+
+**✅ Check:** medians and quartiles for each group.
+:::
+
+## Code walk-through
+
+```r
+summarise_categorical <- function(data, var) {                            # <1>
+  counts <- data %>%
+    filter(!is.na(.data[[var]])) %>%                                       # <2>
+    count(level = as.character(.data[[var]]), t2d) %>%
+    pivot_wider(names_from = t2d, values_from = n, values_fill = 0)        # <3>
+
+  p <- suppressWarnings(chisq.test(as.matrix(counts[, c("No", "Yes")]))$p.value)   # <4>
+
+  counts %>%
+    mutate(`No diabetes` = sprintf("%d (%.1f%%)", No,  100 * No  / sum(No)),       # <5>
+           `Diabetes`    = sprintf("%d (%.1f%%)", Yes, 100 * Yes / sum(Yes)), …)
+}
+
+table_cat <- map(categorical_vars, ~ summarise_categorical(fa, .x)) %>% list_rbind()   # <6>
+```
+1. A **function**: a named recipe with two inputs, the data and a column name.
+2. `.data[[var]]` means "the column whose name is in `var`", so one function works for any column.
+3. One row per level, with a column of counts for each group.
+4. A **chi-square test**: are the groups' distributions different?
+5. Text like `3,092 (62.4%)`: `%d` a whole number, `%.1f` one decimal, `%%` a percent sign.
+6. Run the function once per variable and stack the results.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls (the shareable version).
+
+| | No diabetes | Diabetes |
+|---|---|---|
+| Female | 62.4% | 57.0% |
+| Age 18–39 | 23.8% | **5.1%** |
+| Age 65+ | 34.0% | **50.2%** |
+| Black or African American | 16.5% | 26.4% |
+| White | 69.8% | 59.2% |
+| Hispanic or Latino | 15.1% | 19.9% |
+
+- **Age** is the biggest difference: it must be in every model.
+- **HbA1c and LDL** were measured far more often in cases (their diabetes is monitored), so missing data differs by group.
+- **The small-count check** flagged four rows (rare sex-at-birth and race categories). The shareable table combines them: *Another race*, and *Another answer or not reported* for sex at birth, so no count of 1 to 20 is shown **or derivable**.
+
+**💬 Discuss:** if many controls never had an HbA1c test, who **are** the controls who did? (Often people whose doctor suspected diabetes: a selected group.)
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip
+
+- The **derived counts** point surprises even experienced researchers: work through the arithmetic on the board.
+- Race and ethnicity are described, not used to choose people. Differences between groups reflect many things (access to care, diagnosis, where people live), not biology: worth saying explicitly.
+:::
+
+## Key takeaways
+
+- A **Table 1** describes each group: n (%) for categories, mean (SD) or median (IQR) for numbers
+- Judge the **size** of a difference, not just the p-value
+- Report **missing data** by group: it's often not random
+- Check for counts of **1 to 20**, and counts that can be **worked out**, before sharing
+
+## Next
+
+**[3.2 Logistic regression](3-2-logistic-regression.qmd)**: which characteristics go with higher odds of type 2 diabetes, adjusted for each other?

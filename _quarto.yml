@@ -34,6 +34,8 @@ website:
         menu:
           - text: "All courses"
             href: pages/courses/index.qmd
+          - text: "Core series"
+            href: pages/courses/core/index.qmd
           - text: "Omics series"
             href: pages/courses/omics/index.qmd
       - text: "Learn by Example"
@@ -87,6 +89,18 @@ website:
       style: docked
       contents:
         - pages/courses/index.qmd
+        - section: "Core"
+          contents:
+            - pages/courses/core/index.qmd
+            - pages/courses/core/1-1-build-cohorts.qmd
+            - pages/courses/core/1-2-survival-data.qmd
+            - pages/courses/core/2-1-clean.qmd
+            - pages/courses/core/2-2-reshape.qmd
+            - pages/courses/core/2-3-join-and-bind.qmd
+            - pages/courses/core/3-1-table-one.qmd
+            - pages/courses/core/3-2-logistic-regression.qmd
+            - pages/courses/core/3-3-linear-regression.qmd
+            - pages/courses/core/3-4-survival-analysis.qmd
         - section: "Omics"
           contents:
             - pages/courses/omics/index.qmd

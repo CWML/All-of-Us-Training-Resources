@@ -1,0 +1,142 @@
+---
+title: "3.2 Logistic Regression"
+description: "Odds and odds ratios, univariable and multivariable models, readable scales, comparing models on the same people, and reverse causation"
+code-annotations: below
+---
+
+**Core series, class 7 of 9** · R · 85 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.2%20logistic_regression.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Table 1 showed that cases are older and heavier, with different blood pressure and cholesterol. But those differences overlap: older people are also heavier, on average. **Logistic regression** asks how each characteristic goes with the **odds of type 2 diabetes** while **holding the others constant**.
+
+### Why this class matters
+
+Logistic regression is the most common model in health research for yes/no outcomes, and the same model powers the GWAS in 4.2. This class also shows two of its classic traps in real data: adjusting for a variable that **defines** the outcome (HbA1c), and **reverse causation** (LDL cholesterol after treatment).
+
+### By the end you'll be able to
+
+1. Explain **odds** and **odds ratios**
+2. Fit **univariable** and **multivariable** models with `glm()`, and read them with `broom::tidy()`
+3. Put predictors on **readable scales**
+4. Compare models fitted on the **same people**
+5. Explain why HbA1c is left out, and what **reverse causation** is
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Which characteristics go with higher odds of type 2 diabetes, accounting for each other? |
+| 🧪 **The analysis** | **Logistic regression**: type 2 diabetes ~ age + sex + BMI + blood pressure + LDL, built up step by step |
+| 🎯 **Why** | A yes/no outcome; **multivariable**, because the predictors are related (confounding) |
+| ✅ **What we conclude** | Adjusted odds ratios, e.g. per 5 BMI units, at the same age and sex |
+| ⚠️ **What it can't tell us** | Cause. Measurements taken **after** diagnosis can reflect the disease or its treatment |
+| 🔗 **Connections** | The same model as the GWAS in **4.2**; **3.3** is the version for a numeric outcome |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 85 minutes |
+| ⏱️ **Run time** | under 1 minute |
+| 💰 **Cost** | about **$0.40**: no queries, only app time |
+| 📋 **Before class** | run **2.3** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: odds, odds ratios, why logistic, crude vs adjusted | listen, ask |
+| 0:20 | **2. Load and prepare**: readable scales | run the cells |
+| 0:30 | **3. One predictor at a time** | run the cells, discuss |
+| 0:45 | **4. Multivariable models on the same people**; AIC | run the cells |
+| 1:05 | **5. What the model can't tell us**: HbA1c, LDL and statins | ✋ **Try It Out** (10 min) |
+| 1:20 | **Wrap-up** | |
+
+## Key concepts
+
+- **Odds** = chance it happens ÷ chance it doesn't (20% → 0.25).
+- **Odds ratio (OR)**: the odds in one group ÷ another. 1 = no difference; 2 = twice the odds.
+- For a number like BMI, the OR is **per unit**, so we choose a readable unit: **per 5 BMI units**, **per 10 years**.
+- Our sample is **half cases** by design (a **case-control** sample). That makes risk meaningless here, but **odds ratios stay valid**: that's why case-control studies report them.
+
+| | Univariable | Multivariable |
+|---|---|---|
+| Model | diabetes ~ **one** predictor | diabetes ~ **several** |
+| OR is | **crude** | **adjusted** for the others |
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/3.2 logistic_regression.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out · 10 minutes · Part 5, "Your turn"
+
+Requiring LDL dropped many people. Refit **age + sex + BMI** on everyone with those three variables. How many people does it use, and does the BMI OR change?
+
+**✅ Check:** many more people (especially controls), and a similar BMI OR: a **sensitivity analysis**.
+:::
+
+## Code walk-through
+
+```r
+model_data <- fa %>% drop_na(t2d_binary, age10, sex_at_birth, BMI5, SBP10, LDL10)   # <1>
+
+models <- list(
+  "1. Age + sex"             = glm(t2d_binary ~ age10 + sex_at_birth,  data = model_data, family = binomial),   # <2>
+  "2. + BMI"                 = glm(t2d_binary ~ age10 + sex_at_birth + BMI5, data = model_data, family = binomial),
+  "3. + blood pressure, LDL" = glm(t2d_binary ~ age10 + sex_at_birth + BMI5 + SBP10 + LDL10,
+                                   data = model_data, family = binomial)
+)
+
+imap(models, ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) %>% mutate(model = .y))   # <3>
+```
+1. One data set with **every** model variable present, so all three models use the **same people**. Otherwise a change in an OR could just be a change in who's in the model.
+2. `glm(…, family = binomial)` is logistic regression. `age10`, `BMI5`, … are the predictors divided by 10 or 5, for readable ORs.
+3. `tidy(exponentiate = TRUE)` turns coefficients into **odds ratios**, with 95% confidence intervals; `imap()` labels each model's rows.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9).
+
+| | Crude OR | Adjusted OR (model 3) |
+|---|---|---|
+| Age, per 10 years | 1.43 | 1.41 |
+| Male (vs female) | 1.25 | 1.14 |
+| BMI, per 5 units | 1.46 | **1.59** |
+| Systolic BP, per 10 mm Hg | 1.15 | 1.09 |
+| LDL, per 10 mg/dL | **0.87** | 0.88 |
+
+- The multivariable models used **6,397** people out of 9,905: mostly controls without an LDL result.
+- **BMI got stronger** after adjusting for age: younger people are heavier on average but have less diabetes, which hid part of BMI's link. Adjustment can move an OR either way.
+- **LDL's OR is below 1**, which looks protective. It isn't: most people with diabetes take **statins**, and our LDL is each person's **latest** value, usually measured after treatment began. That's **reverse causation**: diabetes affects LDL, not the other way round.
+- AIC fell from 8,400 to 7,761 to 7,512: each step improved the fit, BMI most of all.
+
+**💬 Discuss:** which other predictors could be affected by having diabetes or its treatment? (Weight, with some diabetes medicines; blood pressure, often treated too.) What would fix it? (Measurements from **before** diagnosis.)
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip
+
+- Ask students to guess LDL's OR before running the models. Most expect it above 1.
+- HbA1c is left out on purpose: it **defines** diabetes. If a student adds it, the model warns about fitted probabilities of 0 or 1: a nice teaching moment.
+:::
+
+## Key takeaways
+
+- Logistic regression is for **yes/no** outcomes; `exp(coefficient)` is the **odds ratio**
+- Compare models on the **same people**
+- Put predictors on **readable scales**
+- Don't adjust for what **defines** the outcome
+- Measurements taken **after** diagnosis can show **reverse causation**
+
+## Next
+
+**[3.3 Linear regression](3-3-linear-regression.qmd)**: the same idea for a numeric outcome.

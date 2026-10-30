@@ -1,0 +1,84 @@
+---
+title: "Core Series: Cohorts to Analysis"
+description: "Nine classes that take one study from start to finish: build a cohort with SQL; clean, reshape, and join; Table 1, regression, and survival analysis"
+---
+
+Nine R classes that take **one study from start to finish**, with *All of Us* health records: people **with type 2 diabetes** compared with people **without diabetes**, including how quickly people with diabetes develop **chronic kidney disease (CKD)**.
+
+Along the way you learn the skills almost every health data project needs: finding people with **SQL**, **cleaning** messy records, **reshaping** and **joining** tables, describing groups in a **Table 1**, and **regression** and **survival** models, with an honest look at what each result can and can't tell you.
+
+## The classes
+
+| Class | Time | What you learn |
+|---|---|---|
+| [**1.1 Build the cohort**](1-1-build-cohorts.qmd) | 90 min | OMOP tables, concept IDs, the concept hierarchy, SQL; the cohort query; survey answers and measurements |
+| [**1.2 Survival data**](1-2-survival-data.qmd) | 60 min | Time zero, event, and censoring; checking a concept ID; first CKD dates |
+| [**2.1 Clean**](2-1-clean.qmd) | 105 min | Non-answers, messy labels, duplicates, units, plausible ranges, a cleaning log, missing data |
+| [**2.2 Reshape**](2-2-reshape.qmd) | 70 min | Long vs wide; choosing one value per person |
+| [**2.3 Join and bind**](2-3-join-and-bind.qmd) | 75 min | Stacking tables; left, inner, full, and anti joins; checking every join |
+| [**3.1 Table One**](3-1-table-one.qmd) | 75 min | Describing groups; your own functions; small and derived counts |
+| [**3.2 Logistic regression**](3-2-logistic-regression.qmd) | 85 min | Odds ratios, adjustment, reverse causation |
+| [**3.3 Linear regression**](3-3-linear-regression.qmd) | 75 min | A numeric outcome (blood pressure), model fit, residuals |
+| [**3.4 Survival analysis**](3-4-survival-analysis.qmd) | 90 min | Kaplan–Meier curves, the log-rank test, the Cox model |
+
+## How the classes connect
+
+```
+sql/t2d_cohort.sql          the shared cohort query
+     │
+1.1 build_cohorts ──► cohort_sample.csv, survey_raw.csv, measurement_raw.csv
+1.2 survival_data ──► ckd_dates.csv
+     │
+2.1 clean ─────────► cohort_clean, survey_clean, measurement_clean
+2.2 reshape ───────► survey_wide, measurements_wide
+2.3 join_and_bind ─► final_analysis.csv
+     │
+3.1 Table One · 3.2 logistic · 3.3 linear · 3.4 survival
+```
+
+Only **1.1** and **1.2** query the database. Every later class reads the files saved in your bucket, so a class can start anywhere once those files exist.
+
+## The cohort
+
+The same cohort as every other series, from one shared query (`notebooks/sql/t2d_cohort.sql`):
+
+| | Definition |
+|---|---|
+| **Everyone** | adults (18+ on 2025-01-01, the CDR v9 data cutoff) with at least one **EHR** visit |
+| **Cases** | a **type 2 diabetes** diagnosis, and no type 1 diagnosis |
+| **Controls** | **no diabetes** diagnosis of any type |
+| **This series** | a random sample of **5,000 cases and 5,000 controls**, ages 18 to 100 |
+
+Race and ethnicity are **described**, never used to choose people.
+
+## What you need
+
+- An *All of Us* **Controlled Tier** workspace with a **bucket**, and the course notebooks in your app (see the [Notebooks](../../examples/notebooks.qmd) page).
+- **Notebook 0.0 setup**, run once.
+- The default **AoU Jupyter** app. No extra packages beyond those `aou_setup.R` installs.
+
+## What it costs
+
+| | Cost |
+|---|---|
+| **1.1 and 1.2** (the only database queries) | about **$2 to $3** in total |
+| **2.1 to 3.4** | **$0** in data; only the app's running time |
+| **The app, while running** | about **$0.27 an hour** |
+| **The app's disk** | about **$0.70 a day**, even while the app is stopped |
+
+**Stop** your app after each class.
+
+## What you'll find along the way
+
+Our test runs (CDR v9, October 2026) turned up real-world lessons the classes use:
+
+- **235,264** exact duplicate measurement rows: 13% of the data (2.1)
+- BMI recorded with the unit *"link for Gunter's chain"*: a mapping error with perfectly good values (2.1)
+- one person with over **5,000** blood pressure readings (2.2)
+- LDL cholesterol **lower** in people with diabetes, because of statins (3.2)
+- a type 2 diabetes link to blood pressure of **2.8 mm Hg**, after adjustment (3.3)
+- **73%** of people with diabetes still CKD-free 10 years after diagnosis (3.4)
+
+## Keep All of Us data in the Workbench
+
+Don't download, screenshot, or share **participant-level data**, or counts of **1 to 20** (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.
