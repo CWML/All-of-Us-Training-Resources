@@ -119,6 +119,7 @@ website:
           contents:
             - pages/courses/surveys/index.qmd
             - pages/courses/surveys/5-1-survey-basics.qmd
+            - pages/courses/surveys/5-2-family-history-lifestyle.qmd
     - id: extras
       title: "Optional Extras"
       style: docked

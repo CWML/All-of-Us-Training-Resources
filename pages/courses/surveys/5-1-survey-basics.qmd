@@ -235,4 +235,4 @@ Results from our test run in October 2026 (CDR v9).
 
 ## Next
 
-**5.2 Family history and lifestyle** (coming soon): family history of diabetes, smoking, and alcohol, in cases and controls.
+**[5.2 Family history and lifestyle](5-2-family-history-lifestyle.qmd)**: family history of diabetes, smoking, and alcohol, in cases and controls.
