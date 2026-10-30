@@ -108,16 +108,37 @@ One chromosome is **80 GB**, so the class never reads a whole one: PLINK **jumps
 4. Check the kernel (top right of the notebook) says **R**. If it doesn't, click it and choose **R**.
 5. Run the first code cell (**Shift + Enter**). It should end with *Setup done*, followed by your dataset and data folder.
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### What you'll see
 
-These steps will get screenshots once we capture them, with names, the app name, and emails painted out:
+**1. The Apps tab:** your app is *Running*. Click the icon next to its name to open JupyterLab. The row also shows the app's cost while running.
 
-1. The **Apps** tab with the app running, and its **Open** button
-2. JupyterLab's **File → New → Terminal**
-3. The file browser opened to `notebooks/omics/`
-4. The kernel name, top right of the notebook
-5. The output of the setup cell
+::: {.annotated}
+![](../images/wb-apps-open.png){fig-alt="Workspace Apps tab listing one running AoU Jupyter app, with its open-in-new-tab icon outlined next to the app name. The row also shows the Stop button and the current cost, 0.27 dollars per hour."}
+
+::: {.red-box style="left: 28.6%; top: 21.5%; width: 3.4%; height: 6.5%;"}
+:::
+:::
+
+**2. Open a terminal:** **File → New → Terminal**, or the **Terminal** tile on the Launcher (the page JupyterLab opens with).
+
+::: {.annotated}
+![](../images/wb-new-terminal.png){fig-alt="JupyterLab Launcher with tiles for Notebook, Console, and Other. The Terminal tile, in the Other row, is outlined."}
+
+::: {.red-box style="left: 29.4%; top: 55.8%; width: 7.4%; height: 12.2%;"}
+:::
+:::
+
+**3. Find the notebook** in the file browser on the left: `repos` → `All-of-Us-Training-Resources` → `notebooks` → `omics`.
+
+![](../images/wb-file-browser.png){fig-alt="JupyterLab file browser opened to notebooks/omics, listing the seven omics notebooks from 4.1 dna_intro to 4.7 rnaseq_proteomics, and a README."}
+
+**4. Wrong kernel?** The kernel's name is at the top right of the notebook. If it isn't the one you need, use **Kernel → Change Kernel…**.
+
+::: {.annotated}
+![](../images/wb-kernel.png){fig-alt="JupyterLab Kernel menu open over a notebook, listing Interrupt, Restart, and Shut Down options. The last item, Change Kernel, is outlined."}
+
+::: {.red-box style="left: 18.9%; top: 78.0%; width: 11.6%; height: 9.0%;"}
+:::
 :::
 
 ## Try It Out
@@ -244,10 +265,10 @@ Results from our test run in October 2026 (CDR v9). Your numbers will be similar
 |---|---|---|
 | African (`afr`) | 569 | 393 |
 | Admixed American (`amr`) | 518 | 372 |
-| East Asian (`eas`) | 65 | 77 |
 | European (`eur`) | 1,323 | 1,622 |
-| South Asian (`sas`) | 20 or fewer | 29 |
-| Middle Eastern (`mid`) | 20 or fewer | 20 or fewer |
+| East Asian, South Asian, or Middle Eastern (`eas`, `sas`, `mid`), or none assigned | 90 | 113 |
+
+The three smallest groups are **combined**: on their own, some were 20 or fewer, and with the column totals (2,500) a hidden count could be worked out. That's the *All of Us* rule on **derived counts** (more in [3.1](../core/3-1-table-one.qmd)).
 
 **💬 Discuss:** cases include **more** people of African and Admixed American ancestry than controls do. Why does that make adjusting for ancestry important in 4.2?
 

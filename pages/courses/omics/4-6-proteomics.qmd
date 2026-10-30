@@ -164,16 +164,11 @@ The proteins point to **organs**:
 
 **💬 Discuss:** which of these are **causes** of diabetes, **consequences** (kidney damage), or **treatment** effects? *UMOD*'s pQTL sits in the *UMOD* gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (**Mendelian randomization**).
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### The plot
 
-Plots with one point per **protein** can be shared:
+![](images/4-6-volcano.png){fig-alt="Volcano plot of blood proteins in type 2 diabetes: logFC on the x-axis, minus log10 p-value on the y-axis. Hundreds of proteins pass adjusted p below 0.05, most of them to the right (higher in diabetes). Labelled proteins include NFASC at the top, HAVCR1, LGALS4, ADGRG1, KRT8, IGSF9, MUC13, and PDZK1 on the right, and DMP1 and UMOD on the left."}
 
-1. The volcano plot (Part 6)
-2. The plate check (median NPX by plate, Part 5): one box per plate
-
-The PCA plot and the top-protein boxplot show **people**: keep them in the notebook.
-:::
+The PCA plot, the plate boxplot (some plates hold only a few of our people), and the top-protein boxplot stay in the notebook.
 
 ## Instructor notes
 

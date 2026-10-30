@@ -333,6 +333,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">All courses</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../../pages/courses/core/index.html">
+ <span class="dropdown-text">Core series</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../../pages/courses/omics/index.html">
  <span class="dropdown-text">Omics series</span></a>
   </li>  
@@ -718,11 +722,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Make notebooks portable:</strong> avoid hardcoded workspace paths. Build paths from your home folder, and keep the bucket name and dataset path in <strong>one place</strong> at the top of the notebook, so collaborators only change those lines:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"&lt;project-id&gt;.&lt;dataset-id&gt;"</span>   <span class="co"># copy from your Data Explorer query</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="op">=</span> <span class="st">"&lt;project-id&gt;.&lt;dataset-id&gt;"</span>   <span class="co"># copy from your Data Explorer query</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="op">=</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>WORKSPACE_BUCKET</code> and <code>WORKSPACE_CDR</code> from the classic Workbench are <strong>not set</strong> in new Workbench 2.0 workspaces (see <a href="../../pages/workspace/storage-costs.html#workspace-variables">Workspace Variables</a>).</p>
 <p>To share <strong>results</strong>, share the workspace itself through Workbench’s sharing settings so data and outputs stay inside All of Us.</p>
 </section>

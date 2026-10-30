@@ -1,0 +1,141 @@
+---
+title: "2.3 Join and Bind"
+description: "Stacking tables with bind_rows(); left, inner, full, and anti joins; checking every join; building the analysis table"
+code-annotations: below
+---
+
+**Core series, class 5 of 9** · R · 75 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.3%20join_and_bind.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Our data is in four tables: the cohort, the measurements, the survey answers, and the CKD dates. An analysis needs them **together**, one row per person. **Binding** stacks tables on top of each other; **joining** lines them up side by side by a shared **key** (`person_id`). We learn the join types on a tiny example first, then **check** every real join.
+
+### Why this class matters
+
+Joins are where analyses most often go **silently** wrong. An inner join where a left join was meant quietly drops people; a key that isn't unique quietly duplicates them. The numbers still look reasonable, which is what makes these mistakes dangerous. A few routine checks catch nearly all of them.
+
+### By the end you'll be able to
+
+1. Stack tables with `bind_rows()`
+2. Explain **left**, **inner**, **full**, and **anti** joins, and choose the right one
+3. Check a join: **key types**, **unique keys**, **unmatched IDs**, and **row counts**
+4. Build the analysis table that 3.1–3.4 use
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | How do we combine four tables without losing or duplicating people? |
+| 🧪 **The analysis** | `bind_rows()` to stack; `left_join()` by `person_id`; `anti_join()` and counts to check |
+| 🎯 **Why** | A wrong join can silently drop or duplicate people, changing every result after it |
+| ✅ **What we conclude** | One analysis table: 10,000 rows, one per person |
+| ⚠️ **What it can't tell us** | Anything about diabetes yet |
+| 🔗 **Connections** | Uses files from **1.2**, **2.1**, **2.2**; saves `final_analysis.csv` for **3.1–3.4** |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 75 minutes |
+| ⏱️ **Run time** | under 1 minute |
+| 💰 **Cost** | about **$0.35**: no queries, only app time |
+| 📋 **Before class** | run **1.2**, **2.1**, and **2.2** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: bind vs join, the join types | listen, ask |
+| 0:15 | **2–3. Load; binding rows** | run the cells |
+| 0:30 | **4. The join types, on a tiny example** | ✋ **Try It Out** (5 min) |
+| 0:45 | **5. Checks before joining** | run the cells |
+| 0:55 | **6. Build the analysis table** | run the cells, discuss |
+| 1:10 | **Wrap-up** | |
+
+## Key concepts
+
+```
+     x            y
+  ┌─────┐      ┌─────┐
+  │  A  │      │  A  │      A, B: in both
+  │  B  │      │  B  │      C: only in x
+  │  C  │      │  D  │      D: only in y
+  └─────┘      └─────┘
+```
+
+| Join | Keeps | Result | Use it when |
+|---|---|---|---|
+| `left_join(x, y)` | every row of x; y's columns where they match | A, B, C | adding information **without losing anyone**: our default |
+| `inner_join(x, y)` | rows in **both** | A, B | you only want people with both, and know who you drop |
+| `full_join(x, y)` | rows in **either** | A, B, C, D | combining two lists of people |
+| `anti_join(x, y)` | rows of x with **no** match | C | **checking**: who doesn't match? |
+
+If the key appears **more than once** in y, each x row is repeated once per match (**one-to-many**): usually a sign you forgot to reshape first.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/2.3 join_and_bind.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out · 5 minutes · Part 4, "Your turn"
+
+Add a **second** BMI row for person A to the tiny `labs` table, then `left_join()` again. How many rows do you get, and why?
+
+**✅ Check:** 4 rows: A appears twice. The key wasn't unique, so the join became one-to-many.
+:::
+
+## Code walk-through
+
+```r
+final_analysis <- cohort_clean %>%                                    # <1>
+  left_join(measurements_wide, by = "person_id") %>%                  # <2>
+  left_join(survey_wide,       by = "person_id") %>%
+  left_join(ckd_dates,         by = "person_id") %>%
+  mutate(age_group = cut(age, breaks = c(18, 40, 65, Inf), right = FALSE,
+                         labels = c("18-39", "40-64", "65+")))         # <3>
+
+c(rows = nrow(final_analysis), people = n_distinct(final_analysis$person_id))   # <4>
+```
+1. Start from the **cohort**: everyone we want in the analysis.
+2. `left_join()` each table onto it, so nobody is lost. People without measurements get `NA`. `by = "person_id"` names the key: always write it.
+3. Age groups for tables. `right = FALSE` means each group includes its lower bound (18 is in "18-39").
+4. The check that matters most: still **one row per person**?
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9).
+
+- **10,000 rows, 10,000 people**: nobody lost, nobody duplicated.
+- The share of people with each variable:
+
+| BMI | SBP | LDL | HbA1c | PTSD answers | a CKD date |
+|---|---|---|---|---|---|
+| 98.6% | 98.8% | 65.3% | 58.2% | 5.2% | 17.0% |
+
+**💬 Discuss:** the old version of this course ended this step with `drop_na()`, keeping only people with **every** variable. With these numbers, how many would that have left, and who would they be? (Only people who answered the PTSD questions, and had LDL and HbA1c tested: a few hundred, and a very unusual group.)
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip
+
+- Teach the joins on the 3-person example **before** touching real data: it's the only way to see every row.
+- The type-mismatch demo (Part 5) produces a clear error message. Point out that an error is the **good** outcome: a silent mismatch would be worse.
+:::
+
+## Key takeaways
+
+- **Bind** stacks tables with the same columns; **join** combines tables by a key
+- `left_join()` from your main table keeps **everyone**; `inner_join()` silently drops people
+- **Check** every join: key types, unique keys, `anti_join()`, and row counts
+- Keep `NA`s; decide per analysis
+
+## Next
+
+**[3.1 Table One](3-1-table-one.qmd)**: describe cases and controls.

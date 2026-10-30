@@ -1,0 +1,171 @@
+---
+title: "1.2 Data for the Survival Analysis"
+description: "Time zero, event, and censoring; why follow-up comes from health record dates; first chronic kidney disease dates"
+code-annotations: below
+---
+
+**Core series, class 2 of 9** · R + SQL · 60 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.2%20survival_data.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+In **3.4** we'll ask: **after a type 2 diabetes diagnosis, how long until people develop chronic kidney disease (CKD)?** A "how long until" question needs more than who has the disease: it needs **dates**, and a careful idea of how long we could **see** each person in their health records. This class gathers those dates.
+
+### Why this class matters
+
+Survival analysis is easy to run and easy to get wrong. Most mistakes happen **before** any model: a wrong start date, follow-up that runs past the end of someone's records, or events that happened before the clock started. This class gets the ingredients right.
+
+### By the end you'll be able to
+
+1. Explain **time zero**, **event**, **censoring**, and **follow-up**
+2. Explain why follow-up should end at the **last health record**
+3. Find the first date of a diagnosis with SQL (`MIN()`, `GROUP BY`)
+4. **Check a concept ID** before using it
+5. Describe how many people had the event, and how long they were followed
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Among people with type 2 diabetes, who developed CKD **after** their diagnosis, and how long was everyone followed? |
+| 🧪 **The analysis** | A SQL query for each person's **first CKD date**; then, for cases, time from diabetes to CKD or to the end of their records |
+| 🎯 **Why** | A survival analysis needs a clear start, a clear event, and a fair end for people without the event |
+| ✅ **What we conclude** | How many cases had CKD after diabetes, how many before, and how long people were followed |
+| ⚠️ **What it can't tell us** | Risk or what predicts it: that's **3.4** |
+| 🔗 **Connections** | Uses the sample from **1.1**; joined in **2.3**; analysed in **3.4** |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 60 minutes |
+| ⏱️ **Run time** | about 3 minutes |
+| 💰 **Cost** | about **$1** per student: two small queries, plus the app |
+| 📋 **Before class** | run **1.1** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: time zero, event, censoring; why EHR dates | listen, ask |
+| 0:20 | **2. Setup**: load the sample | run the cells |
+| 0:25 | **3. Check the concept** | run the cells |
+| 0:30 | **4. First CKD dates** | run the cells |
+| 0:40 | **5. Time zero, event, censoring** | ✋ **Try It Out** (5 min) |
+| 0:55 | **Wrap-up** | discuss |
+
+## Key concepts
+
+| Term | Means | In our study |
+|---|---|---|
+| **Time zero** | when each person's clock starts | the first type 2 diabetes date |
+| **Event** | what we're waiting for | the first CKD date, after time zero |
+| **Censoring** | the clock stops **without** the event | the earlier of the **last EHR visit** and **death** |
+| **Follow-up** | time zero to the event, or to censoring | in years |
+
+```
+diabetes      last EHR visit
+   │─────────────────│           censored: no CKD while we could see them
+   │──────────X                  event: CKD here
+CKD ──X  diabetes                excluded: CKD came first
+```
+
+**Why the last EHR visit?** A diagnosis can only appear while someone gets care at a site that shares data with *All of Us*. After their last visit, CKD elsewhere would be invisible. We don't use *All of Us*'s `observation_period` table, because it also counts **survey** dates, which can stretch follow-up past the last health record.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/1.2 survival_data.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out · 5 minutes · Part 5, "Your turn"
+
+How many cases had CKD and diabetes recorded **on the same day**?
+
+**✅ Check:** a large share of the "before or on" group. Many records simply **start** with both diagnoses already present.
+:::
+
+## Code walk-through
+
+### First CKD dates
+
+```r
+ckd_sql <- str_glue("
+SELECT co.person_id,
+       MIN(co.condition_start_date)            AS first_ckd_date,   # <1>
+       COUNT(DISTINCT co.condition_start_date) AS ckd_code_days   # <2>
+FROM `{CURRENT_DATASET}.condition_occurrence` AS co
+JOIN `{CURRENT_DATASET}.concept_ancestor` AS ca
+  ON co.condition_concept_id = ca.descendant_concept_id
+WHERE ca.ancestor_concept_id = {CKD_CONCEPT}   # <3>
+  AND co.person_id IN ({ids_sql})   # <4>
+GROUP BY co.person_id   # <5>
+")
+```
+1. Each person's **earliest** CKD diagnosis.
+2. How many **different days** had a CKD code (useful for a stricter definition).
+3. CKD (concept 46271022) **and everything under it**: stages, CKD due to diabetes, and so on.
+4. Only our 10,000 people.
+5. One row per person, like `group_by()` + `summarise()` in R.
+
+### Time zero, event, censoring
+
+```r
+cases <- cohort_sample %>%
+  filter(cohort == "case") %>%
+  left_join(ckd_dates, by = "person_id") %>%                                     # <1>
+  mutate(
+    end_of_records = pmin(last_ehr_date, death_date, na.rm = TRUE),             # <2>
+    timing = case_when(
+      !is.na(first_ckd_date) & first_ckd_date <= first_t2d_date ~ "CKD before or on diabetes date",
+      !is.na(first_ckd_date)                                     ~ "CKD after diabetes",
+      TRUE                                                       ~ "no CKD"),    # <3>
+    followup_end   = if_else(timing == "CKD after diabetes", first_ckd_date, end_of_records),
+    followup_years = as.numeric(followup_end - first_t2d_date) / 365.25          # <4>
+  )
+```
+1. Add each case's first CKD date (`NA` if they never had one).
+2. The end of what we can see: the **earlier** of the last EHR visit and death. `na.rm = TRUE` ignores a missing death date.
+3. Sort each case into one of three groups. `case_when()` uses the first rule that matches.
+4. Follow-up in years, from the first diabetes date to CKD (events) or the end of records (censored).
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls.
+
+| | |
+|---|---|
+| Concept 46271022 | *Chronic kidney disease* (SNOMED, standard): confirmed before use |
+| CKD at any time | **28%** of cases vs **7%** of controls |
+| Cases: CKD **after** diabetes (the events) | **925**, a median of **4.4** years after diagnosis |
+| Cases: CKD **before or on** the diabetes date (can't be used) | **452** |
+| Cases: **no CKD** (censored) | **3,623**, followed for a median of **5.2** years |
+| Followed for less than a year | about 1 in 6 to 1 in 5 |
+
+**💬 Discuss:** why might someone's **first** diabetes date in the records be years after their real diagnosis? (Records often start when someone joins a health system. This is **left truncation**, and it makes time zero uncertain.)
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip: timing and pitfalls
+
+- Draw the three timelines on the board before Part 5.
+- Expect "why not use today's date as the end?": because we'd count years when the person may have been getting care elsewhere, unseen.
+- The 452 "before or on" cases are a good discussion: are they data errors, or real? (Mostly real: both conditions were already present when the records began.)
+:::
+
+## Key takeaways
+
+- A survival analysis needs **time zero**, an **event**, and **censoring**
+- End follow-up at the **last health record** (or death)
+- **Check every concept ID** by name before using it
+- Events **before** time zero can't be used
+- Late-starting records make time zero uncertain
+
+## Next
+
+**[2.1 Clean](2-1-clean.qmd)**: tidy the survey answers and measurements from 1.1.

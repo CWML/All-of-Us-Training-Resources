@@ -1,0 +1,150 @@
+---
+title: "2.2 Reshape"
+description: "Long vs wide data, choosing one value per person, and pivot_wider() and pivot_longer()"
+code-annotations: below
+---
+
+**Core series, class 4 of 9** · R · 70 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.2%20reshape.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Our clean measurements have **many rows per person**: every blood pressure reading, every BMI. Models and tables need **one row per person**, with one column per variable. This class chooses **one value per person** for each measure, and turns tables from **long** to **wide** (and back).
+
+### Why this class matters
+
+Reshaping looks like a technical step, but one part of it is a **research decision**: *which* value to keep when someone has 46 blood pressure readings. The choice changes the results, and the class shows exactly how (it explains the surprising LDL result in 3.2).
+
+### By the end you'll be able to
+
+1. Tell **long** from **wide** data, and say when each is useful
+2. Choose **one value per person**, and explain the choice
+3. Use `pivot_wider()` and `pivot_longer()`
+4. Fix the most common `pivot_wider()` problem: values that aren't unique
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | How do we get from many measurements per person to one row per person? |
+| 🧪 **The analysis** | Per-person summaries (`slice_max()`), then `pivot_wider()`; `pivot_longer()` for plotting |
+| 🎯 **Why** | Models need one row per person; **which** value we keep is a research decision |
+| ✅ **What we conclude** | One row per person with BMI, SBP, HbA1c, and LDL, and one with the PTSD answers |
+| ⚠️ **What it can't tell us** | Whether the kept value was measured at a **meaningful time** (e.g. before diagnosis) |
+| 🔗 **Connections** | Uses **2.1**'s clean files; **2.3** joins the wide tables |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 70 minutes |
+| ⏱️ **Run time** | about 1 minute |
+| 💰 **Cost** | about **$0.35**: no queries, only app time |
+| 📋 **Before class** | run **2.1** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: long and wide | listen, ask |
+| 0:10 | **2–3. Load; survey answers to wide** | run the cells |
+| 0:25 | **4. One value per person**: the choices and their pitfalls | discuss |
+| 0:45 | **5. Measurements to wide** | ✋ **Try It Out** (5 min) |
+| 0:55 | **6. Wide to long, for a plot** | run the cells |
+| 1:05 | **Wrap-up** | |
+
+## Key concepts
+
+**Long:** one row per **observation** | **Wide:** one row per **person**
+---|---
+`person_id · measure · value` | `person_id · BMI · SBP · …`
+good for storing, summarising, and **plots** | good for **tables** and **models**
+
+### Which value?
+
+| Choice | Good for | Watch out for |
+|---|---|---|
+| **Latest** | "current" status | for cases, usually **after** diagnosis and treatment |
+| **First** | the earliest picture | old measurements, different eras |
+| **Median** | a stable typical value | mixes before and after events |
+| **Closest before a date** | a **baseline** before a diagnosis | needs a date for everyone |
+
+This series uses the **latest** value: simple, and everyone has one. Its weakness shows up in 3.2.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/2.2 reshape.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out · 5 minutes · Part 5, "Your turn"
+
+What happens if you **skip** the one-value-per-person step and pivot the measurements directly? Try it on 5 people.
+
+**✅ Check:** a warning that values are **not uniquely identified**, and cells holding a **list** of values (`<dbl [37]>`).
+:::
+
+## Code walk-through
+
+```r
+measurement_latest <- measurement_clean %>%
+  group_by(person_id, measure) %>%                                          # <1>
+  slice_max(measurement_date, n = 1, with_ties = FALSE) %>%                 # <2>
+  ungroup()
+
+measurements_wide <- measurement_latest %>%
+  pivot_wider(id_cols = person_id, names_from = measure,                     # <3>
+              values_from = value_as_number)
+
+nrow(measurements_wide) == n_distinct(measurements_wide$person_id)          # <4>
+```
+1. One group per person per measure.
+2. Keep the row with the **latest** date in each group; `with_ties = FALSE` keeps just one if two share a date.
+3. Turn the values of `measure` (BMI, SBP, …) into **column names**, filled with the values.
+4. Always check: **one row per person** (`TRUE`).
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9).
+
+| Measure | People with a value | Median results per person |
+|---|---|---|
+| BMI | 9,860 | 13 |
+| SBP | 9,882 | 46 |
+| HbA1c | 5,822 | 4 |
+| LDL | 6,535 | 5 |
+
+Some people had **thousands** of blood pressure readings. (We don't show each measure's maximum: a maximum describes a single person, which the *All of Us* rules on small counts don't allow.)
+
+Keeping the latest value took the clean measurements from **1,544,092 rows to 32,099**: at most four per person.
+
+**💬 Discuss:** people with thousands of blood pressure readings were probably monitored continuously during hospital stays. Would their **latest** reading be typical of them? Would the **median** be a better choice?
+
+::: {.callout-note collapse="true"}
+## Screenshots: none to share
+
+The histograms in Part 6 count **people**, and their tails can include counts of 1 to 20. Keep them in the notebook.
+:::
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip
+
+- The "which value?" table is worth a full discussion: ask students which they'd choose for a study of **risk** (baseline, before diagnosis) vs of **current control** (latest).
+- The Try It Out error (list-columns) is one of the most common R questions online: worth seeing once on purpose.
+:::
+
+## Key takeaways
+
+- **Long** for storing, summarising, and plotting; **wide** for tables and models
+- Choosing **one value per person** is a research decision: say which and why
+- After `pivot_wider()`, check **one row per person**
+
+## Next
+
+**[2.3 Join and bind](2-3-join-and-bind.qmd)**: combine everything into one analysis table.

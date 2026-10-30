@@ -9,7 +9,7 @@ All the series share **one research question**, type 2 diabetes, and one cohort 
 
 | Series | Classes | Status |
 |---|---|---|
-| **Core: Cohorts to Analysis** | 1.1–3.4: build a cohort with SQL; clean, reshape, and join; Table One, regression, survival analysis | Notebooks ready (see the [Notebooks](../examples/notebooks.qmd) page); companion pages coming |
+| [**Core: Cohorts to Analysis**](core/index.qmd) | 1.1–3.4: build a cohort with SQL; clean, reshape, and join; Table One, regression, survival analysis | Notebooks and companion pages ready |
 | [**Omics**](omics/index.qmd) | 4.1–4.7: genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, proteomics | Notebooks and companion pages ready |
 | **Surveys** | 5.1–5.3: survey structure, family history and lifestyle, social factors | Planned |
 | **Wearables** | 6.1–6.3: Fitbit basics, steps, sleep and heart rate | Planned |
@@ -25,3 +25,9 @@ All the series share **one research question**, type 2 diabetes, and one cohort 
 
 The **notebooks** are self-contained: you can work through them on your own. This **site** adds what a notebook can't do well: the class plan, diagrams, Workbench walk-throughs, "Try It Out" pauses, our results to compare with, and instructor notes.
 :::
+
+## Acknowledgment and data availability
+
+We gratefully acknowledge *All of Us* participants for their contributions, without whom this research would not have been possible. We also thank the National Institutes of Health's *All of Us* Research Program for making available the participant data examined in these materials.
+
+The course results on this site used data from the *All of Us* Research Program's **Controlled Tier Dataset v9** (and **v8** on the Data Explorer page), available to authorized users on the **Researcher Workbench**. All results shown are summary statistics; no participant-level data, and no counts from 1 to 20, are published, in line with the *All of Us* [Data and Statistics Dissemination Policy](https://support.researchallofus.org/hc/en-us/articles/22346276580372-Data-and-Statistics-Dissemination-Policy).

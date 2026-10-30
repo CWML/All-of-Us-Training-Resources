@@ -1,0 +1,231 @@
+---
+title: "1.1 Build the Cohort"
+description: "How the All of Us data is organised, the shared type 2 diabetes cohort query, a sample, and the survey answers and measurements the series needs"
+code-annotations: below
+---
+
+**Core series, class 1 of 9** · R + SQL · 90 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.1%20build_cohorts.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+A **cohort** is a group of people chosen by written rules. In this class we pull ours out of the *All of Us* database with **SQL**: adults with health records who either **have type 2 diabetes** (cases) or **have no diabetes** (controls). Then we take a sample, and download what the rest of the series needs: **survey answers** and **measurements** (BMI, blood pressure, cholesterol, HbA1c).
+
+### Why this class matters
+
+Every later result depends on **who is in the study**. Writing the rules down once, in a query anyone can read and rerun, is what makes a study reproducible. And this class is where you first meet the real data: its tables, its codes, and its quirks.
+
+### By the end you'll be able to
+
+1. Explain the **CDR**, the **OMOP** tables, and **concept IDs**
+2. Use the **concept hierarchy** to find a disease and everything more specific under it
+3. Read a SQL query: `SELECT`, `FROM`, `JOIN`, `WHERE`, `GROUP BY`, `WITH`
+4. Run the shared cohort query from R, and describe the result
+5. Download survey answers and measurements for a sample, and save them to your bucket
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Who is in our type 2 diabetes cohort, and what data do we have for them? |
+| 🧪 **The analysis** | Three SQL queries (the cohort, survey answers, measurements); counts and summaries |
+| 🎯 **Why** | Defining cases and controls **once**, with written rules, keeps every analysis comparable |
+| ✅ **What we conclude** | How many cases and controls there are, and how complete their data is |
+| ⚠️ **What it can't tell us** | Anything about cause or risk: this class collects and describes |
+| 🔗 **Connections** | **1.2** adds diagnosis dates; **2.1–2.3** clean and combine; the **omics** series uses the same query |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 90 minutes |
+| ⏱️ **Run time** | about 10 minutes. Slowest: the cohort query, and the measurement query and download |
+| 💰 **Cost** | about **$2** per student: three BigQuery queries, plus the app |
+| 📋 **Before class** | a Controlled Tier workspace with a bucket; **0.0 setup** run once |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: the CDR, OMOP tables, concept IDs and the hierarchy, our cohort, SQL in one table | listen, ask |
+| 0:20 | **2. Setup**: check the tables exist | run the cells |
+| 0:25 | **3. The cohort query**: read it, run it, describe the groups | ✋ **Try It Out 1** (5 min) |
+| 0:50 | **4. Choose a sample** | run the cells |
+| 1:00 | ☕ **Break** (5 min) | |
+| 1:05 | **5. Survey answers** | run the cells |
+| 1:15 | **6. Measurements**: concepts, units | ✋ **Try It Out 2** (5 min) |
+| 1:25 | **Wrap-up** | discuss |
+
+## Key concepts
+
+### OMOP tables and concept IDs
+
+The *All of Us* data is a set of tables in **BigQuery**, in a standard layout called the **OMOP Common Data Model**. Every table shares **`person_id`**, which links a person's data across tables. Instead of text like *"Type 2 diabetes"*, the tables store a number, a **concept ID** (201826), that points to the `concept` dictionary. Look up any concept at [athena.ohdsi.org](https://athena.ohdsi.org/).
+
+### The concept hierarchy
+
+*Type 2 diabetes mellitus* has more specific concepts under it (e.g. *with diabetic nephropathy*), and a doctor may record any of them. The `concept_ancestor` table lists every "this is under that" pair, so one join finds them all:
+
+```sql
+SELECT co.person_id
+FROM condition_occurrence AS co
+JOIN concept_ancestor AS ca ON co.condition_concept_id = ca.descendant_concept_id
+WHERE ca.ancestor_concept_id = 201826     -- type 2 diabetes, and everything under it
+```
+
+### SQL in one table
+
+| SQL | Means | R equivalent |
+|---|---|---|
+| `SELECT a, b` | the columns to return | `select()` |
+| `JOIN t2 ON t1.x = t2.x` | combine matching rows | `inner_join()` |
+| `LEFT JOIN` | keep every row of the first table | `left_join()` |
+| `WHERE` | keep rows that meet a condition | `filter()` |
+| `GROUP BY` + `MIN()`, `COUNT()` | one row per group, with a summary | `group_by()` + `summarise()` |
+| `WITH name AS (...)` | a named step, used later in the query | saving a result with `<-` |
+
+## Follow along in the Workbench
+
+1. Open your workspace → **Apps** → start your **AoU Jupyter** app → **Open**.
+2. In a **Terminal** (File → New → Terminal), get the newest notebooks:
+   ```bash
+   cd ~/repos/All-of-Us-Training-Resources
+   git checkout -- notebooks/
+   git stash && git pull && git stash pop
+   ```
+3. Open `notebooks/core/1.1 build_cohorts.ipynb`, with the **R** kernel.
+4. Run the first cell: it ends with *Setup done*, then a table where every row is `TRUE`.
+
+### What you'll see
+
+**1. The Apps tab:** your app is *Running*. Click the icon next to its name to open JupyterLab. The row also shows the app's cost while running.
+
+::: {.annotated}
+![](../images/wb-apps-open.png){fig-alt="Workspace Apps tab listing one running AoU Jupyter app, with its open-in-new-tab icon outlined next to the app name. The row also shows the Stop button and the current cost, 0.27 dollars per hour."}
+
+::: {.red-box style="left: 28.6%; top: 21.5%; width: 3.4%; height: 6.5%;"}
+:::
+:::
+
+**2. Open a terminal:** **File → New → Terminal**, or the **Terminal** tile on the Launcher (the page JupyterLab opens with).
+
+::: {.annotated}
+![](../images/wb-new-terminal.png){fig-alt="JupyterLab Launcher with tiles for Notebook, Console, and Other. The Terminal tile, in the Other row, is outlined."}
+
+::: {.red-box style="left: 29.4%; top: 55.8%; width: 7.4%; height: 12.2%;"}
+:::
+:::
+
+**3. Find the notebook** in the file browser on the left: `repos` → `All-of-Us-Training-Resources` → `notebooks` → `core`.
+
+
+**4. Wrong kernel?** The kernel's name is at the top right of the notebook. If it isn't the one you need, use **Kernel → Change Kernel…**.
+
+::: {.annotated}
+![](../images/wb-kernel.png){fig-alt="JupyterLab Kernel menu open over a notebook, listing Interrupt, Restart, and Shut Down options. The last item, Change Kernel, is outlined."}
+
+::: {.red-box style="left: 18.9%; top: 78.0%; width: 11.6%; height: 9.0%;"}
+:::
+:::
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out 1 · 5 minutes · Part 3, "Your turn"
+
+How many cases have a type 2 diabetes code on only **one** day, and how many on two or more?
+
+**✅ Check:** a two-row table. About 1 in 6 cases had a single code day in our full cohort.
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 2 · 5 minutes · Part 6, "Your turn"
+
+What range of values does **BMI** have? Do any look impossible?
+
+**✅ Check:** most values between about 18 and 45, but a minimum and maximum that can't be real.
+:::
+
+## Code walk-through
+
+### Running the shared query
+
+```r
+cohort_sql <- read_file("../sql/t2d_cohort.sql")                          # <1>
+
+cohort <- run_query(str_glue(cohort_sql, AGE_DATE = "2025-01-01")) %>%    # <2>
+  mutate(person_id = as.character(person_id))                             # <3>
+
+cohort %>% count(cohort)                                                  # <4>
+```
+1. Read the SQL from the shared file in `notebooks/sql/`. The notebook prints it next, so you can read every step.
+2. `str_glue()` fills in the placeholders `{CURRENT_DATASET}` and `{AGE_DATE}`; `run_query()` (from `aou_setup.R`) sends the query to BigQuery and returns a data frame.
+3. Store IDs as **text**: they're labels, not numbers, and as text they match IDs in every other file.
+4. One row per group: *case*, *control*, *excluded*.
+
+### A repeatable sample
+
+```r
+set.seed(2026)                                                             # <1>
+cohort_sample <- cohort %>%
+  filter(cohort %in% c("case", "control"), between(age, 18, 100)) %>%      # <2>
+  arrange(person_id) %>%                                                   # <3>
+  group_by(cohort) %>%
+  slice_sample(n = 5000) %>%                                               # <4>
+  ungroup()
+
+save_data(cohort_sample, "cohort_sample.csv")                              # <5>
+```
+1. Fix the random number generator, so everyone gets the same "random" sample.
+2. Cases and controls only, aged 18 to 100 (a few recorded ages above 100 are probably errors).
+3. Sort first: BigQuery doesn't return rows in a fixed order, and the seed only repeats if the rows start in the same order.
+4. 5,000 at random **within each group**.
+5. Save to your bucket: later classes load this file instead of querying again.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9).
+
+| | Cases | Controls |
+|---|---|---|
+| In the cohort (excluded: 13,765) | **80,919** | **331,912** |
+| Mean age | 63.4 | 54.8 |
+| Female | 56.0% | 62.7% |
+| Deceased | 3.8% | 1.3% |
+| Median years of EHR history | 10.8 | 8.3 |
+
+- **426,596** adults with EHR data in total.
+- **Survey:** about 500 of our 10,000 people answered each PTSD question: they're follow-up questions, asked only of people who reported PTSD. Each answer **repeats the question** (*"… (PTSD)? - Yes"*), and the only non-answer was *PMI: Skip*.
+- **Measurements:** about **1.8 million** rows. Systolic blood pressure alone had over a million, for about 9,800 people.
+- **Units were messy:** almost half of blood pressure rows had *"No matching concept"*; some BMI rows had the unit *"link for Gunter's chain (US)"* (a surveying length!); some HbA1c rows were in grams or milligrams per deciliter. 2.1 deals with these.
+
+**💬 Discuss:** cases have longer health records. Why could that matter when comparing them with controls? (More visits, more chances for **any** diagnosis to be recorded.)
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip: timing and pitfalls
+
+- Start the cohort query, then explain the printed SQL while it runs (1–2 minutes).
+- The PTSD question IDs are easy to mix up: **43528846** is *currently receiving treatment*, **43530361** is *still seeing a doctor*.
+- The units table is the best moment of the class: ask students what "Gunter's chain" might be before telling them.
+- Our sample is **half cases** by design. Remind students that percentages describe the **sample**, not the *All of Us* population.
+:::
+
+## Key takeaways
+
+- *All of Us* data is in **OMOP** tables, linked by `person_id`; codes are **concept IDs**
+- `concept_ancestor` finds a concept **and everything under it**
+- One **shared query** defines the cohort for every class
+- Query **once**, save to your bucket, then load the files
+- **Check units** before using any measurement
+
+## Prefer point and click?
+
+The Data Explorer can build the same cohort without code, as a demonstration: see **[Optional: build the cohort in the Data Explorer](data-explorer-cohort.qmd)**. It currently uses CDR v8, so its cohorts can't be combined with this series' v9 files.
+
+## Next
+
+**[1.2 Survival data](1-2-survival-data.qmd)**: the dates needed to study time to chronic kidney disease.

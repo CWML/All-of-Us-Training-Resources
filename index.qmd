@@ -49,6 +49,12 @@ Boxes like this one hold extra details from the training session. Click them to 
 - Follow the *All of Us* [Data User Code of Conduct](https://www.researchallofus.org/faq/data-user-code-of-conduct/) and the [Data and Statistics Dissemination Policy](https://www.researchallofus.org/faq/data-and-statistics-dissemination-policy/)
 :::
 
+## Acknowledgment and data availability
+
+We gratefully acknowledge *All of Us* participants for their contributions, without whom this research would not have been possible. We also thank the National Institutes of Health's *All of Us* Research Program for making available the participant data examined in these materials.
+
+The course results on this site used data from the *All of Us* Research Program's **Controlled Tier Dataset v9** (and **v8** on the Data Explorer page), available to authorized users on the **Researcher Workbench**. All results shown are summary statistics; no participant-level data, and no counts from 1 to 20, are published, in line with the *All of Us* [Data and Statistics Dissemination Policy](https://support.researchallofus.org/hc/en-us/articles/22346276580372-Data-and-Statistics-Dissemination-Policy).
+
 ## Contact
 
 Maximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine

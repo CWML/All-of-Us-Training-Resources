@@ -1,0 +1,142 @@
+---
+title: "3.3 Linear Regression"
+description: "Systolic blood pressure and type 2 diabetes: coefficients, model comparison with R² and AIC, and residual checks"
+code-annotations: below
+---
+
+**Core series, class 8 of 9** · R · 75 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/3.3%20linear_regression.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Diabetes and high blood pressure often go together. Here the outcome is a **number**, systolic blood pressure (SBP), so we use **linear regression**: how much higher, on average, is SBP for each year of age, each BMI unit, and in people with type 2 diabetes, holding the others constant?
+
+### Why this class matters
+
+Linear regression is the foundation of most statistical models, including the gene-by-gene models in 4.5 and 4.6. This class also shows that a model can explain little of the variation (a **low R²**) and still estimate a real difference well, and how to **check** a model with its residuals.
+
+### By the end you'll be able to
+
+1. Explain a **coefficient**: the average change in the outcome per unit of a predictor
+2. Fit and read models with `lm()`, `tidy()`, and `glance()`
+3. Compare models with **R²**, **adjusted R²**, and **AIC**
+4. Check a model's **residuals**
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Is type 2 diabetes linked to higher SBP, after accounting for age, sex, BMI, and LDL? |
+| 🧪 **The analysis** | **Linear regression**, built up step by step, on the same people |
+| 🎯 **Why** | SBP is a number; adjusting separates diabetes from age and weight |
+| ✅ **What we conclude** | The adjusted difference in SBP (mm Hg), and how much each model explains |
+| ⚠️ **What it can't tell us** | Cause, or **untreated** blood pressure: many people take medicine for it |
+| 🔗 **Connections** | The logistic version is **3.2**; the same kind of model is used per gene in **4.5** |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 75 minutes |
+| ⏱️ **Run time** | under 1 minute |
+| 💰 **Cost** | about **$0.35**: no queries, only app time |
+| 📋 **Before class** | run **2.3** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: coefficients, R², AIC, assumptions | listen, ask |
+| 0:15 | **2. Load and look at the outcome** | run the cells |
+| 0:25 | **3. One predictor** | ✋ **Try It Out** (5 min) |
+| 0:40 | **4. Multivariable models** | run the cells, discuss |
+| 1:00 | **5. Check the residuals** | run the cells |
+| 1:10 | **Wrap-up** | |
+
+## Key concepts
+
+$$\text{SBP} = \beta_0 + \beta_1 \times \text{age} + \beta_2 \times \text{BMI} + \dots + \text{error}$$
+
+- Each **coefficient** is the average change in SBP (mm Hg) per unit of that predictor, holding the others constant. For type 2 diabetes (yes/no), it's the average **difference** between the groups.
+- **R²**: the share of variation explained (0 to 1). **AIC**: fit vs complexity, lower is better, only on the same data.
+- Blood pressure varies a lot from reading to reading, so R² is **low** here. That doesn't make the coefficients wrong.
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/3.3 linear_regression.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out · 5 minutes · Part 3, "Your turn"
+
+Fit SBP ~ **t2d** on its own. How much higher is SBP in cases, before any adjustment?
+
+**✅ Check:** the `t2dYes` row: the crude difference in mm Hg. Compare it with the adjusted one in Part 4.
+:::
+
+## Code walk-through
+
+```r
+model_data <- fa %>% drop_na(SBP, age10, sex_at_birth, BMI5, LDL10, t2d)   # <1>
+
+m1 <- lm(SBP ~ age10 + sex_at_birth,                      data = model_data)
+m2 <- lm(SBP ~ age10 + sex_at_birth + BMI5 + LDL10,       data = model_data)
+m3 <- lm(SBP ~ age10 + sex_at_birth + BMI5 + LDL10 + t2d, data = model_data)   # <2>
+
+bind_rows("1. Age + sex" = glance(m1), "2. + BMI, LDL" = glance(m2),
+          "3. + type 2 diabetes" = glance(m3), .id = "model")               # <3>
+tidy(m3, conf.int = TRUE)                                                   # <4>
+```
+1. Every model on the **same people**, as in 3.2.
+2. `lm()` fits a linear regression. Model 3 adds type 2 diabetes last, so its coefficient is **adjusted** for everything before it.
+3. `glance()` gives one row of fit statistics per model (R², AIC); `bind_rows(.id = "model")` labels them.
+4. `tidy()` gives each coefficient with its 95% confidence interval.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9), 6,397 people.
+
+| Model 3 coefficient | mm Hg (95% CI) |
+|---|---|
+| Age, per 10 years | +2.0 (1.7 to 2.3) |
+| Male (vs female) | +2.4 (1.4 to 3.3) |
+| BMI, per 5 units | +1.6 (1.3 to 1.9) |
+| LDL, per 10 mg/dL | +0.4 (0.2 to 0.5) |
+| **Type 2 diabetes** | **+2.8** (1.8 to 3.7) |
+
+| Model | R² | AIC |
+|---|---|---|
+| 1. Age + sex | 0.026 | 55,334 |
+| 2. + BMI, LDL | 0.051 | 55,170 |
+| 3. + type 2 diabetes | 0.056 | 55,142 |
+
+- Type 2 diabetes goes with **2.8 mm Hg** higher SBP, after adjustment: real, but modest.
+- Even the best model explains only about **6%** of the variation. Blood pressure depends on much more than these variables (and on the moment it was measured).
+- The residual plot was centred on zero with an even spread: the model's assumptions look reasonable.
+
+**💬 Discuss:** many people with diabetes take blood pressure medicines. How does that affect the diabetes coefficient? (It makes it **smaller** than the untreated difference: treatment hides part of the link.)
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip
+
+- The scatter and residual plots show **one dot per person**: keep them in the notebook, not on slides.
+- Students often think a low R² means a useless model. Ask: "Is the 2.8 mm Hg wrong because R² is 0.06?" (No: R² measures prediction of individuals, not the accuracy of an average difference.)
+:::
+
+## Key takeaways
+
+- Linear regression is for **numeric** outcomes; coefficients are average changes per unit
+- A low **R²** doesn't make a coefficient wrong
+- Compare models with AIC, on the **same people**
+- **Check the residuals**
+- **Treatment** can hide a link in observational data
+
+## Next
+
+**[3.4 Survival analysis](3-4-survival-analysis.qmd)**: time from type 2 diabetes to chronic kidney disease.

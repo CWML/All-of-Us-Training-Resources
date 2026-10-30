@@ -1,0 +1,176 @@
+---
+title: "2.1 Clean"
+description: "Non-answers, messy survey labels, duplicates, units checked value by value, plausible ranges, a cleaning log, and missing data"
+code-annotations: below
+---
+
+**Core series, class 3 of 9** · R · 105 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/2.1%20clean.ipynb){.btn .btn-outline-primary .btn-sm}
+[Core series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+Real health data is messy: the same answer written several ways, people who skipped a question, the same measurement in different units, impossible values typed by mistake, and duplicate rows. **Cleaning** turns that into data you can analyse, with **every decision written down**. We clean the cohort, the survey answers, and the measurements from 1.1.
+
+### Why this class matters
+
+An impossible BMI of 999, or "PMI: Skip" counted as an answer, can change a mean, a model, or a conclusion, and nobody would notice. Cleaning is where most of the real work of a study happens, and where the most judgment calls are made. Doing it carefully, and **logging** it, is what makes the rest of the analysis trustworthy.
+
+### By the end you'll be able to
+
+1. Check that every column has the right **type**
+2. Tell **real answers** from **non-answers**, and turn non-answers into `NA`
+3. Pull the useful part out of messy text with `str_extract()`
+4. Find and remove **duplicates**, and choose which of several answers to keep
+5. Clean measurements with **units** and **plausible ranges**, after looking at the values unit by unit
+6. Explain what **missing data** costs, and keep a **cleaning log**
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Which values can we trust, and what do we do with the rest? |
+| 🧪 **The analysis** | Counting labels and values, then rules: recode non-answers, extract answers, remove duplicates, keep plausible measurements |
+| 🎯 **Why** | Every later result depends on it |
+| ✅ **What we conclude** | Clean versions of the three files, and a log of what was removed and why |
+| ⚠️ **What it can't tell us** | Whether a **plausible** value is **correct**: cleaning removes the impossible, not every error |
+| 🔗 **Connections** | Uses the files from **1.1**; **2.2** reshapes them; **2.3** joins them |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 105 minutes |
+| ⏱️ **Run time** | about 2 minutes |
+| 💰 **Cost** | about **$0.50**: no queries, only app time |
+| 📋 **Before class** | run **1.1** |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: the cleaning problems, `NA` is not "No", write every decision down | listen, ask |
+| 0:15 | **2. Load and check types** | run the cells |
+| 0:25 | **3. The cohort: non-answers** | run the cells |
+| 0:40 | **4. The survey answers**: extract, duplicates | ✋ **Try It Out 1** (5 min) |
+| 1:00 | ☕ **Break** (5 min) | |
+| 1:05 | **5. The measurements**: units value by value, ranges, the cleaning log | ✋ **Try It Out 2** (5 min) |
+| 1:35 | **6. Missing data** | discuss |
+| 1:45 | **Wrap-up** | |
+
+## Key concepts
+
+| Problem | Example from our data | What we do |
+|---|---|---|
+| **Wrong type** | an ID read as a number | set types when reading the file |
+| **Non-answers** | *PMI: Skip*, *I prefer not to answer*, *None Indicated* | turn into `NA`, and say so |
+| **Messy text** | *"Are you still seeing a doctor … (PTSD)? - Yes"* | extract the part we need: *Yes* |
+| **Duplicates** | the same measurement row twice; two answers to one question | remove exact copies; a rule for the rest (the latest) |
+| **Units** | BMI with the unit "link for Gunter's chain"; HbA1c in g/dL | look at the values for each unit; keep or drop |
+| **Impossible values** | BMI of 0 or 999 | keep a **plausible range**, chosen before the analysis |
+| **Missing data** | no LDL test for a third of people | keep the `NA`; decide per analysis |
+
+### `NA` is not "No"
+
+Someone may have no answer because they **skipped** the question, **preferred not to answer**, or **were never asked** (follow-up questions appear only after certain answers: **skip logic**). None of these means "No".
+
+## Follow along in the Workbench
+
+1. Start your app and pull the newest notebooks, as in [1.1](1-1-build-cohorts.qmd#follow-along-in-the-workbench).
+2. Open `notebooks/core/2.1 clean.ipynb`, with the **R** kernel.
+
+## Try It Out
+
+::: {.callout-tip}
+## ✋ Try It Out 1 · 5 minutes · Part 4, "Your turn"
+
+What share of our 10,000 people answered the PTSD doctor question at all? What does that mean for using it in a model?
+
+**✅ Check:** about 5%. It was asked only of people who reported PTSD, so for 95% the answer is unknown, not "No".
+:::
+
+::: {.callout-tip}
+## ✋ Try It Out 2 · 5 minutes · Part 5, "Your turn"
+
+What if the BMI range were narrower, 15 to 60? How many more rows would be removed? Would the median change?
+
+**✅ Check:** a small number of rows, and almost no change to the median: the median is **robust** to extreme values.
+:::
+
+## Code walk-through
+
+### Extracting the survey answer
+
+```r
+survey_clean <- survey_raw %>%
+  mutate(question = case_when(question_concept_id == 43528846 ~ "ptsd_treatment",   # <1>
+                              question_concept_id == 43530361 ~ "ptsd_doctor"),
+         answer_clean = str_extract(answer, "(?<= - ).*$"))                          # <2>
+
+survey_clean %>% count(question, answer_clean)                                       # <3>
+```
+1. A short name for each question, chosen by its **concept ID**, which never changes (the wording could).
+2. A **regular expression**: `(?<= - )` means "just after ' - '", `.*$` "everything to the end". *PMI: Skip* has no " - ", so it becomes `NA`: exactly right for a non-answer.
+3. **Always check a recoding** by counting the new values: a typo in a pattern can silently turn everything into `NA`.
+
+### The measurement cleaning log
+
+```r
+step1 <- step0 %>% anti_join(WRONG_UNITS, by = c("measure", "unit"))          # <1>
+step2 <- step1 %>%
+  filter(!is.na(value_as_number)) %>%
+  left_join(RANGES, by = "measure") %>%
+  filter(between(value_as_number, low, high))                                   # <2>
+step3 <- step2 %>%
+  distinct(person_id, measure, measurement_date, value_as_number, .keep_all = TRUE)   # <3>
+
+cleaning_log <- tibble(step = c("Start", "1. …", "2. …", "3. …"),
+                       rows = c(nrow(step0), nrow(step1), nrow(step2), nrow(step3))) %>%
+  mutate(removed = lag(rows) - rows)                                             # <4>
+```
+1. Drop units that mean **another measure**: here, HbA1c in grams or milligrams per deciliter. `anti_join()` keeps rows that **don't** match the list.
+2. Drop missing values, then keep each measure's **plausible range** (e.g. BMI 12 to 80), looked up from a small table.
+3. Drop **exact duplicates**: the same person, measure, date, and value.
+4. The **log**: rows left after each step, and how many each removed. Report a table like this with your results.
+
+## What we found
+
+Results from our test run in October 2026 (CDR v9).
+
+**The cleaning log:**
+
+| Step | Rows | Removed |
+|---|---|---|
+| Start | 1,786,613 | |
+| 1. Drop units that mean another measure | 1,786,495 | 118 |
+| 2. Keep plausible values | 1,779,356 | 7,139 |
+| 3. Remove exact duplicates | 1,544,092 | **235,264** |
+
+- **Duplicates** were by far the biggest problem: 13% of all rows, likely the same result recorded by two systems.
+- **Checking values unit by unit changed a decision.** We'd planned to drop BMI recorded in "percent", assuming they were children's BMI percentiles. The values were ordinary adult BMIs (median 28.6), so we **kept** them. HbA1c in "milligram per deciliter" had a median of 132: probably an estimated average glucose, so we dropped it.
+- **Non-answers** were common in demographics: for race, *None Indicated* (about 1,400 people), *PMI: Skip*, and *I prefer not to answer*. Some odd-looking labels, such as *Sex At Birth: Sex At Birth None Of These*, are **real** answers ("none of these describe me").
+
+**💬 Discuss:** cases had HbA1c and LDL results far more often than controls. Why is that a warning sign for any analysis that uses only people with those results?
+
+## Instructor notes
+
+::: {.callout-tip collapse="true"}
+## Instructor tip: timing and pitfalls
+
+- The unit-check table (Part 5) is the heart of the class: give students two minutes to spot the odd units themselves before discussing.
+- Expect "why not just drop every row with an odd unit?": because many odd units hold perfectly good values (*No matching concept* was almost half of blood pressure rows).
+- Ask students to predict the biggest step in the cleaning log before running it. Almost nobody guesses duplicates.
+:::
+
+## Key takeaways
+
+- **Look first**: count every label and summarise every value before writing rules
+- Non-answers become **`NA`**, never "No"
+- A **unit label** alone can't be trusted: check the values
+- Choose **plausible ranges** before the analysis, and keep a **cleaning log**
+- Keep missing values; decide how to handle them **per analysis**
+
+## Next
+
+**[2.2 Reshape](2-2-reshape.qmd)**: from many rows per person to one row per person.
