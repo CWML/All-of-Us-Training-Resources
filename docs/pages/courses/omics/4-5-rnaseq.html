@@ -749,7 +749,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Find <strong><em>TXNIP</em></strong> (a gene that responds to blood sugar) in the results.</li>
 <li>Run the model <strong>without</strong> RNA quality. How many genes are significant now?</li>
-<li><em>Challenge:</em> add each person’s <strong>neutrophil count</strong> from their lab results. Do the neutrophil genes stay significant? (One more query, about $1.)</li>
+<li><em>Optional challenge</em> (its own section, after Your turn): add each person’s <strong>neutrophil count</strong> from their lab results. How much do the neutrophil genes’ differences shrink? (One more query, about $1.)</li>
 </ol>
 <p><strong>✅ Check:</strong> the answers are under <strong>Show answer</strong> in the notebook.</p>
 </div>
@@ -873,14 +873,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>up in diabetes: <strong>immune system process</strong> (p ≈ 7 × 10⁻⁶), defense response, TNF production, phagocytosis; few genes per term, so a supporting theme</td>
 </tr>
 <tr class="even">
+<td>Neutrophil challenge (369 people with a count)</td>
+<td>neutrophil genes’ logFC shrank about 20–45% (e.g.&nbsp;<em>MMP8</em> 0.70 → 0.54) but didn’t disappear: the cell mix explains <strong>part</strong> of the signal</td>
+</tr>
+<tr class="odd">
 <td><em>TCF7L2</em></td>
 <td>not different between groups (adjusted p ≈ 0.95)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Our eQTL test</td>
 <td>no effect of the T allele on <em>TCF7L2</em> (estimate ≈ −0.01, p ≈ 0.6)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><em>All of Us</em> eQTLs (~9,000 people)</td>
 <td><em>TCF7L2</em>’s strongest eQTL is a <strong>different</strong> variant (<code>chr10:112951996_C_T</code>, slope −0.25); rs7903146’s effect is tiny (slope 0.02, p ≈ 0.004)</td>
 </tr>
@@ -931,7 +935,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Run the <strong>setup cell before class</strong>: installing limma and edgeR takes 5–10 minutes.</li>
 <li>Loading the counts reads one large compressed file; use the time for questions or a break.</li>
 <li>The <strong>optional enrichment</strong> section installs two more Bioconductor packages (a few minutes the first time).</li>
-<li>The neutrophil challenge hasn’t been run yet; its result isn’t in the table.</li>
+<li>The neutrophil challenge is a good lesson in comparing <strong>effect sizes</strong> rather than p-values: the genes lost significance partly because only 369 of 600 people had a count. The cell now also refits the main model on the same people, for a fair comparison.</li>
 </ul>
 </div>
 </div>
