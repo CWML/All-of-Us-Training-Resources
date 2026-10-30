@@ -30,7 +30,7 @@ As of October 2026, the Data Explorer offers only version **v8r9**, the *All of 
 
 ### Same rules, different numbers
 
-Built in the Data Explorer, our cases came to **65,710** people. The SQL in 1.1 found **80,919**. Same rules, different counts:
+Built in the Data Explorer, our cases came to **65,710** people and our controls to **311,871**. The SQL in 1.1 found **80,919** and **331,912**. Same rules, different counts:
 
 | | Data Explorer | 1.1 (SQL) |
 |---|---|---|
@@ -38,6 +38,7 @@ Built in the Data Explorer, our cases came to **65,710** people. The SQL in 1.1 
 | Age | 18+ **today** | 18+ on **2025-01-01** |
 | "Has EHR data" | *All of Us*'s ready-made flag | at least one EHR visit, including records participants share themselves |
 | Cases | **65,710** | **80,919** |
+| Controls | **311,871** | **331,912** |
 
 **💬 Discuss:** the same rules on different data, or with slightly different definitions, give different counts. What should you always report with a count? (The data version, and the exact definitions.)
 
@@ -80,6 +81,10 @@ Each **group** is a set of criteria; groups combine with **AND**. Within a group
 | 3 | **Excluded** | Domains → **Condition** → **Type 1 diabetes mellitus** (concept 201254) |
 | 4 | **Included** | Domains → **Has EHR Data** |
 
+**Three ways to search.** The search box finds a criterion by its **name** (e.g. *type 2 diabetes*), by its **vocabulary code** (e.g. the SNOMED code `73211009` for *Diabetes mellitus*), or by its **OMOP concept ID** (e.g. `201820`). Searching by code or ID finds exactly the concept you mean, which helps when several names look alike.
+
+![](images/de-15-search-code.png){fig-alt="Adding criteria for group 3: a search for the code 73211009 returns one row, the Condition Diabetes mellitus, SNOMED vocabulary, code 73211009, roll-up count 78,915, with an Add button."}
+
 For group 2, ticking *Type 2 diabetes mellitus* also includes every more specific concept **under** it: the rows below it in the list are ticked automatically (the same idea as `concept_ancestor` in 1.1). **View in hierarchy** shows the tree.
 
 ![](images/de-06-t2d-search.png){fig-alt="Adding Condition criteria: a search for type 2 diabetes. Type 2 diabetes mellitus, concept 201826, is ticked; the more specific Type 2 diabetes mellitus without complication, concept 4193704, is ticked automatically below it. Selected items lists Type 2 diabetes mellitus."}
@@ -102,7 +107,15 @@ The same steps, with a cohort called `t2d_controls` and these groups:
 |---|---|---|
 | 1 | **Included** | Current Age: 18 to 125 |
 | 2 | **Included** | Has EHR Data |
-| 3 | **Excluded** | Condition → **Diabetes mellitus** (concept **201820**): every type of diabetes |
+| 3 | **Excluded** | Condition → **Diabetes mellitus** (concept **201820**, SNOMED code 73211009): every type of diabetes |
+
+The order of the groups doesn't matter: they're all joined by **AND**.
+
+![](images/de-16-controls-top.png){fig-alt="Cohort filter for t2d_controls: group 1, Included, Has EHR Data, AND group 2, Included, Current Age 18 to 125."}
+
+![](images/de-17-controls-exclude.png){fig-alt="Further down the t2d_controls filter: group 3, Excluded, Condition Diabetes mellitus, and a link to add another group."}
+
+Click **Apply**: **311,871** in our test.
 
 ## Save a data snapshot
 
@@ -110,15 +123,30 @@ A **data snapshot** saves the cohort's data (as CSV files) and/or the **queries*
 
 ![](images/de-09-snapshot-button.png){fig-alt="The top bar of the t2d_cases cohort, showing its data source and version, and a Save data snapshot button on the right."}
 
-**Select data:** **Demographics** is ticked by default; **+ Browse more data** adds other tables (e.g. measurements). In each table, untick the columns you don't need.
+**Select data: choose the tables, then the columns.**
 
-![](images/de-10-tables.png){fig-alt="Save data snapshot, step 1, Select data, Tables tab: the person table with checkboxes for each column, such as PERSON_ID, GENDER, DATE_OF_BIRTH, and RACE."}
+- On the left, **Demographics** and **Tables that contain cohort-defining criteria** are ticked by default; **+ Browse more data** adds other tables (e.g. measurements).
+- The **Tables** tab is where you choose **which columns to include**: every column has a **checkbox**. Untick the ones you don't need. Fewer columns means smaller files and less data to look after.
+
+![](images/de-10-tables.png){fig-alt="Save data snapshot, step 1, Select data, Tables tab: the person table with a checkbox above each column, all ticked: PERSON_ID, GENDER_CONCEPT_ID, GENDER, DATE_OF_BIRTH, RACE_CONCEPT_ID, RACE, and ETHNICITY_CONCEPT_ID."}
+
+The same table with the **concept ID** columns unticked, keeping the readable names (`GENDER`, `RACE`):
+
+![](images/de-10b-columns.png){fig-alt="The same person table with some checkboxes unticked: GENDER_CONCEPT_ID, RACE_CONCEPT_ID, and ETHNICITY_CONCEPT_ID are unticked, while PERSON_ID, GENDER, DATE_OF_BIRTH, and RACE stay ticked."}
+
+::: {.callout-note}
+## "Tables that contain cohort-defining criteria" holds only the criteria's rows
+
+This option adds, for example, the `condition_occurrence` table, but **only the rows for the criteria's own concepts**: for the cases, their diabetes diagnoses, not all their diagnoses. For the **controls**, whose rule is *no diabetes*, that table is therefore **empty**: their query asks for diabetes codes among people with no diabetes. To get **other** diagnoses, add them with **+ Browse more data**.
+:::
 
 The **Summary** tab lists the criteria and the tables, in plain words: a good check before saving.
 
 ![](images/de-11-summary.png){fig-alt="Summary tab: cohort participants meet 4 criteria (current age 18 to 125, type 2 diabetes mellitus, excluding type 1 diabetes mellitus, and has EHR data); the snapshot includes 1 table, person, with 6 of 12 columns."}
 
-The **Queries for each table** and **Queries for the cohort** tabs show the SQL and the code (R or Python) that the snapshot uses. You can **Copy** them.
+The **Queries for each table** tab shows the **SQL** for each table. **Queries for the cohort** shows the complete code, in **Python** (*Jupyter*) or **R**: choose with the drop-down, then **Copy**.
+
+![](images/de-18-cohort-queries.png){fig-alt="Queries for the cohort tab: a drop-down open with the choices Jupyter and R, a Copy button, and the start of the Python code, import pandas, import pandas_gbq, import os."}
 
 **Select file format:** CSV tables (zipped), and/or a notebook with the queries, in R or Python.
 

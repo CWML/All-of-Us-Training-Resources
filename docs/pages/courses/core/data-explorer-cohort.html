@@ -632,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="same-rules-different-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="same-rules-different-numbers">Same rules, different numbers</h3>
-<p>Built in the Data Explorer, our cases came to <strong>65,710</strong> people. The SQL in 1.1 found <strong>80,919</strong>. Same rules, different counts:</p>
+<p>Built in the Data Explorer, our cases came to <strong>65,710</strong> people and our controls to <strong>311,871</strong>. The SQL in 1.1 found <strong>80,919</strong> and <strong>331,912</strong>. Same rules, different counts:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -666,6 +666,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Cases</td>
 <td><strong>65,710</strong></td>
 <td><strong>80,919</strong></td>
+</tr>
+<tr class="odd">
+<td>Controls</td>
+<td><strong>311,871</strong></td>
+<td><strong>331,912</strong></td>
 </tr>
 </tbody>
 </table>
@@ -751,6 +756,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p><strong>Three ways to search.</strong> The search box finds a criterion by its <strong>name</strong> (e.g.&nbsp;<em>type 2 diabetes</em>), by its <strong>vocabulary code</strong> (e.g.&nbsp;the SNOMED code <code>73211009</code> for <em>Diabetes mellitus</em>), or by its <strong>OMOP concept ID</strong> (e.g.&nbsp;<code>201820</code>). Searching by code or ID finds exactly the concept you mean, which helps when several names look alike.</p>
+<p><img src="images/de-15-search-code.png" class="img-fluid" alt="Adding criteria for group 3: a search for the code 73211009 returns one row, the Condition Diabetes mellitus, SNOMED vocabulary, code 73211009, roll-up count 78,915, with an Add button."></p>
 <p>For group 2, ticking <em>Type 2 diabetes mellitus</em> also includes every more specific concept <strong>under</strong> it: the rows below it in the list are ticked automatically (the same idea as <code>concept_ancestor</code> in 1.1). <strong>View in hierarchy</strong> shows the tree.</p>
 <p><img src="images/de-06-t2d-search.png" class="img-fluid" alt="Adding Condition criteria: a search for type 2 diabetes. Type 2 diabetes mellitus, concept 201826, is ticked; the more specific Type 2 diabetes mellitus without complication, concept 4193704, is ticked automatically below it. Selected items lists Type 2 diabetes mellitus."></p>
 <p>For group 3, change <strong>Included</strong> to <strong>Excluded</strong>, then add <em>Type 1 diabetes mellitus</em>:</p>
@@ -789,21 +796,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>3</td>
 <td><strong>Excluded</strong></td>
-<td>Condition → <strong>Diabetes mellitus</strong> (concept <strong>201820</strong>): every type of diabetes</td>
+<td>Condition → <strong>Diabetes mellitus</strong> (concept <strong>201820</strong>, SNOMED code 73211009): every type of diabetes</td>
 </tr>
 </tbody>
 </table>
+<p>The order of the groups doesn’t matter: they’re all joined by <strong>AND</strong>.</p>
+<p><img src="images/de-16-controls-top.png" class="img-fluid" alt="Cohort filter for t2d_controls: group 1, Included, Has EHR Data, AND group 2, Included, Current Age 18 to 125."></p>
+<p><img src="images/de-17-controls-exclude.png" class="img-fluid" alt="Further down the t2d_controls filter: group 3, Excluded, Condition Diabetes mellitus, and a link to add another group."></p>
+<p>Click <strong>Apply</strong>: <strong>311,871</strong> in our test.</p>
 </section>
 </section>
 <section id="save-a-data-snapshot" class="level2">
 <h2 class="anchored" data-anchor-id="save-a-data-snapshot">Save a data snapshot</h2>
 <p>A <strong>data snapshot</strong> saves the cohort’s data (as CSV files) and/or the <strong>queries</strong> that produce it (as a notebook) to a bucket. Click <strong>Save data snapshot</strong> at the top right of the cohort.</p>
 <p><img src="images/de-09-snapshot-button.png" class="img-fluid" alt="The top bar of the t2d_cases cohort, showing its data source and version, and a Save data snapshot button on the right."></p>
-<p><strong>Select data:</strong> <strong>Demographics</strong> is ticked by default; <strong>+ Browse more data</strong> adds other tables (e.g.&nbsp;measurements). In each table, untick the columns you don’t need.</p>
-<p><img src="images/de-10-tables.png" class="img-fluid" alt="Save data snapshot, step 1, Select data, Tables tab: the person table with checkboxes for each column, such as PERSON_ID, GENDER, DATE_OF_BIRTH, and RACE."></p>
+<p><strong>Select data: choose the tables, then the columns.</strong></p>
+<ul>
+<li>On the left, <strong>Demographics</strong> and <strong>Tables that contain cohort-defining criteria</strong> are ticked by default; <strong>+ Browse more data</strong> adds other tables (e.g.&nbsp;measurements).</li>
+<li>The <strong>Tables</strong> tab is where you choose <strong>which columns to include</strong>: every column has a <strong>checkbox</strong>. Untick the ones you don’t need. Fewer columns means smaller files and less data to look after.</li>
+</ul>
+<p><img src="images/de-10-tables.png" class="img-fluid" alt="Save data snapshot, step 1, Select data, Tables tab: the person table with a checkbox above each column, all ticked: PERSON_ID, GENDER_CONCEPT_ID, GENDER, DATE_OF_BIRTH, RACE_CONCEPT_ID, RACE, and ETHNICITY_CONCEPT_ID."></p>
+<p>The same table with the <strong>concept ID</strong> columns unticked, keeping the readable names (<code>GENDER</code>, <code>RACE</code>):</p>
+<p><img src="images/de-10b-columns.png" class="img-fluid" alt="The same person table with some checkboxes unticked: GENDER_CONCEPT_ID, RACE_CONCEPT_ID, and ETHNICITY_CONCEPT_ID are unticked, while PERSON_ID, GENDER, DATE_OF_BIRTH, and RACE stay ticked."></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>“Tables that contain cohort-defining criteria” holds only the criteria’s rows
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This option adds, for example, the <code>condition_occurrence</code> table, but <strong>only the rows for the criteria’s own concepts</strong>: for the cases, their diabetes diagnoses, not all their diagnoses. For the <strong>controls</strong>, whose rule is <em>no diabetes</em>, that table is therefore <strong>empty</strong>: their query asks for diabetes codes among people with no diabetes. To get <strong>other</strong> diagnoses, add them with <strong>+ Browse more data</strong>.</p>
+</div>
+</div>
 <p>The <strong>Summary</strong> tab lists the criteria and the tables, in plain words: a good check before saving.</p>
 <p><img src="images/de-11-summary.png" class="img-fluid" alt="Summary tab: cohort participants meet 4 criteria (current age 18 to 125, type 2 diabetes mellitus, excluding type 1 diabetes mellitus, and has EHR data); the snapshot includes 1 table, person, with 6 of 12 columns."></p>
-<p>The <strong>Queries for each table</strong> and <strong>Queries for the cohort</strong> tabs show the SQL and the code (R or Python) that the snapshot uses. You can <strong>Copy</strong> them.</p>
+<p>The <strong>Queries for each table</strong> tab shows the <strong>SQL</strong> for each table. <strong>Queries for the cohort</strong> shows the complete code, in <strong>Python</strong> (<em>Jupyter</em>) or <strong>R</strong>: choose with the drop-down, then <strong>Copy</strong>.</p>
+<p><img src="images/de-18-cohort-queries.png" class="img-fluid" alt="Queries for the cohort tab: a drop-down open with the choices Jupyter and R, a Copy button, and the start of the Python code, import pandas, import pandas_gbq, import os."></p>
 <p><strong>Select file format:</strong> CSV tables (zipped), and/or a notebook with the queries, in R or Python.</p>
 <p><img src="images/de-12-format.png" class="img-fluid" alt="Select file format: options for Tables as zipped CSV files, Queries for the cohort as an R notebook, and Queries for the cohort as a Jupyter (Python) notebook, each with a Copy code link."></p>
 <p><strong>Select destination bucket:</strong> pick your workspace bucket, then <strong>Save</strong>.</p>
