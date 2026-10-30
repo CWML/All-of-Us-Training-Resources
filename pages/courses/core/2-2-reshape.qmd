@@ -111,16 +111,18 @@ nrow(measurements_wide) == n_distinct(measurements_wide$person_id)          # <4
 
 Results from our test run in October 2026 (CDR v9).
 
-| Measure | People with a value | Median results per person | Most for one person |
-|---|---|---|---|
-| BMI | 9,860 | 13 | over 1,000 |
-| SBP | 9,882 | 46 | over **5,000** |
-| HbA1c | 5,822 | 4 | over 100 |
-| LDL | 6,535 | 5 | over 100 |
+| Measure | People with a value | Median results per person |
+|---|---|---|
+| BMI | 9,860 | 13 |
+| SBP | 9,882 | 46 |
+| HbA1c | 5,822 | 4 |
+| LDL | 6,535 | 5 |
+
+Some people had **thousands** of blood pressure readings. (We don't show each measure's maximum: a maximum describes a single person, which the *All of Us* rules on small counts don't allow.)
 
 Keeping the latest value took the clean measurements from **1,544,092 rows to 32,099**: at most four per person.
 
-**💬 Discuss:** one person had over 5,000 blood pressure readings: probably continuous monitoring during hospital stays. Would their **latest** reading be typical of them? Would the **median** be a better choice?
+**💬 Discuss:** people with thousands of blood pressure readings were probably monitored continuously during hospital stays. Would their **latest** reading be typical of them? Would the **median** be a better choice?
 
 ::: {.callout-note collapse="true"}
 ## Screenshots: none to share

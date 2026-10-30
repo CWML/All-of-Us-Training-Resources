@@ -1478,7 +1478,7 @@
     "href": "pages/courses/omics/4-1-dna-intro.html#what-we-found",
     "title": "4.1 Introduction to Genomic Data",
     "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9). Your numbers will be similar, but not identical if your sample differs.\n\nThe cohort and the genomes\n\n\n\n\nCases\nControls\n\n\n\n\nIn the cohort, with a genome\n70,020\n287,628\n\n\nEligible (unrelated, 18–100, sex recorded)\n63,310\n264,250\n\n\nOur sample\n2,500\n2,500\n\n\n\n535,662 people had a short-read genome. Chromosome 10 was 80 GB in the PLINK 2 format and 846 GB in PLINK 1. PLINK extracted the TCF7L2 region for our 5,000 people in about 10 seconds: 14,430 variants.\n💬 Discuss: most people in our cohort have a genome, but not all. Who might be missing, and could that matter?\n\n\nGenetic ancestry of our sample\n\n\n\nAncestry group\nCases\nControls\n\n\n\n\nAfrican (afr)\n569\n393\n\n\nAdmixed American (amr)\n518\n372\n\n\nEast Asian (eas)\n65\n77\n\n\nEuropean (eur)\n1,323\n1,622\n\n\nSouth Asian (sas)\n20 or fewer\n29\n\n\nMiddle Eastern (mid)\n20 or fewer\n20 or fewer\n\n\n\n💬 Discuss: cases include more people of African and Admixed American ancestry than controls do. Why does that make adjusting for ancestry important in 4.2?\n\n\nrs7903146\n\nIn All of Us as a whole, rs7903146 is multi-allelic: REF C, ALT T or G. About 28% of alleles are T; G is extremely rare.\nVariant IDs in the files are chromosome:position:REF (chr10:112998590:C), not rsIDs.\n\n\n\n\n\nCases\nControls\n\n\n\n\nT allele frequency\n0.301\n0.270\n\n\n\nOdds ratio per T allele (unadjusted): 1.17 (95% confidence interval 1.07 to 1.27; p = 0.0006).\n💬 Discuss: large published studies report about 1.3 to 1.4, mostly in people of European ancestry. Why might our first estimate be smaller? (Mixed ancestry, no adjustment, diagnosis codes as the case definition, younger controls who may develop diabetes later.) In 4.2, after adjustment, it rises to about 1.25.\n\n\n\n\n\n\nNoteWhy the first odds ratio was 0.86 (a lesson from testing)\n\n\n\n\n\nThe first time we ran this notebook, the odds ratio came out below 1 (0.86). The variant hadn’t changed: PLINK was counting the C allele, because for a multi-allelic variant it counts REF by default. 1 ÷ 0.857 = 1.17, the same result counted the other way. Always check which allele a result is “per copy” of: the column name in PLINK’s output ends with it (_T).",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9). Your numbers will be similar, but not identical if your sample differs.\n\nThe cohort and the genomes\n\n\n\n\nCases\nControls\n\n\n\n\nIn the cohort, with a genome\n70,020\n287,628\n\n\nEligible (unrelated, 18–100, sex recorded)\n63,310\n264,250\n\n\nOur sample\n2,500\n2,500\n\n\n\n535,662 people had a short-read genome. Chromosome 10 was 80 GB in the PLINK 2 format and 846 GB in PLINK 1. PLINK extracted the TCF7L2 region for our 5,000 people in about 10 seconds: 14,430 variants.\n💬 Discuss: most people in our cohort have a genome, but not all. Who might be missing, and could that matter?\n\n\nGenetic ancestry of our sample\n\n\n\n\n\n\n\n\nAncestry group\nCases\nControls\n\n\n\n\nAfrican (afr)\n569\n393\n\n\nAdmixed American (amr)\n518\n372\n\n\nEuropean (eur)\n1,323\n1,622\n\n\nEast Asian, South Asian, or Middle Eastern (eas, sas, mid), or none assigned\n90\n113\n\n\n\nThe three smallest groups are combined: on their own, some were 20 or fewer, and with the column totals (2,500) a hidden count could be worked out. That’s the All of Us rule on derived counts (more in 3.1).\n💬 Discuss: cases include more people of African and Admixed American ancestry than controls do. Why does that make adjusting for ancestry important in 4.2?\n\n\nrs7903146\n\nIn All of Us as a whole, rs7903146 is multi-allelic: REF C, ALT T or G. About 28% of alleles are T; G is extremely rare.\nVariant IDs in the files are chromosome:position:REF (chr10:112998590:C), not rsIDs.\n\n\n\n\n\nCases\nControls\n\n\n\n\nT allele frequency\n0.301\n0.270\n\n\n\nOdds ratio per T allele (unadjusted): 1.17 (95% confidence interval 1.07 to 1.27; p = 0.0006).\n💬 Discuss: large published studies report about 1.3 to 1.4, mostly in people of European ancestry. Why might our first estimate be smaller? (Mixed ancestry, no adjustment, diagnosis codes as the case definition, younger controls who may develop diabetes later.) In 4.2, after adjustment, it rises to about 1.25.\n\n\n\n\n\n\nNoteWhy the first odds ratio was 0.86 (a lesson from testing)\n\n\n\n\n\nThe first time we ran this notebook, the odds ratio came out below 1 (0.86). The variant hadn’t changed: PLINK was counting the C allele, because for a multi-allelic variant it counts REF by default. 1 ÷ 0.857 = 1.17, the same result counted the other way. Always check which allele a result is “per copy” of: the column name in PLINK’s output ends with it (_T).",
     "crumbs": [
       "Omics",
       "4.1 Introduction to Genomic Data"
@@ -1599,7 +1599,7 @@
     "href": "pages/courses/core/index.html#what-youll-find-along-the-way",
     "title": "Core Series: Cohorts to Analysis",
     "section": "What you’ll find along the way",
-    "text": "What you’ll find along the way\nOur test runs (CDR v9, October 2026) turned up real-world lessons the classes use:\n\n235,264 exact duplicate measurement rows: 13% of the data (2.1)\nBMI recorded with the unit “link for Gunter’s chain”: a mapping error with perfectly good values (2.1)\none person with over 5,000 blood pressure readings (2.2)\nLDL cholesterol lower in people with diabetes, because of statins (3.2)\na type 2 diabetes link to blood pressure of 2.8 mm Hg, after adjustment (3.3)\n73% of people with diabetes still CKD-free 10 years after diagnosis (3.4)",
+    "text": "What you’ll find along the way\nOur test runs (CDR v9, October 2026) turned up real-world lessons the classes use:\n\n235,264 exact duplicate measurement rows: 13% of the data (2.1)\nBMI recorded with the unit “link for Gunter’s chain”: a mapping error with perfectly good values (2.1)\npeople with thousands of blood pressure readings, likely from hospital monitoring (2.2)\nLDL cholesterol lower in people with diabetes, because of statins (3.2)\na type 2 diabetes link to blood pressure of 2.8 mm Hg, after adjustment (3.3)\n73% of people with diabetes still CKD-free 10 years after diagnosis (3.4)",
     "crumbs": [
       "Core",
       "Core Series: Cohorts to Analysis"
@@ -1610,7 +1610,7 @@
     "href": "pages/courses/core/index.html#keep-all-of-us-data-in-the-workbench",
     "title": "Core Series: Cohorts to Analysis",
     "section": "Keep All of Us data in the Workbench",
-    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data, or counts of 1 to 20 (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data, or counts of 1 to 20 (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.\nThe results on these pages come from the All of Us Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge All of Us participants for their contributions. See Acknowledgment and data availability.",
     "crumbs": [
       "Core",
       "Core Series: Cohorts to Analysis"
@@ -2268,6 +2268,13 @@
     "text": "Data use\n\n\n\n\n\n\nWarningKeep All of Us data in the Workbench\n\n\n\n\nDon’t download, screenshot, or share participant-level data\nDon’t publish participant counts of 1 to 20, or numbers they could be calculated from\nFollow the All of Us Data User Code of Conduct and the Data and Statistics Dissemination Policy"
   },
   {
+    "objectID": "index.html#acknowledgment-and-data-availability",
+    "href": "index.html#acknowledgment-and-data-availability",
+    "title": "All of Us Researcher Workbench 2.0",
+    "section": "Acknowledgment and data availability",
+    "text": "Acknowledgment and data availability\nWe gratefully acknowledge All of Us participants for their contributions, without whom this research would not have been possible. We also thank the National Institutes of Health’s All of Us Research Program for making available the participant data examined in these materials.\nThe course results on this site used data from the All of Us Research Program’s Controlled Tier Dataset v9 (and v8 on the Data Explorer page), available to authorized users on the Researcher Workbench. All results shown are summary statistics; no participant-level data, and no counts from 1 to 20, are published, in line with the All of Us Data and Statistics Dissemination Policy."
+  },
+  {
     "objectID": "index.html#contact",
     "href": "index.html#contact",
     "title": "All of Us Researcher Workbench 2.0",
@@ -2477,7 +2484,7 @@
     "href": "pages/courses/core/2-2-reshape.html#what-we-found",
     "title": "2.2 Reshape",
     "section": "What we found",
-    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\n\n\n\n\n\n\nMeasure\nPeople with a value\nMedian results per person\nMost for one person\n\n\n\n\nBMI\n9,860\n13\nover 1,000\n\n\nSBP\n9,882\n46\nover 5,000\n\n\nHbA1c\n5,822\n4\nover 100\n\n\nLDL\n6,535\n5\nover 100\n\n\n\nKeeping the latest value took the clean measurements from 1,544,092 rows to 32,099: at most four per person.\n💬 Discuss: one person had over 5,000 blood pressure readings: probably continuous monitoring during hospital stays. Would their latest reading be typical of them? Would the median be a better choice?\n\n\n\n\n\n\nNoteScreenshots: none to share\n\n\n\n\n\nThe histograms in Part 6 count people, and their tails can include counts of 1 to 20. Keep them in the notebook.",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\n\n\nMeasure\nPeople with a value\nMedian results per person\n\n\n\n\nBMI\n9,860\n13\n\n\nSBP\n9,882\n46\n\n\nHbA1c\n5,822\n4\n\n\nLDL\n6,535\n5\n\n\n\nSome people had thousands of blood pressure readings. (We don’t show each measure’s maximum: a maximum describes a single person, which the All of Us rules on small counts don’t allow.)\nKeeping the latest value took the clean measurements from 1,544,092 rows to 32,099: at most four per person.\n💬 Discuss: people with thousands of blood pressure readings were probably monitored continuously during hospital stays. Would their latest reading be typical of them? Would the median be a better choice?\n\n\n\n\n\n\nNoteScreenshots: none to share\n\n\n\n\n\nThe histograms in Part 6 count people, and their tails can include counts of 1 to 20. Keep them in the notebook.",
     "crumbs": [
       "Core",
       "2.2 Reshape"
@@ -2851,6 +2858,16 @@
     "title": "Courses",
     "section": "How a class works",
     "text": "How a class works\n\nBefore class: set up your workspace and app once (see Get Started and Your Workspace), and run 0.0 setup.\nIn class: the instructor walks through the notebook. At each ✋ Try It Out you run the next cells or an exercise yourself.\nAfter class: stop your app, so it stops costing money.\n\n\n\n\n\n\n\nNoteThe notebooks and this site work together\n\n\n\nThe notebooks are self-contained: you can work through them on your own. This site adds what a notebook can’t do well: the class plan, diagrams, Workbench walk-throughs, “Try It Out” pauses, our results to compare with, and instructor notes.",
+    "crumbs": [
+      "Courses"
+    ]
+  },
+  {
+    "objectID": "pages/courses/index.html#acknowledgment-and-data-availability",
+    "href": "pages/courses/index.html#acknowledgment-and-data-availability",
+    "title": "Courses",
+    "section": "Acknowledgment and data availability",
+    "text": "Acknowledgment and data availability\nWe gratefully acknowledge All of Us participants for their contributions, without whom this research would not have been possible. We also thank the National Institutes of Health’s All of Us Research Program for making available the participant data examined in these materials.\nThe course results on this site used data from the All of Us Research Program’s Controlled Tier Dataset v9 (and v8 on the Data Explorer page), available to authorized users on the Researcher Workbench. All results shown are summary statistics; no participant-level data, and no counts from 1 to 20, are published, in line with the All of Us Data and Statistics Dissemination Policy.",
     "crumbs": [
       "Courses"
     ]
@@ -3322,7 +3339,7 @@
     "href": "pages/courses/omics/index.html#keep-all-of-us-data-in-the-workbench",
     "title": "Omics Series",
     "section": "Keep All of Us data in the Workbench",
-    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data (including genotypes, expression values, and IDs), or counts of 1 to 20. The results shown on these pages are summary statistics from our test runs.",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data (including genotypes, expression values, and IDs), or counts of 1 to 20. The results shown on these pages are summary statistics from our test runs.\nThe results on these pages come from the All of Us Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge All of Us participants for their contributions. See Acknowledgment and data availability.",
     "crumbs": [
       "Omics",
       "Omics Series"

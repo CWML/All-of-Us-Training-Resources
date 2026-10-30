@@ -79,3 +79,5 @@ Each class answers one question. Combining them asks sharper ones. These methods
 ## Keep All of Us data in the Workbench
 
 Don't download, screenshot, or share **participant-level data** (including genotypes, expression values, and IDs), or counts of **1 to 20**. The results shown on these pages are summary statistics from our test runs.
+
+The results on these pages come from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge *All of Us* participants for their contributions. See [Acknowledgment and data availability](../index.qmd#acknowledgment-and-data-availability).

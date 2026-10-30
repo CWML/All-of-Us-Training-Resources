@@ -849,18 +849,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
 <p>Results from our test run in October 2026 (CDR v9).</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Measure</th>
 <th>People with a value</th>
 <th>Median results per person</th>
-<th>Most for one person</th>
 </tr>
 </thead>
 <tbody>
@@ -868,30 +861,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>BMI</td>
 <td>9,860</td>
 <td>13</td>
-<td>over 1,000</td>
 </tr>
 <tr class="even">
 <td>SBP</td>
 <td>9,882</td>
 <td>46</td>
-<td>over <strong>5,000</strong></td>
 </tr>
 <tr class="odd">
 <td>HbA1c</td>
 <td>5,822</td>
 <td>4</td>
-<td>over 100</td>
 </tr>
 <tr class="even">
 <td>LDL</td>
 <td>6,535</td>
 <td>5</td>
-<td>over 100</td>
 </tr>
 </tbody>
 </table>
+<p>Some people had <strong>thousands</strong> of blood pressure readings. (We don’t show each measure’s maximum: a maximum describes a single person, which the <em>All of Us</em> rules on small counts don’t allow.)</p>
 <p>Keeping the latest value took the clean measurements from <strong>1,544,092 rows to 32,099</strong>: at most four per person.</p>
-<p><strong>💬 Discuss:</strong> one person had over 5,000 blood pressure readings: probably continuous monitoring during hospital stays. Would their <strong>latest</strong> reading be typical of them? Would the <strong>median</strong> be a better choice?</p>
+<p><strong>💬 Discuss:</strong> people with thousands of blood pressure readings were probably monitored continuously during hospital stays. Would their <strong>latest</strong> reading be typical of them? Would the <strong>median</strong> be a better choice?</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

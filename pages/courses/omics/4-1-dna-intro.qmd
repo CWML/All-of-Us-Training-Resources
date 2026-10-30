@@ -265,10 +265,10 @@ Results from our test run in October 2026 (CDR v9). Your numbers will be similar
 |---|---|---|
 | African (`afr`) | 569 | 393 |
 | Admixed American (`amr`) | 518 | 372 |
-| East Asian (`eas`) | 65 | 77 |
 | European (`eur`) | 1,323 | 1,622 |
-| South Asian (`sas`) | 20 or fewer | 29 |
-| Middle Eastern (`mid`) | 20 or fewer | 20 or fewer |
+| East Asian, South Asian, or Middle Eastern (`eas`, `sas`, `mid`), or none assigned | 90 | 113 |
+
+The three smallest groups are **combined**: on their own, some were 20 or fewer, and with the column totals (2,500) a hidden count could be worked out. That's the *All of Us* rule on **derived counts** (more in [3.1](../core/3-1-table-one.qmd)).
 
 **💬 Discuss:** cases include **more** people of African and Admixed American ancestry than controls do. Why does that make adjusting for ancestry important in 4.2?
 

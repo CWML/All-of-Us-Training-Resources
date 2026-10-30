@@ -127,6 +127,10 @@ The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
 
+## Acknowledgment and Data Availability
+
+We gratefully acknowledge *All of Us* participants for their contributions, without whom this research would not have been possible. We also thank the National Institutes of Health's *All of Us* Research Program for making available the participant data examined in these materials. The results described in these materials used data from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench.
+
 ## Data Use
 
 This repository contains **code only, no *All of Us* data**. If you use these materials:

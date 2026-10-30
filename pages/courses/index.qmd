@@ -25,3 +25,9 @@ All the series share **one research question**, type 2 diabetes, and one cohort 
 
 The **notebooks** are self-contained: you can work through them on your own. This **site** adds what a notebook can't do well: the class plan, diagrams, Workbench walk-throughs, "Try It Out" pauses, our results to compare with, and instructor notes.
 :::
+
+## Acknowledgment and data availability
+
+We gratefully acknowledge *All of Us* participants for their contributions, without whom this research would not have been possible. We also thank the National Institutes of Health's *All of Us* Research Program for making available the participant data examined in these materials.
+
+The course results on this site used data from the *All of Us* Research Program's **Controlled Tier Dataset v9** (and **v8** on the Data Explorer page), available to authorized users on the **Researcher Workbench**. All results shown are summary statistics; no participant-level data, and no counts from 1 to 20, are published, in line with the *All of Us* [Data and Statistics Dissemination Policy](https://support.researchallofus.org/hc/en-us/articles/22346276580372-Data-and-Statistics-Dissemination-Policy).

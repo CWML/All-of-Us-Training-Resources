@@ -75,7 +75,7 @@ Our test runs (CDR v9, October 2026) turned up real-world lessons the classes us
 
 - **235,264** exact duplicate measurement rows: 13% of the data (2.1)
 - BMI recorded with the unit *"link for Gunter's chain"*: a mapping error with perfectly good values (2.1)
-- one person with over **5,000** blood pressure readings (2.2)
+- people with **thousands** of blood pressure readings, likely from hospital monitoring (2.2)
 - LDL cholesterol **lower** in people with diabetes, because of statins (3.2)
 - a type 2 diabetes link to blood pressure of **2.8 mm Hg**, after adjustment (3.3)
 - **73%** of people with diabetes still CKD-free 10 years after diagnosis (3.4)
@@ -83,3 +83,5 @@ Our test runs (CDR v9, October 2026) turned up real-world lessons the classes us
 ## Keep All of Us data in the Workbench
 
 Don't download, screenshot, or share **participant-level data**, or counts of **1 to 20** (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.
+
+The results on these pages come from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge *All of Us* participants for their contributions. See [Acknowledgment and data availability](../index.qmd#acknowledgment-and-data-availability).
