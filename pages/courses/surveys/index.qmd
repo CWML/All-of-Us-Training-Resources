@@ -1,0 +1,42 @@
+---
+title: "Survey Series"
+description: "Three classes on the All of Us survey data: how the surveys are organised, family history and lifestyle, and social factors, with the shared type 2 diabetes cohort"
+---
+
+Three R classes on the *All of Us* **survey data**, with the same cohort as every other series: people **with type 2 diabetes** compared with people **without diabetes**.
+
+Surveys tell us what health records rarely do: smoking, family history, income, food security, access to care. They also have their own traps: non-answers, questions that were never asked, several answers per question, and later surveys answered by only some participants. This series teaches you to read and code survey answers correctly, then to use them in an analysis.
+
+## The classes
+
+| Class | Time | What you learn |
+|---|---|---|
+| [**5.1 Survey basics**](5-1-survey-basics.qmd) | 90 min | The ten surveys and who answered them; finding questions; non-answers, skip logic, select-all questions; one row per person |
+| **5.2 Family history and lifestyle** (coming soon) | | Family history of diabetes, smoking, and alcohol, in cases and controls |
+| **5.3 Social factors** (coming soon) | | Income, education, food security, and health care access, and type 2 diabetes |
+
+## The cohort
+
+The same cohort as the [core series](../core/index.qmd): a random sample of **5,000 cases and 5,000 controls** from the shared query (`notebooks/sql/t2d_cohort.sql`). The notebooks load `cohort_sample.csv` from **1.1**, or make it if it's missing, so this series can start without the core series.
+
+## What you need
+
+- An *All of Us* **Controlled Tier** workspace with a **bucket**, and the course notebooks in your app (see the [Notebooks](../../examples/notebooks.qmd) page).
+- **Notebook 0.0 setup**, run once.
+- Helpful, not required: **2.1 clean**, **2.2 reshape**, and **3.1 Table One** from the core series.
+
+## What it costs
+
+| | Cost |
+|---|---|
+| **5.1** | about **$1 to $2** in queries: `ds_survey` is a large table |
+| **The app, while running** | about **$0.27 an hour** |
+| **The app's disk** | about **$0.70 a day**, even while the app is stopped |
+
+**Stop** your app after each class.
+
+## Keep All of Us data in the Workbench
+
+Don't download, screenshot, or share **participant-level data**, or counts of **1 to 20** (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.
+
+The results on these pages come from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge *All of Us* participants for their contributions. See [Acknowledgment and data availability](../index.qmd#acknowledgment-and-data-availability).

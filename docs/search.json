@@ -880,6 +880,72 @@
     ]
   },
   {
+    "objectID": "pages/courses/surveys/index.html",
+    "href": "pages/courses/surveys/index.html",
+    "title": "Survey Series",
+    "section": "",
+    "text": "Three R classes on the All of Us survey data, with the same cohort as every other series: people with type 2 diabetes compared with people without diabetes.\nSurveys tell us what health records rarely do: smoking, family history, income, food security, access to care. They also have their own traps: non-answers, questions that were never asked, several answers per question, and later surveys answered by only some participants. This series teaches you to read and code survey answers correctly, then to use them in an analysis.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#the-classes",
+    "href": "pages/courses/surveys/index.html#the-classes",
+    "title": "Survey Series",
+    "section": "The classes",
+    "text": "The classes\n\n\n\nClass\nTime\nWhat you learn\n\n\n\n\n5.1 Survey basics\n90 min\nThe ten surveys and who answered them; finding questions; non-answers, skip logic, select-all questions; one row per person\n\n\n5.2 Family history and lifestyle (coming soon)\n\nFamily history of diabetes, smoking, and alcohol, in cases and controls\n\n\n5.3 Social factors (coming soon)\n\nIncome, education, food security, and health care access, and type 2 diabetes",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#the-cohort",
+    "href": "pages/courses/surveys/index.html#the-cohort",
+    "title": "Survey Series",
+    "section": "The cohort",
+    "text": "The cohort\nThe same cohort as the core series: a random sample of 5,000 cases and 5,000 controls from the shared query (notebooks/sql/t2d_cohort.sql). The notebooks load cohort_sample.csv from 1.1, or make it if it’s missing, so this series can start without the core series.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#what-you-need",
+    "href": "pages/courses/surveys/index.html#what-you-need",
+    "title": "Survey Series",
+    "section": "What you need",
+    "text": "What you need\n\nAn All of Us Controlled Tier workspace with a bucket, and the course notebooks in your app (see the Notebooks page).\nNotebook 0.0 setup, run once.\nHelpful, not required: 2.1 clean, 2.2 reshape, and 3.1 Table One from the core series.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#what-it-costs",
+    "href": "pages/courses/surveys/index.html#what-it-costs",
+    "title": "Survey Series",
+    "section": "What it costs",
+    "text": "What it costs\n\n\n\n\n\n\n\n\nCost\n\n\n\n\n5.1\nabout $1 to $2 in queries: ds_survey is a large table\n\n\nThe app, while running\nabout $0.27 an hour\n\n\nThe app’s disk\nabout $0.70 a day, even while the app is stopped\n\n\n\nStop your app after each class.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#keep-all-of-us-data-in-the-workbench",
+    "href": "pages/courses/surveys/index.html#keep-all-of-us-data-in-the-workbench",
+    "title": "Survey Series",
+    "section": "Keep All of Us data in the Workbench",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data, or counts of 1 to 20 (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.\nThe results on these pages come from the All of Us Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge All of Us participants for their contributions. See Acknowledgment and data availability.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
     "objectID": "pages/courses/omics/omics-for-beginners.html",
     "href": "pages/courses/omics/omics-for-beginners.html",
     "title": "Omics for Beginners",
@@ -3343,6 +3409,127 @@
     "crumbs": [
       "Omics",
       "Omics Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html",
+    "href": "pages/courses/surveys/5-1-survey-basics.html",
+    "title": "5.1 Survey Basics",
+    "section": "",
+    "text": "Survey series, class 1 of 3 · R + SQL · 90 minutes\nOpen the notebook on GitHub Survey series overview",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#overview",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#overview",
+    "title": "5.1 Survey Basics",
+    "section": "Overview",
+    "text": "Overview\nMost All of Us participants answer surveys about their background, health, habits, family, and life circumstances. Survey answers tell us things health records rarely do (smoking, income, family history), but they have their own structure and their own traps. In this class we learn how the survey data is organised, how to find the questions we need, and how to turn raw answers into a clean table with one row per person.\n\nWhy this class matters\nSurvey answers are easy to misread. A missing answer, a skipped answer, and “prefer not to answer” mean different things, and a missing answer often means the question was never asked. Treating them all as “no” or as “missing” quietly changes who is in an analysis. And the people who answer later, optional surveys aren’t a random sample.\n\n\nBy the end you’ll be able to\n\nName the All of Us surveys, and explain why each was answered by a different number of people\nFind questions by text and by concept ID, in the Workbench and in the public Survey Explorer\nTell the non-answers apart, and know when PMI: None or PMI: Other is a real answer\nExplain skip logic: why a missing answer often means “never asked”\nHandle select all that apply questions (several answers per person)\nBuild a tidy table with one row per person, and compare cases and controls\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhich surveys did the people in our cohort answer, and how do we turn their answers into usable variables?\n\n\n🧪 The analysis\nFour BigQuery queries (the surveys, a question dictionary, who answered what, five example questions); counts and percents by group\n\n\n🎯 Why\nCoding non-answers and skip logic correctly decides who is in every later analysis\n\n\n✅ What we conclude\nWhich surveys and questions we can use, how complete they are in cases and controls, and how to code them\n\n\n⚠️ What it can’t tell us\nAnything about cause. And people who answer later surveys aren’t a random sample\n\n\n🔗 Connections\nUses the sample from 1.1; builds on 2.1 (cleaning), 2.2 (reshaping), 3.1 (Table 1); 5.2 and 5.3 use these skills\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nabout 5 minutes. Slowest: the question dictionary\n\n\n💰 Cost\nabout $2 per student: four queries on ds_survey, a large table, plus the app\n\n\n📋 Before class\n0.0 setup run once. cohort_sample.csv from 1.1 is used if it’s in your bucket; otherwise the notebook makes it",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#class-plan",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#class-plan",
+    "title": "5.1 Survey Basics",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: surveys, questions, answers, non-answers, skip logic\nlisten, ask\n\n\n0:15\n2. Setup: load the sample; the columns of ds_survey\nrun the cells\n\n\n0:20\n3. The ten surveys, and who answered them\nrun the cells, discuss\n\n\n0:35\n4. Finding questions: a question dictionary\n✋ Try It Out 1 (5 min)\n\n\n0:50\n5. Answers: non-answers, several answers, skip logic\nrun the cells, discuss\n\n\n1:10\n6. One row per person; cases vs controls\n✋ Try It Out 2 (5 min)\n\n\n1:20\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#key-concepts",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#key-concepts",
+    "title": "5.1 Survey Basics",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nHow the surveys work\nParticipants answer surveys online (or with staff), one module at a time. The Basics, Overall Health, and Lifestyle are answered when people join, so almost everyone has them. The others are offered later and are optional, so fewer people answer them.\n\n\n\n\n\n\n\n\nWord\nMeans\nExample\n\n\n\n\nSurvey (module)\none questionnaire\nLifestyle\n\n\nQuestion\none item, with a concept ID and a concept code\n1585857, Smoking_100CigsLifetime\n\n\nAnswer\nthe option chosen, also with a concept ID\nYes\n\n\nSelect all that apply\nseveral answers allowed: one row per answer\nrace: White and Asian\n\n\nSkip logic\nfollow-up questions shown only after certain answers\n“How often do you smoke now?” only after Yes to 100 cigarettes\n\n\n\nThe answers are in the ds_survey table (questions and answers as text, plus their concept IDs). The standard OMOP observation table holds the same answers as concept IDs.\n\n\nNon-answers\n\n\n\n\n\n\n\n\nCode\nMeans\nUsually treat as\n\n\n\n\nPMI: Skip\nsaw the question, and skipped it\nmissing\n\n\nPMI: Prefer Not To Answer\nchose “prefer not to answer”\nmissing, or its own category\n\n\nPMI: Dont Know, PMI: Not Sure\nchose “don’t know” or “not sure”\nmissing, or its own category\n\n\nPMI: None\nchose “none of these”\noften a real answer\n\n\nPMI: Other\nchose “other”\na real answer\n\n\nPMI: Does Not Apply To Me\nchose “does not apply”\na real answer\n\n\nno row at all\nnot asked (skip logic), or never took the survey\ndepends on why: check\n\n\n\nPMI is the program’s former name, the Precision Medicine Initiative.\n\n\nWhere to read the questions\n\nSurvey Explorer: every survey’s questions, answer options, and branching, plus the Survey Data Codebooks\nData Browser: how many participants gave each answer\nIn the Workbench: the question dictionary built in Part 4",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#follow-along-in-the-workbench",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#follow-along-in-the-workbench",
+    "title": "5.1 Survey Basics",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/surveys/5.1 survey_basics.ipynb, with the R kernel.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#try-it-out",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#try-it-out",
+    "title": "5.1 Survey Basics",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nFind the questions about food (e.g. worrying that food would run out). Which survey are they in, and how many people answered them?\n✅ Check: questions from Social Determinants of Health, answered by far fewer people than The Basics.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nMake an income variable, keeping Prefer Not To Answer as its own category. Who prefers not to give their income, cases or controls?\n✅ Check: one row per income category and group; Prefer not to answer is one of the largest categories.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#code-walk-through",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#code-walk-through",
+    "title": "5.1 Survey Basics",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nA question dictionary\nquestions &lt;- run_query(str_glue(\"\n  WITH q AS (\n    SELECT survey, question_concept_id,\n1           ANY_VALUE(question)       AS question,\n           COUNT(DISTINCT person_id) AS n_people\n    FROM `{CURRENT_DATASET}.ds_survey`\n    GROUP BY survey, question_concept_id\n  )\n  SELECT q.*, c.concept_code\n  FROM q\n2  LEFT JOIN `{CURRENT_DATASET}.concept` AS c ON c.concept_id = q.question_concept_id\n\"))\n3save_data(questions, \"survey_questions.csv\")\n\n4find_questions &lt;- function(pattern) {\n  questions %&gt;%\n    filter(str_detect(question, regex(pattern, ignore_case = TRUE))) %&gt;%\n    arrange(desc(n_people))\n}\nfind_questions(\"smok\")\n\n1\n\nOne row per question. ANY_VALUE() picks one text per ID: the same ID can be worded slightly differently in different survey versions.\n\n2\n\nThe concept code (e.g. Smoking_100CigsLifetime) from the concept table: the name used in the codebooks.\n\n3\n\nSaved to your bucket, so you query once and search for free.\n\n4\n\nSearch the dictionary by a word or pattern, ignoring upper and lower case.\n\n\n\n\nSkip logic: one smoking variable from two questions\nsmoking &lt;- smoking %&gt;%\n1  mutate(smoking_status = case_when(\n2    str_detect(smoked_100, regex(\"^no$\", ignore_case = TRUE))                    ~ \"Never\",\n    str_detect(smoke_frequency, regex(\"every day|some days\", ignore_case = TRUE)) ~ \"Current\",\n    str_detect(smoked_100, regex(\"^yes$\", ignore_case = TRUE)) &\n3      str_detect(smoke_frequency, regex(\"not at all\", ignore_case = TRUE))        ~ \"Former\",\n    TRUE                                                                          ~ NA_character_))\n\n1\n\ncase_when() checks each rule in order, and uses the first that’s true.\n\n2\n\nNo to 100 cigarettes: never asked the follow-up, so a never smoker, not “missing”.\n\n3\n\nFormer needs Yes first: someone who skipped the first question and answered Not At All could be a former smoker or someone who never smoked.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#what-we-found",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#what-we-found",
+    "title": "5.1 Survey Basics",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\nThe ten surveys\n\n\n\n\n\n\n\n\n\n\nSurvey\nPeople who answered (all of All of Us)\nQuestions\nOur sample: cases\nOur sample: controls\n\n\n\n\nThe Basics\n746,993\n34\n100%\n100%\n\n\nOverall Health\n680,103\n24\n99.0%\n98.6%\n\n\nLifestyle\n674,065\n31\n98.8%\n98.4%\n\n\nHealthcare Access & Utilization\n368,572\n57\n53.0%\n58.6%\n\n\nPersonal and Family Health History\n354,743\n606\n48.9%\n56.6%\n\n\nSocial Determinants of Health\n314,521\n81\n41.5%\n49.9%\n\n\nCOVID-19 Vaccine Survey\n167,718\n72\n25.4%\n26.7%\n\n\nBehavioral Health and Personality\n139,637\n60\n18.7%\n24.7%\n\n\nEmotional Health History and Well-Being\n137,946\n103\n18.4%\n23.9%\n\n\nCOVID-19 Participant Experience (COPE)\n103,323\n192\n15.5%\n18.1%\n\n\n\n\nCases answered every later survey less often than controls. Any comparison that uses a later survey includes only part of each group, and a different part.\nPeople who answered Social Determinants of Health were a little older (mean age 60 vs 58), more often female (62% vs 57%), and less often cases (45% vs 54%) than those who didn’t.\nWhen: the enrollment surveys span 2017 to 2024; Social Determinants of Health started in 2021, the two newest surveys in 2023.\n\n\n\nFinding questions\n\n1,260 survey questions in CDR v9. Personal and Family Health History alone has 606: each condition is its own question.\nSkip logic shows in the counts: about 674,000 people answered Smoking: 100 Cigs Lifetime, but only about 261,000 the follow-up questions, the people who said Yes.\nIncluding yourself, who in your family has had type 2 diabetes? (select all that apply) was answered by about 199,000 people. 5.2 uses it.\n\n\n\nAnswers and non-answers\n\nNon-answers were 1–2% for most questions. Income was the exception: about 14% Prefer Not To Answer and 7% Skip, and more often in cases (24%) than in controls (18%).\nRace is one combined race and ethnicity question, with several answers allowed: about 7% of our sample chose more than one.\nSmoking: everyone who said No to 100 cigarettes had no follow-up answer (never asked), but many who skipped the first question did get the follow-up. Combined: about 56% never, 26% former, and 14% current smokers.\n\n\n\nSelf-rated general health\n\n\n\nGeneral health\nCases\nControls\n\n\n\n\nExcellent\n3.2%\n12.8%\n\n\nVery good\n18.2%\n33.8%\n\n\nGood\n37.4%\n33.2%\n\n\nFair\n32.1%\n16.2%\n\n\nPoor\n9.1%\n4.0%\n\n\n\n\n💬 Discuss: cases are also older (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age, as in 3.2.)",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#instructor-notes",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#instructor-notes",
+    "title": "5.1 Survey Basics",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nWho answers later surveys is the best moment of the class: ask students to guess which group answers more before showing the table.\nPMI comes up every time: it’s the program’s former name, the Precision Medicine Initiative.\nStudents often ask why the survey race differs from the race column in the cohort file: the program maps the same question to the person table with its own rules for several answers and non-answers.\nPMI: Dont Know has no apostrophe: a filter on \"Don't Know\" silently matches nothing.\nIf time is short, skip the “Who answers a later survey?” cell and the income exercise.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#key-takeaways",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#key-takeaways",
+    "title": "5.1 Survey Basics",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nAll of Us has ten surveys; later ones were answered by fewer, and different, people\nFind questions in a dictionary (or the Survey Explorer), then query by concept ID\nNon-answers start with PMI:; some (None, Other, Does Not Apply To Me) are real answers\nA missing answer can mean “never asked”: use the skip logic\nSelect-all questions give several rows per person: reshape before joining\nAnswers have dates: check whether they came before or after a diagnosis",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#next",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#next",
+    "title": "5.1 Survey Basics",
+    "section": "Next",
+    "text": "Next\n5.2 Family history and lifestyle (coming soon): family history of diabetes, smoking, and alcohol, in cases and controls.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
     ]
   },
   {

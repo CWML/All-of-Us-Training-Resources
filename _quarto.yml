@@ -38,6 +38,8 @@ website:
             href: pages/courses/core/index.qmd
           - text: "Omics series"
             href: pages/courses/omics/index.qmd
+          - text: "Survey series"
+            href: pages/courses/surveys/index.qmd
       - text: "Learn by Example"
         href: pages/examples/tutorial-workspaces.qmd
       - text: "Optional Extras"
@@ -113,6 +115,10 @@ website:
             - pages/courses/omics/4-5-rnaseq.qmd
             - pages/courses/omics/4-6-proteomics.qmd
             - pages/courses/omics/4-7-rnaseq-proteomics.qmd
+        - section: "Surveys"
+          contents:
+            - pages/courses/surveys/index.qmd
+            - pages/courses/surveys/5-1-survey-basics.qmd
     - id: extras
       title: "Optional Extras"
       style: docked
