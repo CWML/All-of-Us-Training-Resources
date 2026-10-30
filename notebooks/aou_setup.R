@@ -80,6 +80,28 @@ load_data <- function(file_name, ...) {
   read_csv(file.path(DATA_DIR, file_name), show_col_types = FALSE, ...)
 }
 
+# The shared sample of 5,000 cases and 5,000 controls (made in 1.1, Part 4).
+# Loads cohort_sample.csv if it's in your bucket; otherwise runs the cohort query
+# (cents to under $1), takes the same sample as 1.1, and saves it.
+load_cohort_sample <- function(n_per_group = 5000, seed = 2026,
+                               sql_file = "../sql/t2d_cohort.sql") {
+  if (file.exists(file.path(DATA_DIR, "cohort_sample.csv"))) {
+    return(load_data("cohort_sample.csv", col_types = cols(person_id = "c")))
+  }
+  message("cohort_sample.csv not found: running the cohort query (1-2 minutes)...")
+  cohort <- run_query(str_glue(read_file(sql_file), AGE_DATE = "2025-01-01")) %>%
+    mutate(person_id = as.character(person_id))
+  set.seed(seed)
+  cohort_sample <- cohort %>%
+    filter(cohort %in% c("case", "control"), between(age, 18, 100)) %>%
+    arrange(person_id) %>%
+    group_by(cohort) %>%
+    slice_sample(n = n_per_group) %>%
+    ungroup()
+  save_data(cohort_sample, "cohort_sample.csv")
+  cohort_sample
+}
+
 # ---- 3. ANALYSIS HELPERS (used by notebooks 3.1-3.4) -------------------------
 
 # Read final_analysis.csv (made in 2.3) and set up variable types for modelling
