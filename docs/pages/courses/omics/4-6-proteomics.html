@@ -804,12 +804,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>over 99% of measurements passed; under 1% failed; a few <code>WARN</code> (kept, per Olink’s advice)</td>
 </tr>
 <tr class="even">
-<td>PCA</td>
-<td><strong>2</strong> people far from everyone else (outliers: checked with a sensitivity analysis, not deleted)</td>
+<td>Batch checks</td>
+<td>120 plates; plate explained essentially <strong>none</strong> of PC1–PC5 (adjusted R² ≤ 0); plate medians within about half an NPX unit</td>
 </tr>
 <tr class="odd">
+<td>Outliers</td>
+<td>a few people (fewer than 20) flagged by the 5-SD rule: checked with a sensitivity analysis, not deleted</td>
+</tr>
+<tr class="even">
 <td>Significant proteins</td>
-<td>about <strong>290</strong>, most of them <strong>higher</strong> in diabetes</td>
+<td>about <strong>280–290</strong>, most of them <strong>higher</strong> in diabetes</td>
+</tr>
+<tr class="odd">
+<td>Sensitivity: plate in the model</td>
+<td><strong>182</strong> significant; logFC correlation with the main analysis <strong>0.93</strong></td>
+</tr>
+<tr class="even">
+<td>Sensitivity: outliers removed</td>
+<td><strong>533</strong> significant; logFC correlation <strong>0.995</strong></td>
+</tr>
+<tr class="odd">
+<td>Pathways (GO)</td>
+<td>up in diabetes: <strong>inflammation and defense</strong> and <strong>metabolism</strong> (organic acid, small molecule metabolism)</td>
 </tr>
 <tr class="even">
 <td>Top protein</td>
@@ -857,6 +873,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p><strong>💬 Discuss:</strong> the effects barely changed in the sensitivity analyses, but the <strong>number</strong> of significant proteins ranged from 182 to 533. Which would you report, and why? (Choose the rule before looking; report the others as sensitivity analyses. Adding 119 plate terms to a 600-person model costs power.)</p>
 <p><strong>💬 Discuss:</strong> which of these are <strong>causes</strong> of diabetes, <strong>consequences</strong> (kidney damage), or <strong>treatment</strong> effects? <em>UMOD</em>’s pQTL sits in the <em>UMOD</em> gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (<strong>Mendelian randomization</strong>).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -897,7 +914,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Use the 3–5 minute load in Part 4 for a break or for questions about Olink.</li>
 <li>The protein IDs in the pQTL files look like <code>P09769_ENSG00000000938.13</code>: UniProt ID, then the gene’s Ensembl ID. The notebook matches on the UniProt part.</li>
-<li>The batch checks, sensitivity analyses, enrichment, and BMI challenge were added after our first Workbench run; their results aren’t in the table above yet.</li>
+<li>The plate boxplot sorts plates by their median, so it <strong>always</strong> rises left to right: teach students to look at <strong>how much</strong>, not whether.</li>
+<li>The BMI challenge hasn’t been run yet; its result isn’t in the table.</li>
 </ul>
 </div>
 </div>

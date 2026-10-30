@@ -156,6 +156,8 @@ Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls.
 | Significant genes | a few dozen (adjusted p < 0.05) |
 | Higher in diabetes | many **neutrophil** genes: *MMP8*, *LTF*, *CRISP3*, *HP*, *ANXA3* |
 | Lower in diabetes | *ABCG1* (cholesterol transport), *NRCAM* (the top gene) |
+| Normalization check | medians uneven before, level after TMM; voom trend smooth and downward |
+| Pathways (GO) | up in diabetes: **immune system process** (p ≈ 7 × 10⁻⁶), defense response, TNF production, phagocytosis; few genes per term, so a supporting theme |
 | *TCF7L2* | not different between groups (adjusted p ≈ 0.95) |
 | Our eQTL test | no effect of the T allele on *TCF7L2* (estimate ≈ −0.01, p ≈ 0.6) |
 | *All of Us* eQTLs (~9,000 people) | *TCF7L2*'s strongest eQTL is a **different** variant (`chr10:112951996_C_T`, slope −0.25); rs7903146's effect is tiny (slope 0.02, p ≈ 0.004) |
@@ -184,7 +186,7 @@ The PCA plot, the before/after normalization boxplots (one box per person), and 
 - Run the **setup cell before class**: installing limma and edgeR takes 5–10 minutes.
 - Loading the counts reads one large compressed file; use the time for questions or a break.
 - The **optional enrichment** section installs two more Bioconductor packages (a few minutes the first time).
-- The sections on normalization checks, enrichment, and the neutrophil challenge were added after our first Workbench run; their results aren't in the table above yet.
+- The neutrophil challenge hasn't been run yet; its result isn't in the table.
 :::
 
 ## Key takeaways
