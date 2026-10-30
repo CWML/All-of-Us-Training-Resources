@@ -563,7 +563,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#correlation-pair-by-pair" id="toc-correlation-pair-by-pair" class="nav-link" data-scroll-target="#correlation-pair-by-pair">Correlation, pair by pair</a></li>
   </ul></li>
   <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
-  <li><a href="#the-whole-series" id="toc-the-whole-series" class="nav-link" data-scroll-target="#the-whole-series">The whole series</a></li>
+  <li><a href="#the-whole-series" id="toc-the-whole-series" class="nav-link" data-scroll-target="#the-whole-series">The whole series</a>
+  <ul class="collapse">
+  <li><a href="#the-plots" id="toc-the-plots" class="nav-link" data-scroll-target="#the-plots">The plots</a></li>
+  </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
@@ -964,31 +967,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><strong>DNA</strong> tells us about lifelong risk and can help argue about <strong>cause</strong>. <strong>RNA and proteins</strong> show what’s happening <strong>now</strong>, including consequences and treatment. Each layer answers a different question; combining them carefully is how multi-omics studies get closer to how a disease works.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Screenshots to add (for the instructor)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Plots with one point per <strong>gene–protein pair</strong> can be shared:</p>
-<ol type="1">
-<li>The histogram of RNA–protein correlations (Part 5)</li>
-<li>The RNA vs protein t-statistic scatter plot (Part 6)</li>
-</ol>
-</div>
-</div>
-</div>
+<section id="the-plots" class="level3">
+<h3 class="anchored" data-anchor-id="the-plots">The plots</h3>
+<p><img src="images/4-7-histogram.png" class="img-fluid" alt="Histogram of Spearman correlations between RNA and protein for each gene-protein pair. The distribution peaks just above zero, with a long tail to the right reaching about 0.75."></p>
+<p><img src="images/4-7-scatter.png" class="img-fluid" alt="Scatter plot of t-statistics for type 2 diabetes in RNA (x-axis) and protein (y-axis), one point per gene-protein pair. The cloud shows no clear diagonal trend and sits mostly above zero on the protein axis; pairs whose RNA and protein correlate above 0.3 are highlighted in blue, and SAT2 and SERPINF1 are labelled at the left."></p>
+</section>
 </section>
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -997,7 +985,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Loading takes about 10 minutes: a good time for the “why RNA and protein disagree” discussion.</li>

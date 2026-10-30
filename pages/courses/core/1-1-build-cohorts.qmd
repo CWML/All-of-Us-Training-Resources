@@ -98,11 +98,36 @@ WHERE ca.ancestor_concept_id = 201826     -- type 2 diabetes, and everything und
 3. Open `notebooks/core/1.1 build_cohorts.ipynb`, with the **R** kernel.
 4. Run the first cell: it ends with *Setup done*, then a table where every row is `TRUE`.
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### What you'll see
 
-1. The JupyterLab file browser opened to `notebooks/core/`
-2. The kernel name, top right of the notebook
+**1. The Apps tab:** your app is *Running*. Click the icon next to its name to open JupyterLab. The row also shows the app's cost while running.
+
+::: {.annotated}
+![](../images/wb-apps-open.png){fig-alt="Workspace Apps tab listing one running AoU Jupyter app, with its open-in-new-tab icon outlined next to the app name. The row also shows the Stop button and the current cost, 0.27 dollars per hour."}
+
+::: {.red-box style="left: 28.6%; top: 21.5%; width: 3.4%; height: 6.5%;"}
+:::
+:::
+
+**2. Open a terminal:** **File → New → Terminal**, or the **Terminal** tile on the Launcher (the page JupyterLab opens with).
+
+::: {.annotated}
+![](../images/wb-new-terminal.png){fig-alt="JupyterLab Launcher with tiles for Notebook, Console, and Other. The Terminal tile, in the Other row, is outlined."}
+
+::: {.red-box style="left: 29.4%; top: 55.8%; width: 7.4%; height: 12.2%;"}
+:::
+:::
+
+**3. Find the notebook** in the file browser on the left: `repos` → `All-of-Us-Training-Resources` → `notebooks` → `core`.
+
+
+**4. Wrong kernel?** The kernel's name is at the top right of the notebook. If it isn't the one you need, use **Kernel → Change Kernel…**.
+
+::: {.annotated}
+![](../images/wb-kernel.png){fig-alt="JupyterLab Kernel menu open over a notebook, listing Interrupt, Restart, and Shut Down options. The last item, Change Kernel, is outlined."}
+
+::: {.red-box style="left: 18.9%; top: 78.0%; width: 11.6%; height: 9.0%;"}
+:::
 :::
 
 ## Try It Out

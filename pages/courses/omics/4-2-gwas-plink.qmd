@@ -167,15 +167,11 @@ Results from our test run in October 2026 (CDR v9), 2,500 cases and 2,500 contro
 - In the Q-Q plot, the **unadjusted** p-values were inflated across the board (confounding by ancestry); the **adjusted** ones followed the diagonal until the real signal at the end.
 - rs7903146 isn't genome-wide significant with 5,000 people. The published finding came from tens of thousands: **power**.
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### The plots
 
-Plots in this class show one point per **variant**, not per person, so they can be shared:
+![](images/4-2-regional.png){fig-alt="Regional association plot of the TCF7L2 region on chromosome 10. Each dot is a variant, plotted by position and minus log10 p-value, coloured by linkage with rs7903146. A tall peak rises inside the TCF7L2 gene near 113.0 million; rs7903146, a red diamond, sits near minus log10 p of 5.5, below the dashed genome-wide line at 7.3, with one variant just above it."}
 
-1. The regional association plot (Part 5)
-2. The Q-Q plot, adjusted vs unadjusted (Part 6)
-3. The top-10 table (Part 5)
-:::
+![](images/4-2-qq.png){fig-alt="Q-Q plot of observed against expected minus log10 p-values for the adjusted and unadjusted models, with a table of genomic inflation: adjusted 1.16, unadjusted 3.63. The unadjusted points rise above the diagonal almost from the start; the adjusted points follow the diagonal until the strongest variants at the end."}
 
 ## Instructor notes
 

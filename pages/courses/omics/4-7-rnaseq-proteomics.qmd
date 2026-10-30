@@ -154,14 +154,11 @@ Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls w
 
 **DNA** tells us about lifelong risk and can help argue about **cause**. **RNA and proteins** show what's happening **now**, including consequences and treatment. Each layer answers a different question; combining them carefully is how multi-omics studies get closer to how a disease works.
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### The plots
 
-Plots with one point per **gene–protein pair** can be shared:
+![](images/4-7-histogram.png){fig-alt="Histogram of Spearman correlations between RNA and protein for each gene-protein pair. The distribution peaks just above zero, with a long tail to the right reaching about 0.75."}
 
-1. The histogram of RNA–protein correlations (Part 5)
-2. The RNA vs protein t-statistic scatter plot (Part 6)
-:::
+![](images/4-7-scatter.png){fig-alt="Scatter plot of t-statistics for type 2 diabetes in RNA (x-axis) and protein (y-axis), one point per gene-protein pair. The cloud shows no clear diagonal trend and sits mostly above zero on the protein axis; pairs whose RNA and protein correlate above 0.3 are highlighted in blue, and SAT2 and SERPINF1 are labelled at the left."}
 
 ## Instructor notes
 

@@ -132,12 +132,11 @@ Results from our test run in October 2026 (CDR v9), cases with follow-up after d
 4. **Who gets tested:** people who see doctors more often are diagnosed sooner (**surveillance bias**).
 5. **The outcome definition:** one CKD code, or a lab-based definition?
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### The plot
 
-1. The Kaplan–Meier plot by HbA1c group (Part 3)
-2. The number-at-risk table (Part 3): it uses `hide_small_counts()`, so it can be shared
-:::
+![](images/3-4-km.png){fig-alt="Kaplan-Meier curves of the share CKD-free over 10 years after a type 2 diabetes diagnosis, with dashed 95 percent confidence limits. Both curves fall steadily; the curve for HbA1c 7 percent or more drops faster, to about 0.69 at 10 years, than the curve for HbA1c below 7 percent, about 0.73. The log-rank test above the plot gives a chi-square of 7.7 and p equal to 0.006."}
+
+The number-at-risk table uses `hide_small_counts()`, so it can be shared as text.
 
 ## Instructor notes
 

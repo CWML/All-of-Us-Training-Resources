@@ -168,16 +168,13 @@ Results from our test run in October 2026 (CDR v9), 300 cases and 300 controls.
 - Are the neutrophil genes higher because each neutrophil changed, or because people with diabetes have **more** neutrophils (inflammation)? How would you tell? (Adjust for neutrophil counts: the challenge exercise.)
 - rs7903146 is one of the strongest diabetes risk variants, yet it barely touches *TCF7L2* in **blood**. What does that say about **tissue**? (Its known effects are in the pancreas, where insulin is made.)
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### The plots
 
-Plots with one point per **gene** can be shared:
+![](images/4-5-voom.png){fig-alt="voom mean-variance plot: each dot is a gene, with average log2 count on the x-axis and the square root of its standard deviation on the y-axis. A red trend line falls smoothly from left to right, then rises slightly for the highest-count genes."}
 
-1. The volcano plot (Part 6)
-2. The voom mean-variance plot (Part 6)
+![](images/4-5-volcano.png){fig-alt="Volcano plot of differential expression between type 2 diabetes and controls: log2 fold change on the x-axis, minus log10 p-value on the y-axis. Most genes are grey near the centre; a few dozen red genes pass adjusted p below 0.05, on both sides, the highest near minus log10 p of 10."}
 
-The PCA plot, the before/after normalization boxplots (one box per person), and the genotype boxplot show **people**: keep them in the notebook.
-:::
+The PCA plot, the before/after normalization boxplots (one box per person), and the genotype boxplot show **people**: they stay in the notebook.
 
 ## Instructor notes
 

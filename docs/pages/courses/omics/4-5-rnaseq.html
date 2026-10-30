@@ -563,7 +563,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#filter-and-normalize" id="toc-filter-and-normalize" class="nav-link" data-scroll-target="#filter-and-normalize">Filter and normalize</a></li>
   <li><a href="#differential-expression" id="toc-differential-expression" class="nav-link" data-scroll-target="#differential-expression">Differential expression</a></li>
   </ul></li>
-  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a>
+  <ul class="collapse">
+  <li><a href="#the-plots" id="toc-the-plots" class="nav-link" data-scroll-target="#the-plots">The plots</a></li>
+  </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
@@ -970,32 +973,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Are the neutrophil genes higher because each neutrophil changed, or because people with diabetes have <strong>more</strong> neutrophils (inflammation)? How would you tell? (Adjust for neutrophil counts: the challenge exercise.)</li>
 <li>rs7903146 is one of the strongest diabetes risk variants, yet it barely touches <em>TCF7L2</em> in <strong>blood</strong>. What does that say about <strong>tissue</strong>? (Its known effects are in the pancreas, where insulin is made.)</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Screenshots to add (for the instructor)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Plots with one point per <strong>gene</strong> can be shared:</p>
-<ol type="1">
-<li>The volcano plot (Part 6)</li>
-<li>The voom mean-variance plot (Part 6)</li>
-</ol>
-<p>The PCA plot, the before/after normalization boxplots (one box per person), and the genotype boxplot show <strong>people</strong>: keep them in the notebook.</p>
-</div>
-</div>
-</div>
+<section id="the-plots" class="level3">
+<h3 class="anchored" data-anchor-id="the-plots">The plots</h3>
+<p><img src="images/4-5-voom.png" class="img-fluid" alt="voom mean-variance plot: each dot is a gene, with average log2 count on the x-axis and the square root of its standard deviation on the y-axis. A red trend line falls smoothly from left to right, then rises slightly for the highest-count genes."></p>
+<p><img src="images/4-5-volcano.png" class="img-fluid" alt="Volcano plot of differential expression between type 2 diabetes and controls: log2 fold change on the x-axis, minus log10 p-value on the y-axis. Most genes are grey near the centre; a few dozen red genes pass adjusted p below 0.05, on both sides, the highest near minus log10 p of 10."></p>
+<p>The PCA plot, the before/after normalization boxplots (one box per person), and the genotype boxplot show <strong>people</strong>: they stay in the notebook.</p>
+</section>
 </section>
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1004,7 +992,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Run the <strong>setup cell before class</strong>: installing limma and edgeR takes 5–10 minutes.</li>

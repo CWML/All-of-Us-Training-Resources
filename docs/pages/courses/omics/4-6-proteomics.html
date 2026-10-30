@@ -564,7 +564,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-only-our-peoples-rows" id="toc-reading-only-our-peoples-rows" class="nav-link" data-scroll-target="#reading-only-our-peoples-rows">Reading only our people’s rows</a></li>
   <li><a href="#differential-abundance" id="toc-differential-abundance" class="nav-link" data-scroll-target="#differential-abundance">Differential abundance</a></li>
   </ul></li>
-  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a>
+  <ul class="collapse">
+  <li><a href="#the-plot" id="toc-the-plot" class="nav-link" data-scroll-target="#the-plot">The plot</a></li>
+  </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
@@ -954,32 +957,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p><strong>💬 Discuss:</strong> the effects barely changed in the sensitivity analyses, but the <strong>number</strong> of significant proteins ranged from 182 to 533. Which would you report, and why? (Choose the rule before looking; report the others as sensitivity analyses. Adding 119 plate terms to a 600-person model costs power.)</p>
 <p><strong>💬 Discuss:</strong> which of these are <strong>causes</strong> of diabetes, <strong>consequences</strong> (kidney damage), or <strong>treatment</strong> effects? <em>UMOD</em>’s pQTL sits in the <em>UMOD</em> gene, a region also linked to kidney function in large GWAS: an example of how pQTLs help ask about cause (<strong>Mendelian randomization</strong>).</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Screenshots to add (for the instructor)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Plots with one point per <strong>protein</strong> can be shared:</p>
-<ol type="1">
-<li>The volcano plot (Part 6)</li>
-<li>The plate check (median NPX by plate, Part 5): one box per plate</li>
-</ol>
-<p>The PCA plot and the top-protein boxplot show <strong>people</strong>: keep them in the notebook.</p>
-</div>
-</div>
-</div>
+<section id="the-plot" class="level3">
+<h3 class="anchored" data-anchor-id="the-plot">The plot</h3>
+<p><img src="images/4-6-volcano.png" class="img-fluid" alt="Volcano plot of blood proteins in type 2 diabetes: logFC on the x-axis, minus log10 p-value on the y-axis. Hundreds of proteins pass adjusted p below 0.05, most of them to the right (higher in diabetes). Labelled proteins include NFASC at the top, HAVCR1, LGALS4, ADGRG1, KRT8, IGSF9, MUC13, and PDZK1 on the right, and DMP1 and UMOD on the left."></p>
+<p>The PCA plot, the plate boxplot (some plates hold only a few of our people), and the top-protein boxplot stay in the notebook.</p>
+</section>
 </section>
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -988,7 +975,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Use the 3–5 minute load in Part 4 for a break or for questions about Olink.</li>

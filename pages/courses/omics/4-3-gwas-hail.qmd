@@ -185,12 +185,11 @@ Results from our test run in October 2026 (CDR v9).
 - Why do only 488 of 765 tests match PLINK? (Split multi-allelic rows, especially repeats, are trimmed differently; and the frequency filter works per allele in Hail, per variant in PLINK.)
 - The regional plot showed **two** clusters: one at rs7903146 and one a little to the right, with the top hit. One signal or two? A **conditional analysis** (adding rs7903146 as a covariate) would tell.
 
-::: {.callout-note collapse="true"}
-## Screenshots to add (for the instructor)
+### The plots
 
-1. The regional plot (Part 6)
-2. The two PLINK-vs-Hail scatter plots (Part 7)
-:::
+![](images/4-3-regional.png){fig-alt="Hail regional plot of a 200,000-letter window of chromosome 10. Points show minus log10 p-values by position; rs7903146 is a red diamond near 5.5, and a second cluster of small p-values sits a little to the right, around 113.02 to 113.05 million, with one point above the genome-wide line."}
+
+![](images/4-3-scatter.png){fig-alt="Two scatter plots comparing PLINK and Hail for the same variants: odds ratios on the left and minus log10 p-values on the right. Almost every point lies on the diagonal line, showing the two tools agree."}
 
 ## Instructor notes
 

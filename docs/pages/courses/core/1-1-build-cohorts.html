@@ -557,7 +557,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-concept-hierarchy" id="toc-the-concept-hierarchy" class="nav-link" data-scroll-target="#the-concept-hierarchy">The concept hierarchy</a></li>
   <li><a href="#sql-in-one-table" id="toc-sql-in-one-table" class="nav-link" data-scroll-target="#sql-in-one-table">SQL in one table</a></li>
   </ul></li>
-  <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
+  <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a>
+  <ul class="collapse">
+  <li><a href="#what-youll-see" id="toc-what-youll-see" class="nav-link" data-scroll-target="#what-youll-see">What you’ll see</a></li>
+  </ul></li>
   <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try It Out</a></li>
   <li><a href="#code-walk-through" id="toc-code-walk-through" class="nav-link" data-scroll-target="#code-walk-through">Code walk-through</a>
   <ul class="collapse">
@@ -815,25 +818,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Open <code>notebooks/core/1.1 build_cohorts.ipynb</code>, with the <strong>R</strong> kernel.</p></li>
 <li><p>Run the first cell: it ends with <em>Setup done</em>, then a table where every row is <code>TRUE</code>.</p></li>
 </ol>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Screenshots to add (for the instructor)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>The JupyterLab file browser opened to <code>notebooks/core/</code></li>
-<li>The kernel name, top right of the notebook</li>
-</ol>
+<section id="what-youll-see" class="level3">
+<h3 class="anchored" data-anchor-id="what-youll-see">What you’ll see</h3>
+<p><strong>1. The Apps tab:</strong> your app is <em>Running</em>. Click the icon next to its name to open JupyterLab. The row also shows the app’s cost while running.</p>
+<div class="annotated">
+<p><img src="../images/wb-apps-open.png" class="img-fluid" alt="Workspace Apps tab listing one running AoU Jupyter app, with its open-in-new-tab icon outlined next to the app name. The row also shows the Stop button and the current cost, 0.27 dollars per hour."></p>
+<div class="red-box" style="left: 28.6%; top: 21.5%; width: 3.4%; height: 6.5%;">
+
 </div>
 </div>
+<p><strong>2. Open a terminal:</strong> <strong>File → New → Terminal</strong>, or the <strong>Terminal</strong> tile on the Launcher (the page JupyterLab opens with).</p>
+<div class="annotated">
+<p><img src="../images/wb-new-terminal.png" class="img-fluid" alt="JupyterLab Launcher with tiles for Notebook, Console, and Other. The Terminal tile, in the Other row, is outlined."></p>
+<div class="red-box" style="left: 29.4%; top: 55.8%; width: 7.4%; height: 12.2%;">
+
 </div>
+</div>
+<p><strong>3. Find the notebook</strong> in the file browser on the left: <code>repos</code> → <code>All-of-Us-Training-Resources</code> → <code>notebooks</code> → <code>core</code>.</p>
+<p><strong>4. Wrong kernel?</strong> The kernel’s name is at the top right of the notebook. If it isn’t the one you need, use <strong>Kernel → Change Kernel…</strong>.</p>
+<div class="annotated">
+<p><img src="../images/wb-kernel.png" class="img-fluid" alt="JupyterLab Kernel menu open over a notebook, listing Interrupt, Restart, and Shut Down options. The last item, Change Kernel, is outlined."></p>
+<div class="red-box" style="left: 18.9%; top: 78.0%; width: 11.6%; height: 9.0%;">
+
+</div>
+</div>
+</section>
 </section>
 <section id="try-it-out" class="level2">
 <h2 class="anchored" data-anchor-id="try-it-out">Try It Out</h2>
@@ -980,7 +989,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -989,7 +998,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Start the cohort query, then explain the printed SQL while it runs (1–2 minutes).</li>
