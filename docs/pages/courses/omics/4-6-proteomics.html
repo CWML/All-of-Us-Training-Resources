@@ -718,7 +718,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Is <strong>leptin</strong> (<code>LEP</code>, made by fat tissue) higher in diabetes? Why might that be?</li>
 <li>Is <strong><em>TCF7L2</em></strong> on the Olink panel?</li>
-<li><em>Challenge:</em> add <strong>BMI</strong> to the model. What happens to leptin? (One more query, about $1.)</li>
+<li><em>Optional challenge</em> (its own section, after Your turn): add <strong>BMI</strong> to the model. What happens to leptin? (One more query, about $1.)</li>
 </ol>
 <p><strong>✅ Check:</strong> leptin’s link to diabetes shrinks with BMI in the model: it was mostly body size. <em>TCF7L2</em> isn’t measured: it works inside the cell’s nucleus, not in the blood.</p>
 </div>
@@ -828,14 +828,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>up in diabetes: <strong>inflammation and defense</strong> and <strong>metabolism</strong> (organic acid, small molecule metabolism)</td>
 </tr>
 <tr class="even">
+<td>Leptin, BMI challenge</td>
+<td>logFC <strong>0.68</strong> without BMI (adjusted p ≈ 0.00007) → <strong>0.18</strong> with BMI (p ≈ 0.63): mostly body size</td>
+</tr>
+<tr class="odd">
 <td>Top protein</td>
 <td><strong><em>NFASC</em></strong> (higher in diabetes)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>pQTLs</td>
 <td>18 of the top 20 proteins had very strong pQTLs</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>rs7903146</td>
 <td>not in any fine-mapped pQTL</td>
 </tr>
@@ -915,7 +919,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Use the 3–5 minute load in Part 4 for a break or for questions about Olink.</li>
 <li>The protein IDs in the pQTL files look like <code>P09769_ENSG00000000938.13</code>: UniProt ID, then the gene’s Ensembl ID. The notebook matches on the UniProt part.</li>
 <li>The plate boxplot sorts plates by their median, so it <strong>always</strong> rises left to right: teach students to look at <strong>how much</strong>, not whether.</li>
-<li>The BMI challenge hasn’t been run yet; its result isn’t in the table.</li>
+<li>The BMI challenge is a strong, quick lesson in confounding: leptin’s diabetes link almost disappears once BMI is in the model.</li>
 </ul>
 </div>
 </div>
