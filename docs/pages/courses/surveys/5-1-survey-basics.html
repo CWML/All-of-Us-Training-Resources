@@ -601,6 +601,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#how-the-surveys-work" id="toc-how-the-surveys-work" class="nav-link" data-scroll-target="#how-the-surveys-work">How the surveys work</a></li>
   <li><a href="#non-answers" id="toc-non-answers" class="nav-link" data-scroll-target="#non-answers">Non-answers</a></li>
   <li><a href="#where-to-read-the-questions" id="toc-where-to-read-the-questions" class="nav-link" data-scroll-target="#where-to-read-the-questions">Where to read the questions</a></li>
+  <li><a href="#common-ways-to-analyse-survey-answers" id="toc-common-ways-to-analyse-survey-answers" class="nav-link" data-scroll-target="#common-ways-to-analyse-survey-answers">Common ways to analyse survey answers</a></li>
+  <li><a href="#no-survey-weights" id="toc-no-survey-weights" class="nav-link" data-scroll-target="#no-survey-weights">No survey weights</a></li>
   </ul></li>
   <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
   <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try It Out</a></li>
@@ -615,6 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#finding-questions" id="toc-finding-questions" class="nav-link" data-scroll-target="#finding-questions">Finding questions</a></li>
   <li><a href="#answers-and-non-answers" id="toc-answers-and-non-answers" class="nav-link" data-scroll-target="#answers-and-non-answers">Answers and non-answers</a></li>
   <li><a href="#self-rated-general-health" id="toc-self-rated-general-health" class="nav-link" data-scroll-target="#self-rated-general-health">Self-rated general health</a></li>
+  <li><a href="#modelling-an-ordered-answer" id="toc-modelling-an-ordered-answer" class="nav-link" data-scroll-target="#modelling-an-ordered-answer">Modelling an ordered answer</a></li>
   </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
@@ -776,7 +779,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td>1:10</td>
-<td><strong>6. One row per person</strong>; cases vs controls</td>
+<td><strong>6. One row per person</strong>; cases vs controls; an ordinal model</td>
 <td>✋ <strong>Try It Out 2</strong> (5 min)</td>
 </tr>
 <tr class="odd">
@@ -897,6 +900,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><a href="https://databrowser.researchallofus.org/">Data Browser</a></strong>: how many participants gave each answer</li>
 <li><strong>In the Workbench</strong>: the question dictionary built in Part 4</li>
 </ul>
+</section>
+<section id="common-ways-to-analyse-survey-answers" class="level3">
+<h3 class="anchored" data-anchor-id="common-ways-to-analyse-survey-answers">Common ways to analyse survey answers</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Answer type</th>
+<th>Example</th>
+<th>Summarise with</th>
+<th>Model with</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Yes / no</strong></td>
+<td>smoked 100 cigarettes</td>
+<td>n (%)</td>
+<td>logistic regression</td>
+</tr>
+<tr class="even">
+<td><strong>Ordered</strong> (a scale)</td>
+<td>general health: Excellent … Poor</td>
+<td>n (%) per level</td>
+<td><strong>ordinal</strong> logistic regression (<code>MASS::polr()</code>), or collapse to yes/no</td>
+</tr>
+<tr class="odd">
+<td><strong>Categories, no order</strong></td>
+<td>marital status</td>
+<td>n (%) per level</td>
+<td>multinomial regression, or one category vs the rest</td>
+</tr>
+<tr class="even">
+<td><strong>Select all that apply</strong></td>
+<td>race; who in your family</td>
+<td>one yes/no column per option</td>
+<td>one model per option</td>
+</tr>
+<tr class="odd">
+<td><strong>Several questions on one topic</strong></td>
+<td>the two food questions in 5.3</td>
+<td>a score, using the published scoring rule if there is one</td>
+<td>linear regression on the score</td>
+</tr>
+<tr class="even">
+<td><strong>Numbers and counts</strong></td>
+<td>drinks per day</td>
+<td>mean (SD) or median (IQR)</td>
+<td>linear, or Poisson for counts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Missing answers:</strong> dropping them (a complete-case analysis) changes who is compared if some groups skip more. Alternatives: keep <em>Prefer not to answer</em> as its own category, or <strong>multiple imputation</strong> (the <code>mice</code> package).</p>
+</section>
+<section id="no-survey-weights" class="level3">
+<h3 class="anchored" data-anchor-id="no-survey-weights">No survey weights</h3>
+<p>National surveys like <strong>NHANES</strong> and <strong>BRFSS</strong> choose people <strong>at random</strong> and give each a <strong>survey weight</strong> (how many people in the US population they stand for), so their percents estimate the <strong>whole country</strong>. <em>All of Us</em> participants <strong>volunteer</strong>, and the program deliberately <strong>oversamples</strong> groups that research has often left out. There are <strong>no survey weights</strong>, so:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Can we say it?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“In our sample, 41% of cases rated their health fair or poor”</td>
+<td>✅ it describes <strong>our sample</strong></td>
+</tr>
+<tr class="even">
+<td>“41% of Americans with diabetes rate their health fair or poor”</td>
+<td>❌ our sample isn’t a random sample of the country</td>
+</tr>
+<tr class="odd">
+<td>How common diabetes is, from our sample</td>
+<td>❌ our sample is <strong>half cases</strong> by design</td>
+</tr>
+<tr class="even">
+<td>“People with diabetes had higher odds of fair or poor health”</td>
+<td>⚠️ with care: comparisons within a cohort transfer better than percents, but selection can still bias them</td>
+</tr>
+</tbody>
+</table>
+<p>For population numbers: report sample estimates and say who the sample is; build approximate weights from <strong>Census</strong> totals (e.g.&nbsp;<strong>raking</strong> with <code>survey::rake()</code>); or compare with NHANES or BRFSS.</p>
 </section>
 </section>
 <section id="follow-along-in-the-workbench" class="level2">
@@ -1161,7 +1257,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><img src="images/5-1-general-health.png" class="img-fluid" alt="Stacked bar chart of self-rated general health, as a percent of people who answered, for cases and controls. Cases have much more Fair and Poor, about 41 percent together, than controls, about 20 percent, and far less Excellent, about 3 percent versus 13 percent."></p>
-<p><strong>💬 Discuss:</strong> cases are also <strong>older</strong> (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age, as in 3.2.)</p>
+</section>
+<section id="modelling-an-ordered-answer" class="level3">
+<h3 class="anchored" data-anchor-id="modelling-an-ordered-answer">Modelling an ordered answer</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Adjusted for age and sex</th>
+<th>Logistic: fair or poor</th>
+<th>Ordinal: a worse category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Type 2 diabetes</td>
+<td>3.22 (2.92 to 3.54)</td>
+<td><strong>3.49</strong> (3.23 to 3.77)</td>
+</tr>
+<tr class="even">
+<td>Age, per 10 years</td>
+<td>0.86 (0.84 to 0.89)</td>
+<td>0.87 (0.85 to 0.89)</td>
+</tr>
+<tr class="odd">
+<td>Male (vs female)</td>
+<td>0.82 (0.75 to 0.90)</td>
+<td>0.81 (0.75 to 0.88)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Diabetes:</strong> about <strong>3.5 times</strong> the odds of rating health one category worse. The two models agree; the ordinal model uses all five levels, so its interval is narrower.</li>
+<li><strong>Age:</strong> older people rated their health slightly <strong>better</strong> once diabetes and sex were accounted for: people tend to rate their health compared with others their age.</li>
+</ul>
+<p><strong>💬 Discuss:</strong> cases are also <strong>older</strong> (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age: the notebook fits a logistic model for <em>fair or poor</em> and an <strong>ordinal</strong> model that keeps all five levels.) And who do these percents describe? Our sample, not all Americans: there are no survey weights.</p>
 </section>
 </section>
 <section id="instructor-notes" class="level2">

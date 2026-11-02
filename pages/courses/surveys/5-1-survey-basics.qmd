@@ -236,6 +236,17 @@ Results from our test run in October 2026 (CDR v9).
 
 ![](images/5-1-general-health.png){fig-alt="Stacked bar chart of self-rated general health, as a percent of people who answered, for cases and controls. Cases have much more Fair and Poor, about 41 percent together, than controls, about 20 percent, and far less Excellent, about 3 percent versus 13 percent."}
 
+### Modelling an ordered answer
+
+| Adjusted for age and sex | Logistic: fair or poor | Ordinal: a worse category |
+|---|---|---|
+| Type 2 diabetes | 3.22 (2.92 to 3.54) | **3.49** (3.23 to 3.77) |
+| Age, per 10 years | 0.86 (0.84 to 0.89) | 0.87 (0.85 to 0.89) |
+| Male (vs female) | 0.82 (0.75 to 0.90) | 0.81 (0.75 to 0.88) |
+
+- **Diabetes:** about **3.5 times** the odds of rating health one category worse. The two models agree; the ordinal model uses all five levels, so its interval is narrower.
+- **Age:** older people rated their health slightly **better** once diabetes and sex were accounted for: people tend to rate their health compared with others their age.
+
 **💬 Discuss:** cases are also **older** (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age: the notebook fits a logistic model for *fair or poor* and an **ordinal** model that keeps all five levels.) And who do these percents describe? Our sample, not all Americans: there are no survey weights.
 
 ## Instructor notes
