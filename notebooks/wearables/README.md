@@ -1,11 +1,14 @@
-# Wearables series (6.x): coming soon
+# Wearables series (6.x)
 
-Planned classes on the *All of Us* Fitbit data, using the same type 2 diabetes cohort as the other series:
+Classes on the *All of Us* wearable data, using the same type 2 diabetes cohort as the other series:
+**Fitbit** (in the main CDR v9 dataset) and **Apple HealthKit** (a separate, off-cycle CDR v9 dataset,
+`C_V9_R6_offcycle_healthkit`, joined by `person_id`).
 
-| Class | What it will do |
+| Class | What it does |
 |---|---|
-| **6.1 fitbit_basics** | Which Fitbit tables exist (and why to use the daily ones); who has Fitbit data; summarising many days per person; valid wear days |
-| **6.2 steps_and_t2d** | Average daily steps and type 2 diabetes, with steps measured before the diagnosis |
-| **6.3 sleep_and_heart_rate** | The same approach with sleep and resting heart rate |
+| **6.1 wearables_basics** | Fitbit and HealthKit tables and their cost (the minute-level tables are over 6 TB, clustered by `person_id`); valid wear days; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data |
+| **6.2 steps_and_t2d** | *(planned)* Daily steps and type 2 diabetes, using steps measured before a diagnosis |
+| **6.3 sleep_and_heart_rate** | *(planned)* Sleep and heart rate; optional: HealthKit blood glucose |
 
-See `notebooks/CURRICULUM_PLAN.md` for details.
+Each notebook loads `../aou_setup.R`, which has two cost helpers for this series: `run_if_cheap()` (a free dry
+run before every query) and `last_query_cost()` (what a query actually billed).
