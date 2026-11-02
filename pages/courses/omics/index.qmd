@@ -7,7 +7,7 @@ Seven classes on the *All of Us* **genomic and multi-omics** data. Together they
 
 The thread through the series is one genetic variant, **rs7903146**, in the gene *TCF7L2*: the strongest known genetic risk factor for type 2 diabetes. We find it, test it, follow its effects across hundreds of diseases, and then look for it in gene activity and blood proteins.
 
-**New to omics?** Start with [Omics for Beginners](omics-for-beginners.qmd): the words, the data types, and the tools, in plain language.
+**New to omics?** Start with [Omics for Beginners](omics-for-beginners.qmd): the words, the data types, and the tools, in plain language. **Looking for a file?** [Where the omics data lives](omics-data-map.qmd) maps every folder, format, and data type.
 
 ## The classes
 

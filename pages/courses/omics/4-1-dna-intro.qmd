@@ -323,6 +323,10 @@ A newer method, **genomic-relatedness-matched association (GRMA)**, compares peo
 - [*All of Us* Data Browser](https://databrowser.researchallofus.org/): public summary counts
 - The *All of Us* CDR v9 data dictionary: the **Genomic and Multi-omics File Paths** tab lists where every file is
 
+## Going further
+
+This class uses the **ACAF** callset (common variants). For rare variants in genes, start from the **exome** callset; for known disease variants, **ClinVar**; to find a variant from its rsID, the **Variant Annotation Table**. **[Where the omics data lives](omics-data-map.qmd)** maps every folder and format.
+
 ## Next
 
 **[4.2 GWAS with PLINK](4-2-gwas-plink.qmd)**: test every variant in the *TCF7L2* region, adjusted for age, sex, and ancestry.
