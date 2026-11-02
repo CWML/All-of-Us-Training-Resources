@@ -15,6 +15,10 @@ Surveys tell us what health records rarely do: smoking, family history, income, 
 | [**5.2 Family history and lifestyle**](5-2-family-history-lifestyle.qmd) | 90 min | Family history, smoking, and alcohol; denominators; self-report vs records; reverse causation and sensitivity analyses |
 | [**5.3 Social factors**](5-3-social-factors.qmd) | 90 min | Income, education, insurance, and food insecurity; confounding shown on the same people; confounders vs mediators |
 
+## Who the results describe
+
+*All of Us* participants **volunteer**: unlike NHANES or BRFSS, there are **no survey weights**, so percents from these classes describe **our sample**, not the US population. Our sample is also **half cases** by design. Class 5.1 explains what that means, and the options when you need population numbers.
+
 ## The cohort
 
 The same cohort as the [core series](../core/index.qmd): a random sample of **5,000 cases and 5,000 controls** from the shared query (`notebooks/sql/t2d_cohort.sql`). The notebooks load `cohort_sample.csv` from **1.1**, or make it if it's missing, so this series can start without the core series.

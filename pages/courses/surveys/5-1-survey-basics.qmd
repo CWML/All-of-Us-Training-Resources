@@ -55,7 +55,7 @@ Survey answers are easy to **misread**. A missing answer, a skipped answer, and 
 | 0:20 | **3. The ten surveys**, and who answered them | run the cells, discuss |
 | 0:35 | **4. Finding questions**: a question dictionary | ✋ **Try It Out 1** (5 min) |
 | 0:50 | **5. Answers**: non-answers, several answers, skip logic | run the cells, discuss |
-| 1:10 | **6. One row per person**; cases vs controls | ✋ **Try It Out 2** (5 min) |
+| 1:10 | **6. One row per person**; cases vs controls; an ordinal model | ✋ **Try It Out 2** (5 min) |
 | 1:20 | **Wrap-up** | discuss |
 
 ## Key concepts
@@ -93,6 +93,32 @@ The answers are in the `ds_survey` table (questions and answers as text, plus th
 - **[Survey Explorer](https://www.researchallofus.org/data-tools/survey-explorer/)**: every survey's questions, answer options, and branching, plus the Survey Data Codebooks
 - **[Data Browser](https://databrowser.researchallofus.org/)**: how many participants gave each answer
 - **In the Workbench**: the question dictionary built in Part 4
+
+### Common ways to analyse survey answers
+
+| Answer type | Example | Summarise with | Model with |
+|---|---|---|---|
+| **Yes / no** | smoked 100 cigarettes | n (%) | logistic regression |
+| **Ordered** (a scale) | general health: Excellent … Poor | n (%) per level | **ordinal** logistic regression (`MASS::polr()`), or collapse to yes/no |
+| **Categories, no order** | marital status | n (%) per level | multinomial regression, or one category vs the rest |
+| **Select all that apply** | race; who in your family | one yes/no column per option | one model per option |
+| **Several questions on one topic** | the two food questions in 5.3 | a score, using the published scoring rule if there is one | linear regression on the score |
+| **Numbers and counts** | drinks per day | mean (SD) or median (IQR) | linear, or Poisson for counts |
+
+**Missing answers:** dropping them (a complete-case analysis) changes who is compared if some groups skip more. Alternatives: keep *Prefer not to answer* as its own category, or **multiple imputation** (the `mice` package).
+
+### No survey weights
+
+National surveys like **NHANES** and **BRFSS** choose people **at random** and give each a **survey weight** (how many people in the US population they stand for), so their percents estimate the **whole country**. *All of Us* participants **volunteer**, and the program deliberately **oversamples** groups that research has often left out. There are **no survey weights**, so:
+
+| | Can we say it? |
+|---|---|
+| "In our sample, 41% of cases rated their health fair or poor" | ✅ it describes **our sample** |
+| "41% of Americans with diabetes rate their health fair or poor" | ❌ our sample isn't a random sample of the country |
+| How common diabetes is, from our sample | ❌ our sample is **half cases** by design |
+| "People with diabetes had higher odds of fair or poor health" | ⚠️ with care: comparisons within a cohort transfer better than percents, but selection can still bias them |
+
+For population numbers: report sample estimates and say who the sample is; build approximate weights from **Census** totals (e.g. **raking** with `survey::rake()`); or compare with NHANES or BRFSS.
 
 ## Follow along in the Workbench
 
@@ -210,7 +236,7 @@ Results from our test run in October 2026 (CDR v9).
 
 ![](images/5-1-general-health.png){fig-alt="Stacked bar chart of self-rated general health, as a percent of people who answered, for cases and controls. Cases have much more Fair and Poor, about 41 percent together, than controls, about 20 percent, and far less Excellent, about 3 percent versus 13 percent."}
 
-**💬 Discuss:** cases are also **older** (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age, as in 3.2.)
+**💬 Discuss:** cases are also **older** (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age: the notebook fits a logistic model for *fair or poor* and an **ordinal** model that keeps all five levels.) And who do these percents describe? Our sample, not all Americans: there are no survey weights.
 
 ## Instructor notes
 
