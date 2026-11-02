@@ -108,6 +108,7 @@ website:
           contents:
             - pages/courses/omics/index.qmd
             - pages/courses/omics/omics-for-beginners.qmd
+            - pages/courses/omics/omics-data-map.qmd
             - pages/courses/omics/4-1-dna-intro.qmd
             - pages/courses/omics/4-2-gwas-plink.qmd
             - pages/courses/omics/4-3-gwas-hail.qmd

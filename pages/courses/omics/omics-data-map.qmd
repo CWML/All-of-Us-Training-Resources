@@ -1,0 +1,131 @@
+---
+title: "Where the Omics Data Lives"
+description: "A map of the All of Us CDR v9 genomic and multi-omic files: folders, formats, who has each data type, the ready-made extras, and which file to start from"
+---
+
+A reference page for the omics series. The *All of Us* genomic and multi-omic data is a large set of files, in many formats, for different groups of participants. This page puts it all on one map: **where** each data type is, **what** format it's in, **who** has it, and **which file to start from** for a question.
+
+::: {.callout-note}
+## The official guide
+
+This page is a summary. The full description of every file and column is the *All of Us* article **"How the All of Us Genomic and Multi-omic Data are Organized"**, on the [User Support Hub](https://support.researchallofus.org/) (search for its title). The **Genomic Data Quality Report**, on the same site, explains how the data was produced and checked.
+:::
+
+## Finding the files
+
+In a Workbench 2.0 app, the data is **mounted** as a folder in `~/workspace/`, named something like `vwb-aou-datasets-controlled-v8r9`, with one subfolder per data release. The course helper `aou_data_dir()` (in `aou_setup.R`) finds it for you:
+
+```r
+source("../aou_setup.R")
+AOU_DIR <- aou_data_dir("v9")    # e.g. ~/workspace/vwb-aou-datasets-controlled-v8r9/v9
+list.files(AOU_DIR)              # wgs, microarray, multiomics
+```
+
+Listing folders and checking file sizes is free. Reading files costs only your app's time, except the raw sequencing reads (below).
+
+## The map
+
+```
+v9/
+├── wgs/
+│   ├── short_read/
+│   │   ├── snpindel/                 SNPs and small insertions/deletions
+│   │   │   ├── acaf_threshold/       common variants        ← 4.1–4.4
+│   │   │   ├── exome/                variants in genes (exons)
+│   │   │   ├── clinvar/              variants listed in ClinVar
+│   │   │   ├── vds/                  every variant, whole genome (very large)
+│   │   │   └── aux/                  ancestry, relatedness, QC, annotations…  ← 4.1–4.4
+│   │   └── structural_variants/      large deletions, duplications, inversions
+│   ├── long_read/                    long-read genomes, by sequencing centre
+│   └── cram/                         raw sequencing reads (costly to read)
+├── microarray/                       genotyping array data
+└── multiomics/
+    ├── rnaseq/                       RNA sequencing, whole blood   ← 4.5, 4.7
+    └── proteomics/                   Olink proteins, blood plasma  ← 4.6, 4.7
+```
+
+## Who has which data (CDR v9)
+
+| Data type | Participants | Formats | In this series |
+|---|---|---|---|
+| **Short-read genomes**: SNPs and small indels | about 535,000 | Hail (VDS, MatrixTable), PLINK 1 and 2, BGEN, VCF | **4.1–4.4** |
+| **Short-read genomes**: structural variants | about 97,000 | VCF | |
+| **Genotyping arrays** | most participants with a blood or saliva sample | VCF, Hail, PLINK 1; raw IDAT files | |
+| **Long-read genomes** | about 14,500 | BAM (with DNA methylation), VCF, Hail; genome assemblies for PacBio samples | |
+| **RNA sequencing** (whole blood) | about 9,000 | gene counts and TPM (RNA-SeQC 2, RSEM); BAM; eQTL and sQTL results | **4.5, 4.7** |
+| **Proteomics** (Olink Explore HT, plasma) | about 10,000 | NPX tables (TSV, Parquet); pQTL results | **4.6, 4.7** |
+
+The groups **overlap only partly**: someone with RNA-seq data almost always has a genome, but most people with a genome have no RNA-seq. Every omics class starts by checking **who in our cohort** has the data type it needs.
+
+## Choosing a short-read callset
+
+The full set of variants, the **VDS**, covers the whole genome for everyone, and is very large: most analyses would first have to filter and convert it ("densify"), which takes time and money. *All of Us* has done that already for three common uses:
+
+| Callset | Contains | Start here when… |
+|---|---|---|
+| **ACAF threshold** | variants with allele frequency above 1%, or allele count above 100, in any ancestry group | GWAS, PheWAS, ancestry: **most questions** (this series) |
+| **Exome** | variants in the exons of protein-coding genes (plus 15 bases either side) | rare variants in genes, gene-based tests |
+| **ClinVar** | variants listed in the ClinVar database, whatever their effect | known disease-causing variants |
+| **VDS** | everything | only if none of the above has your variants |
+
+Each smaller callset comes in **PLINK 2** (`pgen`), **PLINK 1** (`plink_bed`), **BGEN**, **VCF**, and **Hail** (`splitMT`: one alternate allele per row; `multiMT`: several), with one file per chromosome. Use the format your tool reads: PLINK 2 in 4.2, Hail `splitMT` in 4.3.
+
+::: {.callout-tip}
+## Have an rsID, not a position?
+
+The callsets identify variants by **position** (`chr10:112998590`). To find an rsID's position, use the **Variant Annotation Table** (`aux/vat/`), which also has each variant's gene, predicted effect, and allele frequencies. For one well-known variant, [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) works too (use the **GRCh38** position).
+:::
+
+## The ready-made extras (`snpindel/aux/`)
+
+| Folder | Contains | Use it to… | In this series |
+|---|---|---|---|
+| `ancestry` | genetic ancestry group and 16 **principal components** per person | adjust for ancestry | **4.1–4.4** |
+| `relatedness` | related pairs, and a list of people to remove so everyone left is unrelated | keep one person per family | **4.1–4.4** |
+| `qc` | samples **flagged** by quality checks | remove problem samples | 4.1 |
+| `vat` | the **Variant Annotation Table** | look up rsIDs, genes, and effects | |
+| `pca` | PCs for everyone, and within each ancestry group | finer ancestry adjustment | |
+| `admixture_estimates` | estimated share of each ancestry per person | describe mixed ancestry | |
+| `pgx` | **pharmacogenomic** star alleles for drug-metabolism genes (e.g. *CYP2C19*) | study how genes affect drug response | |
+| `hla_variants`, `cmrg`, `mitochondria`, `phasing` | immune (HLA) genes; hard-to-sequence genes; mitochondrial DNA; which alleles were inherited together | specialised analyses | |
+
+## Technical variables worth checking
+
+Samples were collected, extracted, and sequenced in different ways and places. These **technical** differences can create patterns that look like biology (**batch effects**), so check them, and adjust for them if they differ between your groups:
+
+| Data | Technical variables | In this series |
+|---|---|---|
+| Genomes | **sequencing centre** (Broad, University of Washington, Baylor); **sample source** (blood or saliva); **DNA extraction method** (Autogen or Chemogen): in the genomic metrics and extraction-method files | not needed for common variants; matters for coverage, mitochondrial copy number, and rare variants |
+| RNA-seq | RNA quality, sequencing depth, processing batch: in `rnaseq_metadata.tsv` and the RNA-SeQC 2 metrics | **4.5** adjusts for RNA quality |
+| Proteomics | **plate**, sample and assay QC flags; 127 technical **replicate** samples (removed in the `reps_removed` file) | **4.6** checks plates and QC flags |
+
+## Precomputed results: QTLs
+
+*All of Us* has already linked genetic variants to RNA and protein levels. These files are **summary statistics** (no individual data), so they're quick to read:
+
+| Results | Folder | Has | In this series |
+|---|---|---|---|
+| **cis-eQTL** | `rnaseq/eqtl/` | each gene's strongest nearby variant; every gene–variant pair tested; **fine-mapped** variants | **4.5, 4.7** |
+| **cis-sQTL** | `rnaseq/sqtl/` | variants linked to **splicing** (which exons are kept) | |
+| **cis-pQTL** | `proteomics/pqtl/` | each protein's strongest nearby variant; **fine-mapped** variants | **4.6, 4.7** |
+
+**Fine-mapping** goes one step further than "the strongest variant": it groups variants that are inherited together into a **credible set**, and gives each a **PIP** (posterior inclusion probability), the probability that it's the variant really driving the signal. A variant with a high PIP for both a protein and a disease is a strong lead.
+
+Each QTL analysis was run in everyone together (`COMB`) and within each genetic ancestry group.
+
+## Raw data: rarely the place to start
+
+| Raw data | Folder | Notes |
+|---|---|---|
+| Short-read sequencing reads (CRAM) | `wgs/cram/` | reading them has **extra (egress) charges**; for re-calling variants with your own pipeline |
+| Array intensities (IDAT) | `microarray/idat/` | for re-calling genotypes |
+| RNA reads (BAM) | listed in `rnaseq/manifest.tsv` | for new expression or splicing analyses |
+| Long-read reads (BAM) | `wgs/long_read/` | include DNA methylation tags |
+
+Almost every question can start from the processed files above. If you need raw data, plan the costs first (see [Storage and costs](../../workspace/storage-costs.qmd)), and consider a workflow tool for many samples.
+
+## Where to go next
+
+- **[4.1 Introduction to genomic data](4-1-dna-intro.qmd)**: a hands-on tour of `wgs/short_read/` and `aux/`
+- **[Omics for beginners](omics-for-beginners.qmd)**: DNA, RNA, and proteins in plain language
+- The official **"How the All of Us Genomic and Multi-omic Data are Organized"** article and the **Genomic Data Quality Report**, on the [User Support Hub](https://support.researchallofus.org/)
