@@ -13,7 +13,7 @@ Surveys tell us what health records rarely do: smoking, family history, income, 
 |---|---|---|
 | [**5.1 Survey basics**](5-1-survey-basics.qmd) | 90 min | The ten surveys and who answered them; finding questions; non-answers, skip logic, select-all questions; one row per person |
 | [**5.2 Family history and lifestyle**](5-2-family-history-lifestyle.qmd) | 90 min | Family history, smoking, and alcohol; denominators; self-report vs records; reverse causation and sensitivity analyses |
-| **5.3 Social factors** (coming soon) | | Income, education, food security, and health care access, and type 2 diabetes |
+| [**5.3 Social factors**](5-3-social-factors.qmd) | 90 min | Income, education, insurance, and food insecurity; confounding shown on the same people; confounders vs mediators |
 
 ## The cohort
 
@@ -31,6 +31,7 @@ The same cohort as the [core series](../core/index.qmd): a random sample of **5,
 |---|---|
 | **5.1** | about **$1 to $2** in queries: `ds_survey` is a large table |
 | **5.2** | about **$1** in queries |
+| **5.3** | about **$1** in queries |
 | **The app, while running** | about **$0.27 an hour** |
 | **The app's disk** | about **$0.70 a day**, even while the app is stopped |
 

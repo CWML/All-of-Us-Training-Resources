@@ -195,4 +195,4 @@ Results from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 contro
 
 ## Next
 
-**5.3 Social factors** (coming soon): income, education, food security, and health care access, and type 2 diabetes.
+**[5.3 Social factors](5-3-social-factors.qmd)**: income, education, food security, and health care access, and type 2 diabetes.
