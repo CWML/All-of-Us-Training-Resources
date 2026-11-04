@@ -2567,6 +2567,8 @@ Interested in using an AI tool (e.g., Claude, ChatGPT, Gemini) for help with you
 
 ::: {.fragment}
 👉 **How:** get your code from GitHub (outputs cleared, no data), ask the AI on your own computer, then bring the fixed code back into your workspace
+
+📘 **Step by step:** the class [Coding with AI and GitHub](https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/ai-coding.html)
 :::
 
 ::: notes
