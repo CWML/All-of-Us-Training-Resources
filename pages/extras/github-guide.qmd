@@ -8,6 +8,8 @@ A step-by-step guide for pushing notebooks and scripts from an All of Us workspa
 - **Path A:** Adding your work to an **existing** GitHub repository
 - **Path B:** Creating a **new** GitHub repository for your work
 
+Using an AI assistant to write the code? The class **[Coding with AI and GitHub](ai-coding.qmd)** shows how to do it safely, with GitHub carrying the code between your computer and the Workbench.
+
 It also covers how to keep *All of Us* data out of GitHub **automatically** (safety nets that stop a commit or a merge with outputs or data files), how to protect your account, what to do if something slips through, and a troubleshooting section based on problems we actually ran into.
 
 
