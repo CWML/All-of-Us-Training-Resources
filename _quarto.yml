@@ -40,6 +40,8 @@ website:
             href: pages/courses/omics/index.qmd
           - text: "Survey series"
             href: pages/courses/surveys/index.qmd
+          - text: "Wearables series"
+            href: pages/courses/wearables/index.qmd
       - text: "Learn by Example"
         href: pages/examples/tutorial-workspaces.qmd
       - text: "Optional Extras"
@@ -122,6 +124,10 @@ website:
             - pages/courses/surveys/5-1-survey-basics.qmd
             - pages/courses/surveys/5-2-family-history-lifestyle.qmd
             - pages/courses/surveys/5-3-social-factors.qmd
+        - section: "Wearables"
+          contents:
+            - pages/courses/wearables/index.qmd
+            - pages/courses/wearables/6-1-wearables-basics.qmd
     - id: extras
       title: "Optional Extras"
       style: docked

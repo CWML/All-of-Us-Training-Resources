@@ -1,0 +1,45 @@
+---
+title: "Wearables Series"
+description: "Three classes on Fitbit and Apple HealthKit data in All of Us: costs and valid wear days, steps and type 2 diabetes, sleep and heart rate"
+---
+
+Three R classes on the *All of Us* **wearable data**, with the same cohort as every other series: people **with type 2 diabetes** compared with people **without diabetes**.
+
+Wearables show daily life in a way health records and surveys can't: how much people move, **when**, how they sleep, and how their heart rate changes, often minute by minute for years. They also bring new problems: tables measured in **terabytes**, days the device wasn't worn, devices that measure differently, and users who aren't typical of anyone else.
+
+## The classes
+
+| Class | Time | What you learn |
+|---|---|---|
+| [**6.1 Wearables basics**](6-1-wearables-basics.qmd) | 95 min | Fitbit and Apple HealthKit tables and their cost; querying minute-level data safely; valid wear days; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data |
+| **6.2 Steps and type 2 diabetes** (coming soon) | | Daily steps measured **before** a diagnosis, and type 2 diabetes |
+| **6.3 Sleep and heart rate** (coming soon) | | Sleep duration and stages, resting heart rate; optional: HealthKit blood glucose |
+
+## The data
+
+| | Fitbit | Apple HealthKit |
+|---|---|---|
+| **Where** | the main CDR v9 dataset | a separate, "off-cycle" CDR v9 dataset (September 2026), joined by `person_id`; not in the Data Explorer |
+| **People with steps** (all of *All of Us*) | about 68,500 | about 18,000 |
+| **In our sample** of 5,000 cases and 5,000 controls | 840 with 10+ valid days | about 250 |
+
+## Who the results describe
+
+Owning a Fitbit or an iPhone and sharing its data isn't random. In our sample, people with Fitbit data were a little younger, more often female, and less often cases. As with the surveys, there are **no weights**: results describe **people with wearable data**, not all participants, and not the US population.
+
+## What it costs
+
+| | Cost |
+|---|---|
+| **6.1** | about **$1.40** in queries (mostly the Apple HealthKit query) |
+| **Never** | query a minute-level table without a `person_id` filter: a full read is over **6 TB**, about **$40** |
+| **The app, while running** | about **$0.27 an hour** |
+| **The app's disk** | about **$0.70 a day**, even while the app is stopped |
+
+Every query in the series is **priced before it runs**, with the `run_if_cheap()` helper, and checked afterwards with `last_query_cost()`.
+
+## Keep All of Us data in the Workbench
+
+Don't download, screenshot, or share **participant-level data**, or counts of **1 to 20** (including counts that could be worked out from others). A plot of **one person's** steps or heart rate is participant-level data: plot groups. The results on these pages are summary statistics from our test runs.
+
+The results on these pages come from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge *All of Us* participants for their contributions. See [Acknowledgment and data availability](../index.qmd#acknowledgment-and-data-availability).

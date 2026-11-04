@@ -924,6 +924,72 @@
     ]
   },
   {
+    "objectID": "pages/courses/wearables/index.html",
+    "href": "pages/courses/wearables/index.html",
+    "title": "Wearables Series",
+    "section": "",
+    "text": "Three R classes on the All of Us wearable data, with the same cohort as every other series: people with type 2 diabetes compared with people without diabetes.\nWearables show daily life in a way health records and surveys can’t: how much people move, when, how they sleep, and how their heart rate changes, often minute by minute for years. They also bring new problems: tables measured in terabytes, days the device wasn’t worn, devices that measure differently, and users who aren’t typical of anyone else.",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#the-classes",
+    "href": "pages/courses/wearables/index.html#the-classes",
+    "title": "Wearables Series",
+    "section": "The classes",
+    "text": "The classes\n\n\n\nClass\nTime\nWhat you learn\n\n\n\n\n6.1 Wearables basics\n95 min\nFitbit and Apple HealthKit tables and their cost; querying minute-level data safely; valid wear days; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data\n\n\n6.2 Steps and type 2 diabetes (coming soon)\n\nDaily steps measured before a diagnosis, and type 2 diabetes\n\n\n6.3 Sleep and heart rate (coming soon)\n\nSleep duration and stages, resting heart rate; optional: HealthKit blood glucose",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#the-data",
+    "href": "pages/courses/wearables/index.html#the-data",
+    "title": "Wearables Series",
+    "section": "The data",
+    "text": "The data\n\n\n\n\n\n\n\n\n\nFitbit\nApple HealthKit\n\n\n\n\nWhere\nthe main CDR v9 dataset\na separate, “off-cycle” CDR v9 dataset (September 2026), joined by person_id; not in the Data Explorer\n\n\nPeople with steps (all of All of Us)\nabout 68,500\nabout 18,000\n\n\nIn our sample of 5,000 cases and 5,000 controls\n840 with 10+ valid days\nabout 250",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#who-the-results-describe",
+    "href": "pages/courses/wearables/index.html#who-the-results-describe",
+    "title": "Wearables Series",
+    "section": "Who the results describe",
+    "text": "Who the results describe\nOwning a Fitbit or an iPhone and sharing its data isn’t random. In our sample, people with Fitbit data were a little younger, more often female, and less often cases. As with the surveys, there are no weights: results describe people with wearable data, not all participants, and not the US population.",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#what-it-costs",
+    "href": "pages/courses/wearables/index.html#what-it-costs",
+    "title": "Wearables Series",
+    "section": "What it costs",
+    "text": "What it costs\n\n\n\n\n\n\n\n\nCost\n\n\n\n\n6.1\nabout $1.40 in queries (mostly the Apple HealthKit query)\n\n\nNever\nquery a minute-level table without a person_id filter: a full read is over 6 TB, about $40\n\n\nThe app, while running\nabout $0.27 an hour\n\n\nThe app’s disk\nabout $0.70 a day, even while the app is stopped\n\n\n\nEvery query in the series is priced before it runs, with the run_if_cheap() helper, and checked afterwards with last_query_cost().",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#keep-all-of-us-data-in-the-workbench",
+    "href": "pages/courses/wearables/index.html#keep-all-of-us-data-in-the-workbench",
+    "title": "Wearables Series",
+    "section": "Keep All of Us data in the Workbench",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data, or counts of 1 to 20 (including counts that could be worked out from others). A plot of one person’s steps or heart rate is participant-level data: plot groups. The results on these pages are summary statistics from our test runs.\nThe results on these pages come from the All of Us Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge All of Us participants for their contributions. See Acknowledgment and data availability.",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
     "objectID": "pages/courses/surveys/index.html",
     "href": "pages/courses/surveys/index.html",
     "title": "Survey Series",
@@ -3948,6 +4014,127 @@
     "crumbs": [
       "Surveys",
       "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html",
+    "title": "6.1 Wearables Basics",
+    "section": "",
+    "text": "Wearables series, class 1 of 3 · R + SQL · 95 minutes\nOpen the notebook on GitHub Wearables series overview",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#overview",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#overview",
+    "title": "6.1 Wearables Basics",
+    "section": "Overview",
+    "text": "Overview\nTens of thousands of All of Us participants share data from a Fitbit or from Apple Health (iPhone and Apple Watch). In this class we learn where the wearable data is, what it costs to use, and how to turn months of daily records into one clean value per person, ready for the analyses in 6.2 and 6.3.\n\nWhy this class matters\nWearable data is easy to misuse in three ways: a day the device wasn’t worn looks like an inactive day; a phone and a watch count steps differently; and one careless query on a minute-level table can cost tens of dollars. This class builds the habits that prevent all three: price every query, keep only valid days, and never pool different devices.\n\n\nBy the end you’ll be able to\n\nDescribe the Fitbit and Apple HealthKit data: tables, layouts, and who has them\nEstimate and check the cost of a query, and query huge minute-level tables safely\nDefine a valid wear day, and check a wear measure against a better one\nSummarise many days into one value per person\nExplain why Fitbit, iPhone, and Apple Watch steps can’t simply be pooled\nDescribe who has wearable data, and what that means for generalisability\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWho in our cohort has wearable data, how much, and how do we turn it into usable variables?\n\n\n🧪 The analysis\nTable sizes and costs; valid wear days; median daily steps per person, by device; steps by hour of the day; who has data\n\n\n🎯 Why\nUn-worn days, different devices, and huge tables each lead to wrong or expensive results if ignored\n\n\n✅ What we conclude\nHow many cases and controls have usable data, and a per-person step summary for 6.2\n\n\n⚠️ What it can’t tell us\nAnything about cause. And people with wearables aren’t typical: results describe them\n\n\n🔗 Connections\nCohort from 1.1; units and cleaning from 2.1; long vs wide from 2.2; no survey weights from 5.1\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n95 minutes\n\n\n⏱️ Run time\nabout 5 minutes\n\n\n💰 Cost\nabout $1.40 in queries in our test run ($1.20 of it the Apple HealthKit query), plus the app\n\n\n📋 Before class\n0.0 setup run once. cohort_sample.csv from 1.1 is used if it’s in your bucket; otherwise the notebook makes it",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#class-plan",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#class-plan",
+    "title": "6.1 Wearables Basics",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: two data sources, wear time, one value per person, devices, cost\nlisten, ask\n\n\n0:20\n2–3. Setup; the tables and their cost\nrun the cells\n\n\n0:30\n4. Fitbit daily data and valid days\n✋ Try It Out 1 (5 min)\n\n\n0:50\n5. Minute-level data, safely; is our wear measure any good?\nrun the cells, discuss\n\n\n1:05\n6. Apple HealthKit: phone vs watch\nrun the cells\n\n\n1:20\n7. Who has wearables?\n✋ Try It Out 2 (5 min)\n\n\n1:30\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#key-concepts",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#key-concepts",
+    "title": "6.1 Wearables Basics",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nTwo sources of wearable data\n\n\n\n\n\n\n\n\n\nFitbit\nApple HealthKit\n\n\n\n\nWhere\nthe main CDR v9 dataset\na separate CDR v9 dataset (C_V9_R6_offcycle_healthkit, September 2026), joined by person_id; not in the Data Explorer\n\n\nPeople with steps\nabout 68,500\nabout 18,000\n\n\nLayout\nwide: a column per measure (steps, sedentary_minutes, …)\nlong: a row per measurement, with data_type, value (stored as text), and units\n\n\nDetail\ndaily summary tables, and minute-level tables\nindividual measurements, seconds to hours apart; no daily summary\n\n\nAlso has\nheart-rate zones, sleep stages, scales\nresting heart rate, heart rate variability, blood pressure, blood glucose (about 1,000 people), walking speed\n\n\n\n\n\nValid wear days\nA day with 300 steps could be an inactive day, or a device left on the charger. Studies keep only valid days:\n\n\n\n\n\n\n\nRule\nWhy\n\n\n\n\nat least 10 hours of wear, judged from heart-rate minutes\nFitbit only records heart rate on a wrist\n\n\n100 to 45,000 steps\nfewer is barely worn; more is likely an error\n\n\na person needs 10 or more valid days\nfor their average to mean something\n\n\n\nThen each person gets one value: their median daily steps over valid days.\n\n\nCost: big tables, clustering, and dry runs\nThe minute-level Fitbit tables are over 6 TB each (a full read is about $40). They’re clustered by person_id: each person’s rows are stored together, so a query filtered by person reads only those people. A dry run (free) prices a query before it runs, clustering included:\n\n\n\nThe same minute-level query, for…\nReads\nCosts\n\n\n\n\n50 people\nabout 5.7 GB\nabout $0.04\n\n\nour 10,000 people\nabout 3,000 GB\nabout $19\n\n\n\nCost grows with the number of people: keep minute-level queries to small groups.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#follow-along-in-the-workbench",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#follow-along-in-the-workbench",
+    "title": "6.1 Wearables Basics",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/wearables/6.1 wearables_basics.ipynb, with the R kernel.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#try-it-out",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#try-it-out",
+    "title": "6.1 Wearables Basics",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nUse 8 hours of wear (480 minutes) instead of 10. How many more valid days does that give, and does median daily steps change much?\n✅ Check: a few more valid days, and a slightly lower median: partly-worn days have fewer steps.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 7, “Your turn”\n\n\n\nCompare people with and without HealthKit data: age, sex, and case status. Are they like Fitbit users?\n✅ Check: Apple users are selected in their own way: an iPhone isn’t a Fitbit.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#code-walk-through",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#code-walk-through",
+    "title": "6.1 Wearables Basics",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nTwo cost helpers\n1run_if_cheap(sql, max_dollars = 1)\n2last_query_cost()\n\n1\n\nA free dry run first; the query runs only if it costs less than max_dollars. With max_dollars = 0 it only prints the estimate.\n\n2\n\nWhat the most recent query actually billed.\n\n\n\n\nDaily steps plus wear time, in one query\n1WITH wear AS (\n  SELECT person_id, date, SUM(minute_in_zone) AS wear_minutes\n  FROM heart_rate_summary\n  WHERE person_id IN (…)\n  GROUP BY person_id, date\n)\nSELECT a.person_id, a.date, a.steps, …, w.wear_minutes\nFROM activity_summary AS a\n2LEFT JOIN wear AS w ON a.person_id = w.person_id AND a.date = w.date\nWHERE a.person_id IN (…)\n\n1\n\nFitbit counts minutes in each heart-rate zone; their sum is a cheap measure of wear time.\n\n2\n\nLEFT JOIN keeps every activity day, even days without heart-rate data.\n\n\n\n\nHealthKit: long data, text values, one device at a time\nSELECT a.person_id,\n       DATE(SAFE_CAST(a.start_datetime AS TIMESTAMP)) AS date,\n1       CASE WHEN d.product_type LIKE 'Watch%'  THEN 'Apple Watch'\n            WHEN d.product_type LIKE 'iPhone%' THEN 'iPhone'\n            ELSE 'other' END AS device,\n2       SUM(SAFE_CAST(a.value AS FLOAT64)) AS steps\nFROM activity_measurements AS a\nLEFT JOIN device_and_source AS d ON a.device_source_id = d.device_source_id\n3WHERE a.data_type = 'STEP_COUNT' AND a.person_id IN (…)\n4GROUP BY 1, 2, 3\n\n1\n\nWhich device recorded each measurement.\n\n2\n\nvalue is stored as text; SAFE_CAST turns it into a number (anything that isn’t becomes NULL).\n\n3\n\nIn the long layout, data_type picks the measure.\n\n4\n\nOne total per person, day, and device: adding the phone and watch together would count the same steps twice.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#what-we-found",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#what-we-found",
+    "title": "6.1 Wearables Basics",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in November 2026 (CDR v9), 5,000 cases and 5,000 controls.\n\nFitbit, in our sample\n\n926 people had Fitbit data (about 850,000 person-days, 2009 to 2024); 840 had 10 or more valid days, with a median of 390 valid days each.\n64% of days were valid. Most of the rest had no heart-rate data, so we couldn’t tell whether the device was worn.\nMedian daily steps rose from 5,142 (all days) to 5,897 (valid days): the bias un-worn days create.\n\n\n\nIs our wear measure any good?\nFor 100 people, we compared the cheap measure with the one published All of Us studies use:\n\n\n\n\n\n\n\n\nWear measure\nMedian minutes\nDays with 10+ hours\n\n\n\n\nheart-rate zone total (daily table)\n1,440 (exactly 24 hours on 61% of days)\n98.6%\n\n\nminutes with a heart-rate reading (minute-level table)\n1,392 (about 23 hours)\n95.5%\n\n\n\nThese Fitbit users wear their devices almost around the clock. The zone total overstates wear, but at the 10-hour cutoff the two disagree on only about 3% of days: good enough for class; for a paper, use the minute-level count.\n\n\nWhen people move\n\nControls took more steps through the working day; the groups were similar at night.\n\n\nPhones, watches, and Fitbits\n\n\nThe iPhone records far fewer steps: it misses every step taken without it.\nWithin the same people (151 with both an iPhone and an Apple Watch), the iPhone recorded about 59% of their Watch steps.\nSo Fitbit is the main data for 6.2; Apple steps are a separate measure, never pooled with Fitbit.\n\n\n\nWho has wearable data?\n\n\n\n\nCases\nControls\n\n\n\n\nFitbit, 10+ valid days\n7.3%\n9.5%\n\n\nApple HealthKit steps\n1.8%\n3.3%\n\n\n\nPeople with Fitbit data were a little younger (mean age 58 vs 59), more often female (63% vs 59%), and less often cases (43% vs 51%). Selection: results describe wearable users.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#instructor-notes",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#instructor-notes",
+    "title": "6.1 Wearables Basics",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nStart with the cost table: “what would one careless query cost?” gets everyone’s attention.\nThe wear-measure check is a good habit to model: a cheap measure looked suspicious (a median of exactly 24 hours), so we tested it against a better one, on a small group, for $0.04.\niPhone vs Watch: ask students where their phone is right now. Most aren’t carrying it.\nPlots: a default box plot draws single people (whisker ends, outliers). The notebook draws it from percentiles, and the page shows only boxes and medians.\nPrivacy: never plot one person’s minute-level data outside the Workbench.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#key-takeaways",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#key-takeaways",
+    "title": "6.1 Wearables Basics",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nAll of Us has Fitbit data (main dataset) and Apple HealthKit data (a separate dataset)\nPrice queries before running them, and check what they cost: minute-level costs grow with the number of people\nKeep only valid days, then summarise to one value per person; check your wear measure\niPhone, Apple Watch, and Fitbit steps measure different things: don’t pool them\nWearable users are a selected group",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#next",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#next",
+    "title": "6.1 Wearables Basics",
+    "section": "Next",
+    "text": "Next\n6.2 Steps and type 2 diabetes (coming soon): daily steps measured before a diagnosis.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
     ]
   },
   {
