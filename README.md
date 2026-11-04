@@ -140,6 +140,13 @@ This repository contains **code only, no *All of Us* data**. If you use these ma
 - Follow the [Data and Statistics Dissemination Policy](https://www.researchallofus.org/faq/data-and-statistics-dissemination-policy/): don't publish participant counts of 1 to 20, or numbers they could be calculated from.
 - **Clear notebook outputs before committing** to this repository, so no results are accidentally made public.
 
+**Safety nets in this repository:** every push and pull request runs `tools/check_notebooks.py` (see `.github/workflows/check-notebooks.yml`), which fails if any notebook has saved outputs, or if a data file, a file over 25 MB, or a credential is added. To run the same check **before** each commit, add it as a Git hook once per clone:
+
+```sh
+printf '#!/bin/sh\ngit diff --cached --name-only -z --diff-filter=ACM | xargs -0 python3 tools/check_notebooks.py\n' > .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
 ## Resources
 
 - [*All of Us* Research Hub](https://www.researchallofus.org/)
