@@ -162,6 +162,8 @@ You need:
 
 You do **not** need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (`wb`) and Git are already installed and you're already logged in.
 
+Work **inside** the app on purpose: Controlled Tier workspaces are in a security **perimeter**, so the data can't be reached from your own computer, even with `wb`, `gcloud`, or `bq`. Git and GitHub work normally from inside the app. Only **code** should travel that way.
+
 
 ## Step 1: Start an app and open a terminal
 

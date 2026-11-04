@@ -672,6 +672,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>For Path A: <strong>write access</strong> to the existing repo (ask the repo or organization owner to add you)</li>
 </ul>
 <p>You do <strong>not</strong> need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (<code>wb</code>) and Git are already installed and you’re already logged in.</p>
+<p>Work <strong>inside</strong> the app on purpose: Controlled Tier workspaces are in a security <strong>perimeter</strong>, so the data can’t be reached from your own computer, even with <code>wb</code>, <code>gcloud</code>, or <code>bq</code>. Git and GitHub work normally from inside the app. Only <strong>code</strong> should travel that way.</p>
 </section>
 <section id="step-1-start-an-app-and-open-a-terminal" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-start-an-app-and-open-a-terminal">Step 1: Start an app and open a terminal</h2>
