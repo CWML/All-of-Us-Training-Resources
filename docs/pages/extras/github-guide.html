@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Push notebooks and scripts from an All of Us workspace to GitHub, step by step">
+<meta name="description" content="Push notebooks and scripts from an All of Us workspace to GitHub, step by step, with safety nets that keep data and outputs out">
 
 <title>GitHub Guide – All of Us Workbench 2.0 Training</title>
 <style>
@@ -416,7 +416,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#read-this-first-data-protection" id="toc-read-this-first-data-protection" class="nav-link active" data-scroll-target="#read-this-first-data-protection">⚠️ Read this first: data protection</a></li>
+  <li><a href="#read-this-first-data-protection" id="toc-read-this-first-data-protection" class="nav-link active" data-scroll-target="#read-this-first-data-protection">⚠️ Read this first: data protection</a>
+  <ul class="collapse">
+  <li><a href="#what-counts-as-data-the-less-obvious-leaks" id="toc-what-counts-as-data-the-less-obvious-leaks" class="nav-link" data-scroll-target="#what-counts-as-data-the-less-obvious-leaks">What counts as data: the less obvious leaks</a></li>
+  </ul></li>
+  <li><a href="#safety-nets-make-mistakes-hard" id="toc-safety-nets-make-mistakes-hard" class="nav-link" data-scroll-target="#safety-nets-make-mistakes-hard">Safety nets: make mistakes hard</a>
+  <ul class="collapse">
+  <li><a href="#a-.gitignore-for-data-files" id="toc-a-.gitignore-for-data-files" class="nav-link" data-scroll-target="#a-.gitignore-for-data-files">1. A <code>.gitignore</code> for data files</a></li>
+  <li><a href="#a-pre-commit-check" id="toc-a-pre-commit-check" class="nav-link" data-scroll-target="#a-pre-commit-check">2. A pre-commit check</a></li>
+  <li><a href="#a-check-on-github-for-shared-repos" id="toc-a-check-on-github-for-shared-repos" class="nav-link" data-scroll-target="#a-check-on-github-for-shared-repos">3. A check on GitHub, for shared repos</a></li>
+  <li><a href="#look-before-you-push" id="toc-look-before-you-push" class="nav-link" data-scroll-target="#look-before-you-push">4. Look before you push</a></li>
+  </ul></li>
+  <li><a href="#keep-your-personal-settings-out-of-git" id="toc-keep-your-personal-settings-out-of-git" class="nav-link" data-scroll-target="#keep-your-personal-settings-out-of-git">Keep your personal settings out of Git</a></li>
+  <li><a href="#protect-your-github-account" id="toc-protect-your-github-account" class="nav-link" data-scroll-target="#protect-your-github-account">Protect your GitHub account</a></li>
   <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link" data-scroll-target="#before-you-start">Before you start</a></li>
   <li><a href="#step-1-start-an-app-and-open-a-terminal" id="toc-step-1-start-an-app-and-open-a-terminal" class="nav-link" data-scroll-target="#step-1-start-an-app-and-open-a-terminal">Step 1: Start an app and open a terminal</a></li>
   <li><a href="#step-2-connect-workbench-to-github-one-time-setup" id="toc-step-2-connect-workbench-to-github-one-time-setup" class="nav-link" data-scroll-target="#step-2-connect-workbench-to-github-one-time-setup">Step 2: Connect Workbench to GitHub (one-time setup)</a>
@@ -446,6 +458,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#ongoing-workflow-keeping-in-sync" id="toc-ongoing-workflow-keeping-in-sync" class="nav-link" data-scroll-target="#ongoing-workflow-keeping-in-sync">Ongoing workflow: keeping in sync</a></li>
   <li><a href="#sharing-with-colleagues" id="toc-sharing-with-colleagues" class="nav-link" data-scroll-target="#sharing-with-colleagues">Sharing with colleagues</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#if-something-slips-through" id="toc-if-something-slips-through" class="nav-link" data-scroll-target="#if-something-slips-through">If something slips through</a></li>
   <li><a href="#quick-reference" id="toc-quick-reference" class="nav-link" data-scroll-target="#quick-reference">Quick reference</a></li>
   </ul>
 </nav>
@@ -461,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Push notebooks and scripts from an All of Us workspace to GitHub, step by step
+    Push notebooks and scripts from an All of Us workspace to GitHub, step by step, with safety nets that keep data and outputs out
   </div>
 </div>
 
@@ -483,7 +496,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Path A:</strong> Adding your work to an <strong>existing</strong> GitHub repository</li>
 <li><strong>Path B:</strong> Creating a <strong>new</strong> GitHub repository for your work</li>
 </ul>
-<p>It finishes with how to keep things in sync and a troubleshooting section based on problems we actually ran into.</p>
+<p>It also covers how to keep <em>All of Us</em> data out of GitHub <strong>automatically</strong> (safety nets that stop a commit or a merge with outputs or data files), how to protect your account, what to do if something slips through, and a troubleshooting section based on problems we actually ran into.</p>
 <section id="read-this-first-data-protection" class="level2">
 <h2 class="anchored" data-anchor-id="read-this-first-data-protection">⚠️ Read this first: data protection</h2>
 <p>Everything you push to a public GitHub repo can be seen by anyone, and you can’t fully take it back once it’s pushed.</p>
@@ -500,6 +513,159 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Run <code>git status</code> and look at every file</strong> before committing.</li>
 </ol>
 <p>Check the current policy on the All of Us Research Hub if you’re unsure about anything.</p>
+<p><strong>A private repo doesn’t make it OK.</strong> <em>All of Us</em> data must stay <strong>in the Workbench</strong>. Pushing it to GitHub moves it out, whether the repo is public or private, and private repos can be made public, forked, or shared later.</p>
+<section id="what-counts-as-data-the-less-obvious-leaks" class="level3">
+<h3 class="anchored" data-anchor-id="what-counts-as-data-the-less-obvious-leaks">What counts as data: the less obvious leaks</h3>
+<p>Clearing outputs catches most problems. These are the ones people miss:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Where data hides</th>
+<th>Example</th>
+<th>Instead</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Notebook outputs</strong></td>
+<td>tables, printed rows, <code>head()</code> and <code>glimpse()</code></td>
+<td>clear outputs before every commit</td>
+</tr>
+<tr class="even">
+<td><strong>Plots</strong></td>
+<td>images are saved <strong>inside</strong> the notebook file, as text you can’t see</td>
+<td>clearing outputs removes them too</td>
+</tr>
+<tr class="odd">
+<td><strong>Printed SQL</strong></td>
+<td>a query printed with a list of participant IDs (<code>WHERE person_id IN (…)</code>)</td>
+<td>build ID lists in a variable; never print it</td>
+</tr>
+<tr class="even">
+<td><strong>Error messages</strong></td>
+<td>a traceback that shows a row of data</td>
+<td>clear outputs; don’t paste errors with data into issues</td>
+</tr>
+<tr class="odd">
+<td><strong>Code comments and markdown</strong></td>
+<td>“the outlier was person 1234567, aged 103”</td>
+<td>describe results only as allowed aggregates</td>
+</tr>
+<tr class="even">
+<td><strong>Data files</strong></td>
+<td><code>.csv</code>, <code>.tsv</code>, <code>.parquet</code>, <code>.rds</code>, genotype files</td>
+<td>keep them in your workspace bucket; list them in <code>.gitignore</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Screenshots</strong></td>
+<td>a screenshot of a notebook table or the Data Explorer</td>
+<td>check every image before adding it</td>
+</tr>
+<tr class="even">
+<td><strong>Your workspace details</strong></td>
+<td>your workspace’s Google project ID, your bucket name, your email in commits</td>
+<td>keep them in one settings line you don’t commit; use GitHub’s <strong>noreply</strong> email (Step 2c)</td>
+</tr>
+</tbody>
+</table>
+<p>Results you <strong>may</strong> share (aggregate statistics with no counts of 1 to 20, and nothing that lets one be worked out) still count as <strong>publishing</strong> <em>All of Us</em> results: report them through the <em>All of Us</em> <strong>Publication and Presentation Reporting Form</strong> at least two weeks before they go public.</p>
+</section>
+</section>
+<section id="safety-nets-make-mistakes-hard" class="level2">
+<h2 class="anchored" data-anchor-id="safety-nets-make-mistakes-hard">Safety nets: make mistakes hard</h2>
+<p>Checklists rely on remembering. These four habits catch mistakes <strong>automatically</strong>, before they reach GitHub.</p>
+<section id="a-.gitignore-for-data-files" class="level3">
+<h3 class="anchored" data-anchor-id="a-.gitignore-for-data-files">1. A <code>.gitignore</code> for data files</h3>
+<p>A <code>.gitignore</code> file lists files Git should never add. Add one to <strong>every</strong> repo (Path B, step B3, shows how), and include your data folders:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;&gt;</span> .gitignore <span class="op">&lt;&lt; 'EOF'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">*.csv</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">*.tsv</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">*.parquet</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">*.rds</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">*.RData</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">*.vcf*</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">*.bam</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">data/</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">.ipynb_checkpoints/</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">Untitled*.ipynb</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="a-pre-commit-check" class="level3">
+<h3 class="anchored" data-anchor-id="a-pre-commit-check">2. A pre-commit check</h3>
+<p>A <strong>pre-commit hook</strong> is a small script Git runs every time you commit. If it finds a problem, the commit <strong>stops</strong>. We use the course’s checker, <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/tools/check_notebooks.py"><code>tools/check_notebooks.py</code></a>: it blocks notebooks with saved outputs, data files, files over 25 MB, and anything that looks like a key or token. It needs only Python, which every Workbench app has.</p>
+<p>Set it up once in each repo (and again in each new app, since hooks aren’t pushed to GitHub):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/REPO-NAME</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> tools</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> <span class="at">-o</span> tools/check_notebooks.py <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  https://raw.githubusercontent.com/CWML/All-of-Us-Training-Resources/main/tools/check_notebooks.py</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> .git/hooks/pre-commit <span class="op">&lt;&lt; 'EOF'</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">#!/bin/sh</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">git diff --cached --name-only -z --diff-filter=ACM | xargs -0 python3 tools/check_notebooks.py</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x .git/hooks/pre-commit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now a commit with outputs fails like this:</p>
+<pre><code>✗ notebooks/analysis.ipynb: notebook with saved outputs in 12 cell(s): clear them first
+
+1 problem(s) found. Nothing was committed or merged. Fix them, then try again.</code></pre>
+<p>Clear the outputs, <code>git add</code> the notebook again, and commit. Commit <code>tools/check_notebooks.py</code> itself, so collaborators have it too.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>An alternative: strip outputs automatically
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>nbstripout</strong> package removes outputs every time you commit, without stopping you: <code>pip install --user nbstripout</code>, then <code>nbstripout --install</code> inside the repo. It doesn’t check for data files or credentials, so keep the <code>.gitignore</code>.</p>
+</div>
+</div>
+</section>
+<section id="a-check-on-github-for-shared-repos" class="level3">
+<h3 class="anchored" data-anchor-id="a-check-on-github-for-shared-repos">3. A check on GitHub, for shared repos</h3>
+<p>A hook only runs where it’s set up. For a repo that several people push to, add the same check <strong>on GitHub</strong>, so every push and pull request is checked, whoever made it. Create <code>.github/workflows/check-notebooks.yml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Check for outputs and data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">push</span><span class="kw">,</span><span class="at"> pull_request</span><span class="kw">]</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">check</span><span class="kw">:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> git ls-files -z | xargs -0 python3 tools/check_notebooks.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A failing check shows a red ✗ on the pull request, before anyone merges it. This course’s repo <a href="https://github.com/CWML/All-of-Us-Training-Resources/actions">runs this check</a>. Note that a check on GitHub runs <strong>after</strong> the push: it stops a merge, but the files are already on GitHub. That’s why the pre-commit hook comes first.</p>
+</section>
+<section id="look-before-you-push" class="level3">
+<h3 class="anchored" data-anchor-id="look-before-you-push">4. Look before you push</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status                    <span class="co"># which files changed?</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--cached</span> <span class="at">--stat</span>      <span class="co"># what's about to be committed, and how big?</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log origin/main..HEAD <span class="at">--stat</span>   <span class="co"># what's about to be pushed?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On a pull request, read the <strong>Files changed</strong> tab before merging. A notebook change of thousands of lines usually means outputs slipped in.</p>
+</section>
+</section>
+<section id="keep-your-personal-settings-out-of-git" class="level2">
+<h2 class="anchored" data-anchor-id="keep-your-personal-settings-out-of-git">Keep your personal settings out of Git</h2>
+<p>Notebooks often need one or two lines that differ for each person, such as your <strong>bucket name</strong>. If you edit them in a shared file, every <code>git pull</code> can conflict with your edit, and every commit risks pushing it.</p>
+<ul>
+<li><strong>Before pulling:</strong> <code>git stash</code>, then <code>git pull</code>, then <code>git stash pop</code> puts your edit back on top of the new version.</li>
+<li><strong>Before committing:</strong> check <code>git diff</code> for your setting, and leave that file out: <code>git restore --staged &lt;file&gt;</code>.</li>
+<li><strong>Better:</strong> keep personal settings in a file Git ignores (e.g.&nbsp;<code>my_settings.R</code>, listed in <code>.gitignore</code>), and have the shared code read it.</li>
+</ul>
+</section>
+<section id="protect-your-github-account" class="level2">
+<h2 class="anchored" data-anchor-id="protect-your-github-account">Protect your GitHub account</h2>
+<ul>
+<li><strong>Turn on two-factor authentication (2FA)</strong>: GitHub <strong>Settings → Password and authentication</strong>. GitHub now requires it for people who contribute code.</li>
+<li><strong>Each Workbench app has its own SSH key</strong> (Step 2b). In GitHub <strong>Settings → SSH and GPG keys</strong>, delete keys from apps you’ve deleted.</li>
+<li><strong>Never put a password, token, or key in a notebook</strong>, even in a cell you plan to delete: Git keeps the history. In the Workbench you don’t need one: the app is already logged in to Google Cloud, and SSH handles GitHub.</li>
+<li><strong>Public or private?</strong> Public repos are best for teaching code that others can reuse. Use private for work in progress. Either way, no data.</li>
+</ul>
 </section>
 <section id="before-you-start" class="level2">
 <h2 class="anchored" data-anchor-id="before-you-start">Before you start</h2>
@@ -524,7 +690,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Open a terminal: <strong>File → New → Terminal</strong>, or the <strong>Terminal</strong> tile in the Launcher (+ tab).</li>
 <li>Confirm you’re logged in:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> auth status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> auth status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> If you add a Git repo to the workspace (<strong>Apps</strong> tab → <strong>Git repositories</strong> → <strong>+ Add repository</strong>) <em>before</em> creating the app, the app clones it automatically. Apps created earlier won’t get it. Clone it manually as shown below.</p>
 </blockquote>
@@ -533,8 +699,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="step-2-connect-workbench-to-github-one-time-setup">Step 2: Connect Workbench to GitHub (one-time setup)</h2>
 <section id="a.-test-the-connection" class="level3">
 <h3 class="anchored" data-anchor-id="a.-test-the-connection">2a. Test the connection</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The first time, you may be asked <code>Are you sure you want to continue connecting (yes/no)?</code>. Type <code>yes</code>.</p>
 <ul>
 <li>✅ Success looks like: <code>Hi YOUR-USERNAME! You've successfully authenticated, but GitHub does not provide shell access.</code> (The “no shell access” part is normal.) Skip to 2c.</li>
@@ -544,7 +710,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="b.-add-your-workbench-ssh-key-to-github" class="level3">
 <h3 class="anchored" data-anchor-id="b.-add-your-workbench-ssh-key-to-github">2b. Add your Workbench SSH key to GitHub</h3>
 <p>Get your public key:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> security ssh-key get</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> security ssh-key get</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If that errors because no key exists, run <code>wb security ssh-key generate</code> first.</p>
 <p>Then, on GitHub:</p>
 <ol type="1">
@@ -558,9 +724,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="c.-set-your-git-identity" class="level3">
 <h3 class="anchored" data-anchor-id="c.-set-your-git-identity">2c. Set your Git identity</h3>
 <p>⚠️ <strong>Replace the example values with your own.</strong> Don’t paste them as-is.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your-github-username"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your-email@example.com"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span>    <span class="co"># confirm what's set</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your-github-username"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your-email@example.com"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span>    <span class="co"># confirm what's set</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For a public repo, consider using your GitHub <strong>noreply</strong> email so your real address isn’t published. Find it at GitHub <strong>Settings → Emails</strong>. It looks like <code>12345678+username@users.noreply.github.com</code>.</p>
 </section>
 </section>
@@ -569,7 +735,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Your workspace notebooks are usually in a mounted bucket folder like:</p>
 <pre><code>/home/jupyter/workspace/&lt;your-workspace-folder&gt;/notebooks</code></pre>
 <p>List them:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /home/jupyter/workspace/<span class="op">&lt;</span>your-workspace-folder<span class="op">&gt;</span>/notebooks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span> /home/jupyter/workspace/<span class="op">&lt;</span>your-workspace-folder<span class="op">&gt;</span>/notebooks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Save any open notebooks in JupyterLab first</strong> (Ctrl/Cmd+S) so you copy the latest version.</p>
 <blockquote class="blockquote">
 <p><strong>Important:</strong> Do <strong>not</strong> run <code>git init</code> or <code>git clone</code> inside <code>~/workspace/...</code>. It’s a mounted cloud bucket, and Git doesn’t work well there. Always clone into your home directory (<code>~</code>) and copy files over.</p>
@@ -580,18 +746,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="a1.-clone-the-repo-and-create-a-branch" class="level3">
 <h3 class="anchored" data-anchor-id="a1.-clone-the-repo-and-create-a-branch">A1. Clone the repo and create a branch</h3>
 <p>Use the repo’s <strong>SSH</strong> URL (green <strong>Code</strong> button on GitHub → <strong>SSH</strong>):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone git@github.com:OWNER/REPO-NAME.git</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO-NAME</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> add-my-notebooks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone git@github.com:OWNER/REPO-NAME.git</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO-NAME</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> add-my-notebooks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The cloned folder is named after the repo (<code>REPO-NAME</code>).</p>
 </section>
 <section id="a2.-copy-in-your-notebooks" class="level3">
 <h3 class="anchored" data-anchor-id="a2.-copy-in-your-notebooks">A2. Copy in your notebooks</h3>
 <p>Put them in a subfolder so they don’t clash with existing files:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> notebooks</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /home/jupyter/workspace/<span class="op">&lt;</span>your-workspace-folder<span class="op">&gt;</span>/notebooks/<span class="pp">*</span>.ipynb notebooks/</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> notebooks/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> notebooks</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /home/jupyter/workspace/<span class="op">&lt;</span>your-workspace-folder<span class="op">&gt;</span>/notebooks/<span class="pp">*</span>.ipynb notebooks/</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> notebooks/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>To use an existing folder or a name with spaces, <strong>use quotes</strong>: <code>mkdir -p "Session 3"</code> and <code>cp ... "Session 3/"</code></li>
 <li>To copy a single file whose name has spaces, quote the full path: <code>cp "/home/jupyter/workspace/&lt;folder&gt;/notebooks/01. my notebook.ipynb" notebooks/</code></li>
@@ -599,19 +765,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="a3.-clean-before-committing" class="level3">
 <h3 class="anchored" data-anchor-id="a3.-clean-before-committing">A3. Clean before committing</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all outputs (keeps code and markdown)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for credentials</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-iE</span> <span class="st">"token|key|secret|password"</span> notebooks/<span class="pp">*</span>.ipynb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all outputs (keeps code and markdown)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for credentials</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-iE</span> <span class="st">"token|key|secret|password"</span> notebooks/<span class="pp">*</span>.ipynb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If the <code>grep</code> prints anything that looks like a credential, edit or remove that file before continuing. Pay special attention to notebooks that load environment variables or configuration.</p>
 </section>
 <section id="a4.-commit-and-push" class="level3">
 <h3 class="anchored" data-anchor-id="a4.-commit-and-push">A4. Commit and push</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status                     <span class="co"># review every file listed</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add analysis notebooks from All of Us workspace"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin add-my-notebooks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status                     <span class="co"># review every file listed</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add analysis notebooks from All of Us workspace"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin add-my-notebooks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="a5.-open-and-merge-a-pull-request" class="level3">
 <h3 class="anchored" data-anchor-id="a5.-open-and-merge-a-pull-request">A5. Open and merge a pull request</h3>
@@ -626,8 +792,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="a6.-update-your-local-copy" class="level3">
 <h3 class="anchored" data-anchor-id="a6.-update-your-local-copy">A6. Update your local copy</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="path-b-create-a-new-repo-for-your-work" class="level2">
@@ -643,39 +809,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="b2.-set-up-the-repo-in-your-home-directory" class="level3">
 <h3 class="anchored" data-anchor-id="b2.-set-up-the-repo-in-your-home-directory">B2. Set up the repo in your home directory</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/my-new-repo/notebooks</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/my-new-repo</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:YOUR-USERNAME/my-new-repo.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/my-new-repo/notebooks</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/my-new-repo</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:YOUR-USERNAME/my-new-repo.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="b3.-copy-clean-and-add-a-.gitignore" class="level3">
 <h3 class="anchored" data-anchor-id="b3.-copy-clean-and-add-a-.gitignore">B3. Copy, clean, and add a .gitignore</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /home/jupyter/workspace/<span class="op">&lt;</span>your-workspace-folder<span class="op">&gt;</span>/notebooks/<span class="pp">*</span>.ipynb notebooks/</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-iE</span> <span class="st">"token|key|secret|password"</span> notebooks/<span class="pp">*</span>.ipynb</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep data files and clutter out of Git</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> .gitignore <span class="op">&lt;&lt; 'EOF'</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="st">*.csv</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="st">*.tsv</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st">*.parquet</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="st">*.vcf</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="st">*.vcf.gz</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="st">*.bam</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="st">*.rds</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="st">*.RData</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="st">.ipynb_checkpoints/</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="st">.DS_Store</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> /home/jupyter/workspace/<span class="op">&lt;</span>your-workspace-folder<span class="op">&gt;</span>/notebooks/<span class="pp">*</span>.ipynb notebooks/</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-iE</span> <span class="st">"token|key|secret|password"</span> notebooks/<span class="pp">*</span>.ipynb</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep data files and clutter out of Git</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> .gitignore <span class="op">&lt;&lt; 'EOF'</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">*.csv</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">*.tsv</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">*.parquet</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="st">*.vcf</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">*.vcf.gz</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="st">*.bam</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="st">*.rds</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="st">*.RData</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="st">.ipynb_checkpoints/</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="st">.DS_Store</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Optionally create a <code>README.md</code> describing the project, the order to run the notebooks in, and what data access is required.</p>
 </section>
 <section id="b4.-first-commit-and-push" class="level3">
 <h3 class="anchored" data-anchor-id="b4.-first-commit-and-push">B4. First commit and push</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Initial commit: analysis notebooks"</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Initial commit: analysis notebooks"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No pull request is needed here. The files go straight to <code>main</code>.</p>
 </section>
 </section>
@@ -693,15 +859,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="ongoing-workflow-keeping-in-sync">Ongoing workflow: keeping in sync</h2>
 <p>After setup, <strong>work from the repo folder</strong> (<code>~/REPO-NAME/notebooks/</code>), not the original workspace folder.</p>
 <p><strong>Each session:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/REPO-NAME</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                       <span class="co"># get the latest from GitHub</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ...edit and run notebooks...</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Describe your change"</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/REPO-NAME</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout main</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                       <span class="co"># get the latest from GitHub</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ...edit and run notebooks...</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Describe your change"</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can push straight to <code>main</code> if it’s your own repo, or use a branch and pull request (as in Path A) if others should review first.</p>
 <p><strong>Things to know:</strong></p>
 <ul>
@@ -714,8 +880,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sharing-with-colleagues" class="level2">
 <h2 class="anchored" data-anchor-id="sharing-with-colleagues">Sharing with colleagues</h2>
 <p><strong>To use your code</strong> in their own All of Us workspace, colleagues run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/OWNER/REPO-NAME.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/OWNER/REPO-NAME.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No SSH key is needed to clone a public repo over HTTPS. They need the same data access tier your notebooks use (e.g., Controlled Tier).</p>
 <p><strong>To contribute back</strong>, colleagues need:</p>
 <ol type="1">
@@ -724,13 +890,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>To clone with the <code>git@github.com:...</code> URL</li>
 </ol>
 <p><strong>Make notebooks portable:</strong> avoid hardcoded workspace paths. Build paths from your home folder, and keep the bucket name and dataset path in <strong>one place</strong> at the top of the notebook, so collaborators only change those lines:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="op">=</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="op">=</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>WORKSPACE_BUCKET</code> and <code>WORKSPACE_CDR</code> from the classic Workbench are <strong>not set</strong> in new Workbench 2.0 workspaces (see <a href="../../pages/workspace/storage-costs.html#workspace-variables">Workspace Variables</a>).</p>
 <p>To share <strong>results</strong>, share the workspace itself through Workbench’s sharing settings so data and outputs stay inside All of Us.</p>
 </section>
@@ -833,29 +999,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>Accidentally pushed outputs or data</td>
 <td>Sensitive content is now on GitHub</td>
-<td>Act quickly: make the repo private if possible, remove the content, and contact the All of Us support team about the policy steps. Deleting it in a new commit does <strong>not</strong> remove it from Git history.</td>
+<td>See <strong>If something slips through</strong>, below.</td>
+</tr>
+<tr class="even">
+<td><code>✗ … notebook with saved outputs</code> when committing</td>
+<td>The pre-commit check found outputs</td>
+<td><code>jupyter nbconvert --clear-output --inplace &lt;notebook&gt;</code>, then <code>git add</code> it again and commit.</td>
+</tr>
+<tr class="odd">
+<td>A red ✗ on a pull request</td>
+<td>The GitHub check found outputs, data, or a credential</td>
+<td>Click <strong>Details</strong> to see which file; fix it on the branch and push again. Don’t merge until it’s green.</td>
 </tr>
 </tbody>
 </table>
 </section>
+<section id="if-something-slips-through" class="level2">
+<h2 class="anchored" data-anchor-id="if-something-slips-through">If something slips through</h2>
+<p>If outputs, data, or a credential reach GitHub:</p>
+<ol type="1">
+<li><strong>Act now.</strong> Make the repo <strong>private</strong> (repo <strong>Settings → General → Danger Zone</strong>), so no one else can see it while you fix it.</li>
+<li><strong>Deleting the file in a new commit isn’t enough:</strong> it stays in the repo’s <strong>history</strong>. It has to be removed from the history (tools like <code>git filter-repo</code>), then force-pushed. Ask for help if you haven’t done this before.</li>
+<li><strong>Report it.</strong> Contact <em>All of Us</em> User Support (support@researchallofus.org): exposing participant data is a policy issue they need to know about, and they’ll tell you what else to do.</li>
+<li><strong>A credential?</strong> Revoke it right away (e.g.&nbsp;delete the token or key on GitHub or Google Cloud), even after removing it. Assume someone copied it.</li>
+<li><strong>Then add the safety nets</strong> above, so it can’t happen the same way again.</li>
+</ol>
+</section>
 <section id="quick-reference" class="level2">
 <h2 class="anchored" data-anchor-id="quick-reference">Quick reference</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-time setup (per app)</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> security ssh-key get</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your-username"</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your-email"</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="kw">&amp;&amp;</span> <span class="fu">git</span> clone git@github.com:OWNER/REPO.git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> REPO</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily cycle</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-time setup (per app)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> security ssh-key get</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your-username"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your-email"</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone, and add the pre-commit check (see Safety nets)</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="kw">&amp;&amp;</span> <span class="fu">git</span> clone git@github.com:OWNER/REPO.git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> REPO</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily cycle</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash <span class="kw">&amp;&amp;</span> <span class="fu">git</span> pull <span class="kw">&amp;&amp;</span> <span class="fu">git</span> stash pop    <span class="co"># keeps your personal settings</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--cached</span> <span class="at">--stat</span>                  <span class="co"># what's about to be committed</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>References:</strong> - Verily Workbench: <a href="https://support.workbench.verily.com/docs/guides/cloud_apps/git_integrations/">Git integrations with cloud apps</a> - Verily Workbench: <a href="https://support.workbench.verily.com/docs/guides/cli/cli_install_and_run/">Install and run the Workbench CLI</a> - GitHub: <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Adding a new SSH key to your account</a></p>
 <!-- section-nav -->
 <div class="section-nav">

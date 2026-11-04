@@ -1,0 +1,16 @@
+# Runs on every push and pull request: fails if any tracked file is a notebook
+# with saved outputs, a data file, a very large file, or contains a credential.
+# The same checker the pre-commit hook uses: tools/check_notebooks.py
+name: Check for outputs and data
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: No notebook outputs, data files, or credentials
+        run: git ls-files -z | xargs -0 python3 tools/check_notebooks.py

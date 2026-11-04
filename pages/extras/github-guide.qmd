@@ -1,6 +1,6 @@
 ---
 title: "GitHub Guide"
-description: "Push notebooks and scripts from an All of Us workspace to GitHub, step by step"
+description: "Push notebooks and scripts from an All of Us workspace to GitHub, step by step, with safety nets that keep data and outputs out"
 ---
 
 A step-by-step guide for pushing notebooks and scripts from an All of Us workspace on Verily Workbench to GitHub. It covers two cases:
@@ -8,7 +8,7 @@ A step-by-step guide for pushing notebooks and scripts from an All of Us workspa
 - **Path A:** Adding your work to an **existing** GitHub repository
 - **Path B:** Creating a **new** GitHub repository for your work
 
-It finishes with how to keep things in sync and a troubleshooting section based on problems we actually ran into.
+It also covers how to keep *All of Us* data out of GitHub **automatically** (safety nets that stop a commit or a merge with outputs or data files), how to protect your account, what to do if something slips through, and a troubleshooting section based on problems we actually ran into.
 
 
 ## ⚠️ Read this first: data protection
@@ -28,6 +28,128 @@ The All of Us **Data and Statistics Dissemination Policy** prohibits sharing:
 4. **Run `git status` and look at every file** before committing.
 
 Check the current policy on the All of Us Research Hub if you're unsure about anything.
+
+**A private repo doesn't make it OK.** *All of Us* data must stay **in the Workbench**. Pushing it to GitHub moves it out, whether the repo is public or private, and private repos can be made public, forked, or shared later.
+
+### What counts as data: the less obvious leaks
+
+Clearing outputs catches most problems. These are the ones people miss:
+
+| Where data hides | Example | Instead |
+|---|---|---|
+| **Notebook outputs** | tables, printed rows, `head()` and `glimpse()` | clear outputs before every commit |
+| **Plots** | images are saved **inside** the notebook file, as text you can't see | clearing outputs removes them too |
+| **Printed SQL** | a query printed with a list of participant IDs (`WHERE person_id IN (…)`) | build ID lists in a variable; never print it |
+| **Error messages** | a traceback that shows a row of data | clear outputs; don't paste errors with data into issues |
+| **Code comments and markdown** | "the outlier was person 1234567, aged 103" | describe results only as allowed aggregates |
+| **Data files** | `.csv`, `.tsv`, `.parquet`, `.rds`, genotype files | keep them in your workspace bucket; list them in `.gitignore` |
+| **Screenshots** | a screenshot of a notebook table or the Data Explorer | check every image before adding it |
+| **Your workspace details** | your workspace's Google project ID, your bucket name, your email in commits | keep them in one settings line you don't commit; use GitHub's **noreply** email (Step 2c) |
+
+Results you **may** share (aggregate statistics with no counts of 1 to 20, and nothing that lets one be worked out) still count as **publishing** *All of Us* results: report them through the *All of Us* **Publication and Presentation Reporting Form** at least two weeks before they go public.
+
+
+## Safety nets: make mistakes hard
+
+Checklists rely on remembering. These four habits catch mistakes **automatically**, before they reach GitHub.
+
+### 1. A `.gitignore` for data files
+
+A `.gitignore` file lists files Git should never add. Add one to **every** repo (Path B, step B3, shows how), and include your data folders:
+
+```sh
+cat >> .gitignore << 'EOF'
+*.csv
+*.tsv
+*.parquet
+*.rds
+*.RData
+*.vcf*
+*.bam
+data/
+.ipynb_checkpoints/
+Untitled*.ipynb
+EOF
+```
+
+### 2. A pre-commit check
+
+A **pre-commit hook** is a small script Git runs every time you commit. If it finds a problem, the commit **stops**. We use the course's checker, [`tools/check_notebooks.py`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/tools/check_notebooks.py): it blocks notebooks with saved outputs, data files, files over 25 MB, and anything that looks like a key or token. It needs only Python, which every Workbench app has.
+
+Set it up once in each repo (and again in each new app, since hooks aren't pushed to GitHub):
+
+```sh
+cd ~/REPO-NAME
+mkdir -p tools
+curl -fsSL -o tools/check_notebooks.py \
+  https://raw.githubusercontent.com/CWML/All-of-Us-Training-Resources/main/tools/check_notebooks.py
+
+cat > .git/hooks/pre-commit << 'EOF'
+#!/bin/sh
+git diff --cached --name-only -z --diff-filter=ACM | xargs -0 python3 tools/check_notebooks.py
+EOF
+chmod +x .git/hooks/pre-commit
+```
+
+Now a commit with outputs fails like this:
+
+```
+✗ notebooks/analysis.ipynb: notebook with saved outputs in 12 cell(s): clear them first
+
+1 problem(s) found. Nothing was committed or merged. Fix them, then try again.
+```
+
+Clear the outputs, `git add` the notebook again, and commit. Commit `tools/check_notebooks.py` itself, so collaborators have it too.
+
+::: {.callout-tip}
+## An alternative: strip outputs automatically
+
+The **nbstripout** package removes outputs every time you commit, without stopping you: `pip install --user nbstripout`, then `nbstripout --install` inside the repo. It doesn't check for data files or credentials, so keep the `.gitignore`.
+:::
+
+### 3. A check on GitHub, for shared repos
+
+A hook only runs where it's set up. For a repo that several people push to, add the same check **on GitHub**, so every push and pull request is checked, whoever made it. Create `.github/workflows/check-notebooks.yml`:
+
+```yaml
+name: Check for outputs and data
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: git ls-files -z | xargs -0 python3 tools/check_notebooks.py
+```
+
+A failing check shows a red ✗ on the pull request, before anyone merges it. This course's repo [runs this check](https://github.com/CWML/All-of-Us-Training-Resources/actions). Note that a check on GitHub runs **after** the push: it stops a merge, but the files are already on GitHub. That's why the pre-commit hook comes first.
+
+### 4. Look before you push
+
+```sh
+git status                    # which files changed?
+git diff --cached --stat      # what's about to be committed, and how big?
+git log origin/main..HEAD --stat   # what's about to be pushed?
+```
+
+On a pull request, read the **Files changed** tab before merging. A notebook change of thousands of lines usually means outputs slipped in.
+
+
+## Keep your personal settings out of Git
+
+Notebooks often need one or two lines that differ for each person, such as your **bucket name**. If you edit them in a shared file, every `git pull` can conflict with your edit, and every commit risks pushing it.
+
+- **Before pulling:** `git stash`, then `git pull`, then `git stash pop` puts your edit back on top of the new version.
+- **Before committing:** check `git diff` for your setting, and leave that file out: `git restore --staged <file>`.
+- **Better:** keep personal settings in a file Git ignores (e.g. `my_settings.R`, listed in `.gitignore`), and have the shared code read it.
+
+
+## Protect your GitHub account
+
+- **Turn on two-factor authentication (2FA)**: GitHub **Settings → Password and authentication**. GitHub now requires it for people who contribute code.
+- **Each Workbench app has its own SSH key** (Step 2b). In GitHub **Settings → SSH and GPG keys**, delete keys from apps you've deleted.
+- **Never put a password, token, or key in a notebook**, even in a cell you plan to delete: Git keeps the history. In the Workbench you don't need one: the app is already logged in to Google Cloud, and SSH handles GitHub.
+- **Public or private?** Public repos are best for teaching code that others can reuse. Use private for work in progress. Either way, no data.
 
 
 ## Before you start
@@ -346,7 +468,20 @@ To share **results**, share the workspace itself through Workbench's sharing set
 | `git pull` refuses because of local changes | You have uncommitted edits to files that also changed on GitHub | `git status`, then commit your changes or discard them with `git restore <file>`, then pull again. |
 | Merge conflict in a `.ipynb` file | Two people edited the same notebook | Notebooks are JSON and hard to merge. Keep one person per notebook where possible. To keep one side entirely: `git checkout --ours <file>` or `git checkout --theirs <file>`, then `git add` and commit. |
 | Repo added to the workspace but not in my app | The app was created before the repo was added | In the app terminal: `wb git clone --resource=<resource-name>`, or `git clone <url>`. |
-| Accidentally pushed outputs or data | Sensitive content is now on GitHub | Act quickly: make the repo private if possible, remove the content, and contact the All of Us support team about the policy steps. Deleting it in a new commit does **not** remove it from Git history. |
+| Accidentally pushed outputs or data | Sensitive content is now on GitHub | See **If something slips through**, below. |
+| `✗ … notebook with saved outputs` when committing | The pre-commit check found outputs | `jupyter nbconvert --clear-output --inplace <notebook>`, then `git add` it again and commit. |
+| A red ✗ on a pull request | The GitHub check found outputs, data, or a credential | Click **Details** to see which file; fix it on the branch and push again. Don't merge until it's green. |
+
+
+## If something slips through
+
+If outputs, data, or a credential reach GitHub:
+
+1. **Act now.** Make the repo **private** (repo **Settings → General → Danger Zone**), so no one else can see it while you fix it.
+2. **Deleting the file in a new commit isn't enough:** it stays in the repo's **history**. It has to be removed from the history (tools like `git filter-repo`), then force-pushed. Ask for help if you haven't done this before.
+3. **Report it.** Contact *All of Us* User Support (support@researchallofus.org): exposing participant data is a policy issue they need to know about, and they'll tell you what else to do.
+4. **A credential?** Revoke it right away (e.g. delete the token or key on GitHub or Google Cloud), even after removing it. Assume someone copied it.
+5. **Then add the safety nets** above, so it can't happen the same way again.
 
 
 ## Quick reference
@@ -358,14 +493,15 @@ wb security ssh-key get
 git config --global user.name "your-username"
 git config --global user.email "your-email"
 
-# Clone
+# Clone, and add the pre-commit check (see Safety nets)
 cd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO
 
 # Daily cycle
-git pull
+git stash && git pull && git stash pop    # keeps your personal settings
 jupyter nbconvert --clear-output --inplace notebooks/*.ipynb
 git status
 git add notebooks
+git diff --cached --stat                  # what's about to be committed
 git commit -m "message"
 git push
 ```
