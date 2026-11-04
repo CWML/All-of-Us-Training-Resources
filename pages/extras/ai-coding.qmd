@@ -1,6 +1,7 @@
 ---
 title: "Coding with AI and GitHub"
 description: "Use an AI assistant to write and fix All of Us code safely: the AI works on code on your computer, GitHub carries the code, and the Workbench runs it"
+code-annotations: below
 ---
 
 **A class for anyone who writes code for *All of Us*** · about 90 minutes · no *All of Us* data leaves the Workbench
@@ -64,7 +65,22 @@ Why GitHub, and not copy and paste?
 
 1. **Install Git** ([git-scm.com](https://git-scm.com/downloads)), and sign in to GitHub. Turn on **two-factor authentication** (GitHub requires it for contributors).
 2. **Clone the same repo**: `git clone https://github.com/OWNER/REPO.git`. Cloning code is safe: the repo has no data.
-3. **Add the pre-commit check** (from the [GitHub Guide](github-guide.qmd#safety-nets-make-mistakes-hard)), so nothing with outputs or data can be committed from your computer either.
+3. **Add the pre-commit check**, so nothing with outputs, data files, large files, or credentials can be committed, from your computer **or** from the Workbench. Run this once in each copy of the repo (on your computer, and in each Workbench app):
+
+```sh
+cd REPO
+mkdir -p tools                                                                       # <1>
+[ -f tools/check_notebooks.py ] || curl -fsSL -o tools/check_notebooks.py \
+  https://raw.githubusercontent.com/CWML/All-of-Us-Training-Resources/main/tools/check_notebooks.py
+
+printf '#!/bin/sh\ngit diff --cached --name-only -z --diff-filter=ACM | xargs -0 python3 tools/check_notebooks.py\n' > .git/hooks/pre-commit   # <2>
+chmod +x .git/hooks/pre-commit                                                       # <3>
+```
+1. Get the course's checker script, if the repo doesn't have it yet. Commit it, so collaborators have it too.
+2. Write a two-line script into Git's **hooks** folder. Git runs `pre-commit` before every commit: it lists the files you're committing and passes them to the checker.
+3. Make it executable. Without this, Git ignores it.
+
+Now every commit is checked. A commit with outputs stops with *✗ notebook with saved outputs: clear them first*. More in the [GitHub Guide](github-guide.qmd#safety-nets-make-mistakes-hard).
 4. **Choose an AI tool:**
 
 | Kind | Examples | Sees |
@@ -104,10 +120,23 @@ git checkout -b fix-smoking-code  # a branch for this change
 
 - Ask the AI for the change. Give it the **code** and the **goal**: *"In 5.2, add alcohol frequency to the model, coded as in Part 5. Explain each step."*
 - **Read every change** it makes: `git diff` shows them line by line. Don't accept code you don't understand: ask the AI to explain it.
-- **Test on made-up data.** Ask the AI for a small fake data frame with the same columns, and run the code on it. This catches most bugs before you spend any Workbench time.
+- **Test on made-up data.** Ask the AI for a small fake data frame with the same columns, and run the code on it. This catches most bugs before you spend any Workbench time (see the [worked example](#a-worked-example) below).
+
+::: {.callout-warning}
+## Before every commit: restart, run, clear, save
+
+Wherever you ran the notebook (on your computer or in the Workbench):
+
+1. **Kernel → Restart Kernel and Run All Cells.** Does it run from top to bottom, with nothing left over from earlier runs? If not, fix it first: a notebook that only works in the order you happened to run it isn't reproducible.
+2. **Kernel → Restart Kernel and Clear Outputs of All Cells**, or from the terminal: `jupyter nbconvert --clear-output --inplace notebooks/*.ipynb`
+3. **Save** the notebook (**File → Save**, or Ctrl/Cmd+S). Clearing doesn't change the **file** until you save.
+4. **Commit.** The pre-commit check confirms no outputs slipped through.
+
+In the Workbench, step 1 runs queries again and costs money: skip it for slow or costly notebooks, and run them in full only when needed.
+:::
 
 ```sh
-jupyter nbconvert --clear-output --inplace notebooks/*.ipynb   # if you ran anything locally
+jupyter nbconvert --clear-output --inplace notebooks/*.ipynb   # clear outputs (if not done in the menu)
 git add notebooks
 git commit -m "5.2: add alcohol frequency to the model"         # the pre-commit check runs here
 git push -u origin fix-smoking-code
@@ -143,6 +172,79 @@ Open a **pull request** on GitHub. Read the **Files changed** tab one last time,
 You can also edit notebooks in the Workbench. Before pushing from there: **clear outputs** (`jupyter nbconvert --clear-output --inplace …`), commit, and push. Then `git pull` on your computer before asking the AI for more changes, so it works on the newest version.
 
 ⚠️ Two people (or you and an AI, in two places) editing the **same notebook** at once leads to merge conflicts that are hard to fix in notebooks. Pull before you start, and push when you stop.
+
+## A worked example
+
+The full round trip, for a small task. **The prompt** (on your computer, with the instructions file in place):
+
+> *Write an R function `count_by_group(data, var)` that counts the levels of `var` in each `cohort`, shows the percent within each cohort, and hides counts of 1 to 20 (show them as NA). Then make a small fake data frame to test it.*
+
+**What the AI wrote first:**
+
+```r
+library(tidyverse)
+
+count_by_group <- function(data, var) {
+  data %>%
+    filter(!is.na(.data[[var]])) %>%                                   # <1>
+    count(cohort, level = .data[[var]]) %>%
+    mutate(n = if_else(n <= 20, NA_integer_, n)) %>%                   # <2>
+    group_by(cohort) %>%
+    mutate(percent = round(100 * n / sum(n, na.rm = TRUE), 1)) %>%     # <3>
+    ungroup()
+}
+
+set.seed(1)                                                            # <4>
+fake <- tibble(
+  person_id      = as.character(1:120),
+  cohort         = sample(c("case", "control"), 120, replace = TRUE),
+  smoking_status = sample(c("Never", "Former", "Current", NA), 120, replace = TRUE,
+                          prob = c(0.55, 0.25, 0.17, 0.03))
+)
+
+count_by_group(fake, "smoking_status")                                 # <5>
+```
+1. Leave out missing answers, so they aren't counted as a level.
+2. Hide counts of 1 to 20 (shown as `NA`), as *All of Us* policy requires.
+3. The percent of each cohort in each level.
+4. **Made-up data** with the same column names as the real file: no *All of Us* data is involved. `set.seed()` makes the fake data the same every time. Only 120 people, **on purpose**, so some counts are small enough to be hidden.
+5. Test it.
+
+**The test finds a bug.** *Current* and *Former* are hidden, as they should be, but *Never* shows **100%** in both groups: the percents were calculated only from the cells left **showing**. Looks fine, runs fine, wrong. With the real data (larger counts) you might never have noticed.
+
+**The fix**, after telling the AI what the test showed: calculate the percents from **all** the counts, **then** hide both the small counts and their percents:
+
+```r
+count_by_group <- function(data, var) {
+  data %>%
+    filter(!is.na(.data[[var]])) %>%
+    count(cohort, level = .data[[var]]) %>%
+    group_by(cohort) %>%
+    mutate(percent = round(100 * n / sum(n), 1)) %>%                   # <1>
+    ungroup() %>%
+    mutate(percent = if_else(n <= 20, NA_real_, percent),              # <2>
+           n       = if_else(n <= 20, NA_integer_, n))
+}
+
+count_by_group(fake, "smoking_status")
+```
+1. Percents from **all** counts, so *Never* gets its true share.
+2. Then hide small counts **and** their percents: a percent next to a known total would reveal the count.
+
+Run the test again: *Never* now shows its real share, and the hidden rows show `NA` for both.
+
+**More review questions to ask** before accepting it: *What happens if `var` is a factor? If a cohort has no rows? Could anyone work out a hidden count from the others?* The last is the **derived-counts** rule from **3.1**: with only one hidden row in a group, its count can be worked out from the percents of the others. If that happens, combine small levels first (e.g. *Current* and *Former* into *Ever smoked*).
+
+**Then:** save it in `notebooks/helpers.R`, restart and clear, commit (the check runs), push, and in the Workbench:
+
+```r
+source("~/repos/REPO/notebooks/helpers.R")                                      # <1>
+survey_basics <- load_data("survey_basics.csv", col_types = cols(person_id = "c"))   # <2>
+count_by_group(survey_basics, "smoking_status")                                  # <3>
+```
+1. The function, pulled from GitHub into the Workbench.
+2. The **real** data, read from your bucket: it never leaves the Workbench.
+3. Run it, and read the result **in the Workbench**. If you want to share it, it's an aggregate table that passes the small-count rule, but remember that sharing results publicly needs the **reporting form**.
 
 ## Check everything the AI writes
 
