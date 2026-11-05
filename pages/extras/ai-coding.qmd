@@ -262,9 +262,22 @@ These are for testing code on made-up data on your computer. (`bigrquery` isn't 
 ## 5. Install the Claude Code extension
 
 1. In Positron, open the **Extensions** view: the **squares icon** in the left bar, or **View → Extensions** (Cmd+Shift+X on macOS, Ctrl+Shift+X on Windows).
-2. Search for **Claude Code**, and check the publisher is **Anthropic**. Click **Install**.
-3. A **Claude** icon appears in the left bar (or the editor's top right). Click it, and **sign in** with your Anthropic account: Claude Code needs a Claude subscription or API access (check whether your institution provides one).
-4. If the extension doesn't appear in the search, use the terminal instead: install Claude Code by following [Anthropic's instructions](https://docs.anthropic.com/en/docs/claude-code), then run `claude` in Positron's terminal. It works the same way.
+2. Search for **claude**. Choose **Claude Code for VS Code**, published by **Anthropic** (with a blue verified tick). It's the official extension; the others in the list are from other companies. Positron gets extensions from the **Open VSX** marketplace, so it's the same extension VS Code users install (identifier `anthropic.claude-code`).
+3. Click **Install**. If Positron shows **Restart Extensions** (or *Restart Required*), click it.
+4. A **Claude** icon (an orange spark) appears at the top right of the editor. Click it, and **sign in** with your Anthropic account: Claude Code needs a Claude subscription or API access (check whether your institution provides one).
+5. Prefer the terminal? The extension page also describes the terminal version: run `claude` in Positron's terminal. It works the same way, with the same `CLAUDE.md` and settings.
+
+::: {.annotated}
+![](images/positron-claude-extension.png){fig-alt="Positron's Extensions view, searched for claude. The first result, Claude Code for VS Code, published by Anthropic with a verified tick, is outlined; other AI extensions from other publishers are listed below it. The Extensions icon in the left bar is also outlined. On the right, the extension's page shows it is from open-vsx.org, with Restart Extensions, Disable, and Uninstall buttons, because it is already installed."}
+
+::: {.red-box style="left: 2.9%; top: 5.8%; width: 27.2%; height: 10.2%;"}
+:::
+
+::: {.red-box style="left: 0.2%; top: 37.6%; width: 2.4%; height: 5%;"}
+:::
+:::
+
+In this screenshot the extension is already installed, so it shows **Uninstall** and **Restart Extensions**; before installing, you'll see an **Install** button instead.
 :::
 
 ::: {.callout-note collapse="false"}
