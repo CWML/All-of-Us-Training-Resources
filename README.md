@@ -147,6 +147,22 @@ printf '#!/bin/sh\ngit diff --cached --name-only -z --diff-filter=ACM | xargs -0
 chmod +x .git/hooks/pre-commit
 ```
 
+## Repository Layout
+
+```
+All-of-Us-Training-Resources/
+├── README.md, AGENTS.md     this file; instructions for AI assistants (CLAUDE.md points to AGENTS.md)
+├── .gitignore               keeps data files, private notes, and reference documents out of Git
+├── notebooks/               the classes: aou_setup.R (settings and helpers), sql/, core/, omics/, surveys/, wearables/
+├── pages/, index.qmd        the website's pages (Quarto); built into docs/
+├── Intro to workbench 2.0/  the slide deck
+├── tools/                   check_notebooks.py (the safety check) and the site-building scripts
+├── reference/               public All of Us and OMOP documents for AI assistants (only its README is in Git)
+└── Notes/                   private notes (not in Git)
+```
+
+To use an AI assistant with this code safely (it sees code, never data), see the class [Coding with AI and GitHub](https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/ai-coding.html): `AGENTS.md` and `reference/` are this repository's own examples.
+
 ## Resources
 
 - [*All of Us* Research Hub](https://www.researchallofus.org/)
