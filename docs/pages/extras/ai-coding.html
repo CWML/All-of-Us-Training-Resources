@@ -423,7 +423,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-about-the-ai-tools-inside-the-workbench" id="toc-what-about-the-ai-tools-inside-the-workbench" class="nav-link" data-scroll-target="#what-about-the-ai-tools-inside-the-workbench">What about the AI tools inside the Workbench?</a></li>
   </ul></li>
   <li><a href="#the-workflow-your-computer-github-the-workbench" id="toc-the-workflow-your-computer-github-the-workbench" class="nav-link" data-scroll-target="#the-workflow-your-computer-github-the-workbench">The workflow: your computer ⇄ GitHub ⇄ the Workbench</a></li>
+  <li><a href="#set-up-your-project-folders-.gitignore-and-a-reference-folder" id="toc-set-up-your-project-folders-.gitignore-and-a-reference-folder" class="nav-link" data-scroll-target="#set-up-your-project-folders-.gitignore-and-a-reference-folder">Set up your project: folders, <code>.gitignore</code>, and a reference folder</a>
+  <ul class="collapse">
+  <li><a href="#a-folder-structure" id="toc-a-folder-structure" class="nav-link" data-scroll-target="#a-folder-structure">A folder structure</a></li>
+  <li><a href="#the-.gitignore-your-first-safety-net" id="toc-the-.gitignore-your-first-safety-net" class="nav-link" data-scroll-target="#the-.gitignore-your-first-safety-net">The <code>.gitignore</code>: your first safety net</a></li>
+  <li><a href="#a-reference-folder-public-context-for-the-ai" id="toc-a-reference-folder-public-context-for-the-ai" class="nav-link" data-scroll-target="#a-reference-folder-public-context-for-the-ai">A reference folder: public context for the AI</a></li>
+  </ul></li>
   <li><a href="#one-time-setup" id="toc-one-time-setup" class="nav-link" data-scroll-target="#one-time-setup">One-time setup</a></li>
+  <li><a href="#two-popular-setups" id="toc-two-popular-setups" class="nav-link" data-scroll-target="#two-popular-setups">Two popular setups</a>
+  <ul class="collapse">
+  <li><a href="#claude-code-in-positron" id="toc-claude-code-in-positron" class="nav-link" data-scroll-target="#claude-code-in-positron">Claude Code in Positron</a></li>
+  <li><a href="#yales-clarity-platform" id="toc-yales-clarity-platform" class="nav-link" data-scroll-target="#yales-clarity-platform">Yale’s Clarity platform</a></li>
+  </ul></li>
   <li><a href="#the-round-trip-step-by-step" id="toc-the-round-trip-step-by-step" class="nav-link" data-scroll-target="#the-round-trip-step-by-step">The round trip, step by step</a>
   <ul class="collapse">
   <li><a href="#on-your-computer-ask-review-test" id="toc-on-your-computer-ask-review-test" class="nav-link" data-scroll-target="#on-your-computer-ask-review-test">1. On your computer: ask, review, test</a></li>
@@ -541,6 +552,124 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Colleagues and students get the same code the same way.</li>
 </ul>
 </section>
+<section id="set-up-your-project-folders-.gitignore-and-a-reference-folder" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-your-project-folders-.gitignore-and-a-reference-folder">Set up your project: folders, <code>.gitignore</code>, and a reference folder</h2>
+<p>An AI assistant works much better on a <strong>tidy, predictable</strong> project: it finds the right file, follows your conventions, and guesses less. A clear structure also makes it obvious what belongs in Git and what never does.</p>
+<section id="a-folder-structure" class="level3">
+<h3 class="anchored" data-anchor-id="a-folder-structure">A folder structure</h3>
+<pre><code>my-aou-project/
+├── README.md              what the project is, and the order to run things in
+├── .gitignore             what Git must never add (next section): commit it FIRST
+├── AGENTS.md              instructions for AI assistants (or CLAUDE.md, or .github/copilot-instructions.md)
+├── notebooks/             your notebooks, outputs always cleared
+│   ├── setup.R            settings (bucket, dataset) and shared helper functions
+│   └── 01_cohort.ipynb …
+├── sql/                   queries kept as .sql files, so they can be read and reused
+├── tools/
+│   └── check_notebooks.py the pre-commit check (below)
+├── reference/             PUBLIC All of Us and OMOP documents, for the AI to read   ← ignored by Git
+└── data/                  never used on your computer: in the Workbench, data lives in your bucket   ← ignored by Git</code></pre>
+<p>This is the same layout as this course’s repository: settings and helpers in one setup file, notebooks by topic, shared SQL in its own folder. Its files are working examples to copy: <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/.gitignore"><code>.gitignore</code></a>, <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/AGENTS.md"><code>AGENTS.md</code></a>, and <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/reference/README.md"><code>reference/README.md</code></a>.</p>
+</section>
+<section id="the-.gitignore-your-first-safety-net" class="level3">
+<h3 class="anchored" data-anchor-id="the-.gitignore-your-first-safety-net">The <code>.gitignore</code>: your first safety net</h3>
+<p>A <code>.gitignore</code> lists what Git must <strong>never</strong> add. Create it <strong>before</strong> your first commit, so nothing slips in on day one:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> .gitignore <span class="op">&lt;&lt; 'END'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st"># Data: never in Git (and never on your computer)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">/data/</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">*.csv</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">*.tsv</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">*.parquet</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">*.rds</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">*.RData</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">*.vcf*</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">*.bam</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">*.xlsx</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st"># Reference documents: for the AI to read, not to publish</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">/reference/</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st"># Private notes</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">/Notes/</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="st"># Clutter that Jupyter and your computer create</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">.ipynb_checkpoints/</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">Untitled*.ipynb</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">.DS_Store</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="op">END</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .gitignore</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add .gitignore"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Three things worth knowing:</p>
+<ul>
+<li><strong>Check a rule works:</strong> <code>git check-ignore -v reference/data_dictionary.csv</code> prints the rule that ignores the file. Nothing printed means it <strong>isn’t</strong> ignored.</li>
+<li><strong>Anchor folder names with <code>/</code></strong> (<code>/Notes/</code>, not <code>Notes/</code>). Without it, the rule matches a folder with that name <strong>anywhere</strong>. On a Mac, where names ignore upper and lower case, <code>Notes/</code> also matched a <code>notes/</code> folder deep inside this course’s slide files.</li>
+<li><strong>A <code>.gitignore</code> doesn’t remove files Git already tracks.</strong> If a file was committed before the rule existed, remove it from Git (keeping it on disk) with <code>git rm --cached &lt;file&gt;</code>, and commit. If it contained data, see <a href="../../pages/extras/github-guide.html#if-something-slips-through">If something slips through</a>.</li>
+</ul>
+</section>
+<section id="a-reference-folder-public-context-for-the-ai" class="level3">
+<h3 class="anchored" data-anchor-id="a-reference-folder-public-context-for-the-ai">A reference folder: public context for the AI</h3>
+<p>The AI’s most common mistakes in <em>All of Us</em> code are <strong>made-up names</strong>: a concept ID from memory, a column that doesn’t exist, the wrong table. The fix is to give it the <strong>real documentation</strong>. Keep public documents in <code>reference/</code> on your computer, and tell the AI (in <code>AGENTS.md</code>) to check them:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Document</th>
+<th>What it gives the AI</th>
+<th>How to get it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>CDR data dictionary</strong></td>
+<td>every table and column in the CDR, with descriptions</td>
+<td>the <a href="https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries">Data Dictionaries</a> article links a Google Sheet for each CDR version (e.g.&nbsp;<a href="https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit">CDR v9</a>): <strong>File → Download → CSV</strong> for each tab you need</td>
+</tr>
+<tr class="even">
+<td><strong>How the genomic and multi-omics data are organized</strong></td>
+<td>every genomic, RNA, and protein file: folders, formats, and columns</td>
+<td>the PDF from the <a href="https://support.researchallofus.org/hc/en-us/articles/49999549117588-How-the-All-of-Us-Genomic-and-multi-omics-data-are-organized">User Support Hub article</a>; see also <a href="../../pages/courses/omics/omics-data-map.html">Where the omics data lives</a></td>
+</tr>
+<tr class="odd">
+<td><strong>OMOP Common Data Model</strong></td>
+<td>how the tables fit together (<code>person</code>, <code>condition_occurrence</code>, <code>concept_ancestor</code>, …)</td>
+<td>the <a href="https://ohdsi.github.io/CommonDataModel/">CDM documentation</a> and the <a href="https://github.com/OHDSI/CommonDataModel/wiki">CDM wiki</a>: save the pages for your CDM version</td>
+</tr>
+<tr class="even">
+<td><strong>Concepts</strong></td>
+<td>real concept IDs and names</td>
+<td>look them up in <a href="https://athena.ohdsi.org/search-terms/start">Athena</a> or the <a href="https://databrowser.researchallofus.org/">Data Browser</a>, and paste the ones you use into a small <code>reference/concepts.md</code>. Don’t download Athena’s vocabulary files into a project: they’re very large, and some vocabularies (e.g.&nbsp;CPT4) have licence terms</td>
+</tr>
+<tr class="odd">
+<td><strong>Example code</strong></td>
+<td>working <em>All of Us</em> code to learn from</td>
+<td>this course’s <a href="https://github.com/CWML/All-of-Us-Training-Resources">notebooks</a> (public, outputs cleared); <em>All of Us</em> tutorial notebooks: see below</td>
+</tr>
+</tbody>
+</table>
+<p>Then add to <code>AGENTS.md</code>: <em>“Public reference documents are in <code>reference/</code>. Check table names, column names, and concept IDs there before using them, and say if something isn’t there.”</em></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span><em>All of Us</em> tutorial notebooks: never download them from the Workbench
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The tutorial and featured workspace notebooks are excellent examples, but:</p>
+<ul>
+<li><strong>Downloading any file from a Workbench app to your computer is logged as egress</strong>, whatever the file is. It can be flagged, and large or repeated downloads can lead to suspended access.</li>
+<li>Many tutorial notebooks are <strong>saved with outputs</strong>, which can contain <em>All of Us</em> results.</li>
+</ul>
+<p>Instead:</p>
+<ol type="1">
+<li><strong>Look for a public copy first.</strong> Some <em>All of Us</em> example notebooks are published outside the Workbench. A public copy never touches the perimeter.</li>
+<li><strong>Otherwise, use the GitHub route:</strong> in the Workbench, copy the notebook into your repo folder, <strong>clear its outputs there</strong>, then commit and push it. The pre-commit check confirms no outputs leave the Workbench, and the notebook reaches your computer with <code>git pull</code>, like your own code.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
 <section id="one-time-setup" class="level2">
 <h2 class="anchored" data-anchor-id="one-time-setup">One-time setup</h2>
 <p><strong>In the Workbench</strong> (once per app), follow the <a href="../../pages/extras/github-guide.html">GitHub Guide</a>, Steps 1 and 2: connect the app to GitHub, then clone your repo.</p>
@@ -550,25 +679,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Clone the same repo</strong>: <code>git clone https://github.com/OWNER/REPO.git</code>. Cloning code is safe: the repo has no data.</li>
 <li><strong>Add the pre-commit check</strong>, so nothing with outputs, data files, large files, or credentials can be committed, from your computer <strong>or</strong> from the Workbench. Run this once in each copy of the repo (on your computer, and in each Workbench app):</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode sh code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> tools</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span> <span class="ot">-f</span> tools/check_notebooks.py <span class="bu">]</span> <span class="kw">||</span> <span class="ex">curl</span> <span class="at">-fsSL</span> <span class="at">-o</span> tools/check_notebooks.py <span class="dt">\</span></span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  https://raw.githubusercontent.com/CWML/All-of-Us-Training-Resources/main/tools/check_notebooks.py</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-6" class="code-annotation-target"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">'#!/bin/sh\ngit diff --cached --name-only -z --diff-filter=ACM | xargs -0 python3 tools/check_notebooks.py\n'</span> <span class="op">&gt;</span> .git/hooks/pre-commit</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-7" class="code-annotation-target"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x .git/hooks/pre-commit</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode sh code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> tools</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span> <span class="ot">-f</span> tools/check_notebooks.py <span class="bu">]</span> <span class="kw">||</span> <span class="ex">curl</span> <span class="at">-fsSL</span> <span class="at">-o</span> tools/check_notebooks.py <span class="dt">\</span></span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  https://raw.githubusercontent.com/CWML/All-of-Us-Training-Resources/main/tools/check_notebooks.py</span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">'#!/bin/sh\ngit diff --cached --name-only -z --diff-filter=ACM | xargs -0 python3 tools/check_notebooks.py\n'</span> <span class="op">&gt;</span> .git/hooks/pre-commit</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x .git/hooks/pre-commit</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="1">Get the course’s checker script, if the repo doesn’t have it yet. Commit it, so collaborators have it too.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="1">Get the course’s checker script, if the repo doesn’t have it yet. Commit it, so collaborators have it too.</span>
 </dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="6" data-code-annotation="2">Write a two-line script into Git’s <strong>hooks</strong> folder. Git runs <code>pre-commit</code> before every commit: it lists the files you’re committing and passes them to the checker.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="2">Write a two-line script into Git’s <strong>hooks</strong> folder. Git runs <code>pre-commit</code> before every commit: it lists the files you’re committing and passes them to the checker.</span>
 </dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="3">Make it executable. Without this, Git ignores it.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="3">Make it executable. Without this, Git ignores it.</span>
 </dd>
 </dl>
 <p>Now every commit is checked. A commit with outputs stops with <em>✗ notebook with saved outputs: clear them first</em>. More in the <a href="../../pages/extras/github-guide.html#safety-nets-make-mistakes-hard">GitHub Guide</a>. 4. <strong>Choose an AI tool:</strong></p>
@@ -607,26 +736,309 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="5" type="1">
 <li><strong>Give the AI the context once.</strong> Most tools read a project instructions file (e.g.&nbsp;<code>CLAUDE.md</code> for Claude Code, <code>.github/copilot-instructions.md</code> for Copilot, <code>AGENTS.md</code> for several others). Put the rules and the setting in it, so you don’t repeat them in every prompt:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Instructions for AI assistants</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>This repo holds code for the All of Us Researcher Workbench 2.0 (Verily).</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data: Controlled Tier CDR v9 in BigQuery (<span class="in">`wb-silky-artichoke-2408.C2025Q4R6`</span>), OMOP CDM.</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  SQL is BigQuery Standard SQL. R uses the tidyverse and bigrquery; settings and helpers are in notebooks/aou_setup.R.</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>WORKSPACE_CDR and WORKSPACE_BUCKET are NOT set in Workbench 2.0.</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You will never see the data. Don't ask for data or outputs. Write code I'll run in the Workbench.</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Never write code that prints participant IDs or individual rows; show only summaries.</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Before sharing any table, small counts (1 to 20) must be hidden: use hide_small_counts().</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BigQuery charges by data read: select only the columns needed, and warn me about any query on a large table.</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Look up concept IDs; never invent them. Say when you're unsure.</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Test new code on a small made-up data frame with the same columns.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Instructions for AI assistants</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>This repo holds code for the All of Us Researcher Workbench 2.0 (Verily).</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data: Controlled Tier CDR v9 in BigQuery (<span class="in">`wb-silky-artichoke-2408.C2025Q4R6`</span>), OMOP CDM.</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  SQL is BigQuery Standard SQL. R uses the tidyverse and bigrquery; settings and helpers are in notebooks/aou_setup.R.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>WORKSPACE_CDR and WORKSPACE_BUCKET are NOT set in Workbench 2.0.</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You will never see the data. Don't ask for data or outputs. Write code I'll run in the Workbench.</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Never write code that prints participant IDs or individual rows; show only summaries.</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Before sharing any table, small counts (1 to 20) must be hidden: use hide_small_counts().</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>BigQuery charges by data read: select only the columns needed, and warn me about any query on a large table.</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Look up concept IDs; never invent them. Public reference documents are in reference/: check table names, column names, and concept IDs there first. Say when you're unsure.</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Test new code on a small made-up data frame with the same columns.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="two-popular-setups" class="level2">
+<h2 class="anchored" data-anchor-id="two-popular-setups">Two popular setups</h2>
+<p>The workflow is the same whatever tool you use. Here’s how it looks in two setups that many researchers use.</p>
+<section id="claude-code-in-positron" class="level3">
+<h3 class="anchored" data-anchor-id="claude-code-in-positron">Claude Code in Positron</h3>
+<p><a href="https://positron.posit.co/"><strong>Positron</strong></a> is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. <strong>Claude Code</strong> is Anthropic’s coding agent: it reads your project’s files, edits them, and runs commands: asking first, or on its own for steps it judges low-risk, depending on its permission mode. Together they’re a good setup for the <strong>computer</strong> side of the round trip.</p>
+<p><strong>Set up, step by step</strong> (once per computer, about 30 minutes):</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>1. Install R
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Positron runs R code, but doesn’t include R itself.</p>
+<ol type="1">
+<li>Go to <a href="https://cran.r-project.org/">CRAN</a> and choose your system:
+<ul>
+<li><strong>macOS:</strong> download the <code>.pkg</code> for your Mac’s chip: <strong>arm64</strong> for Apple silicon (M1, M2, …; check <strong>Apple menu → About This Mac</strong>), <strong>x86_64</strong> for Intel. Open it and follow the installer.</li>
+<li><strong>Windows:</strong> <strong>Download R for Windows → base → Download R-4.x.x for Windows</strong>. Run the installer, accepting the defaults.</li>
+</ul></li>
+<li>Check it worked: open a terminal (macOS <strong>Terminal</strong>; Windows <strong>Command Prompt</strong>) and type <code>R --version</code>. It prints the version number.</li>
+</ol>
+<p>Optional: also install <a href="https://www.python.org/downloads/">Python</a> if you’ll work on the Python notebooks.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>2. Install Git, and sign in to GitHub
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Install Git from <a href="https://git-scm.com/downloads">git-scm.com/downloads</a>. On macOS, typing <code>git --version</code> in Terminal offers to install it for you.</li>
+<li>Tell Git who you are (use the same email as your GitHub account, or GitHub’s <strong>noreply</strong> address):</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name  <span class="st">"Your Name"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"you@example.edu"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Make sure your GitHub account has <strong>two-factor authentication</strong> turned on (<strong>Settings → Password and authentication</strong>).</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>3. Install Positron
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Download Positron from <a href="https://positron.posit.co/download">positron.posit.co</a>: choose your system (macOS, Windows, or Linux).</li>
+<li><strong>macOS:</strong> open the <code>.dmg</code> and drag <strong>Positron</strong> into <strong>Applications</strong>. <strong>Windows:</strong> run the installer.</li>
+<li>Open Positron. At the top right, the <strong>interpreter</strong> picker should show your R version (e.g.&nbsp;<em>R 4.4.3</em>). If it doesn’t, click it and choose R. Positron finds R and Python on its own.</li>
+</ol>
+<div class="annotated">
+<p><img src="images/positron-interpreter.png" class="img-fluid" alt="Positron's interpreter picker, opened from the top right of the window. It lists Running Interpreter Sessions: Python 3.12.12, and R 4.4.3 marked Currently Selected, which is outlined. The picker button at the top right, showing R 4.4.3, is also outlined."></p>
+<div class="red-box" style="left: 4.4%; top: 67.5%; width: 44.9%; height: 17%;">
+
+</div>
+<div class="red-box" style="left: 87.2%; top: 14.3%; width: 7.4%; height: 10.5%;">
+
+</div>
+</div>
+<ol start="4" type="1">
+<li>Install the R packages the course uses, in Positron’s <strong>Console</strong>:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"lubridate"</span>, <span class="st">"broom"</span>, <span class="st">"survival"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These are for testing code on made-up data on your computer. (<code>bigrquery</code> isn’t needed locally: queries only run in the Workbench.)</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>4. Get your repo into Positron
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>In Positron: <strong>View → Command Palette</strong> (Cmd+Shift+P on macOS, Ctrl+Shift+P on Windows), type <strong>Git: Clone</strong>, and paste your repo’s URL (e.g.&nbsp;<code>https://github.com/OWNER/REPO.git</code>). Choose a folder on your computer <strong>outside</strong> cloud-synced folders if you can (OneDrive and similar can slow Git down).</li>
+</ol>
+<div class="annotated">
+<p><img src="images/positron-git-clone.png" class="img-fluid" alt="Positron's Command Palette at the top of the window, with git clone typed. The first result, Git: Clone, is outlined; Git: Clone (Recursive) is below it."></p>
+<div class="red-box" style="left: 49.1%; top: 41.5%; width: 44.3%; height: 10.5%;">
+
+</div>
+</div>
+<p>Or click the <strong>Source Control</strong> icon in the left bar, then <strong>Clone Repository</strong>:</p>
+<div class="annotated">
+<p><img src="images/positron-source-control.png" class="img-fluid" alt="Positron's Source Control panel before any folder is open, with the buttons Open Folder and Clone Repository. The Clone Repository button and the Source Control icon in the left bar are outlined."></p>
+<div class="red-box" style="left: 21.5%; top: 63%; width: 66.5%; height: 10.5%;">
+
+</div>
+<div class="red-box" style="left: 0.5%; top: 68.5%; width: 8.5%; height: 14.5%;">
+
+</div>
+</div>
+<ol start="2" type="1">
+<li>Positron offers to <strong>open</strong> the cloned folder: say yes. Or later: <strong>File → Open Folder</strong>.</li>
+<li>The first time you push, Positron asks you to <strong>sign in to GitHub</strong> in your browser. Allow it.</li>
+<li>Add the <strong>pre-commit check</strong> (see <a href="#set-up-your-project-folders-.gitignore-and-a-reference-folder">Set up your project</a> and the <a href="../../pages/extras/github-guide.html#safety-nets-make-mistakes-hard">GitHub Guide</a>): in Positron’s terminal (<strong>Terminal → New Terminal</strong>), run the commands from <strong>One-time setup</strong>, step 3, above.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>5. Install the Claude Code extension
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>In Positron, open the <strong>Extensions</strong> view: the <strong>squares icon</strong> in the left bar, or <strong>View → Extensions</strong> (Cmd+Shift+X on macOS, Ctrl+Shift+X on Windows).</li>
+<li>Search for <strong>claude</strong>. Choose <strong>Claude Code for VS Code</strong>, published by <strong>Anthropic</strong> (with a blue verified tick). It’s the official extension; the others in the list are from other companies. Positron gets extensions from the <strong>Open VSX</strong> marketplace, so it’s the same extension VS Code users install (identifier <code>anthropic.claude-code</code>).</li>
+<li>Click <strong>Install</strong>. If Positron shows <strong>Restart Extensions</strong> (or <em>Restart Required</em>), click it.</li>
+<li>A <strong>Claude</strong> icon (an orange spark) appears at the top right of the editor. Click it, and <strong>sign in</strong> with your Anthropic account: Claude Code needs a Claude subscription or API access (check whether your institution provides one).</li>
+<li>Prefer the terminal? The extension page also describes the terminal version: run <code>claude</code> in Positron’s terminal. It works the same way, with the same <code>CLAUDE.md</code> and settings.</li>
+</ol>
+<div class="annotated">
+<p><img src="images/positron-claude-extension.png" class="img-fluid" alt="Positron's Extensions view, searched for claude. The first result, Claude Code for VS Code, published by Anthropic with a verified tick, is outlined; other AI extensions from other publishers are listed below it. The Extensions icon in the left bar is also outlined. On the right, the extension's page shows it is from open-vsx.org, with Restart Extensions, Disable, and Uninstall buttons, because it is already installed."></p>
+<div class="red-box" style="left: 2.9%; top: 5.8%; width: 27.2%; height: 10.2%;">
+
+</div>
+<div class="red-box" style="left: 0.2%; top: 37.6%; width: 2.4%; height: 5%;">
+
+</div>
+</div>
+<p>In this screenshot the extension is already installed, so it shows <strong>Uninstall</strong> and <strong>Restart Extensions</strong>; before installing, you’ll see an <strong>Install</strong> button instead.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>6. Give Claude Code the rules, and keep it away from data files
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Claude Code reads <strong><code>CLAUDE.md</code></strong> automatically at the start of every session. Point it to your instructions: a one-line <code>CLAUDE.md</code> containing <code>@AGENTS.md</code> loads them (as in this course’s repo).</li>
+<li><strong>Block it from reading data files</strong>, as a second safety net. Create <code>.claude/settings.json</code> in the repo:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"permissions"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"deny"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(./data/**)"</span><span class="ot">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(**/*.csv)"</span><span class="ot">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(**/*.tsv)"</span><span class="ot">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(**/*.parquet)"</span><span class="ot">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(**/*.rds)"</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your computer shouldn’t hold any <em>All of Us</em> data anyway; this makes sure an agent couldn’t read a stray data file even if one appeared.</p>
+<ol start="3" type="1">
+<li>Test it: ask Claude Code <em>“What’s in CLAUDE.md, and which files are you not allowed to read?”</em> It should describe your rules.</li>
+</ol>
+<div class="annotated">
+<p><img src="images/positron-claude-panel.png" class="img-fluid" alt="The Claude Code panel open in Positron, with a notice that Auto mode is now Claude Code's default permission mode. The prompt box at the bottom, containing the question What's in CLAUDE.md, and which files are you not allowed to read?, is outlined, as is the Auto mode button at its bottom right."></p>
+<div class="red-box" style="left: 21.3%; top: 87.5%; width: 57.5%; height: 11.2%;">
+
+</div>
+<div class="red-box" style="left: 70.6%; top: 94%; width: 5%; height: 3.8%;">
+
+</div>
+</div>
+<ol start="4" type="1">
+<li><strong>Choose how much Claude Code may do on its own.</strong> The button at the bottom right of the prompt box shows the <strong>permission mode</strong>. In <strong>Auto</strong> mode (the default), Claude Code decides for itself which actions are low-risk and runs them without asking. While you’re learning, click it and choose a mode that <strong>asks before editing files</strong> and running commands, so you see and approve each step. Either way, the deny rules above still apply.</li>
+</ol>
+</div>
+</div>
+</div>
+<p><strong>Working:</strong></p>
+<ul>
+<li>Ask in the terminal: <em>“In notebooks/surveys/5.2, add alcohol frequency to the model, as in Part 5. Test it on made-up data first.”</em></li>
+<li>Depending on its <strong>permission mode</strong> (step 6), Claude Code either asks before each edit or command, or runs the ones it judges low-risk. Either way, <strong>read every change</strong> before you commit: Positron’s <strong>Source Control</strong> panel shows every change in the repo, line by line.</li>
+<li>Run the test on made-up data in Positron’s console or notebook. Then <strong>restart, clear, and save</strong>, and commit and push (Claude Code can do this too, when you ask, and the pre-commit check still runs).</li>
+<li>In the Workbench: pull, run, and read the results there.</li>
+</ul>
+<p>⚠️ Only run Claude Code on <strong>your computer</strong>. Inside a Workbench app with <em>All of Us</em> data, it would send what it reads outside the Workbench (see <a href="#what-about-the-ai-tools-inside-the-workbench">What about the AI tools inside the Workbench?</a>).</p>
+</section>
+<section id="yales-clarity-platform" class="level3">
+<h3 class="anchored" data-anchor-id="yales-clarity-platform">Yale’s Clarity platform</h3>
+<p><a href="https://ai.yale.edu/yales-ai-tools-and-resources/clarity-platform"><strong>Clarity</strong></a> is Yale’s AI chat platform (<a href="https://clarity-ai.yale.edu/">clarity-ai.yale.edu</a>), free for current Yale faculty, staff, and students. It offers several models (agents) to choose from, such as GPT, Claude, and Gemini models, and Yale says conversations are never used to train AI models.</p>
+<p><strong>Can I use it with <em>All of Us</em>?</strong> For <strong>code</strong> and <strong>public documents</strong>, yes. For <em>All of Us</em> <strong>data</strong>, no, even though Clarity is approved for many kinds of Yale data:</p>
+<ul>
+<li>Clarity runs <strong>outside</strong> the Researcher Workbench. The <em>All of Us</em> Data User Code of Conduct doesn’t allow participant data to leave the Workbench, whatever the destination.</li>
+<li>Yale’s own Clarity page says users with external obligations, such as <strong>data use agreements</strong>, should confirm their use is appropriate. The <em>All of Us</em> Code of Conduct is one.</li>
+</ul>
+<p>So Clarity sees exactly what any outside AI may see: code, error messages without data, public documents, and made-up test data.</p>
+<p><strong>Working with a chat tool</strong> is the round trip with copy and paste in the middle:</p>
+<ol type="1">
+<li><strong>Start each conversation with the context.</strong> Paste the text of your <code>AGENTS.md</code> as your first message, or attach it. A chat tool doesn’t read your project folder.</li>
+<li><strong>Attach public reference documents</strong> when they help: the CDR data dictionary (CSV), the genomic data PDF, OMOP pages. Clarity accepts uploads of documents and spreadsheets. <strong>Never</strong> attach a file made in the Workbench.</li>
+<li><strong>Choose a model for the job.</strong> Clarity describes each one when you pick it: for example, one is described as best for writing and code, another for large document sets. Try a second model when the first one struggles.</li>
+<li><strong>Paste the code</strong> you want help with (outputs cleared), and ask for an explanation, a fix, or a test on made-up data.</li>
+<li><strong>Copy the answer into your editor</strong> (Positron, VS Code, or JupyterLab on your computer), review it, test it, then commit and push. In the Workbench: pull and run.</li>
+<li><strong>Organise conversations by project.</strong> Clarity lets you group chats, so you can find the conversation behind a change later. Note the change in your commit message too (e.g.&nbsp;<em>“5.2: alcohol model; drafted with Clarity, tested on fake data”</em>).</li>
+</ol>
+<p><strong>Custom agents:</strong> Clarity lets approved users create a <strong>Custom Agent</strong> with its own instructions and knowledge sources. An agent with your <code>AGENTS.md</code> as its instructions and the public reference documents as its knowledge would save pasting them each time. Check Yale’s requirements for creating one.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Claude Code in Positron</th>
+<th>Clarity (chat)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sees</td>
+<td>the files in your project folder</td>
+<td>only what you paste or attach</td>
+</tr>
+<tr class="even">
+<td>Reads <code>AGENTS.md</code> / <code>CLAUDE.md</code></td>
+<td>automatically</td>
+<td>paste it, or use a Custom Agent</td>
+</tr>
+<tr class="odd">
+<td>Edits files</td>
+<td>yes: asking first, or on its own (depends on the permission mode)</td>
+<td>no: you copy the answer into your editor</td>
+</tr>
+<tr class="even">
+<td>Best for</td>
+<td>multi-file changes, running tests, commits</td>
+<td>questions, explanations, single functions, reviewing documents</td>
+</tr>
+<tr class="odd">
+<td>Cost</td>
+<td>an Anthropic subscription or API access</td>
+<td>free for Yale users</td>
+</tr>
+<tr class="even">
+<td><em>All of Us</em> data</td>
+<td>never: run it only on your computer</td>
+<td>never: code and public documents only</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="the-round-trip-step-by-step" class="level2">
 <h2 class="anchored" data-anchor-id="the-round-trip-step-by-step">The round trip, step by step</h2>
 <section id="on-your-computer-ask-review-test" class="level3">
 <h3 class="anchored" data-anchor-id="on-your-computer-ask-review-test">1. On your computer: ask, review, test</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                          <span class="co"># start from the newest code</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> fix-smoking-code  <span class="co"># a branch for this change</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                          <span class="co"># start from the newest code</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> fix-smoking-code  <span class="co"># a branch for this change</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Ask the AI for the change. Give it the <strong>code</strong> and the <strong>goal</strong>: <em>“In 5.2, add alcohol frequency to the model, coded as in Part 5. Explain each step.”</em></li>
 <li><strong>Read every change</strong> it makes: <code>git diff</code> shows them line by line. Don’t accept code you don’t understand: ask the AI to explain it.</li>
@@ -652,20 +1064,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the Workbench, step 1 runs queries again and costs money: skip it for slow or costly notebooks, and run them in full only when needed.</p>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb   <span class="co"># clear outputs (if not done in the menu)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"5.2: add alcohol frequency to the model"</span>         <span class="co"># the pre-commit check runs here</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin fix-smoking-code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb   <span class="co"># clear outputs (if not done in the menu)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"5.2: add alcohol frequency to the model"</span>         <span class="co"># the pre-commit check runs here</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin fix-smoking-code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="in-the-workbench-pull-run-read" class="level3">
 <h3 class="anchored" data-anchor-id="in-the-workbench-pull-run-read">2. In the Workbench: pull, run, read</h3>
 <p>In your app’s terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/REPO</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash                         <span class="co"># set aside your personal edits (e.g. your bucket name)</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout fix-smoking-code</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash pop                     <span class="co"># put them back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/REPO</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash                         <span class="co"># set aside your personal edits (e.g. your bucket name)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout fix-smoking-code</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash pop                     <span class="co"># put them back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Open the notebook and run it. <strong>The results stay here.</strong> Read them in the Workbench.</p>
 </section>
 <section id="if-something-fails-bring-back-only-whats-safe" class="level3">
@@ -679,6 +1091,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="when-it-works-merge" class="level3">
 <h3 class="anchored" data-anchor-id="when-it-works-merge">4. When it works: merge</h3>
 <p>Open a <strong>pull request</strong> on GitHub. Read the <strong>Files changed</strong> tab one last time, wait for the green ✓ from the safety check, and merge. Everyone (including your other apps) gets it with <code>git pull</code>.</p>
+<p>Near the bottom of the pull request’s <strong>Conversation</strong> tab, GitHub shows the checks. The safety check runs twice (once for the push, once for the pull request): <strong>wait until every check is green</strong> before you click <strong>Merge pull request</strong>. A red ✗ means it found outputs, data files, or a credential: click <strong>Details</strong> to see which file.</p>
+<div class="annotated">
+<p><img src="images/github-pr-checks.png" class="img-fluid" alt="The checks box on a GitHub pull request. It says Some checks haven't completed yet: 1 in progress, 1 successful. The in-progress check, Check for outputs and data / check (pull_request), has a yellow circle; the successful one, Check for outputs and data / check (push), has a green tick. Below: No conflicts with base branch, and the Merge pull request button. The checks are outlined."></p>
+<div class="red-box" style="left: 2.5%; top: 27%; width: 95%; height: 34%;">
+
+</div>
+</div>
 </section>
 <section id="editing-in-the-workbench-too" class="level3">
 <h3 class="anchored" data-anchor-id="editing-in-the-workbench-too">Editing in the Workbench too?</h3>
@@ -693,91 +1112,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Write an R function <code>count_by_group(data, var)</code> that counts the levels of <code>var</code> in each <code>cohort</code>, shows the percent within each cohort, and hides counts of 1 to 20 (show them as NA). Then make a small fake data frame to test it.</em></p>
 </blockquote>
 <p><strong>What the AI wrote first:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>count_by_group <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
-<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-7-5" class="code-annotation-target"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[var]])) <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-7-6"><a href="#annotated-cell-7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(cohort, <span class="at">level =</span> .data[[var]]) <span class="sc">%&gt;%</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-7-7" class="code-annotation-target"><a href="#annotated-cell-7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">if_else</span>(n <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="cn">NA_integer_</span>, n)) <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-7-8"><a href="#annotated-cell-7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cohort) <span class="sc">%&gt;%</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-7-9" class="code-annotation-target"><a href="#annotated-cell-7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-7-10"><a href="#annotated-cell-7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
-<span id="annotated-cell-7-11"><a href="#annotated-cell-7-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-7-12"><a href="#annotated-cell-7-12" aria-hidden="true" tabindex="-1"></a></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-7-13" class="code-annotation-target"><a href="#annotated-cell-7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="annotated-cell-7-14"><a href="#annotated-cell-7-14" aria-hidden="true" tabindex="-1"></a>fake <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="annotated-cell-7-15"><a href="#annotated-cell-7-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">person_id      =</span> <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">120</span>),</span>
-<span id="annotated-cell-7-16"><a href="#annotated-cell-7-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort         =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"case"</span>, <span class="st">"control"</span>), <span class="dv">120</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="annotated-cell-7-17"><a href="#annotated-cell-7-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">smoking_status =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Never"</span>, <span class="st">"Former"</span>, <span class="st">"Current"</span>, <span class="cn">NA</span>), <span class="dv">120</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
-<span id="annotated-cell-7-18"><a href="#annotated-cell-7-18" aria-hidden="true" tabindex="-1"></a>                          <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="fl">0.25</span>, <span class="fl">0.17</span>, <span class="fl">0.03</span>))</span>
-<span id="annotated-cell-7-19"><a href="#annotated-cell-7-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="annotated-cell-7-20"><a href="#annotated-cell-7-20" aria-hidden="true" tabindex="-1"></a></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-7-21" class="code-annotation-target"><a href="#annotated-cell-7-21" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(fake, <span class="st">"smoking_status"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>count_by_group <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
+<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[var]])) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(cohort, <span class="at">level =</span> .data[[var]]) <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-9-7" class="code-annotation-target"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">if_else</span>(n <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="cn">NA_integer_</span>, n)) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cohort) <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-9-9" class="code-annotation-target"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-9-10"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
+<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-9-13" class="code-annotation-target"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a>fake <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">person_id      =</span> <span class="fu">as.character</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">120</span>),</span>
+<span id="annotated-cell-9-16"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort         =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"case"</span>, <span class="st">"control"</span>), <span class="dv">120</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="annotated-cell-9-17"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">smoking_status =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Never"</span>, <span class="st">"Former"</span>, <span class="st">"Current"</span>, <span class="cn">NA</span>), <span class="dv">120</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="annotated-cell-9-18"><a href="#annotated-cell-9-18" aria-hidden="true" tabindex="-1"></a>                          <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="fl">0.25</span>, <span class="fl">0.17</span>, <span class="fl">0.03</span>))</span>
+<span id="annotated-cell-9-19"><a href="#annotated-cell-9-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-9-20"><a href="#annotated-cell-9-20" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-9-21" class="code-annotation-target"><a href="#annotated-cell-9-21" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(fake, <span class="st">"smoking_status"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="5" data-code-annotation="1">Leave out missing answers, so they aren’t counted as a level.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="5" data-code-annotation="1">Leave out missing answers, so they aren’t counted as a level.</span>
 </dd>
-<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="7" data-code-annotation="2">Hide counts of 1 to 20 (shown as <code>NA</code>), as <em>All of Us</em> policy requires.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="7" data-code-annotation="2">Hide counts of 1 to 20 (shown as <code>NA</code>), as <em>All of Us</em> policy requires.</span>
 </dd>
-<dt data-target-cell="annotated-cell-7" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="9" data-code-annotation="3">The percent of each cohort in each level.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="9" data-code-annotation="3">The percent of each cohort in each level.</span>
 </dd>
-<dt data-target-cell="annotated-cell-7" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="13" data-code-annotation="4"><strong>Made-up data</strong> with the same column names as the real file: no <em>All of Us</em> data is involved. <code>set.seed()</code> makes the fake data the same every time. Only 120 people, <strong>on purpose</strong>, so some counts are small enough to be hidden.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="13" data-code-annotation="4"><strong>Made-up data</strong> with the same column names as the real file: no <em>All of Us</em> data is involved. <code>set.seed()</code> makes the fake data the same every time. Only 120 people, <strong>on purpose</strong>, so some counts are small enough to be hidden.</span>
 </dd>
-<dt data-target-cell="annotated-cell-7" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="21" data-code-annotation="5">Test it.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="21" data-code-annotation="5">Test it.</span>
 </dd>
 </dl>
 <p><strong>The test finds a bug.</strong> <em>Current</em> and <em>Former</em> are hidden, as they should be, but <em>Never</em> shows <strong>100%</strong> in both groups: the percents were calculated only from the cells left <strong>showing</strong>. Looks fine, runs fine, wrong. With the real data (larger counts) you might never have noticed.</p>
 <p><strong>The fix</strong>, after telling the AI what the test showed: calculate the percents from <strong>all</strong> the counts, <strong>then</strong> hide both the small counts and their percents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>count_by_group <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
-<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[var]])) <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(cohort, <span class="at">level =</span> .data[[var]]) <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cohort) <span class="sc">%&gt;%</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-6" class="code-annotation-target"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-8-8" class="code-annotation-target"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">if_else</span>(n <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="cn">NA_real_</span>, percent),</span>
-<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">n       =</span> <span class="fu">if_else</span>(n <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="cn">NA_integer_</span>, n))</span>
-<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(fake, <span class="st">"smoking_status"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-10"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>count_by_group <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[var]])) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(cohort, <span class="at">level =</span> .data[[var]]) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cohort) <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-10-6" class="code-annotation-target"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-10-8" class="code-annotation-target"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">if_else</span>(n <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="cn">NA_real_</span>, percent),</span>
+<span id="annotated-cell-10-9"><a href="#annotated-cell-10-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">n       =</span> <span class="fu">if_else</span>(n <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="cn">NA_integer_</span>, n))</span>
+<span id="annotated-cell-10-10"><a href="#annotated-cell-10-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-10-11"><a href="#annotated-cell-10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-12"><a href="#annotated-cell-10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(fake, <span class="st">"smoking_status"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="6" data-code-annotation="1">Percents from <strong>all</strong> counts, so <em>Never</em> gets its true share.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="6" data-code-annotation="1">Percents from <strong>all</strong> counts, so <em>Never</em> gets its true share.</span>
 </dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-8" data-code-lines="8" data-code-annotation="2">Then hide small counts <strong>and</strong> their percents: a percent next to a known total would reveal the count.</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="8" data-code-annotation="2">Then hide small counts <strong>and</strong> their percents: a percent next to a known total would reveal the count.</span>
 </dd>
 </dl>
 <p>Run the test again: <em>Never</em> now shows its real share, and the hidden rows show <code>NA</code> for both.</p>
 <p><strong>More review questions to ask</strong> before accepting it: <em>What happens if <code>var</code> is a factor? If a cohort has no rows? Could anyone work out a hidden count from the others?</em> The last is the <strong>derived-counts</strong> rule from <strong>3.1</strong>: with only one hidden row in a group, its count can be worked out from the percents of the others. If that happens, combine small levels first (e.g.&nbsp;<em>Current</em> and <em>Former</em> into <em>Ever smoked</em>).</p>
 <p><strong>Then:</strong> save it in <code>notebooks/helpers.R</code>, restart and clear, commit (the check runs), push, and in the Workbench:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"~/repos/REPO/notebooks/helpers.R"</span>)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>survey_basics <span class="ot">&lt;-</span> <span class="fu">load_data</span>(<span class="st">"survey_basics.csv"</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">person_id =</span> <span class="st">"c"</span>))</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(survey_basics, <span class="st">"smoking_status"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-11-1" class="code-annotation-target"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"~/repos/REPO/notebooks/helpers.R"</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>survey_basics <span class="ot">&lt;-</span> <span class="fu">load_data</span>(<span class="st">"survey_basics.csv"</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">person_id =</span> <span class="st">"c"</span>))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(survey_basics, <span class="st">"smoking_status"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">The function, pulled from GitHub into the Workbench.</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="1" data-code-annotation="1">The function, pulled from GitHub into the Workbench.</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="2" data-code-annotation="2">The <strong>real</strong> data, read from your bucket: it never leaves the Workbench.</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="2">The <strong>real</strong> data, read from your bucket: it never leaves the Workbench.</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="3">Run it, and read the result <strong>in the Workbench</strong>. If you want to share it, it’s an aggregate table that passes the small-count rule, but remember that sharing results publicly needs the <strong>reporting form</strong>.</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="3" data-code-annotation="3">Run it, and read the result <strong>in the Workbench</strong>. If you want to share it, it’s an aggregate table that passes the small-count rule, but remember that sharing results publicly needs the <strong>reporting form</strong>.</span>
 </dd>
 </dl>
 </section>
@@ -801,7 +1220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>wrote <strong>concept IDs from memory</strong></td>
 <td>a cell printed each ID’s name from the dictionary before using it</td>
-<td>always look IDs up: the dictionary, Athena, or a query on <code>concept</code></td>
+<td>always look IDs up: the dictionary, Athena, or a query on <code>concept</code>; keep the ones you use in <code>reference/</code></td>
 </tr>
 <tr class="even">
 <td>“found” <strong>trailing spaces</strong> in a survey name, and wrote a lesson about them</td>
@@ -905,7 +1324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -914,7 +1333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>Start with the rule and the diagram.</strong> Students’ first question is “can I use ChatGPT?”: the answer is “yes, for code, outside the Workbench”.</li>
@@ -931,6 +1350,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
 <ul>
 <li>The AI sees <strong>code, never data</strong>: work with it on <strong>your own computer</strong>, which has no <em>All of Us</em> data</li>
+<li>Give every project a <strong>predictable folder structure</strong> and a <strong><code>.gitignore</code></strong> from day one</li>
+<li>Keep <strong>public reference documents</strong> (data dictionary, OMOP docs, concepts) in <code>reference/</code>, so the AI checks names instead of guessing</li>
+<li>Never <strong>download</strong> tutorial notebooks from the Workbench: use a public copy, or clear them and push through GitHub</li>
+<li><strong>Claude Code in Positron</strong> and <strong>Yale’s Clarity</strong> both fit the round trip: Claude Code edits your project on your computer; Clarity answers questions about code you paste. Neither ever sees <em>All of Us</em> data</li>
 <li><strong>GitHub</strong> carries the code both ways; the <strong>Workbench</strong> runs it and keeps the results</li>
 <li>Don’t use AI coding agents (including the pre-installed ones) in a workspace with <em>All of Us</em> data</li>
 <li><strong>Review</strong> every change, <strong>test</strong> on made-up data, and <strong>check</strong> results: the AI suggests, the data decides</li>

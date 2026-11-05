@@ -57,6 +57,95 @@ Why GitHub, and not copy and paste?
 - **No files to move by hand**: `git pull` in the Workbench brings in the new code in seconds.
 - Colleagues and students get the same code the same way.
 
+## Set up your project: folders, `.gitignore`, and a reference folder
+
+An AI assistant works much better on a **tidy, predictable** project: it finds the right file, follows your conventions, and guesses less. A clear structure also makes it obvious what belongs in Git and what never does.
+
+### A folder structure
+
+```
+my-aou-project/
+├── README.md              what the project is, and the order to run things in
+├── .gitignore             what Git must never add (next section): commit it FIRST
+├── AGENTS.md              instructions for AI assistants (or CLAUDE.md, or .github/copilot-instructions.md)
+├── notebooks/             your notebooks, outputs always cleared
+│   ├── setup.R            settings (bucket, dataset) and shared helper functions
+│   └── 01_cohort.ipynb …
+├── sql/                   queries kept as .sql files, so they can be read and reused
+├── tools/
+│   └── check_notebooks.py the pre-commit check (below)
+├── reference/             PUBLIC All of Us and OMOP documents, for the AI to read   ← ignored by Git
+└── data/                  never used on your computer: in the Workbench, data lives in your bucket   ← ignored by Git
+```
+
+This is the same layout as this course's repository: settings and helpers in one setup file, notebooks by topic, shared SQL in its own folder. Its files are working examples to copy: [`.gitignore`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/.gitignore), [`AGENTS.md`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/AGENTS.md), and [`reference/README.md`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/reference/README.md).
+
+### The `.gitignore`: your first safety net
+
+A `.gitignore` lists what Git must **never** add. Create it **before** your first commit, so nothing slips in on day one:
+
+```sh
+cat > .gitignore << 'END'
+# Data: never in Git (and never on your computer)
+/data/
+*.csv
+*.tsv
+*.parquet
+*.rds
+*.RData
+*.vcf*
+*.bam
+*.xlsx
+
+# Reference documents: for the AI to read, not to publish
+/reference/
+
+# Private notes
+/Notes/
+
+# Clutter that Jupyter and your computer create
+.ipynb_checkpoints/
+Untitled*.ipynb
+.DS_Store
+END
+git add .gitignore
+git commit -m "Add .gitignore"
+```
+
+Three things worth knowing:
+
+- **Check a rule works:** `git check-ignore -v reference/data_dictionary.csv` prints the rule that ignores the file. Nothing printed means it **isn't** ignored.
+- **Anchor folder names with `/`** (`/Notes/`, not `Notes/`). Without it, the rule matches a folder with that name **anywhere**. On a Mac, where names ignore upper and lower case, `Notes/` also matched a `notes/` folder deep inside this course's slide files.
+- **A `.gitignore` doesn't remove files Git already tracks.** If a file was committed before the rule existed, remove it from Git (keeping it on disk) with `git rm --cached <file>`, and commit. If it contained data, see [If something slips through](github-guide.qmd#if-something-slips-through).
+
+### A reference folder: public context for the AI
+
+The AI's most common mistakes in *All of Us* code are **made-up names**: a concept ID from memory, a column that doesn't exist, the wrong table. The fix is to give it the **real documentation**. Keep public documents in `reference/` on your computer, and tell the AI (in `AGENTS.md`) to check them:
+
+| Document | What it gives the AI | How to get it |
+|---|---|---|
+| **CDR data dictionary** | every table and column in the CDR, with descriptions | the [Data Dictionaries](https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries) article links a Google Sheet for each CDR version (e.g. [CDR v9](https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit)): **File → Download → CSV** for each tab you need |
+| **How the genomic and multi-omics data are organized** | every genomic, RNA, and protein file: folders, formats, and columns | the PDF from the [User Support Hub article](https://support.researchallofus.org/hc/en-us/articles/49999549117588-How-the-All-of-Us-Genomic-and-multi-omics-data-are-organized); see also [Where the omics data lives](../courses/omics/omics-data-map.qmd) |
+| **OMOP Common Data Model** | how the tables fit together (`person`, `condition_occurrence`, `concept_ancestor`, …) | the [CDM documentation](https://ohdsi.github.io/CommonDataModel/) and the [CDM wiki](https://github.com/OHDSI/CommonDataModel/wiki): save the pages for your CDM version |
+| **Concepts** | real concept IDs and names | look them up in [Athena](https://athena.ohdsi.org/search-terms/start) or the [Data Browser](https://databrowser.researchallofus.org/), and paste the ones you use into a small `reference/concepts.md`. Don't download Athena's vocabulary files into a project: they're very large, and some vocabularies (e.g. CPT4) have licence terms |
+| **Example code** | working *All of Us* code to learn from | this course's [notebooks](https://github.com/CWML/All-of-Us-Training-Resources) (public, outputs cleared); *All of Us* tutorial notebooks: see below |
+
+Then add to `AGENTS.md`: *"Public reference documents are in `reference/`. Check table names, column names, and concept IDs there before using them, and say if something isn't there."*
+
+::: {.callout-warning}
+## *All of Us* tutorial notebooks: never download them from the Workbench
+
+The tutorial and featured workspace notebooks are excellent examples, but:
+
+- **Downloading any file from a Workbench app to your computer is logged as egress**, whatever the file is. It can be flagged, and large or repeated downloads can lead to suspended access.
+- Many tutorial notebooks are **saved with outputs**, which can contain *All of Us* results.
+
+Instead:
+
+1. **Look for a public copy first.** Some *All of Us* example notebooks are published outside the Workbench. A public copy never touches the perimeter.
+2. **Otherwise, use the GitHub route:** in the Workbench, copy the notebook into your repo folder, **clear its outputs there**, then commit and push it. The pre-commit check confirms no outputs leave the Workbench, and the notebook reaches your computer with `git pull`, like your own code.
+:::
+
 ## One-time setup
 
 **In the Workbench** (once per app), follow the [GitHub Guide](github-guide.qmd), Steps 1 and 2: connect the app to GitHub, then clone your repo.
@@ -104,9 +193,198 @@ This repo holds code for the All of Us Researcher Workbench 2.0 (Verily).
 - Never write code that prints participant IDs or individual rows; show only summaries.
 - Before sharing any table, small counts (1 to 20) must be hidden: use hide_small_counts().
 - BigQuery charges by data read: select only the columns needed, and warn me about any query on a large table.
-- Look up concept IDs; never invent them. Say when you're unsure.
+- Look up concept IDs; never invent them. Public reference documents are in reference/: check table names, column names, and concept IDs there first. Say when you're unsure.
 - Test new code on a small made-up data frame with the same columns.
 ```
+
+## Two popular setups
+
+The workflow is the same whatever tool you use. Here's how it looks in two setups that many researchers use.
+
+### Claude Code in Positron
+
+[**Positron**](https://positron.posit.co/) is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. **Claude Code** is Anthropic's coding agent: it reads your project's files, edits them, and runs commands: asking first, or on its own for steps it judges low-risk, depending on its permission mode. Together they're a good setup for the **computer** side of the round trip.
+
+**Set up, step by step** (once per computer, about 30 minutes):
+
+::: {.callout-note collapse="false"}
+## 1. Install R
+
+Positron runs R code, but doesn't include R itself.
+
+1. Go to [CRAN](https://cran.r-project.org/) and choose your system:
+   - **macOS:** download the `.pkg` for your Mac's chip: **arm64** for Apple silicon (M1, M2, …; check **Apple menu → About This Mac**), **x86_64** for Intel. Open it and follow the installer.
+   - **Windows:** **Download R for Windows → base → Download R-4.x.x for Windows**. Run the installer, accepting the defaults.
+2. Check it worked: open a terminal (macOS **Terminal**; Windows **Command Prompt**) and type `R --version`. It prints the version number.
+
+Optional: also install [Python](https://www.python.org/downloads/) if you'll work on the Python notebooks.
+:::
+
+::: {.callout-note collapse="false"}
+## 2. Install Git, and sign in to GitHub
+
+1. Install Git from [git-scm.com/downloads](https://git-scm.com/downloads). On macOS, typing `git --version` in Terminal offers to install it for you.
+2. Tell Git who you are (use the same email as your GitHub account, or GitHub's **noreply** address):
+
+```sh
+git config --global user.name  "Your Name"
+git config --global user.email "you@example.edu"
+```
+
+3. Make sure your GitHub account has **two-factor authentication** turned on (**Settings → Password and authentication**).
+:::
+
+::: {.callout-note collapse="false"}
+## 3. Install Positron
+
+1. Download Positron from [positron.posit.co](https://positron.posit.co/download): choose your system (macOS, Windows, or Linux).
+2. **macOS:** open the `.dmg` and drag **Positron** into **Applications**. **Windows:** run the installer.
+3. Open Positron. At the top right, the **interpreter** picker should show your R version (e.g. *R 4.4.3*). If it doesn't, click it and choose R. Positron finds R and Python on its own.
+
+::: {.annotated}
+![](images/positron-interpreter.png){fig-alt="Positron's interpreter picker, opened from the top right of the window. It lists Running Interpreter Sessions: Python 3.12.12, and R 4.4.3 marked Currently Selected, which is outlined. The picker button at the top right, showing R 4.4.3, is also outlined."}
+
+::: {.red-box style="left: 4.4%; top: 67.5%; width: 44.9%; height: 17%;"}
+:::
+
+::: {.red-box style="left: 87.2%; top: 14.3%; width: 7.4%; height: 10.5%;"}
+:::
+:::
+4. Install the R packages the course uses, in Positron's **Console**:
+
+```r
+install.packages(c("tidyverse", "lubridate", "broom", "survival"))
+```
+
+These are for testing code on made-up data on your computer. (`bigrquery` isn't needed locally: queries only run in the Workbench.)
+:::
+
+::: {.callout-note collapse="false"}
+## 4. Get your repo into Positron
+
+1. In Positron: **View → Command Palette** (Cmd+Shift+P on macOS, Ctrl+Shift+P on Windows), type **Git: Clone**, and paste your repo's URL (e.g. `https://github.com/OWNER/REPO.git`). Choose a folder on your computer **outside** cloud-synced folders if you can (OneDrive and similar can slow Git down).
+
+::: {.annotated}
+![](images/positron-git-clone.png){fig-alt="Positron's Command Palette at the top of the window, with git clone typed. The first result, Git: Clone, is outlined; Git: Clone (Recursive) is below it."}
+
+::: {.red-box style="left: 49.1%; top: 41.5%; width: 44.3%; height: 10.5%;"}
+:::
+:::
+
+   Or click the **Source Control** icon in the left bar, then **Clone Repository**:
+
+::: {.annotated}
+![](images/positron-source-control.png){fig-alt="Positron's Source Control panel before any folder is open, with the buttons Open Folder and Clone Repository. The Clone Repository button and the Source Control icon in the left bar are outlined."}
+
+::: {.red-box style="left: 21.5%; top: 63%; width: 66.5%; height: 10.5%;"}
+:::
+
+::: {.red-box style="left: 0.5%; top: 68.5%; width: 8.5%; height: 14.5%;"}
+:::
+:::
+2. Positron offers to **open** the cloned folder: say yes. Or later: **File → Open Folder**.
+3. The first time you push, Positron asks you to **sign in to GitHub** in your browser. Allow it.
+4. Add the **pre-commit check** (see [Set up your project](#set-up-your-project-folders-.gitignore-and-a-reference-folder) and the [GitHub Guide](github-guide.qmd#safety-nets-make-mistakes-hard)): in Positron's terminal (**Terminal → New Terminal**), run the commands from **One-time setup**, step 3, above.
+:::
+
+::: {.callout-note collapse="false"}
+## 5. Install the Claude Code extension
+
+1. In Positron, open the **Extensions** view: the **squares icon** in the left bar, or **View → Extensions** (Cmd+Shift+X on macOS, Ctrl+Shift+X on Windows).
+2. Search for **claude**. Choose **Claude Code for VS Code**, published by **Anthropic** (with a blue verified tick). It's the official extension; the others in the list are from other companies. Positron gets extensions from the **Open VSX** marketplace, so it's the same extension VS Code users install (identifier `anthropic.claude-code`).
+3. Click **Install**. If Positron shows **Restart Extensions** (or *Restart Required*), click it.
+4. A **Claude** icon (an orange spark) appears at the top right of the editor. Click it, and **sign in** with your Anthropic account: Claude Code needs a Claude subscription or API access (check whether your institution provides one).
+5. Prefer the terminal? The extension page also describes the terminal version: run `claude` in Positron's terminal. It works the same way, with the same `CLAUDE.md` and settings.
+
+::: {.annotated}
+![](images/positron-claude-extension.png){fig-alt="Positron's Extensions view, searched for claude. The first result, Claude Code for VS Code, published by Anthropic with a verified tick, is outlined; other AI extensions from other publishers are listed below it. The Extensions icon in the left bar is also outlined. On the right, the extension's page shows it is from open-vsx.org, with Restart Extensions, Disable, and Uninstall buttons, because it is already installed."}
+
+::: {.red-box style="left: 2.9%; top: 5.8%; width: 27.2%; height: 10.2%;"}
+:::
+
+::: {.red-box style="left: 0.2%; top: 37.6%; width: 2.4%; height: 5%;"}
+:::
+:::
+
+In this screenshot the extension is already installed, so it shows **Uninstall** and **Restart Extensions**; before installing, you'll see an **Install** button instead.
+:::
+
+::: {.callout-note collapse="false"}
+## 6. Give Claude Code the rules, and keep it away from data files
+
+1. Claude Code reads **`CLAUDE.md`** automatically at the start of every session. Point it to your instructions: a one-line `CLAUDE.md` containing `@AGENTS.md` loads them (as in this course's repo).
+2. **Block it from reading data files**, as a second safety net. Create `.claude/settings.json` in the repo:
+
+```json
+{
+  "permissions": {
+    "deny": [
+      "Read(./data/**)",
+      "Read(**/*.csv)",
+      "Read(**/*.tsv)",
+      "Read(**/*.parquet)",
+      "Read(**/*.rds)"
+    ]
+  }
+}
+```
+
+Your computer shouldn't hold any *All of Us* data anyway; this makes sure an agent couldn't read a stray data file even if one appeared.
+
+3. Test it: ask Claude Code *"What's in CLAUDE.md, and which files are you not allowed to read?"* It should describe your rules.
+
+::: {.annotated}
+![](images/positron-claude-panel.png){fig-alt="The Claude Code panel open in Positron, with a notice that Auto mode is now Claude Code's default permission mode. The prompt box at the bottom, containing the question What's in CLAUDE.md, and which files are you not allowed to read?, is outlined, as is the Auto mode button at its bottom right."}
+
+::: {.red-box style="left: 21.3%; top: 87.5%; width: 57.5%; height: 11.2%;"}
+:::
+
+::: {.red-box style="left: 70.6%; top: 94%; width: 5%; height: 3.8%;"}
+:::
+:::
+
+4. **Choose how much Claude Code may do on its own.** The button at the bottom right of the prompt box shows the **permission mode**. In **Auto** mode (the default), Claude Code decides for itself which actions are low-risk and runs them without asking. While you're learning, click it and choose a mode that **asks before editing files** and running commands, so you see and approve each step. Either way, the deny rules above still apply.
+:::
+
+**Working:**
+
+- Ask in the terminal: *"In notebooks/surveys/5.2, add alcohol frequency to the model, as in Part 5. Test it on made-up data first."*
+- Depending on its **permission mode** (step 6), Claude Code either asks before each edit or command, or runs the ones it judges low-risk. Either way, **read every change** before you commit: Positron's **Source Control** panel shows every change in the repo, line by line.
+- Run the test on made-up data in Positron's console or notebook. Then **restart, clear, and save**, and commit and push (Claude Code can do this too, when you ask, and the pre-commit check still runs).
+- In the Workbench: pull, run, and read the results there.
+
+⚠️ Only run Claude Code on **your computer**. Inside a Workbench app with *All of Us* data, it would send what it reads outside the Workbench (see [What about the AI tools inside the Workbench?](#what-about-the-ai-tools-inside-the-workbench)).
+
+### Yale's Clarity platform
+
+[**Clarity**](https://ai.yale.edu/yales-ai-tools-and-resources/clarity-platform) is Yale's AI chat platform ([clarity-ai.yale.edu](https://clarity-ai.yale.edu/)), free for current Yale faculty, staff, and students. It offers several models (agents) to choose from, such as GPT, Claude, and Gemini models, and Yale says conversations are never used to train AI models.
+
+**Can I use it with *All of Us*?** For **code** and **public documents**, yes. For *All of Us* **data**, no, even though Clarity is approved for many kinds of Yale data:
+
+- Clarity runs **outside** the Researcher Workbench. The *All of Us* Data User Code of Conduct doesn't allow participant data to leave the Workbench, whatever the destination.
+- Yale's own Clarity page says users with external obligations, such as **data use agreements**, should confirm their use is appropriate. The *All of Us* Code of Conduct is one.
+
+So Clarity sees exactly what any outside AI may see: code, error messages without data, public documents, and made-up test data.
+
+**Working with a chat tool** is the round trip with copy and paste in the middle:
+
+1. **Start each conversation with the context.** Paste the text of your `AGENTS.md` as your first message, or attach it. A chat tool doesn't read your project folder.
+2. **Attach public reference documents** when they help: the CDR data dictionary (CSV), the genomic data PDF, OMOP pages. Clarity accepts uploads of documents and spreadsheets. **Never** attach a file made in the Workbench.
+3. **Choose a model for the job.** Clarity describes each one when you pick it: for example, one is described as best for writing and code, another for large document sets. Try a second model when the first one struggles.
+4. **Paste the code** you want help with (outputs cleared), and ask for an explanation, a fix, or a test on made-up data.
+5. **Copy the answer into your editor** (Positron, VS Code, or JupyterLab on your computer), review it, test it, then commit and push. In the Workbench: pull and run.
+6. **Organise conversations by project.** Clarity lets you group chats, so you can find the conversation behind a change later. Note the change in your commit message too (e.g. *"5.2: alcohol model; drafted with Clarity, tested on fake data"*).
+
+**Custom agents:** Clarity lets approved users create a **Custom Agent** with its own instructions and knowledge sources. An agent with your `AGENTS.md` as its instructions and the public reference documents as its knowledge would save pasting them each time. Check Yale's requirements for creating one.
+
+| | Claude Code in Positron | Clarity (chat) |
+|---|---|---|
+| Sees | the files in your project folder | only what you paste or attach |
+| Reads `AGENTS.md` / `CLAUDE.md` | automatically | paste it, or use a Custom Agent |
+| Edits files | yes: asking first, or on its own (depends on the permission mode) | no: you copy the answer into your editor |
+| Best for | multi-file changes, running tests, commits | questions, explanations, single functions, reviewing documents |
+| Cost | an Anthropic subscription or API access | free for Yale users |
+| *All of Us* data | never: run it only on your computer | never: code and public documents only |
 
 ## The round trip, step by step
 
@@ -166,6 +444,15 @@ Open the notebook and run it. **The results stay here.** Read them in the Workbe
 ### 4. When it works: merge
 
 Open a **pull request** on GitHub. Read the **Files changed** tab one last time, wait for the green ✓ from the safety check, and merge. Everyone (including your other apps) gets it with `git pull`.
+
+Near the bottom of the pull request's **Conversation** tab, GitHub shows the checks. The safety check runs twice (once for the push, once for the pull request): **wait until every check is green** before you click **Merge pull request**. A red ✗ means it found outputs, data files, or a credential: click **Details** to see which file.
+
+::: {.annotated}
+![](images/github-pr-checks.png){fig-alt="The checks box on a GitHub pull request. It says Some checks haven't completed yet: 1 in progress, 1 successful. The in-progress check, Check for outputs and data / check (pull_request), has a yellow circle; the successful one, Check for outputs and data / check (push), has a green tick. Below: No conflicts with base branch, and the Merge pull request button. The checks are outlined."}
+
+::: {.red-box style="left: 2.5%; top: 27%; width: 95%; height: 34%;"}
+:::
+:::
 
 ### Editing in the Workbench too?
 
@@ -252,7 +539,7 @@ AI assistants are fluent and confident, and sometimes **wrong**. While building 
 
 | The AI… | How it was caught | The check to use |
 |---|---|---|
-| wrote **concept IDs from memory** | a cell printed each ID's name from the dictionary before using it | always look IDs up: the dictionary, Athena, or a query on `concept` |
+| wrote **concept IDs from memory** | a cell printed each ID's name from the dictionary before using it | always look IDs up: the dictionary, Athena, or a query on `concept`; keep the ones you use in `reference/` |
 | "found" **trailing spaces** in a survey name, and wrote a lesson about them | `nchar()` gave the same length with and without `trimws()` | test the claim, don't just read the explanation |
 | searched survey answers for "self", which matched **every** answer ("Including your**self**…") | a table of each answer and its group | after any recoding, count the categories |
 | ran a query on a **6 TB** table because a dry run priced it at **$0** (dry runs can't price tables clustered by person) | checking what the query **actually** billed, and how the table is stored | price queries first, then check the bill: `run_if_cheap()` and `last_query_cost()` (**6.1**) |
@@ -309,6 +596,10 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 ## Key takeaways
 
 - The AI sees **code, never data**: work with it on **your own computer**, which has no *All of Us* data
+- Give every project a **predictable folder structure** and a **`.gitignore`** from day one
+- Keep **public reference documents** (data dictionary, OMOP docs, concepts) in `reference/`, so the AI checks names instead of guessing
+- Never **download** tutorial notebooks from the Workbench: use a public copy, or clear them and push through GitHub
+- **Claude Code in Positron** and **Yale's Clarity** both fit the round trip: Claude Code edits your project on your computer; Clarity answers questions about code you paste. Neither ever sees *All of Us* data
 - **GitHub** carries the code both ways; the **Workbench** runs it and keeps the results
 - Don't use AI coding agents (including the pre-installed ones) in a workspace with *All of Us* data
 - **Review** every change, **test** on made-up data, and **check** results: the AI suggests, the data decides
