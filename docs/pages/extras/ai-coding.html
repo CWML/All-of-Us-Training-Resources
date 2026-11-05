@@ -1091,6 +1091,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="when-it-works-merge" class="level3">
 <h3 class="anchored" data-anchor-id="when-it-works-merge">4. When it works: merge</h3>
 <p>Open a <strong>pull request</strong> on GitHub. Read the <strong>Files changed</strong> tab one last time, wait for the green ✓ from the safety check, and merge. Everyone (including your other apps) gets it with <code>git pull</code>.</p>
+<p>Near the bottom of the pull request’s <strong>Conversation</strong> tab, GitHub shows the checks. The safety check runs twice (once for the push, once for the pull request): <strong>wait until every check is green</strong> before you click <strong>Merge pull request</strong>. A red ✗ means it found outputs, data files, or a credential: click <strong>Details</strong> to see which file.</p>
+<div class="annotated">
+<p><img src="images/github-pr-checks.png" class="img-fluid" alt="The checks box on a GitHub pull request. It says Some checks haven't completed yet: 1 in progress, 1 successful. The in-progress check, Check for outputs and data / check (pull_request), has a yellow circle; the successful one, Check for outputs and data / check (push), has a green tick. Below: No conflicts with base branch, and the Merge pull request button. The checks are outlined."></p>
+<div class="red-box" style="left: 2.5%; top: 27%; width: 95%; height: 34%;">
+
+</div>
+</div>
 </section>
 <section id="editing-in-the-workbench-too" class="level3">
 <h3 class="anchored" data-anchor-id="editing-in-the-workbench-too">Editing in the Workbench too?</h3>

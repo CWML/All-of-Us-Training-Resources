@@ -445,6 +445,15 @@ Open the notebook and run it. **The results stay here.** Read them in the Workbe
 
 Open a **pull request** on GitHub. Read the **Files changed** tab one last time, wait for the green ✓ from the safety check, and merge. Everyone (including your other apps) gets it with `git pull`.
 
+Near the bottom of the pull request's **Conversation** tab, GitHub shows the checks. The safety check runs twice (once for the push, once for the pull request): **wait until every check is green** before you click **Merge pull request**. A red ✗ means it found outputs, data files, or a credential: click **Details** to see which file.
+
+::: {.annotated}
+![](images/github-pr-checks.png){fig-alt="The checks box on a GitHub pull request. It says Some checks haven't completed yet: 1 in progress, 1 successful. The in-progress check, Check for outputs and data / check (pull_request), has a yellow circle; the successful one, Check for outputs and data / check (push), has a green tick. Below: No conflicts with base branch, and the Merge pull request button. The checks are outlined."}
+
+::: {.red-box style="left: 2.5%; top: 27%; width: 95%; height: 34%;"}
+:::
+:::
+
 ### Editing in the Workbench too?
 
 You can also edit notebooks in the Workbench. Before pushing from there: **clear outputs** (`jupyter nbconvert --clear-output --inplace …`), commit, and push. Then `git pull` on your computer before asking the AI for more changes, so it works on the newest version.
