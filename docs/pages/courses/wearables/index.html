@@ -574,6 +574,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">6.1 Wearables Basics</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-2-steps-and-t2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.2 Steps and Type 2 Diabetes</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -641,9 +647,9 @@ ul.task-list li input[type="checkbox"] {
 <td>Fitbit and Apple HealthKit tables and their cost; querying minute-level data safely; valid wear days; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data</td>
 </tr>
 <tr class="even">
-<td><strong>6.2 Steps and type 2 diabetes</strong> (coming soon)</td>
-<td></td>
-<td>Daily steps measured <strong>before</strong> a diagnosis, and type 2 diabetes</td>
+<td><a href="../../../pages/courses/wearables/6-2-steps-and-t2d.html"><strong>6.2 Steps and type 2 diabetes</strong></a></td>
+<td>95 min</td>
+<td>Following all Fitbit users forward: baseline steps, then new type 2 diabetes; a design that avoids reverse causation; incidence rates, Kaplan–Meier curves, Cox models, a lag</td>
 </tr>
 <tr class="odd">
 <td><strong>6.3 Sleep and heart rate</strong> (coming soon)</td>
@@ -710,14 +716,18 @@ ul.task-list li input[type="checkbox"] {
 <td>about <strong>$1.40</strong> in queries (mostly the Apple HealthKit query)</td>
 </tr>
 <tr class="even">
+<td><strong>6.2</strong></td>
+<td>about <strong>$1</strong>: the cohort query, and <strong>$0.18</strong> for every Fitbit user’s baseline steps</td>
+</tr>
+<tr class="odd">
 <td><strong>Never</strong></td>
 <td>query a minute-level table without a <code>person_id</code> filter: a full read is over <strong>6 TB</strong>, about <strong>$40</strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>The app, while running</strong></td>
 <td>about <strong>$0.27 an hour</strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>The app’s disk</strong></td>
 <td>about <strong>$0.70 a day</strong>, even while the app is stopped</td>
 </tr>

@@ -229,4 +229,4 @@ People with Fitbit data were a little younger (mean age 58 vs 59), more often fe
 
 ## Next
 
-**6.2 Steps and type 2 diabetes** (coming soon): daily steps measured **before** a diagnosis.
+**[6.2 Steps and type 2 diabetes](6-2-steps-and-t2d.qmd)**: daily steps measured **before** a diagnosis.

@@ -128,6 +128,7 @@ website:
           contents:
             - pages/courses/wearables/index.qmd
             - pages/courses/wearables/6-1-wearables-basics.qmd
+            - pages/courses/wearables/6-2-steps-and-t2d.qmd
     - id: extras
       title: "Optional Extras"
       style: docked
