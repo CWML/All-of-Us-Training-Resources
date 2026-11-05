@@ -78,7 +78,7 @@ my-aou-project/
 └── data/                  never used on your computer: in the Workbench, data lives in your bucket   ← ignored by Git
 ```
 
-This is the same layout as this course's repository: settings and helpers in one setup file, notebooks by topic, shared SQL in its own folder.
+This is the same layout as this course's repository: settings and helpers in one setup file, notebooks by topic, shared SQL in its own folder. Its files are working examples to copy: [`.gitignore`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/.gitignore), [`AGENTS.md`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/AGENTS.md), and [`reference/README.md`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/reference/README.md).
 
 ### The `.gitignore`: your first safety net
 
