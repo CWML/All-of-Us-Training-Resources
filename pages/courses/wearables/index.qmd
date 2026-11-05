@@ -13,7 +13,7 @@ Wearables show daily life in a way health records and surveys can't: how much pe
 |---|---|---|
 | [**6.1 Wearables basics**](6-1-wearables-basics.qmd) | 95 min | Fitbit and Apple HealthKit tables and their cost; querying minute-level data safely; valid wear days; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data |
 | [**6.2 Steps and type 2 diabetes**](6-2-steps-and-t2d.qmd) | 95 min | Following all Fitbit users forward: baseline steps, then new type 2 diabetes; a design that avoids reverse causation; incidence rates, Kaplan–Meier curves, Cox models, a lag |
-| **6.3 Sleep and heart rate** (coming soon) | | Sleep duration and stages, resting heart rate; optional: HealthKit blood glucose |
+| [**6.3 Sleep and heart rate**](6-3-sleep-and-heart-rate.qmd) | 95 min | The 6.2 design as a function: Fitbit sleep and Apple HealthKit resting heart rate, then new type 2 diabetes; non-linear links; a first look at HealthKit blood glucose |
 
 ## The data
 
@@ -33,6 +33,7 @@ Owning a Fitbit or an iPhone and sharing its data isn't random. In our sample, p
 |---|---|
 | **6.1** | about **$1.40** in queries (mostly the Apple HealthKit query) |
 | **6.2** | about **$1**: the cohort query, and **$0.18** for every Fitbit user's baseline steps |
+| **6.3** | about **$1**: sleep, resting heart rate, and glucose queries |
 | **Never** | query a minute-level table without a `person_id` filter: a full read is over **6 TB**, about **$40** |
 | **The app, while running** | about **$0.27 an hour** |
 | **The app's disk** | about **$0.70 a day**, even while the app is stopped |

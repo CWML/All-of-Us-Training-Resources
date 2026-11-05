@@ -238,4 +238,4 @@ The curves separate from the first year (log-rank chi-square 250, p < 0.001). Th
 
 ## Next
 
-**6.3 Sleep and heart rate** (coming soon): the same design for sleep and resting heart rate.
+**[6.3 Sleep and heart rate](6-3-sleep-and-heart-rate.qmd)**: the same design for sleep and resting heart rate.

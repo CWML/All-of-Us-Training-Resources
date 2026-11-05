@@ -129,6 +129,7 @@ website:
             - pages/courses/wearables/index.qmd
             - pages/courses/wearables/6-1-wearables-basics.qmd
             - pages/courses/wearables/6-2-steps-and-t2d.qmd
+            - pages/courses/wearables/6-3-sleep-and-heart-rate.qmd
     - id: extras
       title: "Optional Extras"
       style: docked
