@@ -197,6 +197,77 @@ This repo holds code for the All of Us Researcher Workbench 2.0 (Verily).
 - Test new code on a small made-up data frame with the same columns.
 ```
 
+## Two popular setups
+
+The workflow is the same whatever tool you use. Here's how it looks in two setups that many researchers use.
+
+### Claude Code in Positron
+
+[**Positron**](https://positron.posit.co/) is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. **Claude Code** is Anthropic's coding agent: it reads your project's files, proposes changes, and runs commands, with your permission. Together they're a good setup for the **computer** side of the round trip.
+
+**Set up** (once):
+
+1. Install Positron, and open your **repo folder** (**File → Open Folder**): the one you cloned from GitHub, which has no *All of Us* data.
+2. Open a terminal in Positron (**Terminal → New Terminal**), and run `claude`. Claude Code needs an Anthropic account with a Claude subscription or API access; check whether your institution provides one.
+3. Claude Code reads **`CLAUDE.md`** automatically at the start of every session. Point it to your instructions: a one-line `CLAUDE.md` containing `@AGENTS.md` loads them (as in this course's repo).
+4. **Block it from reading data files**, as a second safety net. Create `.claude/settings.json` in the repo:
+
+```json
+{
+  "permissions": {
+    "deny": [
+      "Read(./data/**)",
+      "Read(**/*.csv)",
+      "Read(**/*.tsv)",
+      "Read(**/*.parquet)",
+      "Read(**/*.rds)"
+    ]
+  }
+}
+```
+
+Your computer shouldn't hold any *All of Us* data anyway; this makes sure an agent couldn't read a stray data file even if one appeared.
+
+**Working:**
+
+- Ask in the terminal: *"In notebooks/surveys/5.2, add alcohol frequency to the model, as in Part 5. Test it on made-up data first."*
+- Claude Code **asks before** editing files or running commands. Read each change before you accept it; Positron's **Source Control** panel shows every change in the repo, line by line.
+- Run the test on made-up data in Positron's console or notebook. Then **restart, clear, and save**, and commit and push (Claude Code can do this too, when you ask, and the pre-commit check still runs).
+- In the Workbench: pull, run, and read the results there.
+
+⚠️ Only run Claude Code on **your computer**. Inside a Workbench app with *All of Us* data, it would send what it reads outside the Workbench (see [What about the AI tools inside the Workbench?](#what-about-the-ai-tools-inside-the-workbench)).
+
+### Yale's Clarity platform
+
+[**Clarity**](https://ai.yale.edu/yales-ai-tools-and-resources/clarity-platform) is Yale's AI chat platform ([clarity-ai.yale.edu](https://clarity-ai.yale.edu/)), free for current Yale faculty, staff, and students. It offers several models (agents) to choose from, such as GPT, Claude, and Gemini models, and Yale says conversations are never used to train AI models.
+
+**Can I use it with *All of Us*?** For **code** and **public documents**, yes. For *All of Us* **data**, no, even though Clarity is approved for many kinds of Yale data:
+
+- Clarity runs **outside** the Researcher Workbench. The *All of Us* Data User Code of Conduct doesn't allow participant data to leave the Workbench, whatever the destination.
+- Yale's own Clarity page says users with external obligations, such as **data use agreements**, should confirm their use is appropriate. The *All of Us* Code of Conduct is one.
+
+So Clarity sees exactly what any outside AI may see: code, error messages without data, public documents, and made-up test data.
+
+**Working with a chat tool** is the round trip with copy and paste in the middle:
+
+1. **Start each conversation with the context.** Paste the text of your `AGENTS.md` as your first message, or attach it. A chat tool doesn't read your project folder.
+2. **Attach public reference documents** when they help: the CDR data dictionary (CSV), the genomic data PDF, OMOP pages. Clarity accepts uploads of documents and spreadsheets. **Never** attach a file made in the Workbench.
+3. **Choose a model for the job.** Clarity describes each one when you pick it: for example, one is described as best for writing and code, another for large document sets. Try a second model when the first one struggles.
+4. **Paste the code** you want help with (outputs cleared), and ask for an explanation, a fix, or a test on made-up data.
+5. **Copy the answer into your editor** (Positron, VS Code, or JupyterLab on your computer), review it, test it, then commit and push. In the Workbench: pull and run.
+6. **Organise conversations by project.** Clarity lets you group chats, so you can find the conversation behind a change later. Note the change in your commit message too (e.g. *"5.2: alcohol model; drafted with Clarity, tested on fake data"*).
+
+**Custom agents:** Clarity lets approved users create a **Custom Agent** with its own instructions and knowledge sources. An agent with your `AGENTS.md` as its instructions and the public reference documents as its knowledge would save pasting them each time. Check Yale's requirements for creating one.
+
+| | Claude Code in Positron | Clarity (chat) |
+|---|---|---|
+| Sees | the files in your project folder | only what you paste or attach |
+| Reads `AGENTS.md` / `CLAUDE.md` | automatically | paste it, or use a Custom Agent |
+| Edits files | yes, with your permission | no: you copy the answer into your editor |
+| Best for | multi-file changes, running tests, commits | questions, explanations, single functions, reviewing documents |
+| Cost | an Anthropic subscription or API access | free for Yale users |
+| *All of Us* data | never: run it only on your computer | never: code and public documents only |
+
 ## The round trip, step by step
 
 ### 1. On your computer: ask, review, test
@@ -401,6 +472,7 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 - Give every project a **predictable folder structure** and a **`.gitignore`** from day one
 - Keep **public reference documents** (data dictionary, OMOP docs, concepts) in `reference/`, so the AI checks names instead of guessing
 - Never **download** tutorial notebooks from the Workbench: use a public copy, or clear them and push through GitHub
+- **Claude Code in Positron** and **Yale's Clarity** both fit the round trip: Claude Code edits your project on your computer; Clarity answers questions about code you paste. Neither ever sees *All of Us* data
 - **GitHub** carries the code both ways; the **Workbench** runs it and keeps the results
 - Don't use AI coding agents (including the pre-installed ones) in a workspace with *All of Us* data
 - **Review** every change, **test** on made-up data, and **check** results: the AI suggests, the data decides
