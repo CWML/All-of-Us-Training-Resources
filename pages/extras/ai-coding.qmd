@@ -203,7 +203,7 @@ The workflow is the same whatever tool you use. Here's how it looks in two setup
 
 ### Claude Code in Positron
 
-[**Positron**](https://positron.posit.co/) is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. **Claude Code** is Anthropic's coding agent: it reads your project's files, proposes changes, and runs commands, with your permission. Together they're a good setup for the **computer** side of the round trip.
+[**Positron**](https://positron.posit.co/) is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. **Claude Code** is Anthropic's coding agent: it reads your project's files, edits them, and runs commands: asking first, or on its own for steps it judges low-risk, depending on its permission mode. Together they're a good setup for the **computer** side of the round trip.
 
 **Set up, step by step** (once per computer, about 30 minutes):
 
@@ -239,7 +239,17 @@ git config --global user.email "you@example.edu"
 
 1. Download Positron from [positron.posit.co](https://positron.posit.co/download): choose your system (macOS, Windows, or Linux).
 2. **macOS:** open the `.dmg` and drag **Positron** into **Applications**. **Windows:** run the installer.
-3. Open Positron. At the top right, the **interpreter** picker should show your R version (e.g. *R 4.5.x*). If it doesn't, click it and choose R. Positron finds R and Python on its own.
+3. Open Positron. At the top right, the **interpreter** picker should show your R version (e.g. *R 4.4.3*). If it doesn't, click it and choose R. Positron finds R and Python on its own.
+
+::: {.annotated}
+![](images/positron-interpreter.png){fig-alt="Positron's interpreter picker, opened from the top right of the window. It lists Running Interpreter Sessions: Python 3.12.12, and R 4.4.3 marked Currently Selected, which is outlined. The picker button at the top right, showing R 4.4.3, is also outlined."}
+
+::: {.red-box style="left: 4.4%; top: 67.5%; width: 44.9%; height: 17%;"}
+:::
+
+::: {.red-box style="left: 87.2%; top: 14.3%; width: 7.4%; height: 10.5%;"}
+:::
+:::
 4. Install the R packages the course uses, in Positron's **Console**:
 
 ```r
@@ -253,6 +263,25 @@ These are for testing code on made-up data on your computer. (`bigrquery` isn't 
 ## 4. Get your repo into Positron
 
 1. In Positron: **View → Command Palette** (Cmd+Shift+P on macOS, Ctrl+Shift+P on Windows), type **Git: Clone**, and paste your repo's URL (e.g. `https://github.com/OWNER/REPO.git`). Choose a folder on your computer **outside** cloud-synced folders if you can (OneDrive and similar can slow Git down).
+
+::: {.annotated}
+![](images/positron-git-clone.png){fig-alt="Positron's Command Palette at the top of the window, with git clone typed. The first result, Git: Clone, is outlined; Git: Clone (Recursive) is below it."}
+
+::: {.red-box style="left: 49.1%; top: 41.5%; width: 44.3%; height: 10.5%;"}
+:::
+:::
+
+   Or click the **Source Control** icon in the left bar, then **Clone Repository**:
+
+::: {.annotated}
+![](images/positron-source-control.png){fig-alt="Positron's Source Control panel before any folder is open, with the buttons Open Folder and Clone Repository. The Clone Repository button and the Source Control icon in the left bar are outlined."}
+
+::: {.red-box style="left: 21.5%; top: 63%; width: 66.5%; height: 10.5%;"}
+:::
+
+::: {.red-box style="left: 0.5%; top: 68.5%; width: 8.5%; height: 14.5%;"}
+:::
+:::
 2. Positron offers to **open** the cloned folder: say yes. Or later: **File → Open Folder**.
 3. The first time you push, Positron asks you to **sign in to GitHub** in your browser. Allow it.
 4. Add the **pre-commit check** (see [Set up your project](#set-up-your-project-folders-.gitignore-and-a-reference-folder) and the [GitHub Guide](github-guide.qmd#safety-nets-make-mistakes-hard)): in Positron's terminal (**Terminal → New Terminal**), run the commands from **One-time setup**, step 3, above.
@@ -303,12 +332,24 @@ In this screenshot the extension is already installed, so it shows **Uninstall**
 Your computer shouldn't hold any *All of Us* data anyway; this makes sure an agent couldn't read a stray data file even if one appeared.
 
 3. Test it: ask Claude Code *"What's in CLAUDE.md, and which files are you not allowed to read?"* It should describe your rules.
+
+::: {.annotated}
+![](images/positron-claude-panel.png){fig-alt="The Claude Code panel open in Positron, with a notice that Auto mode is now Claude Code's default permission mode. The prompt box at the bottom, containing the question What's in CLAUDE.md, and which files are you not allowed to read?, is outlined, as is the Auto mode button at its bottom right."}
+
+::: {.red-box style="left: 21.3%; top: 87.5%; width: 57.5%; height: 11.2%;"}
+:::
+
+::: {.red-box style="left: 70.6%; top: 94%; width: 5%; height: 3.8%;"}
+:::
+:::
+
+4. **Choose how much Claude Code may do on its own.** The button at the bottom right of the prompt box shows the **permission mode**. In **Auto** mode (the default), Claude Code decides for itself which actions are low-risk and runs them without asking. While you're learning, click it and choose a mode that **asks before editing files** and running commands, so you see and approve each step. Either way, the deny rules above still apply.
 :::
 
 **Working:**
 
 - Ask in the terminal: *"In notebooks/surveys/5.2, add alcohol frequency to the model, as in Part 5. Test it on made-up data first."*
-- Claude Code **asks before** editing files or running commands. Read each change before you accept it; Positron's **Source Control** panel shows every change in the repo, line by line.
+- Depending on its **permission mode** (step 6), Claude Code either asks before each edit or command, or runs the ones it judges low-risk. Either way, **read every change** before you commit: Positron's **Source Control** panel shows every change in the repo, line by line.
 - Run the test on made-up data in Positron's console or notebook. Then **restart, clear, and save**, and commit and push (Claude Code can do this too, when you ask, and the pre-commit check still runs).
 - In the Workbench: pull, run, and read the results there.
 
@@ -340,7 +381,7 @@ So Clarity sees exactly what any outside AI may see: code, error messages withou
 |---|---|---|
 | Sees | the files in your project folder | only what you paste or attach |
 | Reads `AGENTS.md` / `CLAUDE.md` | automatically | paste it, or use a Custom Agent |
-| Edits files | yes, with your permission | no: you copy the answer into your editor |
+| Edits files | yes: asking first, or on its own (depends on the permission mode) | no: you copy the answer into your editor |
 | Best for | multi-file changes, running tests, commits | questions, explanations, single functions, reviewing documents |
 | Cost | an Anthropic subscription or API access | free for Yale users |
 | *All of Us* data | never: run it only on your computer | never: code and public documents only |

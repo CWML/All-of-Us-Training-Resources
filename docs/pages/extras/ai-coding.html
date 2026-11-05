@@ -754,7 +754,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The workflow is the same whatever tool you use. Here’s how it looks in two setups that many researchers use.</p>
 <section id="claude-code-in-positron" class="level3">
 <h3 class="anchored" data-anchor-id="claude-code-in-positron">Claude Code in Positron</h3>
-<p><a href="https://positron.posit.co/"><strong>Positron</strong></a> is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. <strong>Claude Code</strong> is Anthropic’s coding agent: it reads your project’s files, proposes changes, and runs commands, with your permission. Together they’re a good setup for the <strong>computer</strong> side of the round trip.</p>
+<p><a href="https://positron.posit.co/"><strong>Positron</strong></a> is a free code editor from Posit (the makers of RStudio), built for R and Python, with notebooks, a console, a data viewer, and a terminal in one window. <strong>Claude Code</strong> is Anthropic’s coding agent: it reads your project’s files, edits them, and runs commands: asking first, or on its own for steps it judges low-risk, depending on its permission mode. Together they’re a good setup for the <strong>computer</strong> side of the round trip.</p>
 <p><strong>Set up, step by step</strong> (once per computer, about 30 minutes):</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
@@ -820,7 +820,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Download Positron from <a href="https://positron.posit.co/download">positron.posit.co</a>: choose your system (macOS, Windows, or Linux).</li>
 <li><strong>macOS:</strong> open the <code>.dmg</code> and drag <strong>Positron</strong> into <strong>Applications</strong>. <strong>Windows:</strong> run the installer.</li>
-<li>Open Positron. At the top right, the <strong>interpreter</strong> picker should show your R version (e.g.&nbsp;<em>R 4.5.x</em>). If it doesn’t, click it and choose R. Positron finds R and Python on its own.</li>
+<li>Open Positron. At the top right, the <strong>interpreter</strong> picker should show your R version (e.g.&nbsp;<em>R 4.4.3</em>). If it doesn’t, click it and choose R. Positron finds R and Python on its own.</li>
+</ol>
+<div class="annotated">
+<p><img src="images/positron-interpreter.png" class="img-fluid" alt="Positron's interpreter picker, opened from the top right of the window. It lists Running Interpreter Sessions: Python 3.12.12, and R 4.4.3 marked Currently Selected, which is outlined. The picker button at the top right, showing R 4.4.3, is also outlined."></p>
+<div class="red-box" style="left: 4.4%; top: 67.5%; width: 44.9%; height: 17%;">
+
+</div>
+<div class="red-box" style="left: 87.2%; top: 14.3%; width: 7.4%; height: 10.5%;">
+
+</div>
+</div>
+<ol start="4" type="1">
 <li>Install the R packages the course uses, in Positron’s <strong>Console</strong>:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"lubridate"</span>, <span class="st">"broom"</span>, <span class="st">"survival"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -842,6 +853,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>In Positron: <strong>View → Command Palette</strong> (Cmd+Shift+P on macOS, Ctrl+Shift+P on Windows), type <strong>Git: Clone</strong>, and paste your repo’s URL (e.g.&nbsp;<code>https://github.com/OWNER/REPO.git</code>). Choose a folder on your computer <strong>outside</strong> cloud-synced folders if you can (OneDrive and similar can slow Git down).</li>
+</ol>
+<div class="annotated">
+<p><img src="images/positron-git-clone.png" class="img-fluid" alt="Positron's Command Palette at the top of the window, with git clone typed. The first result, Git: Clone, is outlined; Git: Clone (Recursive) is below it."></p>
+<div class="red-box" style="left: 49.1%; top: 41.5%; width: 44.3%; height: 10.5%;">
+
+</div>
+</div>
+<p>Or click the <strong>Source Control</strong> icon in the left bar, then <strong>Clone Repository</strong>:</p>
+<div class="annotated">
+<p><img src="images/positron-source-control.png" class="img-fluid" alt="Positron's Source Control panel before any folder is open, with the buttons Open Folder and Clone Repository. The Clone Repository button and the Source Control icon in the left bar are outlined."></p>
+<div class="red-box" style="left: 21.5%; top: 63%; width: 66.5%; height: 10.5%;">
+
+</div>
+<div class="red-box" style="left: 0.5%; top: 68.5%; width: 8.5%; height: 14.5%;">
+
+</div>
+</div>
+<ol start="2" type="1">
 <li>Positron offers to <strong>open</strong> the cloned folder: say yes. Or later: <strong>File → Open Folder</strong>.</li>
 <li>The first time you push, Positron asks you to <strong>sign in to GitHub</strong> in your browser. Allow it.</li>
 <li>Add the <strong>pre-commit check</strong> (see <a href="#set-up-your-project-folders-.gitignore-and-a-reference-folder">Set up your project</a> and the <a href="../../pages/extras/github-guide.html#safety-nets-make-mistakes-hard">GitHub Guide</a>): in Positron’s terminal (<strong>Terminal → New Terminal</strong>), run the commands from <strong>One-time setup</strong>, step 3, above.</li>
@@ -912,13 +941,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="3" type="1">
 <li>Test it: ask Claude Code <em>“What’s in CLAUDE.md, and which files are you not allowed to read?”</em> It should describe your rules.</li>
 </ol>
+<div class="annotated">
+<p><img src="images/positron-claude-panel.png" class="img-fluid" alt="The Claude Code panel open in Positron, with a notice that Auto mode is now Claude Code's default permission mode. The prompt box at the bottom, containing the question What's in CLAUDE.md, and which files are you not allowed to read?, is outlined, as is the Auto mode button at its bottom right."></p>
+<div class="red-box" style="left: 21.3%; top: 87.5%; width: 57.5%; height: 11.2%;">
+
+</div>
+<div class="red-box" style="left: 70.6%; top: 94%; width: 5%; height: 3.8%;">
+
+</div>
+</div>
+<ol start="4" type="1">
+<li><strong>Choose how much Claude Code may do on its own.</strong> The button at the bottom right of the prompt box shows the <strong>permission mode</strong>. In <strong>Auto</strong> mode (the default), Claude Code decides for itself which actions are low-risk and runs them without asking. While you’re learning, click it and choose a mode that <strong>asks before editing files</strong> and running commands, so you see and approve each step. Either way, the deny rules above still apply.</li>
+</ol>
 </div>
 </div>
 </div>
 <p><strong>Working:</strong></p>
 <ul>
 <li>Ask in the terminal: <em>“In notebooks/surveys/5.2, add alcohol frequency to the model, as in Part 5. Test it on made-up data first.”</em></li>
-<li>Claude Code <strong>asks before</strong> editing files or running commands. Read each change before you accept it; Positron’s <strong>Source Control</strong> panel shows every change in the repo, line by line.</li>
+<li>Depending on its <strong>permission mode</strong> (step 6), Claude Code either asks before each edit or command, or runs the ones it judges low-risk. Either way, <strong>read every change</strong> before you commit: Positron’s <strong>Source Control</strong> panel shows every change in the repo, line by line.</li>
 <li>Run the test on made-up data in Positron’s console or notebook. Then <strong>restart, clear, and save</strong>, and commit and push (Claude Code can do this too, when you ask, and the pre-commit check still runs).</li>
 <li>In the Workbench: pull, run, and read the results there.</li>
 </ul>
@@ -969,7 +1010,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td>Edits files</td>
-<td>yes, with your permission</td>
+<td>yes: asking first, or on its own (depends on the permission mode)</td>
 <td>no: you copy the answer into your editor</td>
 </tr>
 <tr class="even">
