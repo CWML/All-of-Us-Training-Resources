@@ -11,3 +11,20 @@ Cohort Notes.pptx
 .ipynb_checkpoints/
 Untitled*.ipynb
 hail-*.log
+
+# All of Us data: never in Git (and never on your computer)
+/data/
+*.csv
+*.tsv
+*.parquet
+*.rds
+*.RData
+*.vcf
+*.vcf.gz
+*.bam
+*.xlsx
+
+# Public reference documents for AI assistants: kept locally, not published
+# (only the README that lists them is in Git)
+/reference/*
+!/reference/README.md
