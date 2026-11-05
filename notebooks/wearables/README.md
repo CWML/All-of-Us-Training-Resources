@@ -7,7 +7,7 @@ Classes on the *All of Us* wearable data, using the same type 2 diabetes cohort 
 | Class | What it does |
 |---|---|
 | **6.1 wearables_basics** | Fitbit and HealthKit tables and their cost (the minute-level tables are over 6 TB, clustered by `person_id`); valid wear days and a check of the wear measure; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data |
-| **6.2 steps_and_t2d** | *(planned)* Daily steps and type 2 diabetes, using steps measured before a diagnosis |
+| **6.2 steps_and_t2d** | All Fitbit users followed forward: baseline steps (first 6 months), then new type 2 diabetes; flow table, incidence rates, Kaplan–Meier, Cox models with and without BMI, a 1-year lag |
 | **6.3 sleep_and_heart_rate** | *(planned)* Sleep and heart rate; optional: HealthKit blood glucose |
 
 Each notebook loads `../aou_setup.R`, which has two cost helpers for this series: `run_if_cheap()` (a free dry
