@@ -57,6 +57,95 @@ Why GitHub, and not copy and paste?
 - **No files to move by hand**: `git pull` in the Workbench brings in the new code in seconds.
 - Colleagues and students get the same code the same way.
 
+## Set up your project: folders, `.gitignore`, and a reference folder
+
+An AI assistant works much better on a **tidy, predictable** project: it finds the right file, follows your conventions, and guesses less. A clear structure also makes it obvious what belongs in Git and what never does.
+
+### A folder structure
+
+```
+my-aou-project/
+├── README.md              what the project is, and the order to run things in
+├── .gitignore             what Git must never add (next section): commit it FIRST
+├── AGENTS.md              instructions for AI assistants (or CLAUDE.md, or .github/copilot-instructions.md)
+├── notebooks/             your notebooks, outputs always cleared
+│   ├── setup.R            settings (bucket, dataset) and shared helper functions
+│   └── 01_cohort.ipynb …
+├── sql/                   queries kept as .sql files, so they can be read and reused
+├── tools/
+│   └── check_notebooks.py the pre-commit check (below)
+├── reference/             PUBLIC All of Us and OMOP documents, for the AI to read   ← ignored by Git
+└── data/                  never used on your computer: in the Workbench, data lives in your bucket   ← ignored by Git
+```
+
+This is the same layout as this course's repository: settings and helpers in one setup file, notebooks by topic, shared SQL in its own folder.
+
+### The `.gitignore`: your first safety net
+
+A `.gitignore` lists what Git must **never** add. Create it **before** your first commit, so nothing slips in on day one:
+
+```sh
+cat > .gitignore << 'END'
+# Data: never in Git (and never on your computer)
+/data/
+*.csv
+*.tsv
+*.parquet
+*.rds
+*.RData
+*.vcf*
+*.bam
+*.xlsx
+
+# Reference documents: for the AI to read, not to publish
+/reference/
+
+# Private notes
+/Notes/
+
+# Clutter that Jupyter and your computer create
+.ipynb_checkpoints/
+Untitled*.ipynb
+.DS_Store
+END
+git add .gitignore
+git commit -m "Add .gitignore"
+```
+
+Three things worth knowing:
+
+- **Check a rule works:** `git check-ignore -v reference/data_dictionary.csv` prints the rule that ignores the file. Nothing printed means it **isn't** ignored.
+- **Anchor folder names with `/`** (`/Notes/`, not `Notes/`). Without it, the rule matches a folder with that name **anywhere**. On a Mac, where names ignore upper and lower case, `Notes/` also matched a `notes/` folder deep inside this course's slide files.
+- **A `.gitignore` doesn't remove files Git already tracks.** If a file was committed before the rule existed, remove it from Git (keeping it on disk) with `git rm --cached <file>`, and commit. If it contained data, see [If something slips through](github-guide.qmd#if-something-slips-through).
+
+### A reference folder: public context for the AI
+
+The AI's most common mistakes in *All of Us* code are **made-up names**: a concept ID from memory, a column that doesn't exist, the wrong table. The fix is to give it the **real documentation**. Keep public documents in `reference/` on your computer, and tell the AI (in `AGENTS.md`) to check them:
+
+| Document | What it gives the AI | How to get it |
+|---|---|---|
+| **CDR data dictionary** | every table and column in the CDR, with descriptions | the [Data Dictionaries](https://support.researchallofus.org/hc/en-us/articles/360033200232-Data-Dictionaries) article links a Google Sheet for each CDR version (e.g. [CDR v9](https://docs.google.com/spreadsheets/d/1GKvrdnvOfzFW4yFveJL__c5mlZk_y6o7Pn8-8DZyYWs/edit)): **File → Download → CSV** for each tab you need |
+| **How the genomic and multi-omics data are organized** | every genomic, RNA, and protein file: folders, formats, and columns | the PDF from the [User Support Hub article](https://support.researchallofus.org/hc/en-us/articles/49999549117588-How-the-All-of-Us-Genomic-and-multi-omics-data-are-organized); see also [Where the omics data lives](../courses/omics/omics-data-map.qmd) |
+| **OMOP Common Data Model** | how the tables fit together (`person`, `condition_occurrence`, `concept_ancestor`, …) | the [CDM documentation](https://ohdsi.github.io/CommonDataModel/) and the [CDM wiki](https://github.com/OHDSI/CommonDataModel/wiki): save the pages for your CDM version |
+| **Concepts** | real concept IDs and names | look them up in [Athena](https://athena.ohdsi.org/search-terms/start) or the [Data Browser](https://databrowser.researchallofus.org/), and paste the ones you use into a small `reference/concepts.md`. Don't download Athena's vocabulary files into a project: they're very large, and some vocabularies (e.g. CPT4) have licence terms |
+| **Example code** | working *All of Us* code to learn from | this course's [notebooks](https://github.com/CWML/All-of-Us-Training-Resources) (public, outputs cleared); *All of Us* tutorial notebooks: see below |
+
+Then add to `AGENTS.md`: *"Public reference documents are in `reference/`. Check table names, column names, and concept IDs there before using them, and say if something isn't there."*
+
+::: {.callout-warning}
+## *All of Us* tutorial notebooks: never download them from the Workbench
+
+The tutorial and featured workspace notebooks are excellent examples, but:
+
+- **Downloading any file from a Workbench app to your computer is logged as egress**, whatever the file is. It can be flagged, and large or repeated downloads can lead to suspended access.
+- Many tutorial notebooks are **saved with outputs**, which can contain *All of Us* results.
+
+Instead:
+
+1. **Look for a public copy first.** Some *All of Us* example notebooks are published outside the Workbench. A public copy never touches the perimeter.
+2. **Otherwise, use the GitHub route:** in the Workbench, copy the notebook into your repo folder, **clear its outputs there**, then commit and push it. The pre-commit check confirms no outputs leave the Workbench, and the notebook reaches your computer with `git pull`, like your own code.
+:::
+
 ## One-time setup
 
 **In the Workbench** (once per app), follow the [GitHub Guide](github-guide.qmd), Steps 1 and 2: connect the app to GitHub, then clone your repo.
@@ -104,7 +193,7 @@ This repo holds code for the All of Us Researcher Workbench 2.0 (Verily).
 - Never write code that prints participant IDs or individual rows; show only summaries.
 - Before sharing any table, small counts (1 to 20) must be hidden: use hide_small_counts().
 - BigQuery charges by data read: select only the columns needed, and warn me about any query on a large table.
-- Look up concept IDs; never invent them. Say when you're unsure.
+- Look up concept IDs; never invent them. Public reference documents are in reference/: check table names, column names, and concept IDs there first. Say when you're unsure.
 - Test new code on a small made-up data frame with the same columns.
 ```
 
@@ -252,7 +341,7 @@ AI assistants are fluent and confident, and sometimes **wrong**. While building 
 
 | The AI… | How it was caught | The check to use |
 |---|---|---|
-| wrote **concept IDs from memory** | a cell printed each ID's name from the dictionary before using it | always look IDs up: the dictionary, Athena, or a query on `concept` |
+| wrote **concept IDs from memory** | a cell printed each ID's name from the dictionary before using it | always look IDs up: the dictionary, Athena, or a query on `concept`; keep the ones you use in `reference/` |
 | "found" **trailing spaces** in a survey name, and wrote a lesson about them | `nchar()` gave the same length with and without `trimws()` | test the claim, don't just read the explanation |
 | searched survey answers for "self", which matched **every** answer ("Including your**self**…") | a table of each answer and its group | after any recoding, count the categories |
 | ran a query on a **6 TB** table because a dry run priced it at **$0** (dry runs can't price tables clustered by person) | checking what the query **actually** billed, and how the table is stored | price queries first, then check the bill: `run_if_cheap()` and `last_query_cost()` (**6.1**) |
@@ -309,6 +398,9 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 ## Key takeaways
 
 - The AI sees **code, never data**: work with it on **your own computer**, which has no *All of Us* data
+- Give every project a **predictable folder structure** and a **`.gitignore`** from day one
+- Keep **public reference documents** (data dictionary, OMOP docs, concepts) in `reference/`, so the AI checks names instead of guessing
+- Never **download** tutorial notebooks from the Workbench: use a public copy, or clear them and push through GitHub
 - **GitHub** carries the code both ways; the **Workbench** runs it and keeps the results
 - Don't use AI coding agents (including the pre-installed ones) in a workspace with *All of Us* data
 - **Review** every change, **test** on made-up data, and **check** results: the AI suggests, the data decides
