@@ -447,7 +447,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
 - When credits run out or expire:
   - You can't launch or open analysis environments
   - Stored resources (buckets, disks) **may be deleted**
-- Set up a **Google Cloud billing account** and **billing pod** *before* this happens (see *Getting a Google Cloud Billing Account at Yale*)
+- Set up a **Google Cloud billing account** and **billing pod** *before* this happens (at Yale: ask **2 to 3 weeks ahead**)
 
 ## Billing Pods
 
@@ -455,7 +455,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
   - Workspace costs are charged to the pod
   - Think of the pod as your billing account inside the Workbench
 - One pod can pay for **many workspaces**
-- You can **invite other users** to your pod (e.g., lab members)
+- You can **invite other users** to your pod (e.g., lab members): they bill to **your** account
 - All of Us researchers have the **Pod Manager** role, so you can create your own pod
 
 ::: fragment
@@ -471,16 +471,27 @@ Initial credits are linked to the personal user pod. Check a workspace's Workspa
 
 ## Getting a Google Cloud Billing Account at Yale
 
+**Ask 2 to 3 weeks before** your credits run out or expire: setup takes about 2 weeks.
+
 Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us billing account"** and include:
 
 - Your All of Us Workbench email (e.g., `yourname@researchallofus.org`)
 - Your **COA** number
-- Whether this is an **NIH-funded** project
+- Whether this is an **NIH-funded** project, and if so, the **NIH grant number** (set up through NIH STRIDES)
 
 Yale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your **pod**.
 
 ::: notes
-Yale Cloud Support may give additional or different guidance.
+Setup takes about 2 weeks because Burwood, Yale's Google reseller, requests the account from Google's distributor. Email is the way to ask for now; Yale Cloud Support is building a ServiceNow request form. Yale Cloud Support may give additional or different guidance.
+:::
+
+## Your Yale Billing Account
+
+- **Your own** Google Cloud billing account, charged to your COA
+- You **keep access**: link it to new pods, or relink pods, yourself, without asking Yale Cloud Support again
+
+::: fragment
+**Watch out:** anyone you invite to your pod can run workspaces billed to **your COA**. Invite only people on the **same grant**.
 :::
 
 # All of Us Tutorial Workspaces
@@ -2374,29 +2385,32 @@ Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch
 
 ## dsub: Jobs from an App
 
-For **one-step** jobs, e.g., run a command on many files. It comes with apps created after **June 2025**.
+For **one-step** jobs, e.g., run a command on many files. dsub is ready to use in *All of Us* Jupyter apps. In *All of Us*, every job needs the **network** settings, **no public address**, and an image from the ***All of Us* mirror**:
 
 ```{.bash code-line-numbers="false"}
-dsub_activate                        # turn on dsub in the terminal
+export DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim
+MIRROR=us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod
 
-dsub \
-  --provider google-batch \
-  --project "${GOOGLE_CLOUD_PROJECT}" \
-  --service-account "${PET_SA_EMAIL}" \
+dsub --provider google-batch \
+  --project "${GOOGLE_CLOUD_PROJECT}" --user-project "${GOOGLE_CLOUD_PROJECT}" \
+  --regions us-central1 --use-private-address \
+  --network global/networks/network \
+  --subnetwork regions/us-central1/subnetworks/subnetwork \
+  --service-account "$(gcloud config get-value account)" \
   --logging gs://<your-bucket>/logs/ \
   --input  BAM=gs://<your-bucket>/sample.bam \
   --output BAI=gs://<your-bucket>/sample.bam.bai \
-  --image  <container image with samtools> \
+  --image  "${MIRROR}/biocontainers/samtools:<version>" \
   --command 'samtools index ${BAM} ${BAI}' \
   --wait
 ```
 
 ::: {.fragment}
-👉 More examples: tutorial notebook `05_How_to_use_workflow_tools` (dsub, Cromwell, Nextflow)
+👉 A full class, tested in *All of Us*: **Running Workflows** (Optional Extras on the website). More examples: tutorial notebook `05_How_to_use_workflow_tools` (dsub, Cromwell, Nextflow)
 :::
 
 ::: notes
-Source: Verily, "Run dsub jobs". Verily's example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.
+Source: Verily, "Run dsub jobs", and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without --use-private-address and the network settings, jobs can't start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub's helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.
 :::
 
 # Storage & Costs

@@ -495,6 +495,138 @@
     ]
   },
   {
+    "objectID": "pages/extras/workflows-for-beginners.html",
+    "href": "pages/extras/workflows-for-beginners.html",
+    "title": "Workflows for Beginners",
+    "section": "",
+    "text": "New to workflows? This page explains what they are, why researchers use them, and the ideas you’ll meet in the class Running Workflows. You don’t need to read it all at once, and you don’t need to know any of it to use the All of Us data: most projects never need a workflow.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#the-big-picture-one-oven-or-a-kitchen-for-hire",
+    "href": "pages/extras/workflows-for-beginners.html#the-big-picture-one-oven-or-a-kitchen-for-hire",
+    "title": "Workflows for Beginners",
+    "section": "The big picture: one oven, or a kitchen for hire",
+    "text": "The big picture: one oven, or a kitchen for hire\nImagine you have to bake 22 cakes, each from its own bag of ingredients.\n\n\n\n\n\n\n\n\n\nBaking at home (your app)\nHiring a kitchen (a workflow)\n\n\n\n\nOvens\none, so one cake after another\none per cake, all baking at once\n\n\nSize\nyour oven, whatever the cake\na big oven for the big cakes, a small one for the small ones\n\n\nYou\nstay home until the last cake is done\nsend the order, and come back when it’s ready\n\n\nPaying\nfor your kitchen, all day\nfor each oven only while it bakes\n\n\n\nIn workflow words:\n\n\n\n\n\n\n\n\nIn the kitchen\nIn a workflow\nIn the class\n\n\n\n\nthe recipe\nthe script: the commands to run\ngwas_one_chr.sh\n\n\nthe ingredients\nthe inputs: files copied onto each machine\nthe ClinVar files for one chromosome, and our sample\n\n\na kitchen kit with every tool already in it\nthe image (container): the software, already installed\nPLINK 2\n\n\nthe ovens\nthe machines (virtual machines in the cloud)\n22 n2-standard-2 machines\n\n\nthe order ticket that lists every cake\nthe tasks file, or the workflow file\ngwas_tasks.tsv\n\n\nthe head chef who hands out the work\nthe workflow engine: dsub, Cromwell, or Nextflow\ndsub\n\n\nthe counter where finished cakes go\nyour bucket\ndata/workflows/\n\n\nthe kitchen’s notes on each cake\nthe logs\ndata/workflows/logs/",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#why-researchers-use-workflows",
+    "href": "pages/extras/workflows-for-beginners.html#why-researchers-use-workflows",
+    "title": "Workflows for Beginners",
+    "section": "Why researchers use workflows",
+    "text": "Why researchers use workflows\n\n\n\n\n\n\n\n\nReason\nWhat it means\nExample\n\n\n\n\n⏱️ Speed\nmany machines work in parallel\n22 chromosomes in the time of the slowest one, instead of the sum of all 22\n\n\n📈 Scale\neach task gets a machine as big as it needs, far bigger than a laptop or an app\n32 CPUs and 400 GB of disk for one chromosome of the full genome data\n\n\n🔁 Reproducibility\nthe workflow file records every step, the software versions, and the settings. Rerun it next year and get the same results\na reviewer asks you to rerun with a different filter: change one line, run again\n\n\n🤝 Sharing\na colleague runs your workflow on their data, or you run a published one\nthe GATK pipelines for finding variants; the nf-core pipelines for RNA-seq\n\n\n🛟 Recovery\nif one task fails, rerun only that task. Cromwell and Nextflow can resume a pipeline where it stopped\na machine is stopped after 3 hours: only its task starts again\n\n\n💤 Hands-off\njobs run without you, even with your app stopped\nlaunch before you go home; results in the morning\n\n\n💰 Cost control\nyou pay for each machine only while it works, and can use cheap spot machines\n(see Is it cheaper? below)\n\n\n\n\nWhy in All of Us in particular\n\nThe data is big. All of Us has hundreds of thousands of whole genomes. One chromosome of the main genome callset (ACAF) is tens to hundreds of GB; in the All of Us tutorial, just copying one onto a machine took an hour. An app can’t hold the whole genome at once.\nThe data can’t leave. At most universities, big jobs go to the university’s computing cluster. All of Us data must stay in the Workbench, so you can’t take it to a cluster (at Yale: the Center for Research Computing’s clusters). Workflows are how you get a cluster’s power inside the Workbench.\nApps are one machine. A bigger app costs more every hour it’s on, including while you read, write, or wait. Workflows use big machines only for the minutes they’re needed.\nPublishing. Journals and reviewers increasingly ask for reproducible code. A workflow file in GitHub, with pinned versions, is exactly that, and it contains no data.\n\n\n\nWhen not to use a workflow\n\nExploring the data, trying ideas, making plots: use the app.\nSmall data, or steps that take minutes: starting machines and copying files would take longer than the work.\nBigQuery work (most of the core, survey, and wearables classes): BigQuery already runs in parallel on Google’s machines. You don’t need a workflow for SQL.\nSteps you haven’t tested yet: get them working in the app first.\n\n👉 Rule of thumb: if you’d run the same step on many files (or one very big one), and it already works in your app, consider a workflow.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#is-it-cheaper",
+    "href": "pages/extras/workflows-for-beginners.html#is-it-cheaper",
+    "title": "Workflows for Beginners",
+    "section": "Is it cheaper?",
+    "text": "Is it cheaper?\nOften faster; cheaper only sometimes. The total computing is about the same: 22 machines for 15 minutes cost about as much as 1 machine for 5½ hours.\n\n\n\n\n\n\n\nA workflow saves money when…\nA workflow costs more when…\n\n\n\n\nthe alternative is a big app running for hours (including while you wait, or forget to stop it)\nthe job is small: each machine takes a few minutes to start and copy its files, and that time is billed too\n\n\nsteps need different sizes: each task gets the machine it needs\nevery task copies the same big files\n\n\nyou use spot machines: much cheaper, and the engine restarts a task if Google stops its machine\na mistake runs in every task: 22 tasks, 22 times the cost. Test in the app first\n\n\nyou stop the app while the jobs run\n\n\n\n\nIn the class, the 22 tasks added up to about 2 hours of machine time (on SSD disks) but ran at the same time; the job cost well under $1.\nJob machines and storage are billed to your workspace’s pod, like apps. They don’t appear in the app’s cost estimate, so estimate them yourself: machine price per hour × hours × number of tasks.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#common-workflow-patterns",
+    "href": "pages/extras/workflows-for-beginners.html#common-workflow-patterns",
+    "title": "Workflows for Beginners",
+    "section": "Common workflow patterns",
+    "text": "Common workflow patterns\n\nScatter–gather: split, run in parallel, combine\nThe most common pattern, and the one in the class: scatter one job into many tasks, then gather the results.\n                ┌─► chr1  ─┐\none analysis ───┼─► chr2  ─┼───► one table of results\n  (scatter)     ├─► ...   ─┤        (gather)\n                └─► chr22 ─┘\nYou can split by chromosome or region (genomics), by sample or person (sequencing data, images), by batch of files, or by setting (the same model with different parameters).\n\n\nA pipeline: steps in order\nEach step uses the outputs of the one before. Each step can scatter too.\nraw files ──► quality control ──► analysis ──► summary and plots\ndsub runs one step per job, so you’d run (and check) each step yourself. Cromwell and Nextflow run the whole chain, in the right order, and start each step as soon as its inputs are ready.\n\n\nWhat researchers run as workflows\n\n\n\n\n\n\n\nField\nTypical workflow\n\n\n\n\nGenomics\nGWAS by chromosome (as in the class); finding variants in each person’s sequence (CRAM → VCF); annotating or filtering variant files; polygenic scores\n\n\nRNA-seq\nfrom raw reads to counts, one task per sample (e.g. the nf-core rnaseq pipeline)\n\n\nImaging\nprocessing each scan the same way\n\n\nText\nrunning a language model over many documents\n\n\nWearables\nsummarizing minute-level data, one batch of people per task\n\n\nStatistics\nsimulations, bootstraps, permutation tests: thousands of independent runs\n\n\nMachine learning\ntrying many model settings at once",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#the-ideas-behind-them",
+    "href": "pages/extras/workflows-for-beginners.html#the-ideas-behind-them",
+    "title": "Workflows for Beginners",
+    "section": "The ideas behind them",
+    "text": "The ideas behind them\n\nContainers and images: the kitchen kit\nAn image is a packaged computer system with the software already installed: PLINK, R and its packages, Python, and so on. A container is a copy of the image, running. Every task runs inside one, so:\n\nthe software is the same on every machine, today and next year\nyou don’t install anything on the machines\nothers can rerun your work with the exact same software\n\nImages live in registries (e.g. Docker Hub, Google’s Artifact Registry) and have tags, which name a version: plink2:alpha2.3_jan2020. Two rules:\n\nPin the version. A tag like latest changes when a new version comes out, and your results (or your job) can change with it. That’s what broke every dsub job in All of Us in November 2026 (see the class).\nIn All of Us, job machines can’t reach Docker Hub. Use images from Google’s registries, or Docker Hub images through the All of Us mirror.\n\nYou don’t need to build images to start: ready-made ones exist for most tools (e.g. the BioContainers project has images for most bioinformatics software).\n\n\nInputs and outputs: what the machine can see\nEach machine starts empty. It sees only the files you list as inputs: the engine copies them in (localizing) before your script runs, and copies the outputs back to your bucket (delocalizing) afterwards. So:\n\nevery file the script uses must be an input (in the class: the .bim and .fam files too, though the script never names them)\ncopying takes time, and big files take a long time. Some engines can stream files instead of copying them (Nextflow in the Workbench can), which helps when a tool reads only part of a file\nthe disk matters. Cloud disks come in types: standard (cheap, slow, and slowest when small) and SSD (faster, a bit more per GB). In the class, chromosome 1 (a 27.7 GB file) took 101 minutes on dsub’s default standard disk, and 8 minutes on an SSD (--disk-type pd-ssd). Most of the difference was copying the file: about 8 MB a second onto the standard disk, about 130 onto the SSD\n\n\n\nParallelism and limits\nTasks that don’t depend on each other can run at the same time. But your project has limits (quotas) on how many machines and CPUs run at once. Above the limit, tasks wait in a queue: the job still finishes, just later. A task can also wait when Google has no free machine of the type you asked for: in the class, 21 of 22 tasks finished in under 8 minutes, and one waited 30 minutes for its machine. The job finishes when its slowest task does.\n\n\nLogs: your first stop\nEvery task saves a log: the engine’s messages (copying files, starting the script) and everything your script printed. When a task fails, read its log before changing anything. When a task is slow, read its time stamps: they show whether the time went on copying files or on the analysis.\n\n\nRetries, spot machines, and resuming\n\nRetries: start a failed task again, automatically (--retries in dsub).\nSpot machines (preemptible): much cheaper, but Google can stop them at any time. With retries, a stopped task starts again.\nResuming: Cromwell (call caching) and Nextflow (-resume) remember which steps finished, and skip them when you rerun the pipeline.\n\n\n\nReproducibility: write it down\nKeep the workflow (script, tasks file, or workflow file) in GitHub, with the image versions pinned. Record the date and the data version (e.g. CDR v9). That’s your methods section, and it contains no data.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#the-tools-in-the-workbench",
+    "href": "pages/extras/workflows-for-beginners.html#the-tools-in-the-workbench",
+    "title": "Workflows for Beginners",
+    "section": "The tools in the Workbench",
+    "text": "The tools in the Workbench\n\n\n\n\ndsub\nCromwell\nNextflow\n\n\n\n\nYou write\na shell script and one command\na WDL file, plus a JSON file of inputs\na Nextflow (.nf) file\n\n\nThink of it as\n“run this script on many files”\na pipeline described in a simple language\na pipeline described in a programming language\n\n\nBest for\none step on many files\nmulti-step pipelines; many published genomics workflows\nmulti-step pipelines; the nf-core community pipelines\n\n\nRun from\nan app (terminal or notebook)\nthe Workflows tab, or an app\nthe Workflows tab, or an app\n\n\nAlso used at\nGoogle Cloud\nTerra (the Broad Institute’s platform), other clouds, clusters\nclusters, laptops, every major cloud\n\n\nStart with\nthe class Running Workflows\nDockstore for ready-made workflows\nnf-core and Nextflow training\n\n\n\n👉 Which should I learn? Start with dsub: it’s one command, and it teaches every idea on this page. Move to Nextflow or Cromwell when you need multi-step pipelines, or want to run a published one. Pick the one your field (or your collaborators) uses: much of genomics at the Broad Institute and on Terra uses WDL; nf-core uses Nextflow.\n\nOutside the Workbench\nThe same ideas work everywhere, with your own data (not All of Us data):\n\nUniversity clusters (e.g. Yale’s Center for Research Computing) run jobs with a scheduler called Slurm. A Slurm job array (sbatch --array=1-22) is the same idea as dsub’s tasks file.\nNextflow and Snakemake (a Python-based workflow tool, popular in academia) run on laptops, clusters, and clouds with the same workflow file.\nTerra runs WDL workflows on Google Cloud, for many large research programs.\n\nSo the skills from the class carry over to most research computing.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#workflows-and-the-all-of-us-rules",
+    "href": "pages/extras/workflows-for-beginners.html#workflows-and-the-all-of-us-rules",
+    "title": "Workflows for Beginners",
+    "section": "Workflows and the All of Us rules",
+    "text": "Workflows and the All of Us rules\nWorkflows don’t change the rules:\n\n\n\n\n\n\n\nRule\nIn a workflow\n\n\n\n\nData stays in the Workbench\nJobs run in your workspace’s cloud project and private network, and write to your bucket, so the data stays inside\n\n\nOutputs are All of Us data\nJob results and logs are as sensitive as anything else you make from the data. Keep them in your bucket\n\n\nNo individual-level data in logs\nDon’t make scripts print rows of data, participant IDs, or dates: logs are saved, and are easy to copy\n\n\nNo counts of 1 to 20 when you share\nThe same for workflow results: summarize first, then check\n\n\nCode goes to GitHub, data doesn’t\nScripts and workflow files: yes. Tasks files with participant IDs in them: no\n\n\nShare notebooks through GitHub, with outputs cleared\nNever download a notebook to share it, even one that looks free of data: its outputs leave the Workbench that way, and downloads are monitored",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#questions-beginners-ask",
+    "href": "pages/extras/workflows-for-beginners.html#questions-beginners-ask",
+    "title": "Workflows for Beginners",
+    "section": "Questions beginners ask",
+    "text": "Questions beginners ask\nDo I need to know Docker? No. Use ready-made images (the class uses PLINK’s). Learn to build your own later, if you need software that isn’t in any image.\nCan a job run R? Yes: use an image with R in it (e.g. one of the rocker images, through the All of Us mirror), and run Rscript my_script.R as the command. Any R packages the script needs must be in the image, or installed by the script.\nCan I close my browser, or stop the app, while jobs run? Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with dstat, or on the Workflows tab for Cromwell and Nextflow. (dsub jobs don’t appear on that tab.)\nHow do I know what a job cost? There’s no per-job bill. Estimate it: machine price per hour × hours × tasks, plus disks. The class shows how to get each task’s run time.\nWhat if one task out of 22 fails? Read its log, fix the cause, and rerun only that task (in dsub, with the task’s row number after the tasks file).\nCan I run a published workflow? Yes. Find it on Dockstore or nf-core and add it on the Workflows tab. Check its images first: in All of Us, they must come from Google’s registries or the mirror.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#words-youll-meet",
+    "href": "pages/extras/workflows-for-beginners.html#words-youll-meet",
+    "title": "Workflows for Beginners",
+    "section": "Words you’ll meet",
+    "text": "Words you’ll meet\n\n\n\n\n\n\n\nWord\nMeans\n\n\n\n\nWorkflow (pipeline)\na set of steps, run for you, often on many files at once\n\n\nWorkflow engine\nthe program that runs it: dsub, Cromwell, Nextflow\n\n\nJob, task\none launch of a workflow; the separate pieces of work inside it (e.g. one per chromosome)\n\n\nMachine (virtual machine, VM)\na computer in Google’s cloud, rented by the minute\n\n\nImage, container\npackaged software; a running copy of it\n\n\nRegistry, tag\nwhere images are kept; the name of one version\n\n\nMirror\na copy of Docker Hub inside Google Cloud, for All of Us workspaces\n\n\nLocalize, delocalize\ncopy inputs onto the machine; copy outputs back to the bucket\n\n\nScatter, gather\nsplit work into parallel tasks; combine their results\n\n\nSpot (preemptible)\ncheaper machines that Google can stop at any time\n\n\nStandard disk, SSD\na machine’s disk: cheap and slow, or faster and a bit dearer (--disk-type pd-ssd in dsub)\n\n\nQuota\nthe limit on how many machines or CPUs your project can use at once\n\n\nGoogle Batch\nthe Google Cloud service the engines use to run machines\n\n\nWDL\nWorkflow Description Language, the language Cromwell runs\n\n\nCall caching, resume\nreusing finished steps when a pipeline is rerun",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#a-learning-path",
+    "href": "pages/extras/workflows-for-beginners.html#a-learning-path",
+    "title": "Workflows for Beginners",
+    "section": "A learning path",
+    "text": "A learning path\n\nRead this page, then do the class Running Workflows: one script, one job, then 22.\nChange the class’s script: a different filter, or a different PLINK command (e.g. allele frequencies of common variants). Test it in the app, then as a job.\nLearn a workflow language on your own computer, with public example data: the free Nextflow training, or the WDL documentation.\nRun a published workflow from Dockstore or nf-core on the Workflows tab, starting with its small test data.",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-for-beginners.html#further-reading",
+    "href": "pages/extras/workflows-for-beginners.html#further-reading",
+    "title": "Workflows for Beginners",
+    "section": "Further reading",
+    "text": "Further reading\n\ndsub on GitHub: the documentation and examples\nVerily Workbench documentation: workflows in the Workbench (Cromwell, Nextflow, dsub)\nOpenWDL, Nextflow, and Snakemake documentation\nDockstore and nf-core: published workflows\nThe All of Us tutorial workspace: How to Use Workflow Tools (dsub, Cromwell, and Nextflow notebooks)\nThis site: the Workflows tab and the class Running Workflows",
+    "crumbs": [
+      "Optional Extras",
+      "Workflows for Beginners"
+    ]
+  },
+  {
     "objectID": "pages/extras/github-guide.html",
     "href": "pages/extras/github-guide.html",
     "title": "GitHub Guide",
@@ -675,7 +807,7 @@
     "href": "pages/extras/github-guide.html#quick-reference",
     "title": "GitHub Guide",
     "section": "Quick reference",
-    "text": "Quick reference\n# One-time setup (per app)\nssh -T git@github.com\nwb security ssh-key get\ngit config --global user.name \"your-username\"\ngit config --global user.email \"your-email\"\n\n# Clone, and add the pre-commit check (see Safety nets)\ncd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO\n\n# Daily cycle\ngit stash && git pull && git stash pop    # keeps your personal settings\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngit status\ngit add notebooks\ngit diff --cached --stat                  # what's about to be committed\ngit commit -m \"message\"\ngit push\nReferences: - Verily Workbench: Git integrations with cloud apps - Verily Workbench: Install and run the Workbench CLI - GitHub: Adding a new SSH key to your account\n\n\nNext section: Resources →",
+    "text": "Quick reference\n# One-time setup (per app)\nssh -T git@github.com\nwb security ssh-key get\ngit config --global user.name \"your-username\"\ngit config --global user.email \"your-email\"\n\n# Clone, and add the pre-commit check (see Safety nets)\ncd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO\n\n# Daily cycle\ngit stash && git pull && git stash pop    # keeps your personal settings\njupyter nbconvert --clear-output --inplace notebooks/*.ipynb\ngit status\ngit add notebooks\ngit diff --cached --stat                  # what's about to be committed\ngit commit -m \"message\"\ngit push\nReferences: - Verily Workbench: Git integrations with cloud apps - Verily Workbench: Install and run the Workbench CLI - GitHub: Adding a new SSH key to your account",
     "crumbs": [
       "Optional Extras",
       "GitHub Guide"
@@ -851,7 +983,7 @@
     "href": "pages/examples/notebooks.html#folder-layout",
     "title": "Example Notebooks",
     "section": "Folder layout",
-    "text": "Folder layout\nnotebooks/\n├── 0.0 setup.ipynb        start here\n├── aou_setup.R            settings you edit once + helper functions (R)\n├── aou_setup.py           the same settings for Python notebooks (read from aou_setup.R)\n├── sql/                   the shared type 2 diabetes cohort query\n├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse\n├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics\n├── surveys/               5.1 – 5.3 (coming soon)\n├── wearables/             6.1 – 6.3 (coming soon)\n└── archive/               earlier versions\nNotebooks in a series folder load the shared files from the folder above (source(\"../aou_setup.R\")), so keep this layout: cloning the repository does that for you.",
+    "text": "Folder layout\nnotebooks/\n├── 0.0 setup.ipynb        start here\n├── aou_setup.R            settings you edit once + helper functions (R)\n├── aou_setup.py           the same settings for Python notebooks (read from aou_setup.R)\n├── sql/                   the shared type 2 diabetes cohort query\n├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse\n├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics\n├── surveys/               5.1 – 5.3 (coming soon)\n├── wearables/             6.1 – 6.3 (coming soon)\n├── workflows/             an Optional Extras class: run one analysis on many files with dsub\n└── archive/               earlier versions\nNotebooks in a series folder load the shared files from the folder above (source(\"../aou_setup.R\")), so keep this layout: cloning the repository does that for you.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -873,7 +1005,7 @@
     "href": "pages/examples/notebooks.html#omics-series-omics",
     "title": "Example Notebooks",
     "section": "Omics series (omics/)",
-    "text": "Omics series (omics/)\nEach class starts with a short cohort section, so it works on its own (4.2 and 4.3 build on 4.1). Details, costs, and setup notes: omics/README.md. One research question runs through the series: type 2 diabetes and the TCF7L2 variant rs7903146. Every notebook opens with an “Analysis at a glance” box and a time and cost estimate (about $1 to $2 per student per class on the default app).\n\n\n\nNotebook\nLanguage\nWhat it does\n\n\n\n\n4.1 dna_intro\nR + PLINK\nThe genomic data, file formats, linking genomes to the cohort, genetic ancestry, and one famous variant\n\n\n4.2 gwas_plink\nR + PLINK\nA regional GWAS: QC, logistic regression per variant, regional and Q-Q plots, why adjust\n\n\n4.3 gwas_hail\nPython + Hail\nThe same GWAS in Hail, compared with PLINK\n\n\n4.4 phewas\nR\nThe All by All browser, then a PheWAS of rs7903146 in a random sample; selection and collider bias\n\n\n4.5 rnaseq\nR (edgeR, limma)\nNormalization, differential expression in blood, an eQTL check of TCF7L2\n\n\n4.6 proteomics\nR (limma)\nOlink proteins: QC, batch checks, differential abundance, pQTLs\n\n\n4.7 rnaseq_proteomics\nR\nRNA and protein in the same people, and a summary of the series\n\n\n\nBefore the omics classes: run 0.0 setup once. Don’t pip install packages into the shared app without checking what they replace: installing PheTK, for example, downgraded a package Hail needs.",
+    "text": "Omics series (omics/)\nEach class starts with a short cohort section, so it works on its own (4.2 and 4.3 build on 4.1). Details, costs, and setup notes: omics/README.md. One research question runs through the series: type 2 diabetes and the TCF7L2 variant rs7903146. Every notebook opens with an “Analysis at a glance” box and a time and cost estimate (about $1 to $2 per student per class on the default app).\n\n\n\nNotebook\nLanguage\nWhat it does\n\n\n\n\n4.1 dna_intro\nR + PLINK\nThe genomic data, file formats, linking genomes to the cohort, genetic ancestry, and one famous variant\n\n\n4.2 gwas_plink\nR + PLINK\nA regional GWAS: QC, logistic regression per variant, regional and Q-Q plots, why adjust\n\n\n4.3 gwas_hail\nPython + Hail\nThe same GWAS in Hail, compared with PLINK\n\n\n4.4 phewas\nR\nThe All by All browser, then a PheWAS of rs7903146 in a random sample; selection and collider bias\n\n\n4.5 rnaseq\nR (edgeR, limma)\nNormalization, differential expression in blood, an eQTL check of TCF7L2\n\n\n4.6 proteomics\nR (limma)\nOlink proteins: QC, batch checks, differential abundance, pQTLs\n\n\n4.7 rnaseq_proteomics\nR\nRNA and protein in the same people, and a summary of the series\n\n\n\nNext step: the Optional Extras class workflows/workflows_dsub (R + dsub + PLINK) runs the 4.2 GWAS on all 22 chromosomes at once, each in its own cloud job, with the settings dsub needs in All of Us. Companion page: Running Workflows.\nBefore the omics classes: run 0.0 setup once. Don’t pip install packages into the shared app without checking what they replace: installing PheTK, for example, downgraded a package Hail needs.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -3932,6 +4064,193 @@
     ]
   },
   {
+    "objectID": "pages/extras/workflows-dsub.html",
+    "href": "pages/extras/workflows-dsub.html",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "",
+    "text": "An Optional Extras class · R + dsub + PLINK · 110 minutes · builds on 4.2 A GWAS with PLINK\nOpen the notebook on GitHub The script it runs Workflows for Beginners The Workflows tab",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#overview",
+    "href": "pages/extras/workflows-dsub.html#overview",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Overview",
+    "text": "Overview\nIn 4.2 we ran a GWAS on one region of one chromosome, inside our app. A whole-genome analysis is 22 or more such jobs, each with large files. Run one after another in the app, that takes hours, and the app must stay open the whole time.\nWorkflow tools send each job to its own cloud machine, run them at the same time, save the results in your bucket, and shut the machines down. In this class we use dsub, the simplest of the three workflow tools in the Workbench, to run the 4.2 GWAS on all 22 chromosomes in parallel.\n\nWhy this class matters\nMost genomic analyses, and many others (imaging, long text, wearable data at minute level), are the same step on many files. Workflow tools make that fast, cheaper (each step gets the machine it needs, only while it runs), and reproducible. In All of Us, they also need a few settings that aren’t in the general instructions: this class collects them in one place, tested.\n\n\nBy the end you’ll be able to\n\nSay when to use a workflow tool instead of running code in your app\nDescribe the parts of a dsub job: image, inputs, outputs, script, and logging\nTest a script locally first, then run it as one job, then as many (--tasks)\nMonitor jobs with dstat, cancel them with ddel, and read their logs to fix errors\nCompare dsub, Cromwell (WDL), and Nextflow, and know where to start with each\n\n\n\nAnalysis at a glance\n\n\n\n❓ Question\nHow do you run one analysis on every chromosome? (The example: which variants in the All of Us ClinVar files are linked to type 2 diabetes?)\n\n\n🧪 The analysis\nThe 4.2 GWAS (QC filters, then plink2 --glm, adjusted for age, sex, and 10 PCs), on each chromosome in its own dsub task\n\n\n🎯 Why\n22 tasks run in about the time of one; the app doesn’t have to do the work, or even stay on\n\n\n✅ What we conclude\nThat the workflow gives the same results as the app, for all 22 chromosomes\n\n\n⚠️ What it can’t tell us\nMuch about diabetes: the ClinVar files hold variants already studied for disease, and few are common. For a real GWAS, use the ACAF files\n\n\n🔗 Connections\nThe sample, phenotype, and covariates from 4.1 and 4.2; the callsets from Where the omics data lives; the Workflows tab\n\n\n\n\n\nTime and cost\n\n\n\n⏱️ Class time\n110 minutes\n\n\n⏱️ Run time\nabout 30 minutes, mostly waiting for jobs (most tasks take 3 to 8 minutes; one can wait longer for its machine)\n\n\n💰 Cost\nabout $1 per student: under $1 for 23 small job machines (n2-standard-2, about $0.10 an hour each, for a few minutes each), plus the app (about $0.27 an hour)\n\n\n📋 Before class\nread Workflows for Beginners; run 4.1 (and ideally 4.2): the notebook reuses their files, or rebuilds them with the cohort query\n\n\n🖥️ App\nan All of Us Jupyter app (it has dsub, gcloud, and PLINK)",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#class-plan",
+    "href": "pages/extras/workflows-dsub.html#class-plan",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: what a workflow tool does; the All of Us settings\nlisten, ask\n\n\n0:20\n2. Setup: settings, the GWAS files, the bucket’s address\nrun the cells\n\n\n0:30\n3. Test locally: chromosome 21 in the app\nrun the cells\n\n\n0:40\n4. One dsub job: chromosome 21 in the cloud; compare; read the log\nlaunch, then read on while it runs (a few minutes)\n\n\n0:55\n5. All 22 chromosomes at once: the tasks file, dstat\nlaunch; ✋ Try It Out 1 while it runs\n\n\n1:15\n6. Combine the results: one table, a Manhattan plot\nrun the cells\n\n\n1:25\n7. Monitor, troubleshoot, scale up, clean up\n✋ Try It Out 2\n\n\n1:35\n8. Cromwell and Nextflow\ndiscuss\n\n\n1:45\nWrap-up",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#key-concepts",
+    "href": "pages/extras/workflows-dsub.html#key-concepts",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nTwo ways to run the same analysis\n\n\n\n\n\n\n\n\n\nIn your app (4.2)\nWith a workflow tool\n\n\n\n\nWhere it runs\non the app’s machine\non new cloud machines, one per task\n\n\nHow many at once\none after another\nmany at once (in parallel)\n\n\nMachine size\nthe app’s size\nchosen per task: big tasks get big machines\n\n\nWhile it runs\nthe app must stay on; the notebook is busy\nthe app can do other things, or even be stopped\n\n\nBest for\nexploring, small data, plots\nthe same steps on many files: chromosomes, samples, batches\n\n\n\n👉 Rule of thumb: develop and test in your app; once a step works and has to run many times or on big files, move it to a workflow. Most class projects don’t need workflows.\n\n\nIs a workflow cheaper?\nOften faster; cheaper only sometimes: the total computing is about the same, but you pay for each machine only while it works, at the size it needs. In our tests, the 22 tasks added up to about 2 hours of machine time (on SSD disks) but ran at the same time, and the job cost well under $1: the workflow’s gain is time. When it saves money and when it costs more: Workflows for Beginners.\n\n\nThe words\n\n\n\n\n\n\n\nWord\nMeans\n\n\n\n\nJob\none dsub command. It can have many tasks: here, one per chromosome\n\n\nImage (container)\na packaged computer system with your software already installed (here, PLINK 2). Each task runs inside one\n\n\nInput\na file the task needs. dsub copies it from a bucket onto the task’s machine first (localizing)\n\n\nOutput\na file the task makes. dsub copies it back to your bucket at the end (delocalizing)\n\n\nScript\nthe commands each task runs\n\n\nLogging\nwhere dsub saves each task’s log. Your first stop when something fails\n\n\nGoogle Batch\nthe Google Cloud service that creates, runs, and deletes the machines\n\n\n\n\n\nHow a dsub job runs\nyour app ── dsub ──► Google Batch ──► machine for chr1  ─┐\n                                 ├──► machine for chr2  ─┤  each one: copy inputs in,\n                                 ├──► ...                 ├─ run the script in the image,\n                                 └──► machine for chr22 ─┘  copy outputs back, shut down\n                                                           │\nyour bucket ◄──────────────── results and logs ───────────┘\n\n\nWhat All of Us needs: the settings\nAll of Us workspaces sit inside a security perimeter, and job machines have no internet access. So every job needs:\n\n\n\nSetting\nWhy\n\n\n\n\n--network global/networks/network and --subnetwork regions/us-central1/subnetworks/subnetwork\nthe workspace’s private network\n\n\n--use-private-address\nno public internet address\n\n\n--service-account your account (gcloud config get-value account)\nthe job runs as you, so it can read All of Us data and write to your bucket\n\n\n--project and --user-project ${GOOGLE_CLOUD_PROJECT}\nyour workspace’s project pays, including for reading the All of Us files\n\n\n--image from the All of Us mirror of Docker Hub\njob machines can’t reach Docker Hub itself, only Google’s registries\n\n\nDSUB_CLOUD_SDK_IMAGE, pinned\ndsub’s helper image (it copies the files). Its default is a moving tag; see below\n\n\n--disk-type pd-ssd (recommended, not required)\ndsub’s default standard disk is slow to copy big files onto: see What we learned\n\n\n\n\n\n\n\n\n\nWarningPin your versions: the November 2026 break\n\n\n\ndsub uses a small helper image, Google’s Cloud SDK, to copy files in and out. By default it uses whatever the latest version is. On 3 November 2026, version 592 of that image came out, and every dsub job started to fail with exit status 127 before running anything. The fix is to pin the version before it:\nexport DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim\nThe same goes for your own images: use a version tag (plink2:alpha2.3_jan2020), not latest, so the software can’t change under you.\n\n\nIn a terminal, the full set of settings looks like this. It’s the command we used to test dsub in an All of Us workspace (November 2026, dsub 0.5.6), with one change: we’ve pinned the image’s version.\nexport DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim\nexport ARTIFACT_REGISTRY_DOCKER_REPO=us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod\nBUCKET=gs://your-bucket-name                                # from the Resources tab\n\ndsub --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" --user-project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --regions us-central1 \\\n  --network \"global/networks/network\" \\\n  --subnetwork \"regions/us-central1/subnetworks/subnetwork\" \\\n  --use-private-address \\\n  --service-account \"$(gcloud config get-value account)\" \\\n  --logging \"${BUCKET}/dsub_test/logs\" \\\n  --image \"${ARTIFACT_REGISTRY_DOCKER_REPO}/ubuntu:24.04\" \\\n  --output OUT=\"${BUCKET}/dsub_test/hello.txt\" \\\n  --command 'echo \"hello from dsub\" &gt; \"${OUT}\"' \\\n  --wait\n\ngcloud storage cat \"${BUCKET}/dsub_test/hello.txt\"           # prints: hello from dsub\nThe notebook wraps these settings in an R function, aou_dsub(), so each job only lists what’s different.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#follow-along-in-the-workbench",
+    "href": "pages/extras/workflows-dsub.html#follow-along-in-the-workbench",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nOpen an All of Us Jupyter app, with this repository cloned (see the GitHub guide).\nOpen notebooks/workflows/workflows_dsub.ipynb, with the R kernel. gwas_one_chr.sh must be in the same folder.\nRun the cells in order. Parts 4 and 5 start cloud jobs: read on while they run.\nBefore you commit the notebook, clear its outputs: dsub’s messages include your project ID and bucket address.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#code-walk-through",
+    "href": "pages/extras/workflows-dsub.html#code-walk-through",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nOne script, two places\nThe GWAS lives in a shell script, gwas_one_chr.sh. It reads every file name from an environment variable, so the same script runs in the app (Part 3) and in each job (Parts 4 and 5): only the variables change.\nset -euo pipefail\nmkdir -p \"${OUT_DIR}\"\n\nplink2 \\\n  --bfile \"${BED%.bed}\" \\\n  --keep \"${KEEP}\" \\\n  --maf 0.01 --geno 0.1 --hwe 1e-10 \\\n  --pheno \"${PHENO}\" --pheno-name t2d \\\n  --covar \"${COVAR}\" --covar-variance-standardize \\\n  --glm hide-covar firth-fallback \\\n  --out \"${OUT_DIR}/chr${CHR}\"\n\n\n\n\n\n\n\nLine\nDoes\n\n\n\n\nset -euo pipefail\nstop at the first error. Without it, a failed step could still look like a successful job\n\n\n--bfile \"${BED%.bed}\"\nthe PLINK files, given as the .bed file’s path; ${BED%.bed} drops the .bed\n\n\n--keep … --glm\nour sample, the QC filters, and the association test from 4.2\n\n\n--out \"${OUT_DIR}/chr${CHR}\"\nresults named after the chromosome, e.g. chr21.t2d.glm.logistic.hybrid\n\n\n\nTest it in the app first (Part 3), on chromosome 21, reading the mounted files. A mistake shows up in a minute, for free.\n\n\nOne job\njob_chr21 &lt;- aou_dsub(\n  \"--name\", \"gwas-chr21\",\n1  \"--image\", PLINK_IMAGE,\n  \"--machine-type\", \"n2-standard-2\",\n2  \"--disk-size\", DISK_GB, \"--disk-type\", \"pd-ssd\",\n  \"--script\", \"gwas_one_chr.sh\",\n  \"--env\", \"CHR=21\",\n3  \"--input\", paste0(\"BED=\", CLINVAR_GS, \"/clinvar.chr21.bed\"),\n  \"--input\", paste0(\"BIM=\", CLINVAR_GS, \"/clinvar.chr21.bim\"),\n  \"--input\", paste0(\"FAM=\", CLINVAR_GS, \"/clinvar.chr21.fam\"),\n  \"--input\", paste0(\"KEEP=\", KEEP_GS),\n  \"--input\", paste0(\"PHENO=\", PHENO_GS),\n  \"--input\", paste0(\"COVAR=\", COVAR_GS),\n4  \"--output-recursive\", paste0(\"OUT_DIR=\", WORK_GS, \"/test_chr21\"),\n  wait = TRUE\n)\n\n1\n\nPLINK 2 from the All of Us mirror, a pinned version.\n\n2\n\nBig enough for the inputs and outputs (set from the biggest ClinVar file), and fast: an SSD.\n\n3\n\nEvery file the task needs must be an input, including the .bim and .fam files the script never names: the machine has nothing else.\n\n4\n\nA folder to copy back: everything the script writes in OUT_DIR.\n\n\nThe notebook then copies the job’s results back and compares them with the app’s: they should match.\n\n\nMany jobs: the tasks file\nTo run many tasks, give dsub a tasks file: a tab-separated table with one row per task and one column per setting. The heading says what each column is.\n\n\n\n\n\n\n\n\n\n\n--env CHR\n--input BED\n--input BIM\n--input FAM\n--output-recursive OUT_DIR\n\n\n\n\n1\ngs://…/clinvar.chr1.bed\ngs://…/clinvar.chr1.bim\ngs://…/clinvar.chr1.fam\ngs://…/gwas_clinvar/chr1\n\n\n2\ngs://…/clinvar.chr2.bed\ngs://…/clinvar.chr2.bim\ngs://…/clinvar.chr2.fam\ngs://…/gwas_clinvar/chr2\n\n\n…\n\n\n\n\n\n\n22\ngs://…/clinvar.chr22.bed\n…\n…\ngs://…/gwas_clinvar/chr22\n\n\n\nSettings that are the same for every task (the image, the script, the three small GWAS files) stay in the command, with \"--tasks\", tasks_file added. dsub starts all 22 tasks at once. The notebook doesn’t wait: it checks on them with dstat.\ndstat(job_all, \"--summary\")           # how many tasks are RUNNING, SUCCESS, FAILURE\ndstat(job_all, \"--wait\", show = FALSE) # wait until every task has finished\ndsub jobs don’t appear on the Workbench’s Workflows tab: that tab shows Cromwell and Nextflow workflows. Check dsub jobs with dstat.\n\n\nCombine\nEach task wrote its results to its own folder. The notebook copies them to the app with gcloud storage cp, stacks them with map(...) %&gt;% bind_rows(), and draws a Manhattan plot. These are summary statistics (one row per variant), so they’re safe to look at. To publish them, follow the All of Us dissemination rules, as for any result.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#what-we-learned",
+    "href": "pages/extras/workflows-dsub.html#what-we-learned",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "What we learned",
+    "text": "What we learned\nWe ran every step of this class in an All of Us workspace before teaching it (November 2026). Five lessons:\n\n\n\n\n\n\n\nWhat happened\nLesson\n\n\n\n\nWith dsub’s default disk (a standard disk), chromosome 1 took 101 minutes: 59 to copy its 27.7 GB .bed file onto the machine (about 8 MB a second), and 37 for PLINK. With an SSD disk (--disk-type pd-ssd), the same task took 8 minutes: under 4 to copy (about 130 MB a second), about 2 for PLINK\nMost of a task’s time can be copying files, not analysis. Standard disks are cheap but slow, and slowest when small. For big inputs, use --disk-type pd-ssd: for a few minutes it costs about a cent more, and it saves machine time\n\n\nOn chromosome 21 (a small file), PLINK itself took about 2 seconds; the whole task, a few minutes\nstarting a machine and copying files take minutes, whatever the job. That’s why tiny jobs don’t belong in a workflow\n\n\nAll 22 tasks on standard disks: about 580 minutes (9½ hours) of machine time, added up; the whole job took 101 minutes. On SSD disks: about 130 minutes (2 hours) added up; 21 of the 22 tasks took 3 to 8 minutes each\nin parallel, a job takes as long as its slowest task. The SSD disks cut the machine time, and so the cost, by more than two thirds\n\n\nOn SSD disks, the whole job still took 32 minutes, because one task (chromosome 4) waited 30 minutes for its machine. Its log started 30 minutes late; once it started, it took 2½ minutes\nsometimes a task waits for a free machine, and you can’t prevent it. dstat’s start-time doesn’t show the wait (it equals create-time): the first time stamp in the task’s log does\n\n\nA long task’s log repeated You do not currently have an active account selected … Sleeping 10s\nharmless: dsub’s log uploader, while the task runs. The job still succeeded and saved its log\n\n\n\n👉 Find where the time goes: each log line has a time stamp. The gap between Localizing BED and the next line is the copy; the gap after PLINK v2 is the analysis.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#try-it-out",
+    "href": "pages/extras/workflows-dsub.html#try-it-out",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Try It Out",
+    "text": "Try It Out",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#try-it-out-1-5-minutes-while-the-22-tasks-run",
+    "href": "pages/extras/workflows-dsub.html#try-it-out-1-5-minutes-while-the-22-tasks-run",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "✋ Try It Out 1 · 5 minutes · while the 22 tasks run",
+    "text": "✋ Try It Out 1 · 5 minutes · while the 22 tasks run\nRun only chromosomes 19 to 22, in a new job. (Hint: the tasks file has a header row, so chromosome 1 is task 1.)\n\n\n\n\n\n\nNoteAnswer\n\n\n\n\n\nAdd the task numbers after the tasks file: \"--tasks\", tasks_file, \"19-22\". Rows 19 to 22 are chromosomes 19 to 22, because the table is sorted by chromosome. This is also how you rerun only the tasks that failed.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#try-it-out-2-5-minutes-part-7",
+    "href": "pages/extras/workflows-dsub.html#try-it-out-2-5-minutes-part-7",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "✋ Try It Out 2 · 5 minutes · Part 7",
+    "text": "✋ Try It Out 2 · 5 minutes · Part 7\nA classmate’s job fails. The log says plink2: Error: Failed to open …/clinvar.chr7.bim. What’s wrong? And how would you make the job cheaper?\n\n\n\n\n\n\nNoteAnswer\n\n\n\n\n\nThe .bim file wasn’t an input: the machine only has the files you give it with --input. PLINK needs the .bed, .bim, and .fam files together.\nCheaper: spot machines, \"--preemptible\", \"--retries\", \"2\". They cost much less, but Google can stop them at any time; --retries starts a stopped task again. They suit short tasks like these.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#when-a-job-fails",
+    "href": "pages/extras/workflows-dsub.html#when-a-job-fails",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "When a job fails",
+    "text": "When a job fails\nRead the log first. dsub saves three per task in the --logging folder: ….log (everything), …-stdout.log (what the script printed), and …-stderr.log (its errors).\n\n\n\n\n\n\n\n\nSymptom (in dstat or the log)\nLikely cause\nFix\n\n\n\n\nFAILURE with exit status 127, before your script runs\ndsub’s helper image broke or can’t be reached\npin DSUB_CLOUD_SDK_IMAGE to a version that works\n\n\nAn error about the image, or a job that never starts\nthe image isn’t from a Google registry\nput the All of Us mirror in front of Docker Hub images\n\n\nNo such file or directory\na file the script uses wasn’t an input\nadd it with --input\n\n\nNo space left on device\nthe disk is too small\na bigger --disk-size\n\n\nA task takes far longer than the others; in its log, a long gap after Localizing BED\ncopying a big file onto a slow standard disk (dsub’s default)\n--disk-type pd-ssd\n\n\nYou do not currently have an active account selected … Sleeping 10s, over and over\ndsub’s log uploader, while a long task runs\nnothing: the task continues\n\n\nOne task finishes long after the others; its log starts late\nit waited for a machine (none free, or the project’s limit)\nnothing: it runs once a machine is free\n\n\nA task is killed, or PLINK runs out of memory\nthe machine is too small\na bigger --machine-type (e.g. n2-highmem-4)\n\n\n401 … Requester pays bucket access requires authentication, then a retry\na short delay while the machine signs in\nnothing: dsub retries, and the job continues\n\n\nError: No variants remaining\nthe filters removed every variant on that chromosome\ncheck the filters, or leave that chromosome out\n\n\nTasks wait in the queue for a long time\nthe project’s limit on machines or CPUs\nwait, or run fewer tasks at a time\n\n\n\nCancel a job (all its tasks): ddel --provider google-batch --project \"${GOOGLE_CLOUD_PROJECT}\" --location us-central1 --jobs JOB_ID",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#scaling-up-from-clinvar-to-acaf",
+    "href": "pages/extras/workflows-dsub.html#scaling-up-from-clinvar-to-acaf",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Scaling up: from ClinVar to ACAF",
+    "text": "Scaling up: from ClinVar to ACAF\nFor a real GWAS, use the ACAF files (every variant common in at least one ancestry group). The steps are the same; the files are much bigger. In the All of Us tutorial, one ACAF chromosome (21) took about 60 minutes to copy onto the machine and about 28 minutes for PLINK, on a machine with 32 CPUs (n2-highmem-32) and a 400 GB disk. With files this big, an SSD disk matters even more (we haven’t timed ACAF ourselves).\n\n\n\n\n\n\n\n\n\nClinVar (this class)\nACAF\n\n\n\n\nVariants\nthose listed in ClinVar\nall variants common in at least one ancestry group\n\n\nFile sizes (.bed)\n4 to 28 GB per chromosome, 293 GB in all (v9)\nmany times bigger\n\n\nMachine\nn2-standard-2\nn2-highmem-16 to -32\n\n\nDisk\nunder 100 GB, SSD\n400 GB or more, SSD\n\n\nTime per task\na few minutes\n1 to 2+ hours\n\n\nCost\nunder $1 in all\ntens of dollars or more: test on one chromosome first\n\n\n\nWays to save: spot machines (--preemptible, with --retries); smaller tasks (split each chromosome into regions with PLINK’s --from-bp and --to-bp); and reading only what you need.\nClean up when you’re done: job results stay in your bucket, and bucket storage is billed every month (gcloud storage rm --recursive gs://…/data/workflows/test_chr21).",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#cromwell-and-nextflow",
+    "href": "pages/extras/workflows-dsub.html#cromwell-and-nextflow",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Cromwell and Nextflow",
+    "text": "Cromwell and Nextflow\ndsub is the simplest tool: one script, a table of tasks. It’s great for one step on many files. When an analysis has many steps (e.g. QC → GWAS → plots), each using the outputs of the one before, a workflow language is easier: you describe the steps and how they connect, and the tool runs them in order, in parallel where it can, and can resume after a failure.\n\n\n\n\ndsub\nCromwell\nNextflow\n\n\n\n\nYou write\na shell script and a dsub command\na WDL file (Workflow Description Language) and a JSON file of inputs\na Nextflow (.nf) file\n\n\nBest for\none step on many files\nmulti-step pipelines; many published genomics workflows (e.g. GATK)\nmulti-step pipelines; the nf-core community pipelines\n\n\nRun from\nan app’s terminal or notebook\nthe Workflows tab, or java -jar $CROMWELL_JAR run … in an app\nthe Workflows tab, or nextflow run … in an app\n\n\nReady-made workflows\n\nDockstore\nnf-core, Dockstore\n\n\nLearning curve\nlow\nmedium\nmedium\n\n\n\nAll three run their tasks on Google Batch, so the same All of Us rules apply: the private network, no public addresses, images from Google registries (or the All of Us mirror), and pinned versions. Each tool takes them in a short configuration file.\n\nA task in each language\nThe same idea in each tool: PLINK on one chromosome, here allele frequencies of the common variants (--maf 0.01 --freq). These follow the All of Us tutorial notebooks (folder How to Use Workflow Tools in the tutorial workspace); we haven’t run them ourselves yet.\n\nWDL (Cromwell)Nextflow\n\n\nversion 1.0\n\nworkflow gwas_one_chr {\n  input {\n    File bed\n    File bim\n    File fam\n    String docker_image\n  }\n  call plink_check { input: bed = bed, bim = bim, fam = fam, docker_image = docker_image }\n}\n\ntask plink_check {\n  input {\n    File bed\n    File bim\n    File fam\n    String docker_image\n  }\n  command {\n    plink2 --bed ~{bed} --bim ~{bim} --fam ~{fam} --maf 0.01 --freq --out chr\n  }\n  output {\n    File freq = \"chr.afreq\"\n  }\n  runtime {\n    docker: docker_image\n    machineType: \"n2-standard-2\"\n  }\n}\nThe inputs go in a JSON file: the three gs:// paths, and the image from the All of Us mirror.\n\n\nparams.plinkDir = \"gs://vwb-aou-datasets-controlled/v9/wgs/short_read/snpindel/clinvar/plink_bed\"\nparams.mirror   = \"us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod\"\n\nprocess plink_check {\n  container \"${params.mirror}/biocontainer/plink2:alpha2.3_jan2020\"\n\n  input:\n  tuple val(chr), path(bed), path(bim), path(fam)\n\n  output:\n  path \"chr${chr}.afreq\"\n\n  script:\n  \"\"\"\n  plink2 --bed ${bed} --bim ${bim} --fam ${fam} --maf 0.01 --freq --out chr${chr}\n  \"\"\"\n}\n\nworkflow {\n  Channel.of(19..22)\n    .map { c -&gt; tuple(c, file(\"${params.plinkDir}/clinvar.chr${c}.bed\"),\n                         file(\"${params.plinkDir}/clinvar.chr${c}.bim\"),\n                         file(\"${params.plinkDir}/clinvar.chr${c}.fam\")) }\n    | plink_check\n}\nNextflow runs one task per chromosome on its own, in parallel.\n\n\n\n\n\nThe All of Us settings for each\n\n\n\n\n\n\n\n\nSetting\nCromwell (cromwell.conf, backend GCPBATCH)\nNextflow (nextflow.config, executor google-batch)\n\n\n\n\nProject\nproject = \"${GOOGLE_CLOUD_PROJECT}\"\ngoogle.project\n\n\nWhere work files go\nroot = \"gs://your-bucket/workflows/cromwell-executions\"\nworkDir = \"gs://your-bucket/workflows/nextflow-scratch\"\n\n\nNetwork\nvirtual-private-cloud { network-name …, subnetwork-name … }\ngoogle.batch.network, google.batch.subnetwork\n\n\nNo public address\ndefault-runtime-attributes { noAddress: true }\ngoogle.batch.usePrivateAddress = true\n\n\nService account\nbatch { compute-service-account = … }\ngoogle.batch.serviceAccountEmail\n\n\nRegion\nbatch { location = \"us-central1\" }\ngoogle.location = \"us-central1\"\n\n\nPaying for All of Us files\n\ngoogle.enableRequesterPaysBuckets = true\n\n\n\nThe All of Us tutorial notebooks have complete configuration files. Check two things in them: that every image comes from a Google registry or the All of Us mirror (not straight from Docker Hub), and that helper images, such as Nextflow’s google.batch.copyImage, use a pinned version. The tutorials read the service account from PET_SA_EMAIL; if that’s empty in your app, use gcloud config get-value account, as for dsub.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nTested: dsub (November 2026, dsub 0.5.6, All of Us Jupyter app, CDR v9): the chromosome 21 job, all 22 tasks (they matched the app), and chromosome 1 on standard and SSD disks. The Cromwell and Nextflow examples follow the All of Us tutorial notebooks and the Verily documentation; we haven’t run them ourselves yet. The tutorials note that the Nextflow web interface (Seqera) doesn’t work in All of Us workspaces, because they have no internet access, and that the default Nextflow is version 25.10 (version 26.04 has a stricter syntax). The Workflows tab runs Cromwell in server mode; running java -jar $CROMWELL_JAR run in an app is run mode: the app must stay on until the workflow finishes. Job machines and bucket storage are billed to the workspace’s pod and don’t appear in the app cost estimate.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#instructor-notes",
+    "href": "pages/extras/workflows-dsub.html#instructor-notes",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Instructor notes",
+    "text": "Instructor notes",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#instructor-tip-timing-and-pitfalls",
+    "href": "pages/extras/workflows-dsub.html#instructor-tip-timing-and-pitfalls",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Instructor tip: timing and pitfalls",
+    "text": "Instructor tip: timing and pitfalls\n\nStart the 22-task job before the break, or before Part 8: it runs while you teach. Machines take a few minutes to start.\nStudents in the same workspace share the project’s limits on machines and CPUs. In a large class, have pairs share one run.\nThe commonest failures are settings, not code: a missing network flag, an image straight from Docker Hub, or a helper image that changed. The settings in aou_dsub() were tested in November 2026; if jobs fail with exit status 127 before the script runs, check the dsub issues on GitHub for a newer working helper version.\nThe comparison in Part 4 (app vs job) is the key check. A small difference in p-values comes from the PLINK version (the image’s 2020 version vs the app’s newer one): a good moment to talk about pinning and reporting versions.\ndsub’s printed messages include the workspace project ID, the bucket address, and your service account: clear outputs before committing, and share the notebook through GitHub, never by downloading it.\nStudents may look for their jobs on the Workflows tab: dsub jobs aren’t there (it shows Cromwell and Nextflow). Use dstat.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#key-takeaways",
+    "href": "pages/extras/workflows-dsub.html#key-takeaways",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nUse a workflow tool when the same step has to run on many or big files: each task gets its own machine, and they run in parallel\nA dsub job is an image, a script, inputs (copied onto the machine), outputs (copied back), and a log\nTest small first: the script in the app, then one job, then all of them\nEvery file a task needs must be an input: the machine has nothing else\nIn All of Us: the private network, no public address, images from the mirror, and pinned versions\ndstat to monitor, ddel to cancel, and the log to find out why a task failed, or where its time went\nCopying big files can take longer than the analysis: use an SSD disk (--disk-type pd-ssd)\nFor multi-step pipelines, use a workflow language: WDL with Cromwell, or Nextflow",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
+    "objectID": "pages/extras/workflows-dsub.html#further-reading",
+    "href": "pages/extras/workflows-dsub.html#further-reading",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "Further reading",
+    "text": "Further reading\n\ndsub on GitHub: documentation, including input and output files and job control\nVerily Workbench: workflows: Cromwell, Nextflow, and dsub in the Workbench\nOpenWDL (the WDL language) and Nextflow documentation\nDockstore and nf-core: ready-made, published workflows\nThe All of Us tutorial workspace: How to Use Workflow Tools (dsub, Cromwell, Nextflow notebooks)\n\n\n\nNext section: Resources →",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
     "objectID": "pages/get-started/about.html",
     "href": "pages/get-started/about.html",
     "title": "About All of Us",
@@ -4035,7 +4354,7 @@
     "href": "pages/get-started/billing.html#initial-credits",
     "title": "Billing",
     "section": "Initial credits",
-    "text": "Initial credits\n\n$300 in initial credits per registered researcher\n\nApplied automatically to compute costs\nExpire 365 days after you first get Workbench access\nTied to your personal pod, user-pod-firstname-lastname-####. A workspace’s Workspace details panel (right side, under Pod) shows which pod pays for it.\n\nWhen credits run out or expire:\n\nYou can’t launch or open analysis environments\nStored resources (buckets, disks) may be deleted\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSet up a Google Cloud billing account and billing pod before your credits run out or expire. See Getting a Google Cloud billing account at Yale.",
+    "text": "Initial credits\n\n$300 in initial credits per registered researcher\n\nApplied automatically to compute costs\nExpire 365 days after you first get Workbench access\nTied to your personal pod, user-pod-firstname-lastname-####. A workspace’s Workspace details panel (right side, under Pod) shows which pod pays for it.\n\nWhen credits run out or expire:\n\nYou can’t launch or open analysis environments\nStored resources (buckets, disks) may be deleted\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSet up a Google Cloud billing account and billing pod before your credits run out or expire. At Yale, ask at least 2 to 3 weeks ahead: see Getting a Google Cloud billing account at Yale.",
     "crumbs": [
       "Get Started",
       "Billing"
@@ -4046,7 +4365,7 @@
     "href": "pages/get-started/billing.html#billing-pods",
     "title": "Billing",
     "section": "Billing pods",
-    "text": "Billing pods\n\nA pod connects your workspaces to a Google Cloud billing account\n\nWorkspace costs are charged to the pod\nThink of the pod as your billing account inside the Workbench\n\nOne pod can pay for many workspaces\nYou can invite other users to your pod (e.g., lab members)\nAll of Us researchers have the Pod Manager role, so you can create your own pod\n\n\n\n\n\n\n\nWarningWatch out\n\n\n\n\nA pod links to only one billing account\nA workspace’s pod can’t be changed later. To switch pods, you have to duplicate the workspace.\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nInitial credits are linked to the personal user pod. Check a workspace’s Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.",
+    "text": "Billing pods\n\nA pod connects your workspaces to a Google Cloud billing account\n\nWorkspace costs are charged to the pod\nThink of the pod as your billing account inside the Workbench\n\nOne pod can pay for many workspaces\nYou can invite other users to your pod (e.g., lab members). Their workspaces in your pod are then billed to your account\nAll of Us researchers have the Pod Manager role, so you can create your own pod\n\n\n\n\n\n\n\nWarningWatch out\n\n\n\n\nA pod links to only one billing account\nA workspace’s pod can’t be changed later. To switch pods, you have to duplicate the workspace.\n\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nInitial credits are linked to the personal user pod. Check a workspace’s Workspace details panel (Overview tab, right side) to see which pod it uses; a Yale billing pod would show its own name there.",
     "crumbs": [
       "Get Started",
       "Billing"
@@ -4057,7 +4376,7 @@
     "href": "pages/get-started/billing.html#getting-a-google-cloud-billing-account-at-yale",
     "title": "Billing",
     "section": "Getting a Google Cloud billing account at Yale",
-    "text": "Getting a Google Cloud billing account at Yale\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number\nWhether this is an NIH-funded project\n\nYale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your pod.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nYale Cloud Support may give additional or different guidance.\n\n\n\n\n\nNext section: Your Workspace →",
+    "text": "Getting a Google Cloud billing account at Yale\n\n\n\n\n\n\nImportantAsk early\n\n\n\nSetting up the account takes about 2 weeks: Burwood, Yale’s Google reseller, requests it from Google’s distributor. Ask at least 2 to 3 weeks before your initial credits run out or expire.\n\n\nEmail cloud.support@yale.edu with the subject “setting up an All of Us billing account” and include:\n\nYour All of Us Workbench email (e.g., yourname@researchallofus.org)\nYour COA number: the account is charged to it\nWhether this is an NIH-funded project, and if so, the NIH grant number. NIH-funded accounts are set up through NIH STRIDES, which needs it\n\nYale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your pod.\n\nWhat you get\n\nYour own Google Cloud billing account, charged to the COA you gave\nYou keep access to it, so you can link it to new pods, or relink pods, yourself, without asking Yale Cloud Support again\n\n\n\n\n\n\n\nWarningChoose who you invite to your pod\n\n\n\nAnyone you invite to your pod can run workspaces that are billed to your COA. Invite only people on the same grant.\n\n\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nEmail is the way to ask for now. Yale Cloud Support is building a ServiceNow request form for this; link it here when it’s live. Yale Cloud Support may give additional or different guidance.\n\n\n\n\n\nNext section: Your Workspace →",
     "crumbs": [
       "Get Started",
       "Billing"
@@ -4415,7 +4734,7 @@
     "href": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
     "title": "Workflows",
     "section": "dsub: Jobs from an App",
-    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. It comes with apps created after June 2025.\ndsub_activate                        # turn on dsub in the terminal\n\ndsub \\\n  --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --service-account \"${PET_SA_EMAIL}\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  &lt;container image with samtools&gt; \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.\n\n\n\n\n\nNext section: Data →",
+    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. dsub is ready to use in All of Us Jupyter apps. In All of Us, every job needs the network settings, no public address, and an image from the All of Us mirror:\nexport DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim\nMIRROR=us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod\n\ndsub --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" --user-project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --regions us-central1 --use-private-address \\\n  --network global/networks/network \\\n  --subnetwork regions/us-central1/subnetworks/subnetwork \\\n  --service-account \"$(gcloud config get-value account)\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  \"${MIRROR}/biocontainers/samtools:&lt;version&gt;\" \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 A full class, tested in All of Us: Running Workflows. More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”, and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without –use-private-address and the network settings, jobs can’t start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub’s helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.\n\n\n\n\n\nNext section: Data →",
     "crumbs": [
       "Your Workspace",
       "Workflows"

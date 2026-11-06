@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Run one analysis on every chromosome at once: a GWAS on all 22 chromosomes in parallel with dsub, the settings All of Us needs, troubleshooting, and where Cromwell and Nextflow fit">
+
+<title>Running Workflows: dsub, Cromwell, and Nextflow – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../pages/extras/workflows-for-beginners.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/workspace/workspaces.html"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/index.html">
+ <span class="dropdown-text">All courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/core/index.html">
+ <span class="dropdown-text">Core series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/omics/index.html">
+ <span class="dropdown-text">Omics series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../pages/extras/extras.html" aria-current="page"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/extras/workflows-dsub.html">Running Workflows: dsub, Cromwell, and Nextflow</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional Extras</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/github-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/ai-coding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coding with AI and GitHub</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workflows for Beginners</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-dsub.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Running Workflows: dsub, Cromwell, and Nextflow</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#why-this-class-matters" id="toc-why-this-class-matters" class="nav-link" data-scroll-target="#why-this-class-matters">Why this class matters</a></li>
+  <li><a href="#by-the-end-youll-be-able-to" id="toc-by-the-end-youll-be-able-to" class="nav-link" data-scroll-target="#by-the-end-youll-be-able-to">By the end you’ll be able to</a></li>
+  <li><a href="#analysis-at-a-glance" id="toc-analysis-at-a-glance" class="nav-link" data-scroll-target="#analysis-at-a-glance">Analysis at a glance</a></li>
+  <li><a href="#time-and-cost" id="toc-time-and-cost" class="nav-link" data-scroll-target="#time-and-cost">Time and cost</a></li>
+  </ul></li>
+  <li><a href="#class-plan" id="toc-class-plan" class="nav-link" data-scroll-target="#class-plan">Class plan</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key concepts</a>
+  <ul class="collapse">
+  <li><a href="#two-ways-to-run-the-same-analysis" id="toc-two-ways-to-run-the-same-analysis" class="nav-link" data-scroll-target="#two-ways-to-run-the-same-analysis">Two ways to run the same analysis</a></li>
+  <li><a href="#is-a-workflow-cheaper" id="toc-is-a-workflow-cheaper" class="nav-link" data-scroll-target="#is-a-workflow-cheaper">Is a workflow cheaper?</a></li>
+  <li><a href="#the-words" id="toc-the-words" class="nav-link" data-scroll-target="#the-words">The words</a></li>
+  <li><a href="#how-a-dsub-job-runs" id="toc-how-a-dsub-job-runs" class="nav-link" data-scroll-target="#how-a-dsub-job-runs">How a dsub job runs</a></li>
+  <li><a href="#what-all-of-us-needs-the-settings" id="toc-what-all-of-us-needs-the-settings" class="nav-link" data-scroll-target="#what-all-of-us-needs-the-settings">What <em>All of Us</em> needs: the settings</a></li>
+  </ul></li>
+  <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
+  <li><a href="#code-walk-through" id="toc-code-walk-through" class="nav-link" data-scroll-target="#code-walk-through">Code walk-through</a>
+  <ul class="collapse">
+  <li><a href="#one-script-two-places" id="toc-one-script-two-places" class="nav-link" data-scroll-target="#one-script-two-places">One script, two places</a></li>
+  <li><a href="#one-job" id="toc-one-job" class="nav-link" data-scroll-target="#one-job">One job</a></li>
+  <li><a href="#many-jobs-the-tasks-file" id="toc-many-jobs-the-tasks-file" class="nav-link" data-scroll-target="#many-jobs-the-tasks-file">Many jobs: the tasks file</a></li>
+  <li><a href="#combine" id="toc-combine" class="nav-link" data-scroll-target="#combine">Combine</a></li>
+  </ul></li>
+  <li><a href="#what-we-learned" id="toc-what-we-learned" class="nav-link" data-scroll-target="#what-we-learned">What we learned</a></li>
+  <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try It Out</a></li>
+  <li><a href="#try-it-out-1-5-minutes-while-the-22-tasks-run" id="toc-try-it-out-1-5-minutes-while-the-22-tasks-run" class="nav-link" data-scroll-target="#try-it-out-1-5-minutes-while-the-22-tasks-run">✋ Try It Out 1 · 5 minutes · while the 22 tasks run</a></li>
+  <li><a href="#try-it-out-2-5-minutes-part-7" id="toc-try-it-out-2-5-minutes-part-7" class="nav-link" data-scroll-target="#try-it-out-2-5-minutes-part-7">✋ Try It Out 2 · 5 minutes · Part 7</a></li>
+  <li><a href="#when-a-job-fails" id="toc-when-a-job-fails" class="nav-link" data-scroll-target="#when-a-job-fails">When a job fails</a></li>
+  <li><a href="#scaling-up-from-clinvar-to-acaf" id="toc-scaling-up-from-clinvar-to-acaf" class="nav-link" data-scroll-target="#scaling-up-from-clinvar-to-acaf">Scaling up: from ClinVar to ACAF</a></li>
+  <li><a href="#cromwell-and-nextflow" id="toc-cromwell-and-nextflow" class="nav-link" data-scroll-target="#cromwell-and-nextflow">Cromwell and Nextflow</a>
+  <ul class="collapse">
+  <li><a href="#a-task-in-each-language" id="toc-a-task-in-each-language" class="nav-link" data-scroll-target="#a-task-in-each-language">A task in each language</a></li>
+  <li><a href="#the-all-of-us-settings-for-each" id="toc-the-all-of-us-settings-for-each" class="nav-link" data-scroll-target="#the-all-of-us-settings-for-each">The <em>All of Us</em> settings for each</a></li>
+  </ul></li>
+  <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
+  <li><a href="#instructor-tip-timing-and-pitfalls" id="toc-instructor-tip-timing-and-pitfalls" class="nav-link" data-scroll-target="#instructor-tip-timing-and-pitfalls">Instructor tip: timing and pitfalls</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Running Workflows: dsub, Cromwell, and Nextflow</h1>
+</div>
+
+<div>
+  <div class="description">
+    Run one analysis on every chromosome at once: a GWAS on all 22 chromosomes in parallel with dsub, the settings All of Us needs, troubleshooting, and where Cromwell and Nextflow fit
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>An Optional Extras class</strong> · R + dsub + PLINK · 110 minutes · builds on <a href="../../pages/courses/omics/4-2-gwas-plink.html">4.2 A GWAS with PLINK</a></p>
+<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/gwas_one_chr.sh" class="btn btn-outline-secondary btn-sm">The script it runs</a> <a href="../../pages/extras/workflows-for-beginners.html" class="btn btn-outline-secondary btn-sm">Workflows for Beginners</a> <a href="../../pages/workspace/workflows.html" class="btn btn-outline-secondary btn-sm">The Workflows tab</a></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In <strong>4.2</strong> we ran a GWAS on <strong>one region</strong> of one chromosome, inside our app. A whole-genome analysis is <strong>22 or more</strong> such jobs, each with large files. Run one after another in the app, that takes hours, and the app must stay open the whole time.</p>
+<p><strong>Workflow tools</strong> send each job to <strong>its own cloud machine</strong>, run them <strong>at the same time</strong>, save the results in your bucket, and shut the machines down. In this class we use <strong>dsub</strong>, the simplest of the three workflow tools in the Workbench, to run the 4.2 GWAS on <strong>all 22 chromosomes in parallel</strong>.</p>
+<section id="why-this-class-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-class-matters">Why this class matters</h3>
+<p>Most genomic analyses, and many others (imaging, long text, wearable data at minute level), are the <strong>same step on many files</strong>. Workflow tools make that fast, cheaper (each step gets the machine it needs, only while it runs), and <strong>reproducible</strong>. In <em>All of Us</em>, they also need a few settings that aren’t in the general instructions: this class collects them in one place, tested.</p>
+</section>
+<section id="by-the-end-youll-be-able-to" class="level3">
+<h3 class="anchored" data-anchor-id="by-the-end-youll-be-able-to">By the end you’ll be able to</h3>
+<ol type="1">
+<li>Say <strong>when</strong> to use a workflow tool instead of running code in your app</li>
+<li>Describe the parts of a dsub job: <strong>image</strong>, <strong>inputs</strong>, <strong>outputs</strong>, <strong>script</strong>, and <strong>logging</strong></li>
+<li>Test a script <strong>locally</strong> first, then run it as <strong>one</strong> job, then as <strong>many</strong> (<code>--tasks</code>)</li>
+<li><strong>Monitor</strong> jobs with <code>dstat</code>, cancel them with <code>ddel</code>, and read their <strong>logs</strong> to fix errors</li>
+<li>Compare <strong>dsub</strong>, <strong>Cromwell</strong> (WDL), and <strong>Nextflow</strong>, and know where to start with each</li>
+</ol>
+</section>
+<section id="analysis-at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-at-a-glance">Analysis at a glance</h3>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>❓ <strong>Question</strong></td>
+<td>How do you run one analysis on every chromosome? (The example: which variants in the <em>All of Us</em> <strong>ClinVar</strong> files are linked to type 2 diabetes?)</td>
+</tr>
+<tr class="even">
+<td>🧪 <strong>The analysis</strong></td>
+<td>The 4.2 GWAS (QC filters, then <code>plink2 --glm</code>, adjusted for age, sex, and 10 PCs), on each chromosome <strong>in its own dsub task</strong></td>
+</tr>
+<tr class="odd">
+<td>🎯 <strong>Why</strong></td>
+<td>22 tasks run in about the time of one; the app doesn’t have to do the work, or even stay on</td>
+</tr>
+<tr class="even">
+<td>✅ <strong>What we conclude</strong></td>
+<td>That the workflow gives the <strong>same results</strong> as the app, for all 22 chromosomes</td>
+</tr>
+<tr class="odd">
+<td>⚠️ <strong>What it can’t tell us</strong></td>
+<td>Much about diabetes: the ClinVar files hold variants already studied for disease, and few are common. For a real GWAS, use the <strong>ACAF</strong> files</td>
+</tr>
+<tr class="even">
+<td>🔗 <strong>Connections</strong></td>
+<td>The sample, phenotype, and covariates from <strong>4.1</strong> and <strong>4.2</strong>; the callsets from <a href="../../pages/courses/omics/omics-data-map.html">Where the omics data lives</a>; the <a href="../../pages/workspace/workflows.html">Workflows tab</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-and-cost" class="level3">
+<h3 class="anchored" data-anchor-id="time-and-cost">Time and cost</h3>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>⏱️ <strong>Class time</strong></td>
+<td>110 minutes</td>
+</tr>
+<tr class="even">
+<td>⏱️ <strong>Run time</strong></td>
+<td>about <strong>30 minutes</strong>, mostly waiting for jobs (most tasks take 3 to 8 minutes; one can wait longer for its machine)</td>
+</tr>
+<tr class="odd">
+<td>💰 <strong>Cost</strong></td>
+<td>about <strong>$1</strong> per student: under $1 for 23 small job machines (<code>n2-standard-2</code>, about $0.10 an hour each, for a few minutes each), plus the app (about $0.27 an hour)</td>
+</tr>
+<tr class="even">
+<td>📋 <strong>Before class</strong></td>
+<td>read <a href="../../pages/extras/workflows-for-beginners.html">Workflows for Beginners</a>; run <strong>4.1</strong> (and ideally <strong>4.2</strong>): the notebook reuses their files, or rebuilds them with the cohort query</td>
+</tr>
+<tr class="odd">
+<td>🖥️ <strong>App</strong></td>
+<td>an <em>All of Us</em> <strong>Jupyter</strong> app (it has dsub, <code>gcloud</code>, and PLINK)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="class-plan" class="level2">
+<h2 class="anchored" data-anchor-id="class-plan">Class plan</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Part</th>
+<th>You do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0:00</td>
+<td><strong>1. Key concepts</strong>: what a workflow tool does; the <em>All of Us</em> settings</td>
+<td>listen, ask</td>
+</tr>
+<tr class="even">
+<td>0:20</td>
+<td><strong>2. Setup</strong>: settings, the GWAS files, the bucket’s address</td>
+<td>run the cells</td>
+</tr>
+<tr class="odd">
+<td>0:30</td>
+<td><strong>3. Test locally</strong>: chromosome 21 in the app</td>
+<td>run the cells</td>
+</tr>
+<tr class="even">
+<td>0:40</td>
+<td><strong>4. One dsub job</strong>: chromosome 21 in the cloud; compare; read the log</td>
+<td>launch, then read on while it runs (a few minutes)</td>
+</tr>
+<tr class="odd">
+<td>0:55</td>
+<td><strong>5. All 22 chromosomes at once</strong>: the tasks file, <code>dstat</code></td>
+<td>launch; ✋ <strong>Try It Out 1</strong> while it runs</td>
+</tr>
+<tr class="even">
+<td>1:15</td>
+<td><strong>6. Combine the results</strong>: one table, a Manhattan plot</td>
+<td>run the cells</td>
+</tr>
+<tr class="odd">
+<td>1:25</td>
+<td><strong>7. Monitor, troubleshoot, scale up, clean up</strong></td>
+<td>✋ <strong>Try It Out 2</strong></td>
+</tr>
+<tr class="even">
+<td>1:35</td>
+<td><strong>8. Cromwell and Nextflow</strong></td>
+<td>discuss</td>
+</tr>
+<tr class="odd">
+<td>1:45</td>
+<td><strong>Wrap-up</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key concepts</h2>
+<section id="two-ways-to-run-the-same-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="two-ways-to-run-the-same-analysis">Two ways to run the same analysis</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>In your app (4.2)</th>
+<th>With a workflow tool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Where it runs</strong></td>
+<td>on the app’s machine</td>
+<td>on <strong>new cloud machines</strong>, one per task</td>
+</tr>
+<tr class="even">
+<td><strong>How many at once</strong></td>
+<td>one after another</td>
+<td><strong>many at once</strong> (in parallel)</td>
+</tr>
+<tr class="odd">
+<td><strong>Machine size</strong></td>
+<td>the app’s size</td>
+<td><strong>chosen per task</strong>: big tasks get big machines</td>
+</tr>
+<tr class="even">
+<td><strong>While it runs</strong></td>
+<td>the app must stay on; the notebook is busy</td>
+<td>the app can do other things, or even be <strong>stopped</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Best for</strong></td>
+<td>exploring, small data, plots</td>
+<td>the <strong>same steps on many files</strong>: chromosomes, samples, batches</td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>Rule of thumb:</strong> develop and test in your app; once a step works and has to run <strong>many times</strong> or on <strong>big</strong> files, move it to a workflow. Most class projects <strong>don’t need</strong> workflows.</p>
+</section>
+<section id="is-a-workflow-cheaper" class="level3">
+<h3 class="anchored" data-anchor-id="is-a-workflow-cheaper">Is a workflow cheaper?</h3>
+<p>Often <strong>faster</strong>; <strong>cheaper</strong> only sometimes: the total computing is about the same, but you pay for each machine only while it works, at the size it needs. In our tests, the 22 tasks added up to about 2 hours of machine time (on SSD disks) but ran at the same time, and the job cost well under $1: the workflow’s gain is <strong>time</strong>. When it saves money and when it costs more: <a href="../../pages/extras/workflows-for-beginners.html#is-it-cheaper">Workflows for Beginners</a>.</p>
+</section>
+<section id="the-words" class="level3">
+<h3 class="anchored" data-anchor-id="the-words">The words</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Word</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Job</strong></td>
+<td>one dsub command. It can have many <strong>tasks</strong>: here, one per chromosome</td>
+</tr>
+<tr class="even">
+<td><strong>Image</strong> (container)</td>
+<td>a packaged computer system with your software already installed (here, PLINK 2). Each task runs inside one</td>
+</tr>
+<tr class="odd">
+<td><strong>Input</strong></td>
+<td>a file the task needs. dsub <strong>copies</strong> it from a bucket onto the task’s machine first (<em>localizing</em>)</td>
+</tr>
+<tr class="even">
+<td><strong>Output</strong></td>
+<td>a file the task makes. dsub copies it <strong>back</strong> to your bucket at the end (<em>delocalizing</em>)</td>
+</tr>
+<tr class="odd">
+<td><strong>Script</strong></td>
+<td>the commands each task runs</td>
+</tr>
+<tr class="even">
+<td><strong>Logging</strong></td>
+<td>where dsub saves each task’s log. Your first stop when something fails</td>
+</tr>
+<tr class="odd">
+<td><strong>Google Batch</strong></td>
+<td>the Google Cloud service that creates, runs, and deletes the machines</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="how-a-dsub-job-runs" class="level3">
+<h3 class="anchored" data-anchor-id="how-a-dsub-job-runs">How a dsub job runs</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>your app ── dsub ──► Google Batch ──► machine for chr1  ─┐</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                                 ├──► machine for chr2  ─┤  each one: copy inputs in,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                                 ├──► ...                 ├─ run the script in the image,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                 └──► machine for chr22 ─┘  copy outputs back, shut down</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                                           │</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>your bucket ◄──────────────── results and logs ───────────┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="what-all-of-us-needs-the-settings" class="level3">
+<h3 class="anchored" data-anchor-id="what-all-of-us-needs-the-settings">What <em>All of Us</em> needs: the settings</h3>
+<p><em>All of Us</em> workspaces sit inside a <strong>security perimeter</strong>, and job machines have <strong>no internet access</strong>. So every job needs:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--network global/networks/network</code> and <code>--subnetwork regions/us-central1/subnetworks/subnetwork</code></td>
+<td>the workspace’s private network</td>
+</tr>
+<tr class="even">
+<td><code>--use-private-address</code></td>
+<td>no public internet address</td>
+</tr>
+<tr class="odd">
+<td><code>--service-account</code> your account (<code>gcloud config get-value account</code>)</td>
+<td>the job runs as you, so it can read <em>All of Us</em> data and write to your bucket</td>
+</tr>
+<tr class="even">
+<td><code>--project</code> and <code>--user-project</code> <code>${GOOGLE_CLOUD_PROJECT}</code></td>
+<td>your workspace’s project pays, including for reading the <em>All of Us</em> files</td>
+</tr>
+<tr class="odd">
+<td><code>--image</code> from the <strong><em>All of Us</em> mirror</strong> of Docker Hub</td>
+<td>job machines can’t reach Docker Hub itself, only Google’s registries</td>
+</tr>
+<tr class="even">
+<td><code>DSUB_CLOUD_SDK_IMAGE</code>, <strong>pinned</strong></td>
+<td>dsub’s helper image (it copies the files). Its default is a moving tag; see below</td>
+</tr>
+<tr class="odd">
+<td><code>--disk-type pd-ssd</code> (recommended, not required)</td>
+<td>dsub’s default <em>standard</em> disk is slow to copy big files onto: see <a href="#what-we-learned">What we learned</a></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled" title="Pin your versions: the November 2026 break">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Pin your versions: the November 2026 break
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>dsub uses a small helper image, Google’s Cloud SDK, to copy files in and out. By default it uses whatever the latest version is. On <strong>3 November 2026</strong>, version 592 of that image came out, and every dsub job started to fail with <strong><em>exit status 127</em></strong> before running anything. The fix is to <strong>pin</strong> the version before it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DSUB_CLOUD_SDK_IMAGE</span><span class="op">=</span>gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The same goes for your own images: use a <strong>version</strong> tag (<code>plink2:alpha2.3_jan2020</code>), not <code>latest</code>, so the software can’t change under you.</p>
+</div>
+</div>
+<p>In a <strong>terminal</strong>, the full set of settings looks like this. It’s the command we used to test dsub in an <em>All of Us</em> workspace (November 2026, dsub 0.5.6), with one change: we’ve pinned the image’s version.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DSUB_CLOUD_SDK_IMAGE</span><span class="op">=</span>gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ARTIFACT_REGISTRY_DOCKER_REPO</span><span class="op">=</span>us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">BUCKET</span><span class="op">=</span>gs://your-bucket-name                                <span class="co"># from the Resources tab</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="at">--user-project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--regions</span> us-central1 <span class="dt">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--network</span> <span class="st">"global/networks/network"</span> <span class="dt">\</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--subnetwork</span> <span class="st">"regions/us-central1/subnetworks/subnetwork"</span> <span class="dt">\</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--use-private-address</span> <span class="dt">\</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">$(</span><span class="ex">gcloud</span> config get-value account<span class="va">)</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> <span class="st">"</span><span class="va">${BUCKET}</span><span class="st">/dsub_test/logs"</span> <span class="dt">\</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span> <span class="st">"</span><span class="va">${ARTIFACT_REGISTRY_DOCKER_REPO}</span><span class="st">/ubuntu:24.04"</span> <span class="dt">\</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> OUT=<span class="st">"</span><span class="va">${BUCKET}</span><span class="st">/dsub_test/hello.txt"</span> <span class="dt">\</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'echo "hello from dsub" &gt; "${OUT}"'</span> <span class="dt">\</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> storage cat <span class="st">"</span><span class="va">${BUCKET}</span><span class="st">/dsub_test/hello.txt"</span>           <span class="co"># prints: hello from dsub</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The notebook wraps these settings in an R function, <code>aou_dsub()</code>, so each job only lists what’s <strong>different</strong>.</p>
+</section>
+</section>
+<section id="follow-along-in-the-workbench" class="level2">
+<h2 class="anchored" data-anchor-id="follow-along-in-the-workbench">Follow along in the Workbench</h2>
+<ol type="1">
+<li>Open an <em>All of Us</em> <strong>Jupyter</strong> app, with this repository cloned (see the <a href="../../pages/extras/github-guide.html">GitHub guide</a>).</li>
+<li>Open <code>notebooks/workflows/workflows_dsub.ipynb</code>, with the <strong>R</strong> kernel. <code>gwas_one_chr.sh</code> must be in the same folder.</li>
+<li>Run the cells in order. Parts 4 and 5 start cloud jobs: read on while they run.</li>
+<li>Before you commit the notebook, <strong>clear its outputs</strong>: dsub’s messages include your project ID and bucket address.</li>
+</ol>
+</section>
+<section id="code-walk-through" class="level2">
+<h2 class="anchored" data-anchor-id="code-walk-through">Code walk-through</h2>
+<section id="one-script-two-places" class="level3">
+<h3 class="anchored" data-anchor-id="one-script-two-places">One script, two places</h3>
+<p>The GWAS lives in a <strong>shell script</strong>, <code>gwas_one_chr.sh</code>. It reads every file name from an <strong>environment variable</strong>, so the <strong>same script</strong> runs in the app (Part 3) and in each job (Parts 4 and 5): only the variables change.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">${OUT_DIR}</span><span class="st">"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">plink2</span> <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--bfile</span> <span class="st">"</span><span class="va">${BED</span><span class="op">%</span>.bed<span class="va">}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--keep</span> <span class="st">"</span><span class="va">${KEEP}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--maf</span> 0.01 <span class="at">--geno</span> 0.1 <span class="at">--hwe</span> 1e-10 <span class="dt">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--pheno</span> <span class="st">"</span><span class="va">${PHENO}</span><span class="st">"</span> <span class="at">--pheno-name</span> t2d <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--covar</span> <span class="st">"</span><span class="va">${COVAR}</span><span class="st">"</span> <span class="at">--covar-variance-standardize</span> <span class="dt">\</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--glm</span> hide-covar firth-fallback <span class="dt">\</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="st">"</span><span class="va">${OUT_DIR}</span><span class="st">/chr</span><span class="va">${CHR}</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Line</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>set -euo pipefail</code></td>
+<td>stop at the first error. Without it, a failed step could still look like a successful job</td>
+</tr>
+<tr class="even">
+<td><code>--bfile "${BED%.bed}"</code></td>
+<td>the PLINK files, given as the <code>.bed</code> file’s path; <code>${BED%.bed}</code> drops the <code>.bed</code></td>
+</tr>
+<tr class="odd">
+<td><code>--keep</code> … <code>--glm</code></td>
+<td>our sample, the QC filters, and the association test from <strong>4.2</strong></td>
+</tr>
+<tr class="even">
+<td><code>--out "${OUT_DIR}/chr${CHR}"</code></td>
+<td>results named after the chromosome, e.g.&nbsp;<code>chr21.t2d.glm.logistic.hybrid</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test it in the app first</strong> (Part 3), on chromosome 21, reading the mounted files. A mistake shows up in a minute, for free.</p>
+</section>
+<section id="one-job" class="level3">
+<h3 class="anchored" data-anchor-id="one-job">One job</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>job_chr21 <span class="ot">&lt;-</span> <span class="fu">aou_dsub</span>(</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--name"</span>, <span class="st">"gwas-chr21"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--image"</span>, PLINK_IMAGE,</span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--machine-type"</span>, <span class="st">"n2-standard-2"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-5" class="code-annotation-target"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--disk-size"</span>, DISK_GB, <span class="st">"--disk-type"</span>, <span class="st">"pd-ssd"</span>,</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--script"</span>, <span class="st">"gwas_one_chr.sh"</span>,</span>
+<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--env"</span>, <span class="st">"CHR=21"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-8" class="code-annotation-target"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--input"</span>, <span class="fu">paste0</span>(<span class="st">"BED="</span>, CLINVAR_GS, <span class="st">"/clinvar.chr21.bed"</span>),</span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--input"</span>, <span class="fu">paste0</span>(<span class="st">"BIM="</span>, CLINVAR_GS, <span class="st">"/clinvar.chr21.bim"</span>),</span>
+<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--input"</span>, <span class="fu">paste0</span>(<span class="st">"FAM="</span>, CLINVAR_GS, <span class="st">"/clinvar.chr21.fam"</span>),</span>
+<span id="annotated-cell-4-11"><a href="#annotated-cell-4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--input"</span>, <span class="fu">paste0</span>(<span class="st">"KEEP="</span>, KEEP_GS),</span>
+<span id="annotated-cell-4-12"><a href="#annotated-cell-4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--input"</span>, <span class="fu">paste0</span>(<span class="st">"PHENO="</span>, PHENO_GS),</span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--input"</span>, <span class="fu">paste0</span>(<span class="st">"COVAR="</span>, COVAR_GS),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-4-14" class="code-annotation-target"><a href="#annotated-cell-4-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"--output-recursive"</span>, <span class="fu">paste0</span>(<span class="st">"OUT_DIR="</span>, WORK_GS, <span class="st">"/test_chr21"</span>),</span>
+<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">wait =</span> <span class="cn">TRUE</span></span>
+<span id="annotated-cell-4-16"><a href="#annotated-cell-4-16" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">PLINK 2 from the <em>All of Us</em> mirror, a pinned version.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="2">Big enough for the inputs and outputs (set from the biggest ClinVar file), and <strong>fast</strong>: an SSD.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="8" data-code-annotation="3">Every file the task needs must be an <strong>input</strong>, including the <code>.bim</code> and <code>.fam</code> files the script never names: the machine has nothing else.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="14" data-code-annotation="4">A <strong>folder</strong> to copy back: everything the script writes in <code>OUT_DIR</code>.</span>
+</dd>
+</dl>
+<p>The notebook then copies the job’s results back and compares them with the app’s: they should match.</p>
+</section>
+<section id="many-jobs-the-tasks-file" class="level3">
+<h3 class="anchored" data-anchor-id="many-jobs-the-tasks-file">Many jobs: the tasks file</h3>
+<p>To run <strong>many</strong> tasks, give dsub a <strong>tasks file</strong>: a tab-separated table with <strong>one row per task</strong> and <strong>one column per setting</strong>. The heading says what each column is.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>--env CHR</code></th>
+<th><code>--input BED</code></th>
+<th><code>--input BIM</code></th>
+<th><code>--input FAM</code></th>
+<th><code>--output-recursive OUT_DIR</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>gs://…/clinvar.chr1.bed</code></td>
+<td><code>gs://…/clinvar.chr1.bim</code></td>
+<td><code>gs://…/clinvar.chr1.fam</code></td>
+<td><code>gs://…/gwas_clinvar/chr1</code></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>gs://…/clinvar.chr2.bed</code></td>
+<td><code>gs://…/clinvar.chr2.bim</code></td>
+<td><code>gs://…/clinvar.chr2.fam</code></td>
+<td><code>gs://…/gwas_clinvar/chr2</code></td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td><code>gs://…/clinvar.chr22.bed</code></td>
+<td>…</td>
+<td>…</td>
+<td><code>gs://…/gwas_clinvar/chr22</code></td>
+</tr>
+</tbody>
+</table>
+<p>Settings that are the <strong>same</strong> for every task (the image, the script, the three small GWAS files) stay in the command, with <code>"--tasks", tasks_file</code> added. dsub starts all 22 tasks at once. The notebook doesn’t wait: it checks on them with <code>dstat</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dstat</span>(job_all, <span class="st">"--summary"</span>)           <span class="co"># how many tasks are RUNNING, SUCCESS, FAILURE</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dstat</span>(job_all, <span class="st">"--wait"</span>, <span class="at">show =</span> <span class="cn">FALSE</span>) <span class="co"># wait until every task has finished</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>dsub jobs <strong>don’t</strong> appear on the Workbench’s <a href="../../pages/workspace/workflows.html">Workflows tab</a>: that tab shows Cromwell and Nextflow workflows. Check dsub jobs with <code>dstat</code>.</p>
+</section>
+<section id="combine" class="level3">
+<h3 class="anchored" data-anchor-id="combine">Combine</h3>
+<p>Each task wrote its results to its own folder. The notebook copies them to the app with <code>gcloud storage cp</code>, stacks them with <code>map(...) %&gt;% bind_rows()</code>, and draws a <strong>Manhattan plot</strong>. These are <strong>summary statistics</strong> (one row per variant), so they’re safe to look at. To <strong>publish</strong> them, follow the <em>All of Us</em> dissemination rules, as for any result.</p>
+</section>
+</section>
+<section id="what-we-learned" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-learned">What we learned</h2>
+<p>We ran every step of this class in an <em>All of Us</em> workspace before teaching it (November 2026). Five lessons:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What happened</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>With dsub’s <strong>default disk</strong> (a <em>standard</em> disk), chromosome 1 took <strong>101 minutes</strong>: 59 to copy its 27.7 GB <code>.bed</code> file onto the machine (about 8 MB a second), and 37 for PLINK. With an <strong>SSD</strong> disk (<code>--disk-type pd-ssd</code>), the same task took <strong>8 minutes</strong>: under 4 to copy (about 130 MB a second), about 2 for PLINK</td>
+<td><strong>Most of a task’s time can be copying files, not analysis.</strong> Standard disks are cheap but slow, and slowest when small. For big inputs, use <code>--disk-type pd-ssd</code>: for a few minutes it costs about a cent more, and it saves machine time</td>
+</tr>
+<tr class="even">
+<td>On chromosome 21 (a small file), PLINK itself took about <strong>2 seconds</strong>; the whole task, a few minutes</td>
+<td>starting a machine and copying files take minutes, whatever the job. That’s why tiny jobs don’t belong in a workflow</td>
+</tr>
+<tr class="odd">
+<td>All 22 tasks on <strong>standard</strong> disks: about <strong>580 minutes</strong> (9½ hours) of machine time, added up; the whole job took <strong>101 minutes</strong>. On <strong>SSD</strong> disks: about <strong>130 minutes</strong> (2 hours) added up; 21 of the 22 tasks took <strong>3 to 8 minutes</strong> each</td>
+<td>in parallel, a job takes as long as its <strong>slowest</strong> task. The SSD disks cut the machine time, and so the cost, by more than two thirds</td>
+</tr>
+<tr class="even">
+<td>On SSD disks, the whole job still took <strong>32 minutes</strong>, because one task (chromosome 4) <strong>waited 30 minutes</strong> for its machine. Its log started 30 minutes late; once it started, it took 2½ minutes</td>
+<td>sometimes a task waits for a free machine, and you can’t prevent it. <code>dstat</code>’s <code>start-time</code> doesn’t show the wait (it equals <code>create-time</code>): the <strong>first time stamp in the task’s log</strong> does</td>
+</tr>
+<tr class="odd">
+<td>A long task’s log repeated <code>You do not currently have an active account selected … Sleeping 10s</code></td>
+<td>harmless: dsub’s log uploader, while the task runs. The job still succeeded and saved its log</td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>Find where the time goes:</strong> each log line has a time stamp. The gap between <code>Localizing BED</code> and the next line is the copy; the gap after <code>PLINK v2</code> is the analysis.</p>
+</section>
+<section id="try-it-out" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out">Try It Out</h2>
+</section>
+<section id="try-it-out-1-5-minutes-while-the-22-tasks-run" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out-1-5-minutes-while-the-22-tasks-run">✋ Try It Out 1 · 5 minutes · while the 22 tasks run</h2>
+<p>Run only chromosomes <strong>19 to 22</strong>, in a new job. (Hint: the tasks file has a header row, so chromosome 1 is task 1.)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Add the task numbers after the tasks file: <code>"--tasks", tasks_file, "19-22"</code>. Rows 19 to 22 are chromosomes 19 to 22, because the table is sorted by chromosome. This is also how you <strong>rerun</strong> only the tasks that failed.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="try-it-out-2-5-minutes-part-7" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out-2-5-minutes-part-7">✋ Try It Out 2 · 5 minutes · Part 7</h2>
+<p>A classmate’s job fails. The log says <code>plink2: Error: Failed to open …/clinvar.chr7.bim</code>. What’s wrong? And how would you make the job cheaper?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>.bim</code> file wasn’t an <strong>input</strong>: the machine only has the files you give it with <code>--input</code>. PLINK needs the <code>.bed</code>, <code>.bim</code>, and <code>.fam</code> files together.</p>
+<p>Cheaper: <strong>spot</strong> machines, <code>"--preemptible", "--retries", "2"</code>. They cost much less, but Google can stop them at any time; <code>--retries</code> starts a stopped task again. They suit short tasks like these.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="when-a-job-fails" class="level2">
+<h2 class="anchored" data-anchor-id="when-a-job-fails">When a job fails</h2>
+<p><strong>Read the log first.</strong> dsub saves three per task in the <code>--logging</code> folder: <code>….log</code> (everything), <code>…-stdout.log</code> (what the script printed), and <code>…-stderr.log</code> (its errors).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symptom (in <code>dstat</code> or the log)</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>FAILURE</code> with <strong>exit status 127</strong>, before your script runs</td>
+<td>dsub’s helper image broke or can’t be reached</td>
+<td>pin <code>DSUB_CLOUD_SDK_IMAGE</code> to a version that works</td>
+</tr>
+<tr class="even">
+<td>An error about the <strong>image</strong>, or a job that never starts</td>
+<td>the image isn’t from a Google registry</td>
+<td>put the <em>All of Us</em> mirror in front of Docker Hub images</td>
+</tr>
+<tr class="odd">
+<td><code>No such file or directory</code></td>
+<td>a file the script uses wasn’t an <strong>input</strong></td>
+<td>add it with <code>--input</code></td>
+</tr>
+<tr class="even">
+<td><code>No space left on device</code></td>
+<td>the disk is too small</td>
+<td>a bigger <code>--disk-size</code></td>
+</tr>
+<tr class="odd">
+<td>A task takes far longer than the others; in its log, a long gap after <code>Localizing BED</code></td>
+<td>copying a big file onto a slow <strong>standard</strong> disk (dsub’s default)</td>
+<td><code>--disk-type pd-ssd</code></td>
+</tr>
+<tr class="even">
+<td><code>You do not currently have an active account selected</code> … <code>Sleeping 10s</code>, over and over</td>
+<td>dsub’s log uploader, while a long task runs</td>
+<td>nothing: the task continues</td>
+</tr>
+<tr class="odd">
+<td>One task finishes long after the others; its log <strong>starts</strong> late</td>
+<td>it waited for a machine (none free, or the project’s limit)</td>
+<td>nothing: it runs once a machine is free</td>
+</tr>
+<tr class="even">
+<td>A task is killed, or PLINK runs out of memory</td>
+<td>the machine is too small</td>
+<td>a bigger <code>--machine-type</code> (e.g.&nbsp;<code>n2-highmem-4</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>401 … Requester pays bucket access requires authentication</code>, then a retry</td>
+<td>a short delay while the machine signs in</td>
+<td>nothing: dsub retries, and the job continues</td>
+</tr>
+<tr class="even">
+<td><code>Error: No variants remaining</code></td>
+<td>the filters removed every variant on that chromosome</td>
+<td>check the filters, or leave that chromosome out</td>
+</tr>
+<tr class="odd">
+<td>Tasks wait in the queue for a long time</td>
+<td>the project’s limit on machines or CPUs</td>
+<td>wait, or run fewer tasks at a time</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cancel</strong> a job (all its tasks): <code>ddel --provider google-batch --project "${GOOGLE_CLOUD_PROJECT}" --location us-central1 --jobs JOB_ID</code></p>
+</section>
+<section id="scaling-up-from-clinvar-to-acaf" class="level2">
+<h2 class="anchored" data-anchor-id="scaling-up-from-clinvar-to-acaf">Scaling up: from ClinVar to ACAF</h2>
+<p>For a real GWAS, use the <strong>ACAF</strong> files (every variant common in at least one ancestry group). The steps are the same; the files are much <strong>bigger</strong>. In the <em>All of Us</em> tutorial, one ACAF chromosome (21) took about <strong>60 minutes</strong> to copy onto the machine and about <strong>28 minutes</strong> for PLINK, on a machine with 32 CPUs (<code>n2-highmem-32</code>) and a 400 GB disk. With files this big, an <strong>SSD</strong> disk matters even more (we haven’t timed ACAF ourselves).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>ClinVar (this class)</th>
+<th>ACAF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Variants</strong></td>
+<td>those listed in ClinVar</td>
+<td>all variants common in at least one ancestry group</td>
+</tr>
+<tr class="even">
+<td><strong>File sizes</strong> (<code>.bed</code>)</td>
+<td>4 to 28 GB per chromosome, 293 GB in all (v9)</td>
+<td>many times bigger</td>
+</tr>
+<tr class="odd">
+<td><strong>Machine</strong></td>
+<td><code>n2-standard-2</code></td>
+<td><code>n2-highmem-16</code> to <code>-32</code></td>
+</tr>
+<tr class="even">
+<td><strong>Disk</strong></td>
+<td>under 100 GB, SSD</td>
+<td>400 GB or more, SSD</td>
+</tr>
+<tr class="odd">
+<td><strong>Time per task</strong></td>
+<td>a few minutes</td>
+<td>1 to 2+ hours</td>
+</tr>
+<tr class="even">
+<td><strong>Cost</strong></td>
+<td>under $1 in all</td>
+<td>tens of dollars or more: <strong>test on one chromosome first</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Ways to save: <strong>spot</strong> machines (<code>--preemptible</code>, with <code>--retries</code>); <strong>smaller tasks</strong> (split each chromosome into regions with PLINK’s <code>--from-bp</code> and <code>--to-bp</code>); and reading <strong>only what you need</strong>.</p>
+<p><strong>Clean up</strong> when you’re done: job results stay in your bucket, and bucket storage is billed every month (<code>gcloud storage rm --recursive gs://…/data/workflows/test_chr21</code>).</p>
+</section>
+<section id="cromwell-and-nextflow" class="level2">
+<h2 class="anchored" data-anchor-id="cromwell-and-nextflow">Cromwell and Nextflow</h2>
+<p>dsub is the <strong>simplest</strong> tool: one script, a table of tasks. It’s great for <strong>one step on many files</strong>. When an analysis has <strong>many steps</strong> (e.g.&nbsp;QC → GWAS → plots), each using the outputs of the one before, a <strong>workflow language</strong> is easier: you describe the steps and how they connect, and the tool runs them in order, in parallel where it can, and can <strong>resume</strong> after a failure.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>dsub</th>
+<th>Cromwell</th>
+<th>Nextflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>You write</strong></td>
+<td>a shell script and a dsub command</td>
+<td>a <strong>WDL</strong> file (<em>Workflow Description Language</em>) and a JSON file of inputs</td>
+<td>a <strong>Nextflow</strong> (<code>.nf</code>) file</td>
+</tr>
+<tr class="even">
+<td><strong>Best for</strong></td>
+<td>one step on many files</td>
+<td>multi-step pipelines; many published genomics workflows (e.g.&nbsp;GATK)</td>
+<td>multi-step pipelines; the <strong>nf-core</strong> community pipelines</td>
+</tr>
+<tr class="odd">
+<td><strong>Run from</strong></td>
+<td>an app’s terminal or notebook</td>
+<td>the <strong><a href="../../pages/workspace/workflows.html">Workflows tab</a></strong>, or <code>java -jar $CROMWELL_JAR run …</code> in an app</td>
+<td>the <strong>Workflows tab</strong>, or <code>nextflow run …</code> in an app</td>
+</tr>
+<tr class="even">
+<td><strong>Ready-made workflows</strong></td>
+<td></td>
+<td><a href="https://dockstore.org/">Dockstore</a></td>
+<td><a href="https://nf-co.re/">nf-core</a>, <a href="https://dockstore.org/">Dockstore</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Learning curve</strong></td>
+<td>low</td>
+<td>medium</td>
+<td>medium</td>
+</tr>
+</tbody>
+</table>
+<p>All three run their tasks on <strong>Google Batch</strong>, so the same <em>All of Us</em> rules apply: the private network, no public addresses, images from Google registries (or the <em>All of Us</em> mirror), and pinned versions. Each tool takes them in a short <strong>configuration file</strong>.</p>
+<section id="a-task-in-each-language" class="level3">
+<h3 class="anchored" data-anchor-id="a-task-in-each-language">A task in each language</h3>
+<p>The same idea in each tool: PLINK on one chromosome, here allele frequencies of the common variants (<code>--maf 0.01 --freq</code>). These follow the <em>All of Us</em> tutorial notebooks (folder <em>How to Use Workflow Tools</em> in the tutorial workspace); we haven’t run them ourselves yet.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">WDL (Cromwell)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Nextflow</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>version 1.0</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>workflow gwas_one_chr {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  input {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    File bed</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    File bim</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    File fam</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    String docker_image</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  call plink_check { input: bed = bed, bim = bim, fam = fam, docker_image = docker_image }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>task plink_check {</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  input {</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    File bed</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    File bim</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    File fam</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    String docker_image</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  command {</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    plink2 --bed ~{bed} --bim ~{bim} --fam ~{fam} --maf 0.01 --freq --out chr</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  output {</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    File freq = "chr.afreq"</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  runtime {</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    docker: docker_image</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    machineType: "n2-standard-2"</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The inputs go in a JSON file: the three <code>gs://</code> paths, and the image from the <em>All of Us</em> mirror.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>params.plinkDir = "gs://vwb-aou-datasets-controlled/v9/wgs/short_read/snpindel/clinvar/plink_bed"</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>params.mirror   = "us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod"</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>process plink_check {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  container "${params.mirror}/biocontainer/plink2:alpha2.3_jan2020"</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  input:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  tuple val(chr), path(bed), path(bim), path(fam)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  output:</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  path "chr${chr}.afreq"</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  script:</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  """</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  plink2 --bed ${bed} --bim ${bim} --fam ${fam} --maf 0.01 --freq --out chr${chr}</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  """</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>workflow {</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  Channel.of(19..22)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    .map { c -&gt; tuple(c, file("${params.plinkDir}/clinvar.chr${c}.bed"),</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                         file("${params.plinkDir}/clinvar.chr${c}.bim"),</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                         file("${params.plinkDir}/clinvar.chr${c}.fam")) }</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    | plink_check</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nextflow runs one task per chromosome on its own, in parallel.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-all-of-us-settings-for-each" class="level3">
+<h3 class="anchored" data-anchor-id="the-all-of-us-settings-for-each">The <em>All of Us</em> settings for each</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Cromwell (<code>cromwell.conf</code>, backend <code>GCPBATCH</code>)</th>
+<th>Nextflow (<code>nextflow.config</code>, executor <code>google-batch</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Project</td>
+<td><code>project = "${GOOGLE_CLOUD_PROJECT}"</code></td>
+<td><code>google.project</code></td>
+</tr>
+<tr class="even">
+<td>Where work files go</td>
+<td><code>root = "gs://your-bucket/workflows/cromwell-executions"</code></td>
+<td><code>workDir = "gs://your-bucket/workflows/nextflow-scratch"</code></td>
+</tr>
+<tr class="odd">
+<td>Network</td>
+<td><code>virtual-private-cloud { network-name …, subnetwork-name … }</code></td>
+<td><code>google.batch.network</code>, <code>google.batch.subnetwork</code></td>
+</tr>
+<tr class="even">
+<td>No public address</td>
+<td><code>default-runtime-attributes { noAddress: true }</code></td>
+<td><code>google.batch.usePrivateAddress = true</code></td>
+</tr>
+<tr class="odd">
+<td>Service account</td>
+<td><code>batch { compute-service-account = … }</code></td>
+<td><code>google.batch.serviceAccountEmail</code></td>
+</tr>
+<tr class="even">
+<td>Region</td>
+<td><code>batch { location = "us-central1" }</code></td>
+<td><code>google.location = "us-central1"</code></td>
+</tr>
+<tr class="odd">
+<td>Paying for <em>All of Us</em> files</td>
+<td></td>
+<td><code>google.enableRequesterPaysBuckets = true</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>All of Us</em> tutorial notebooks have complete configuration files. Check two things in them: that <strong>every image</strong> comes from a Google registry or the <em>All of Us</em> mirror (not straight from Docker Hub), and that helper images, such as Nextflow’s <code>google.batch.copyImage</code>, use a <strong>pinned version</strong>. The tutorials read the service account from <code>PET_SA_EMAIL</code>; if that’s empty in your app, use <code>gcloud config get-value account</code>, as for dsub.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Tested: dsub (November 2026, dsub 0.5.6, <em>All of Us</em> Jupyter app, CDR v9): the chromosome 21 job, all 22 tasks (they matched the app), and chromosome 1 on standard and SSD disks. The Cromwell and Nextflow examples follow the <em>All of Us</em> tutorial notebooks and the Verily documentation; we haven’t run them ourselves yet. The tutorials note that the Nextflow web interface (Seqera) doesn’t work in <em>All of Us</em> workspaces, because they have no internet access, and that the default Nextflow is version 25.10 (version 26.04 has a stricter syntax). The Workflows tab runs Cromwell in <em>server mode</em>; running <code>java -jar $CROMWELL_JAR run</code> in an app is <em>run mode</em>: the app must stay on until the workflow finishes. Job machines and bucket storage are billed to the workspace’s pod and don’t appear in the app cost estimate.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="instructor-notes" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
+</section>
+<section id="instructor-tip-timing-and-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-tip-timing-and-pitfalls">Instructor tip: timing and pitfalls</h2>
+<ul>
+<li><strong>Start the 22-task job before the break</strong>, or before Part 8: it runs while you teach. Machines take a few minutes to start.</li>
+<li>Students in the same workspace share the project’s <strong>limits</strong> on machines and CPUs. In a large class, have pairs share one run.</li>
+<li>The commonest failures are <strong>settings</strong>, not code: a missing network flag, an image straight from Docker Hub, or a helper image that changed. The settings in <code>aou_dsub()</code> were tested in November 2026; if jobs fail with exit status 127 before the script runs, check the <a href="https://github.com/DataBiosphere/dsub/issues">dsub issues on GitHub</a> for a newer working helper version.</li>
+<li>The <strong>comparison</strong> in Part 4 (app vs job) is the key check. A small difference in p-values comes from the PLINK version (the image’s 2020 version vs the app’s newer one): a good moment to talk about <strong>pinning and reporting versions</strong>.</li>
+<li>dsub’s printed messages include the workspace project ID, the bucket address, and your service account: <strong>clear outputs</strong> before committing, and share the notebook through GitHub, never by downloading it.</li>
+<li>Students may look for their jobs on the <strong>Workflows</strong> tab: dsub jobs aren’t there (it shows Cromwell and Nextflow). Use <code>dstat</code>.</li>
+</ul>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
+<ul>
+<li>Use a <strong>workflow tool</strong> when the <strong>same step</strong> has to run on <strong>many</strong> or <strong>big</strong> files: each task gets its own machine, and they run <strong>in parallel</strong></li>
+<li>A dsub job is an <strong>image</strong>, a <strong>script</strong>, <strong>inputs</strong> (copied onto the machine), <strong>outputs</strong> (copied back), and a <strong>log</strong></li>
+<li><strong>Test small first:</strong> the script in the app, then one job, then all of them</li>
+<li><strong>Every file a task needs must be an input</strong>: the machine has nothing else</li>
+<li>In <em>All of Us</em>: the private network, no public address, images from the <strong>mirror</strong>, and <strong>pinned</strong> versions</li>
+<li><code>dstat</code> to monitor, <code>ddel</code> to cancel, and the <strong>log</strong> to find out why a task failed, or where its time went</li>
+<li><strong>Copying</strong> big files can take longer than the analysis: use an <strong>SSD</strong> disk (<code>--disk-type pd-ssd</code>)</li>
+<li>For <strong>multi-step</strong> pipelines, use a workflow language: <strong>WDL</strong> with Cromwell, or <strong>Nextflow</strong></li>
+</ul>
+</section>
+<section id="further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://github.com/DataBiosphere/dsub">dsub on GitHub</a>: documentation, including <a href="https://github.com/DataBiosphere/dsub/blob/main/docs/input_output.md">input and output files</a> and <a href="https://github.com/DataBiosphere/dsub/blob/main/docs/job_control.md">job control</a></li>
+<li><a href="https://support.workbench.verily.com/docs/">Verily Workbench: workflows</a>: Cromwell, Nextflow, and dsub in the Workbench</li>
+<li><a href="https://openwdl.org/">OpenWDL</a> (the WDL language) and <a href="https://www.nextflow.io/docs/latest/">Nextflow documentation</a></li>
+<li><a href="https://dockstore.org/">Dockstore</a> and <a href="https://nf-co.re/">nf-core</a>: ready-made, published workflows</li>
+<li>The <em>All of Us</em> tutorial workspace: <em>How to Use Workflow Tools</em> (dsub, Cromwell, Nextflow notebooks)</li>
+</ul>
+<!-- section-nav -->
+<div class="section-nav">
+<p><a href="../../pages/resources.html" class="section-nav-next">Next section: Resources →</a></p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../pages/extras/workflows-for-beginners.html" class="pagination-link" aria-label="Workflows for Beginners">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Workflows for Beginners</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
