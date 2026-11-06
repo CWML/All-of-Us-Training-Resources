@@ -62,6 +62,7 @@ edit("pages/resources.qmd", [
 ])
 edit("pages/workspace/workflows.qmd", [
     ("see *Optional Extras: GitHub*", "see the [GitHub guide](../extras/github-guide.qmd)"),
+    ("**Running Workflows** (Optional Extras on the website)", "[Running Workflows](../extras/workflows-dsub.qmd)"),
 ])
 print("fixups applied")
 
@@ -86,7 +87,7 @@ SECTIONS = [  # (name, first page, last page), in site order
     ("Your Workspace",   "pages/workspace/workspaces.qmd",        "pages/workspace/workflows.qmd"),
     ("Data",             "pages/data/data-collections.qmd",       "pages/data/data-explorer.qmd"),
     ("Learn by Example", "pages/examples/tutorial-workspaces.qmd", "pages/examples/notebooks.qmd"),
-    ("Optional Extras",  "pages/extras/extras.qmd",               "pages/extras/github-guide.qmd"),
+    ("Optional Extras",  "pages/extras/extras.qmd",               "pages/extras/workflows-dsub.qmd"),
     ("Resources",        "pages/resources.qmd",                   "pages/resources.qmd"),
 ]
 NAV_START = "<!-- section-nav -->"

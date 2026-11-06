@@ -89,6 +89,7 @@ R and Python notebooks in **series**, in `notebooks/`: each notebook does one th
 
 - **`notebooks/core/`** (1.1–3.4): one study from start to finish, people **with type 2 diabetes** vs **without diabetes**, including time to chronic kidney disease (CKD): build the cohort with SQL; clean, reshape, and join; Table 1, logistic and linear regression, survival analysis.
 - **`notebooks/omics/`** (4.1–4.7): genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, and proteomics, around type 2 diabetes and the *TCF7L2* variant rs7903146.
+- **`notebooks/workflows/`** (Optional Extras): run one analysis on many files at once with **dsub**, e.g. the 4.2 GWAS on all 22 chromosomes, with the settings *All of Us* needs.
 - Planned: **surveys** (5.x) and **wearables** (6.x).
 
 Every series uses the same cohort query, `notebooks/sql/t2d_cohort.sql`.
@@ -153,7 +154,7 @@ chmod +x .git/hooks/pre-commit
 All-of-Us-Training-Resources/
 ├── README.md, AGENTS.md     this file; instructions for AI assistants (CLAUDE.md points to AGENTS.md)
 ├── .gitignore               keeps data files, private notes, and reference documents out of Git
-├── notebooks/               the classes: aou_setup.R (settings and helpers), sql/, core/, omics/, surveys/, wearables/
+├── notebooks/               the classes: aou_setup.R (settings and helpers), sql/, core/, omics/, surveys/, wearables/, workflows/
 ├── pages/, index.qmd        the website's pages (Quarto); built into docs/
 ├── Intro to workbench 2.0/  the slide deck
 ├── tools/                   check_notebooks.py (the safety check) and the site-building scripts

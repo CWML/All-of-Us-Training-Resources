@@ -432,6 +432,7 @@ ul.task-list li input[type="checkbox"] {
 ├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics
 ├── surveys/               5.1 – 5.3 (coming soon)
 ├── wearables/             6.1 – 6.3 (coming soon)
+├── workflows/             an Optional Extras class: run one analysis on many files with dsub
 └── archive/               earlier versions</code></pre>
 <p>Notebooks in a series folder load the shared files from the folder above (<code>source("../aou_setup.R")</code>), so <strong>keep this layout</strong>: cloning the repository does that for you.</p>
 </section>
@@ -569,6 +570,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p><strong>Next step:</strong> the Optional Extras class <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb"><code>workflows/workflows_dsub</code></a> (R + dsub + PLINK) runs the 4.2 GWAS on <strong>all 22 chromosomes at once</strong>, each in its own cloud job, with the settings dsub needs in <em>All of Us</em>. Companion page: <a href="https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/workflows-dsub.html">Running Workflows</a>.</p>
 <p><strong>Before the omics classes:</strong> run <strong>0.0 setup</strong> once. Don’t <code>pip install</code> packages into the shared app without checking what they replace: installing PheTK, for example, downgraded a package Hail needs.</p>
 </section>
 <section id="getting-started" class="level2">
