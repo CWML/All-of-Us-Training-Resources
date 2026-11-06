@@ -290,7 +290,7 @@
     "href": "pages/workspace/resources.html#what-you-can-see-and-cant",
     "title": "Overview and Resources Tabs",
     "section": "What You Can See (and Can’t)",
-    "text": "What You Can See (and Can’t)\n\n\n\n\n\n\n\n\n✅ You can see folder and file names, sizes, and types, e.g., notebooks/, data/, and the bq_exports/ folder from a data snapshot\n\n\n❌ You can’t open or download the files. The perimeter blocks it. Open them from an app in the workspace instead.\n\n\n👉 Handy for checking that an export arrived, or finding a file’s path\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThis bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.",
+    "text": "What You Can See (and Can’t)\n\n\n\n\n\n\n\n\n✅ You can see folder and file names, sizes, and types, e.g., notebooks/, data/, and the bq_exports/ folder from a data snapshot\n\n\n❌ You can’t open or download the files. The perimeter blocks it. Open them from an app in the workspace instead.\n\n\n👉 Handy for checking that an export arrived, or finding a file’s path\n🔒 The perimeter also means: you can’t reach the data from your own computer, even with the command-line tools (wb, gcloud, bq): work in an app. And downloading a file from an app to your computer is logged (egress logs). Large transfers can trigger alerts, an app shutdown, or suspended access. Keep data in the Workbench.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nThis bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.",
     "crumbs": [
       "Your Workspace",
       "Overview and Resources Tabs"
@@ -686,7 +686,7 @@
     "href": "pages/extras/github-guide.html#before-you-start",
     "title": "GitHub Guide",
     "section": "Before you start",
-    "text": "Before you start\nYou need:\n\nAn All of Us workspace on Verily Workbench\nA GitHub account\nFor Path A: write access to the existing repo (ask the repo or organization owner to add you)\n\nYou do not need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (wb) and Git are already installed and you’re already logged in.",
+    "text": "Before you start\nYou need:\n\nAn All of Us workspace on Verily Workbench\nA GitHub account\nFor Path A: write access to the existing repo (ask the repo or organization owner to add you)\n\nYou do not need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (wb) and Git are already installed and you’re already logged in.\nWork inside the app on purpose: Controlled Tier workspaces are in a security perimeter, so the data can’t be reached from your own computer, even with wb, gcloud, or bq. Git and GitHub work normally from inside the app. Only code should travel that way.",
     "crumbs": [
       "Optional Extras",
       "GitHub Guide"
@@ -4130,6 +4130,17 @@
     ]
   },
   {
+    "objectID": "pages/extras/workflows-dsub.html#what-we-learned",
+    "href": "pages/extras/workflows-dsub.html#what-we-learned",
+    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
+    "section": "What we learned",
+    "text": "What we learned\nWe ran every step of this class in an All of Us workspace before teaching it (November 2026). Five lessons:\n\n\n\n\n\n\n\nWhat happened\nLesson\n\n\n\n\nWith dsub’s default disk (a standard disk), chromosome 1 took 101 minutes: 59 to copy its 27.7 GB .bed file onto the machine (about 8 MB a second), and 37 for PLINK. With an SSD disk (--disk-type pd-ssd), the same task took 8 minutes: under 4 to copy (about 130 MB a second), about 2 for PLINK\nMost of a task’s time can be copying files, not analysis. Standard disks are cheap but slow, and slowest when small. For big inputs, use --disk-type pd-ssd: for a few minutes it costs about a cent more, and it saves machine time\n\n\nOn chromosome 21 (a small file), PLINK itself took about 2 seconds; the whole task, a few minutes\nstarting a machine and copying files take minutes, whatever the job. That’s why tiny jobs don’t belong in a workflow\n\n\nAll 22 tasks on standard disks: about 580 minutes (9½ hours) of machine time, added up; the whole job took 101 minutes. On SSD disks: about 130 minutes (2 hours) added up; 21 of the 22 tasks took 3 to 8 minutes each\nin parallel, a job takes as long as its slowest task. The SSD disks cut the machine time, and so the cost, by more than two thirds\n\n\nOn SSD disks, the whole job still took 32 minutes, because one task (chromosome 4) waited 30 minutes for its machine. Its log started 30 minutes late; once it started, it took 2½ minutes\nsometimes a task waits for a free machine, and you can’t prevent it. dstat’s start-time doesn’t show the wait (it equals create-time): the first time stamp in the task’s log does\n\n\nA long task’s log repeated You do not currently have an active account selected … Sleeping 10s\nharmless: dsub’s log uploader, while the task runs. The job still succeeded and saved its log\n\n\n\n👉 Find where the time goes: each log line has a time stamp. The gap between Localizing BED and the next line is the copy; the gap after PLINK v2 is the analysis.",
+    "crumbs": [
+      "Optional Extras",
+      "Running Workflows: dsub, Cromwell, and Nextflow"
+    ]
+  },
+  {
     "objectID": "pages/extras/workflows-dsub.html#try-it-out",
     "href": "pages/extras/workflows-dsub.html#try-it-out",
     "title": "Running Workflows: dsub, Cromwell, and Nextflow",
@@ -4727,17 +4738,6 @@
     "crumbs": [
       "Your Workspace",
       "Workflows"
-    ]
-  },
-  {
-    "objectID": "pages/extras/workflows-dsub.html#what-we-learned",
-    "href": "pages/extras/workflows-dsub.html#what-we-learned",
-    "title": "Running Workflows: dsub, Cromwell, and Nextflow",
-    "section": "What we learned",
-    "text": "What we learned\nWe ran every step of this class in an All of Us workspace before teaching it (November 2026). Five lessons:\n\n\n\n\n\n\n\nWhat happened\nLesson\n\n\n\n\nWith dsub’s default disk (a standard disk), chromosome 1 took 101 minutes: 59 to copy its 27.7 GB .bed file onto the machine (about 8 MB a second), and 37 for PLINK. With an SSD disk (--disk-type pd-ssd), the same task took 8 minutes: under 4 to copy (about 130 MB a second), about 2 for PLINK\nMost of a task’s time can be copying files, not analysis. Standard disks are cheap but slow, and slowest when small. For big inputs, use --disk-type pd-ssd: for a few minutes it costs about a cent more, and it saves machine time\n\n\nOn chromosome 21 (a small file), PLINK itself took about 2 seconds; the whole task, a few minutes\nstarting a machine and copying files take minutes, whatever the job. That’s why tiny jobs don’t belong in a workflow\n\n\nAll 22 tasks on standard disks: about 580 minutes (9½ hours) of machine time, added up; the whole job took 101 minutes. On SSD disks: about 130 minutes (2 hours) added up; 21 of the 22 tasks took 3 to 8 minutes each\nin parallel, a job takes as long as its slowest task. The SSD disks cut the machine time, and so the cost, by more than two thirds\n\n\nOn SSD disks, the whole job still took 32 minutes, because one task (chromosome 4) waited 30 minutes for its machine. Its log started 30 minutes late; once it started, it took 2½ minutes\nsometimes a task waits for a free machine, and you can’t prevent it. dstat’s start-time doesn’t show the wait (it equals create-time): the first time stamp in the task’s log does\n\n\nA long task’s log repeated You do not currently have an active account selected … Sleeping 10s\nharmless: dsub’s log uploader, while the task runs. The job still succeeded and saved its log\n\n\n\n👉 Find where the time goes: each log line has a time stamp. The gap between Localizing BED and the next line is the copy; the gap after PLINK v2 is the analysis.",
-    "crumbs": [
-      "Optional Extras",
-      "Running Workflows: dsub, Cromwell, and Nextflow"
     ]
   }
 ]

@@ -1632,6 +1632,8 @@ The details panel also shows the workspace **ID**, **default region**, **pod**, 
 
 ::: {.fragment}
 👉 Handy for checking that an export arrived, or finding a file's path
+
+🔒 **The perimeter also means:** you can't reach the data **from your own computer**, even with the command-line tools (`wb`, `gcloud`, `bq`): work in an app. And downloading a file from an app to your computer is **logged** (egress logs). Large transfers can trigger alerts, an app shutdown, or suspended access. Keep data in the Workbench.
 :::
 
 ::: notes
