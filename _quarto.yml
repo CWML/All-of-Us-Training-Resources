@@ -121,6 +121,7 @@ website:
         - pages/extras/extras.qmd
         - pages/extras/github-guide.qmd
         - pages/extras/ai-coding.qmd
+        - pages/extras/workflows-dsub.qmd
 
   page-footer:
     left: "Cushing/Whitney Medical Library, Yale School of Medicine"

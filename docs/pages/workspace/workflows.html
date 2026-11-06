@@ -631,20 +631,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="dsub-jobs-from-an-app" class="level2">
 <h2 class="anchored" data-anchor-id="dsub-jobs-from-an-app">dsub: Jobs from an App</h2>
-<p>For <strong>one-step</strong> jobs, e.g., run a command on many files. It comes with apps created after <strong>June 2025</strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub_activate</span>                        <span class="co"># turn on dsub in the terminal</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="dt">\</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">${PET_SA_EMAIL}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="op">&lt;</span>container image with samtools<span class="op">&gt;</span> <span class="dt">\</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>👉 More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
+<p>For <strong>one-step</strong> jobs, e.g., run a command on many files. dsub is ready to use in <em>All of Us</em> Jupyter apps. In <em>All of Us</em>, every job needs the <strong>network</strong> settings, <strong>no public address</strong>, and an image from the <strong><em>All of Us</em> mirror</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DSUB_CLOUD_SDK_IMAGE</span><span class="op">=</span>gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">MIRROR</span><span class="op">=</span>us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="at">--user-project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--regions</span> us-central1 <span class="at">--use-private-address</span> <span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--network</span> global/networks/network <span class="dt">\</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--subnetwork</span> regions/us-central1/subnetworks/subnetwork <span class="dt">\</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">$(</span><span class="ex">gcloud</span> config get-value account<span class="va">)</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="st">"</span><span class="va">${MIRROR}</span><span class="st">/biocontainers/samtools:&lt;version&gt;"</span> <span class="dt">\</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>👉 A full class, tested in <em>All of Us</em>: <a href="../../pages/extras/workflows-dsub.html">Running Workflows</a>. More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -657,7 +660,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Source: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.</p>
+<p>Source: Verily, “Run dsub jobs”, and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without –use-private-address and the network settings, jobs can’t start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub’s helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.</p>
 </div>
 </div>
 </div>

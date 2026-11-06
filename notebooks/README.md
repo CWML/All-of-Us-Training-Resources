@@ -14,6 +14,7 @@ notebooks/
 ├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics
 ├── surveys/               5.1 – 5.3 (coming soon)
 ├── wearables/             6.1 – 6.3 (coming soon)
+├── workflows/             an Optional Extras class: run one analysis on many files with dsub
 └── archive/               earlier versions
 ```
 
@@ -69,6 +70,8 @@ Each class starts with a short cohort section, so it works on its own (4.2 and 4
 | [`4.5 rnaseq`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.5%20rnaseq.ipynb) | R (edgeR, limma) | Normalization, differential expression in blood, an eQTL check of *TCF7L2* |
 | [`4.6 proteomics`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.6%20proteomics.ipynb) | R (limma) | Olink proteins: QC, batch checks, differential abundance, pQTLs |
 | [`4.7 rnaseq_proteomics`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/omics/4.7%20rnaseq_proteomics.ipynb) | R | RNA and protein in the same people, and a summary of the series |
+
+**Next step:** the Optional Extras class [`workflows/workflows_dsub`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb) (R + dsub + PLINK) runs the 4.2 GWAS on **all 22 chromosomes at once**, each in its own cloud job, with the settings dsub needs in *All of Us*. Companion page: [Running Workflows](https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/workflows-dsub.html).
 
 **Before the omics classes:** run **0.0 setup** once. Don't `pip install` packages into the shared app without checking what they replace: installing PheTK, for example, downgraded a package Hail needs.
 
