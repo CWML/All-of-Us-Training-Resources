@@ -16,7 +16,7 @@ Everything you run in the Workbench (apps, queries, storage) costs money. It's p
   - Stored resources (buckets, disks) **may be deleted**
 
 ::: {.callout-important}
-Set up a **Google Cloud billing account** and **billing pod** *before* your credits run out or expire. See [Getting a Google Cloud billing account at Yale](#getting-a-google-cloud-billing-account-at-yale).
+Set up a **Google Cloud billing account** and **billing pod** *before* your credits run out or expire. At Yale, ask **at least 2 to 3 weeks ahead**: see [Getting a Google Cloud billing account at Yale](#getting-a-google-cloud-billing-account-at-yale).
 :::
 
 ## Billing pods
@@ -25,7 +25,7 @@ Set up a **Google Cloud billing account** and **billing pod** *before* your cred
   - Workspace costs are charged to the pod
   - Think of the pod as your billing account inside the Workbench
 - One pod can pay for **many workspaces**
-- You can **invite other users** to your pod (e.g., lab members)
+- You can **invite other users** to your pod (e.g., lab members). Their workspaces in your pod are then billed to **your** account
 - All of Us researchers have the **Pod Manager** role, so you can create your own pod
 
 ::: {.callout-warning title="Watch out"}
@@ -39,16 +39,29 @@ Initial credits are linked to the personal user pod. Check a workspace's Workspa
 
 ## Getting a Google Cloud billing account at Yale
 
+::: {.callout-important title="Ask early"}
+Setting up the account takes about **2 weeks**: Burwood, Yale's Google reseller, requests it from Google's distributor. Ask **at least 2 to 3 weeks** before your initial credits run out or expire.
+:::
+
 Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us billing account"** and include:
 
 - Your All of Us Workbench email (e.g., `yourname@researchallofus.org`)
-- Your **COA** number
-- Whether this is an **NIH-funded** project
+- Your **COA** number: the account is charged to it
+- Whether this is an **NIH-funded** project, and if so, the **NIH grant number**. NIH-funded accounts are set up through **NIH STRIDES**, which needs it
 
 Yale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your **pod**.
 
+### What you get
+
+- **Your own** Google Cloud billing account, charged to the COA you gave
+- You **keep access** to it, so you can link it to new pods, or relink pods, yourself, without asking Yale Cloud Support again
+
+::: {.callout-warning title="Choose who you invite to your pod"}
+Anyone you invite to your pod can run workspaces that are billed to **your COA**. Invite only people on the **same grant**.
+:::
+
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-Yale Cloud Support may give additional or different guidance.
+Email is the way to ask for now. Yale Cloud Support is building a **ServiceNow** request form for this; link it here when it's live. Yale Cloud Support may give additional or different guidance.
 :::
 
 <!-- section-nav -->
