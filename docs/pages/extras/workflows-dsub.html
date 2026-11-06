@@ -435,6 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key concepts</a>
   <ul class="collapse">
   <li><a href="#two-ways-to-run-the-same-analysis" id="toc-two-ways-to-run-the-same-analysis" class="nav-link" data-scroll-target="#two-ways-to-run-the-same-analysis">Two ways to run the same analysis</a></li>
+  <li><a href="#is-a-workflow-cheaper" id="toc-is-a-workflow-cheaper" class="nav-link" data-scroll-target="#is-a-workflow-cheaper">Is a workflow cheaper?</a></li>
   <li><a href="#the-words" id="toc-the-words" class="nav-link" data-scroll-target="#the-words">The words</a></li>
   <li><a href="#how-a-dsub-job-runs" id="toc-how-a-dsub-job-runs" class="nav-link" data-scroll-target="#how-a-dsub-job-runs">How a dsub job runs</a></li>
   <li><a href="#what-all-of-us-needs-the-settings" id="toc-what-all-of-us-needs-the-settings" class="nav-link" data-scroll-target="#what-all-of-us-needs-the-settings">What <em>All of Us</em> needs: the settings</a></li>
@@ -685,6 +686,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>👉 <strong>Rule of thumb:</strong> develop and test in your app; once a step works and has to run <strong>many times</strong> or on <strong>big</strong> files, move it to a workflow. Most class projects <strong>don’t need</strong> workflows.</p>
+</section>
+<section id="is-a-workflow-cheaper" class="level3">
+<h3 class="anchored" data-anchor-id="is-a-workflow-cheaper">Is a workflow cheaper?</h3>
+<p>Often <strong>faster</strong>; <strong>cheaper</strong> only sometimes. The total computing is about the same: 22 machines for 15 minutes cost about as much as 1 machine for 5½ hours. What changes is <strong>when</strong> you pay, and for <strong>what size</strong> of machine.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>A workflow <strong>saves</strong> money when…</th>
+<th>A workflow <strong>costs more</strong> when…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>the alternative is a <strong>big app</strong> running for hours (including while you wait, or forget to stop it)</td>
+<td>the job is <strong>small</strong>: each machine takes a few minutes to start and copy its files, and that time is billed too</td>
+</tr>
+<tr class="even">
+<td>steps need <strong>different sizes</strong>: each task gets the machine it needs</td>
+<td>every task copies the <strong>same big files</strong> (one ACAF chromosome took about an hour just to copy)</td>
+</tr>
+<tr class="odd">
+<td>you use <strong>spot</strong> machines (<code>--preemptible</code>): much cheaper, and dsub restarts a task if Google stops it</td>
+<td>a <strong>mistake</strong> runs in every task: 22 tasks, 22 times the cost. That’s why we test in the app first</td>
+</tr>
+<tr class="even">
+<td>you <strong>stop the app</strong> while the jobs run</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>In this class, both ways cost about $1. The workflow’s gain is <strong>time</strong>: about 20 minutes instead of several hours.</p>
 </section>
 <section id="the-words" class="level3">
 <h3 class="anchored" data-anchor-id="the-words">The words</h3>
