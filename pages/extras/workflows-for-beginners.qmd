@@ -68,6 +68,8 @@ Often **faster**; **cheaper** only sometimes. The total computing is about the s
 | you use **spot** machines: much cheaper, and the engine restarts a task if Google stops its machine | a **mistake** runs in every task: 22 tasks, 22 times the cost. Test in the app first |
 | you **stop the app** while the jobs run | |
 
+In the class, the 22 tasks added up to about 2 hours of machine time (on SSD disks) but ran at the same time; the job cost well under $1.
+
 Job machines and storage are billed to your workspace's **pod**, like apps. They **don't** appear in the app's cost estimate, so estimate them yourself: machine price per hour × hours × number of tasks.
 
 ## Common workflow patterns
@@ -130,14 +132,15 @@ Each machine starts **empty**. It sees only the files you list as **inputs**: th
 
 - **every file** the script uses must be an input (in the class: the `.bim` and `.fam` files too, though the script never names them)
 - copying takes **time**, and big files take a long time. Some engines can **stream** files instead of copying them (Nextflow in the Workbench can), which helps when a tool reads only part of a file
+- the **disk** matters. Cloud disks come in types: *standard* (cheap, slow, and slowest when small) and *SSD* (faster, a bit more per GB). In the class, chromosome 1 (a 27.7 GB file) took **101 minutes** on dsub's default standard disk, and **8 minutes** on an SSD (`--disk-type pd-ssd`). Most of the difference was copying the file: about 8 MB a second onto the standard disk, about 130 onto the SSD
 
 ### Parallelism and limits
 
-Tasks that don't depend on each other can run at the same time. But your project has **limits** (quotas) on how many machines and CPUs run at once. Above the limit, tasks **wait** in a queue: the job still finishes, just later.
+Tasks that don't depend on each other can run at the same time. But your project has **limits** (quotas) on how many machines and CPUs run at once. Above the limit, tasks **wait** in a queue: the job still finishes, just later. A task can also wait when Google has no free machine of the type you asked for: in the class, 21 of 22 tasks finished in under 8 minutes, and one waited 30 minutes for its machine. The job finishes when its **slowest** task does.
 
 ### Logs: your first stop
 
-Every task saves a **log**: the engine's messages (copying files, starting the script) and everything your script printed. When a task fails, read its log **before** changing anything.
+Every task saves a **log**: the engine's messages (copying files, starting the script) and everything your script printed. When a task fails, read its log **before** changing anything. When a task is **slow**, read its time stamps: they show whether the time went on copying files or on the analysis.
 
 ### Retries, spot machines, and resuming
 
@@ -183,6 +186,7 @@ Workflows don't change the rules:
 | No individual-level data in logs | Don't make scripts **print** rows of data, participant IDs, or dates: logs are saved, and are easy to copy |
 | No counts of 1 to 20 when you share | The same for workflow results: summarize first, then check |
 | Code goes to GitHub, data doesn't | Scripts and workflow files: yes. Tasks files with **participant IDs** in them: no |
+| Share notebooks through GitHub, with outputs cleared | Never **download** a notebook to share it, even one that looks free of data: its outputs leave the Workbench that way, and downloads are monitored |
 
 ## Questions beginners ask
 
@@ -193,7 +197,7 @@ No. Use ready-made images (the class uses PLINK's). Learn to build your own late
 Yes: use an image with R in it (e.g. one of the **rocker** images, through the *All of Us* mirror), and run `Rscript my_script.R` as the command. Any R packages the script needs must be in the image, or installed by the script.
 
 **Can I close my browser, or stop the app, while jobs run?**
-Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with `dstat`, or on the **Workflows** tab for Cromwell and Nextflow.
+Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with `dstat`, or on the **Workflows** tab for Cromwell and Nextflow. (dsub jobs don't appear on that tab.)
 
 **How do I know what a job cost?**
 There's no per-job bill. Estimate it: machine price per hour × hours × tasks, plus disks. The class shows how to get each task's run time.
@@ -218,6 +222,7 @@ Yes. Find it on [Dockstore](https://dockstore.org/) or [nf-core](https://nf-co.r
 | **Localize**, **delocalize** | copy inputs onto the machine; copy outputs back to the bucket |
 | **Scatter**, **gather** | split work into parallel tasks; combine their results |
 | **Spot** (preemptible) | cheaper machines that Google can stop at any time |
+| **Standard disk**, **SSD** | a machine's disk: cheap and slow, or faster and a bit dearer (`--disk-type pd-ssd` in dsub) |
 | **Quota** | the limit on how many machines or CPUs your project can use at once |
 | **Google Batch** | the Google Cloud service the engines use to run machines |
 | **WDL** | *Workflow Description Language*, the language Cromwell runs |

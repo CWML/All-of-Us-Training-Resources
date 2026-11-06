@@ -697,6 +697,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>In the class, the 22 tasks added up to about 2 hours of machine time (on SSD disks) but ran at the same time; the job cost well under $1.</p>
 <p>Job machines and storage are billed to your workspace’s <strong>pod</strong>, like apps. They <strong>don’t</strong> appear in the app’s cost estimate, so estimate them yourself: machine price per hour × hours × number of tasks.</p>
 </section>
 <section id="common-workflow-patterns" class="level2">
@@ -785,15 +786,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>every file</strong> the script uses must be an input (in the class: the <code>.bim</code> and <code>.fam</code> files too, though the script never names them)</li>
 <li>copying takes <strong>time</strong>, and big files take a long time. Some engines can <strong>stream</strong> files instead of copying them (Nextflow in the Workbench can), which helps when a tool reads only part of a file</li>
+<li>the <strong>disk</strong> matters. Cloud disks come in types: <em>standard</em> (cheap, slow, and slowest when small) and <em>SSD</em> (faster, a bit more per GB). In the class, chromosome 1 (a 27.7 GB file) took <strong>101 minutes</strong> on dsub’s default standard disk, and <strong>8 minutes</strong> on an SSD (<code>--disk-type pd-ssd</code>). Most of the difference was copying the file: about 8 MB a second onto the standard disk, about 130 onto the SSD</li>
 </ul>
 </section>
 <section id="parallelism-and-limits" class="level3">
 <h3 class="anchored" data-anchor-id="parallelism-and-limits">Parallelism and limits</h3>
-<p>Tasks that don’t depend on each other can run at the same time. But your project has <strong>limits</strong> (quotas) on how many machines and CPUs run at once. Above the limit, tasks <strong>wait</strong> in a queue: the job still finishes, just later.</p>
+<p>Tasks that don’t depend on each other can run at the same time. But your project has <strong>limits</strong> (quotas) on how many machines and CPUs run at once. Above the limit, tasks <strong>wait</strong> in a queue: the job still finishes, just later. A task can also wait when Google has no free machine of the type you asked for: in the class, 21 of 22 tasks finished in under 8 minutes, and one waited 30 minutes for its machine. The job finishes when its <strong>slowest</strong> task does.</p>
 </section>
 <section id="logs-your-first-stop" class="level3">
 <h3 class="anchored" data-anchor-id="logs-your-first-stop">Logs: your first stop</h3>
-<p>Every task saves a <strong>log</strong>: the engine’s messages (copying files, starting the script) and everything your script printed. When a task fails, read its log <strong>before</strong> changing anything.</p>
+<p>Every task saves a <strong>log</strong>: the engine’s messages (copying files, starting the script) and everything your script printed. When a task fails, read its log <strong>before</strong> changing anything. When a task is <strong>slow</strong>, read its time stamps: they show whether the time went on copying files or on the analysis.</p>
 </section>
 <section id="retries-spot-machines-and-resuming" class="level3">
 <h3 class="anchored" data-anchor-id="retries-spot-machines-and-resuming">Retries, spot machines, and resuming</h3>
@@ -905,6 +907,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Code goes to GitHub, data doesn’t</td>
 <td>Scripts and workflow files: yes. Tasks files with <strong>participant IDs</strong> in them: no</td>
 </tr>
+<tr class="even">
+<td>Share notebooks through GitHub, with outputs cleared</td>
+<td>Never <strong>download</strong> a notebook to share it, even one that looks free of data: its outputs leave the Workbench that way, and downloads are monitored</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -912,7 +918,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="questions-beginners-ask">Questions beginners ask</h2>
 <p><strong>Do I need to know Docker?</strong> No.&nbsp;Use ready-made images (the class uses PLINK’s). Learn to build your own later, if you need software that isn’t in any image.</p>
 <p><strong>Can a job run R?</strong> Yes: use an image with R in it (e.g.&nbsp;one of the <strong>rocker</strong> images, through the <em>All of Us</em> mirror), and run <code>Rscript my_script.R</code> as the command. Any R packages the script needs must be in the image, or installed by the script.</p>
-<p><strong>Can I close my browser, or stop the app, while jobs run?</strong> Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with <code>dstat</code>, or on the <strong>Workflows</strong> tab for Cromwell and Nextflow.</p>
+<p><strong>Can I close my browser, or stop the app, while jobs run?</strong> Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with <code>dstat</code>, or on the <strong>Workflows</strong> tab for Cromwell and Nextflow. (dsub jobs don’t appear on that tab.)</p>
 <p><strong>How do I know what a job cost?</strong> There’s no per-job bill. Estimate it: machine price per hour × hours × tasks, plus disks. The class shows how to get each task’s run time.</p>
 <p><strong>What if one task out of 22 fails?</strong> Read its log, fix the cause, and rerun <strong>only that task</strong> (in dsub, with the task’s row number after the tasks file).</p>
 <p><strong>Can I run a published workflow?</strong> Yes. Find it on <a href="https://dockstore.org/">Dockstore</a> or <a href="https://nf-co.re/">nf-core</a> and add it on the <strong>Workflows</strong> tab. Check its images first: in <em>All of Us</em>, they must come from Google’s registries or the mirror.</p>
@@ -972,18 +978,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>cheaper machines that Google can stop at any time</td>
 </tr>
 <tr class="odd">
+<td><strong>Standard disk</strong>, <strong>SSD</strong></td>
+<td>a machine’s disk: cheap and slow, or faster and a bit dearer (<code>--disk-type pd-ssd</code> in dsub)</td>
+</tr>
+<tr class="even">
 <td><strong>Quota</strong></td>
 <td>the limit on how many machines or CPUs your project can use at once</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Google Batch</strong></td>
 <td>the Google Cloud service the engines use to run machines</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>WDL</strong></td>
 <td><em>Workflow Description Language</em>, the language Cromwell runs</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Call caching</strong>, <strong>resume</strong></td>
 <td>reusing finished steps when a pipeline is rerun</td>
 </tr>

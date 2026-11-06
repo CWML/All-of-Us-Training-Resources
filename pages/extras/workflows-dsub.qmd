@@ -45,8 +45,8 @@ Most genomic analyses, and many others (imaging, long text, wearable data at min
 | | |
 |---|---|
 | ⏱️ **Class time** | 110 minutes |
-| ⏱️ **Run time** | about **30 minutes**, mostly waiting for jobs |
-| 💰 **Cost** | about **$1** per student: under $1 for 23 small job machines (`n2-standard-2`, about $0.10 an hour each, for 10 to 15 minutes), plus the app (about $0.27 an hour) |
+| ⏱️ **Run time** | about **30 minutes**, mostly waiting for jobs (most tasks take 3 to 8 minutes; one can wait longer for its machine) |
+| 💰 **Cost** | about **$1** per student: under $1 for 23 small job machines (`n2-standard-2`, about $0.10 an hour each, for a few minutes each), plus the app (about $0.27 an hour) |
 | 📋 **Before class** | read [Workflows for Beginners](workflows-for-beginners.qmd); run **4.1** (and ideally **4.2**): the notebook reuses their files, or rebuilds them with the cohort query |
 | 🖥️ **App** | an *All of Us* **Jupyter** app (it has dsub, `gcloud`, and PLINK) |
 
@@ -57,7 +57,7 @@ Most genomic analyses, and many others (imaging, long text, wearable data at min
 | 0:00 | **1. Key concepts**: what a workflow tool does; the *All of Us* settings | listen, ask |
 | 0:20 | **2. Setup**: settings, the GWAS files, the bucket's address | run the cells |
 | 0:30 | **3. Test locally**: chromosome 21 in the app | run the cells |
-| 0:40 | **4. One dsub job**: chromosome 21 in the cloud; compare; read the log | launch, then read on while it runs (about 10 minutes) |
+| 0:40 | **4. One dsub job**: chromosome 21 in the cloud; compare; read the log | launch, then read on while it runs (a few minutes) |
 | 0:55 | **5. All 22 chromosomes at once**: the tasks file, `dstat` | launch; ✋ **Try It Out 1** while it runs |
 | 1:15 | **6. Combine the results**: one table, a Manhattan plot | run the cells |
 | 1:25 | **7. Monitor, troubleshoot, scale up, clean up** | ✋ **Try It Out 2** |
@@ -80,7 +80,7 @@ Most genomic analyses, and many others (imaging, long text, wearable data at min
 
 ### Is a workflow cheaper?
 
-Often **faster**; **cheaper** only sometimes: the total computing is about the same, but you pay for each machine only while it works, at the size it needs. In this class, both ways cost about $1; the workflow's gain is **time**. When it saves money and when it costs more: [Workflows for Beginners](workflows-for-beginners.qmd#is-it-cheaper).
+Often **faster**; **cheaper** only sometimes: the total computing is about the same, but you pay for each machine only while it works, at the size it needs. In our tests, the 22 tasks added up to about 2 hours of machine time (on SSD disks) but ran at the same time, and the job cost well under $1: the workflow's gain is **time**. When it saves money and when it costs more: [Workflows for Beginners](workflows-for-beginners.qmd#is-it-cheaper).
 
 ### The words
 
@@ -117,6 +117,7 @@ your bucket ◄──────────────── results and logs
 | `--project` and `--user-project` `${GOOGLE_CLOUD_PROJECT}` | your workspace's project pays, including for reading the *All of Us* files |
 | `--image` from the ***All of Us* mirror** of Docker Hub | job machines can't reach Docker Hub itself, only Google's registries |
 | `DSUB_CLOUD_SDK_IMAGE`, **pinned** | dsub's helper image (it copies the files). Its default is a moving tag; see below |
+| `--disk-type pd-ssd` (recommended, not required) | dsub's default *standard* disk is slow to copy big files onto: see [What we learned](#what-we-learned) |
 
 ::: {.callout-warning title="Pin your versions: the November 2026 break"}
 dsub uses a small helper image, Google's Cloud SDK, to copy files in and out. By default it uses whatever the latest version is. On **3 November 2026**, version 592 of that image came out, and every dsub job started to fail with ***exit status 127*** before running anything. The fix is to **pin** the version before it:
@@ -196,7 +197,7 @@ job_chr21 <- aou_dsub(
   "--name", "gwas-chr21",
   "--image", PLINK_IMAGE,                                         # <1>
   "--machine-type", "n2-standard-2",
-  "--disk-size", DISK_GB,                                         # <2>
+  "--disk-size", DISK_GB, "--disk-type", "pd-ssd",                # <2>
   "--script", "gwas_one_chr.sh",
   "--env", "CHR=21",
   "--input", paste0("BED=", CLINVAR_GS, "/clinvar.chr21.bed"),     # <3>
@@ -210,7 +211,7 @@ job_chr21 <- aou_dsub(
 )
 ```
 1. PLINK 2 from the *All of Us* mirror, a pinned version.
-2. Big enough for the inputs and outputs: set from the biggest ClinVar file.
+2. Big enough for the inputs and outputs (set from the biggest ClinVar file), and **fast**: an SSD.
 3. Every file the task needs must be an **input**, including the `.bim` and `.fam` files the script never names: the machine has nothing else.
 4. A **folder** to copy back: everything the script writes in `OUT_DIR`.
 
@@ -234,9 +235,25 @@ dstat(job_all, "--summary")           # how many tasks are RUNNING, SUCCESS, FAI
 dstat(job_all, "--wait", show = FALSE) # wait until every task has finished
 ```
 
+dsub jobs **don't** appear on the Workbench's [Workflows tab](../workspace/workflows.qmd): that tab shows Cromwell and Nextflow workflows. Check dsub jobs with `dstat`.
+
 ### Combine
 
-Each task wrote its results to its own folder. The notebook copies them to the app with `gcloud storage cp`, stacks them with `map(...) %>% bind_rows()`, and draws a **Manhattan plot**. These are **summary statistics** (one row per variant), so they're safe to look at and share.
+Each task wrote its results to its own folder. The notebook copies them to the app with `gcloud storage cp`, stacks them with `map(...) %>% bind_rows()`, and draws a **Manhattan plot**. These are **summary statistics** (one row per variant), so they're safe to look at. To **publish** them, follow the *All of Us* dissemination rules, as for any result.
+
+## What we learned
+
+We ran every step of this class in an *All of Us* workspace before teaching it (November 2026). Five lessons:
+
+| What happened | Lesson |
+|---|---|
+| With dsub's **default disk** (a *standard* disk), chromosome 1 took **101 minutes**: 59 to copy its 27.7 GB `.bed` file onto the machine (about 8 MB a second), and 37 for PLINK. With an **SSD** disk (`--disk-type pd-ssd`), the same task took **8 minutes**: under 4 to copy (about 130 MB a second), about 2 for PLINK | **Most of a task's time can be copying files, not analysis.** Standard disks are cheap but slow, and slowest when small. For big inputs, use `--disk-type pd-ssd`: for a few minutes it costs about a cent more, and it saves machine time |
+| On chromosome 21 (a small file), PLINK itself took about **2 seconds**; the whole task, a few minutes | starting a machine and copying files take minutes, whatever the job. That's why tiny jobs don't belong in a workflow |
+| All 22 tasks on **standard** disks: about **580 minutes** (9½ hours) of machine time, added up; the whole job took **101 minutes**. On **SSD** disks: about **130 minutes** (2 hours) added up; 21 of the 22 tasks took **3 to 8 minutes** each | in parallel, a job takes as long as its **slowest** task. The SSD disks cut the machine time, and so the cost, by more than two thirds |
+| On SSD disks, the whole job still took **32 minutes**, because one task (chromosome 4) **waited 30 minutes** for its machine. Its log started 30 minutes late; once it started, it took 2½ minutes | sometimes a task waits for a free machine, and you can't prevent it. `dstat`'s `start-time` doesn't show the wait (it equals `create-time`): the **first time stamp in the task's log** does |
+| A long task's log repeated `You do not currently have an active account selected … Sleeping 10s` | harmless: dsub's log uploader, while the task runs. The job still succeeded and saved its log |
+
+👉 **Find where the time goes:** each log line has a time stamp. The gap between `Localizing BED` and the next line is the copy; the gap after `PLINK v2` is the analysis.
 
 ## Try It Out
 
@@ -268,6 +285,9 @@ Cheaper: **spot** machines, `"--preemptible", "--retries", "2"`. They cost much 
 | An error about the **image**, or a job that never starts | the image isn't from a Google registry | put the *All of Us* mirror in front of Docker Hub images |
 | `No such file or directory` | a file the script uses wasn't an **input** | add it with `--input` |
 | `No space left on device` | the disk is too small | a bigger `--disk-size` |
+| A task takes far longer than the others; in its log, a long gap after `Localizing BED` | copying a big file onto a slow **standard** disk (dsub's default) | `--disk-type pd-ssd` |
+| `You do not currently have an active account selected` … `Sleeping 10s`, over and over | dsub's log uploader, while a long task runs | nothing: the task continues |
+| One task finishes long after the others; its log **starts** late | it waited for a machine (none free, or the project's limit) | nothing: it runs once a machine is free |
 | A task is killed, or PLINK runs out of memory | the machine is too small | a bigger `--machine-type` (e.g. `n2-highmem-4`) |
 | `401 … Requester pays bucket access requires authentication`, then a retry | a short delay while the machine signs in | nothing: dsub retries, and the job continues |
 | `Error: No variants remaining` | the filters removed every variant on that chromosome | check the filters, or leave that chromosome out |
@@ -277,14 +297,15 @@ Cheaper: **spot** machines, `"--preemptible", "--retries", "2"`. They cost much 
 
 ## Scaling up: from ClinVar to ACAF
 
-For a real GWAS, use the **ACAF** files (every variant common in at least one ancestry group). The steps are the same; the files are much **bigger**. In the *All of Us* tutorial, one ACAF chromosome (21) took about **60 minutes** to copy onto the machine and about **28 minutes** for PLINK, on a machine with 32 CPUs (`n2-highmem-32`) and a 400 GB disk.
+For a real GWAS, use the **ACAF** files (every variant common in at least one ancestry group). The steps are the same; the files are much **bigger**. In the *All of Us* tutorial, one ACAF chromosome (21) took about **60 minutes** to copy onto the machine and about **28 minutes** for PLINK, on a machine with 32 CPUs (`n2-highmem-32`) and a 400 GB disk. With files this big, an **SSD** disk matters even more (we haven't timed ACAF ourselves).
 
 | | ClinVar (this class) | ACAF |
 |---|---|---|
 | **Variants** | those listed in ClinVar | all variants common in at least one ancestry group |
+| **File sizes** (`.bed`) | 4 to 28 GB per chromosome, 293 GB in all (v9) | many times bigger |
 | **Machine** | `n2-standard-2` | `n2-highmem-16` to `-32` |
-| **Disk** | under 100 GB | 400 GB or more |
-| **Time per task** | 10 to 15 minutes | 1 to 2+ hours |
+| **Disk** | under 100 GB, SSD | 400 GB or more, SSD |
+| **Time per task** | a few minutes | 1 to 2+ hours |
 | **Cost** | under $1 in all | tens of dollars or more: **test on one chromosome first** |
 
 Ways to save: **spot** machines (`--preemptible`, with `--retries`); **smaller tasks** (split each chromosome into regions with PLINK's `--from-bp` and `--to-bp`); and reading **only what you need**.
@@ -395,7 +416,7 @@ Nextflow runs one task per chromosome on its own, in parallel.
 The *All of Us* tutorial notebooks have complete configuration files. Check two things in them: that **every image** comes from a Google registry or the *All of Us* mirror (not straight from Docker Hub), and that helper images, such as Nextflow's `google.batch.copyImage`, use a **pinned version**. The tutorials read the service account from `PET_SA_EMAIL`; if that's empty in your app, use `gcloud config get-value account`, as for dsub.
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-Tested: dsub (November 2026, dsub 0.5.6, *All of Us* Jupyter app, CDR v9), including a job that read an *All of Us* ClinVar file with the PLINK 2 image from the mirror. The Cromwell and Nextflow examples follow the *All of Us* tutorial notebooks and the Verily documentation; we haven't run them ourselves yet. The tutorials note that the Nextflow web interface (Seqera) doesn't work in *All of Us* workspaces, because they have no internet access, and that the default Nextflow is version 25.10 (version 26.04 has a stricter syntax). The Workflows tab runs Cromwell in *server mode*; running `java -jar $CROMWELL_JAR run` in an app is *run mode*: the app must stay on until the workflow finishes. Job machines and bucket storage are billed to the workspace's pod and don't appear in the app cost estimate.
+Tested: dsub (November 2026, dsub 0.5.6, *All of Us* Jupyter app, CDR v9): the chromosome 21 job, all 22 tasks (they matched the app), and chromosome 1 on standard and SSD disks. The Cromwell and Nextflow examples follow the *All of Us* tutorial notebooks and the Verily documentation; we haven't run them ourselves yet. The tutorials note that the Nextflow web interface (Seqera) doesn't work in *All of Us* workspaces, because they have no internet access, and that the default Nextflow is version 25.10 (version 26.04 has a stricter syntax). The Workflows tab runs Cromwell in *server mode*; running `java -jar $CROMWELL_JAR run` in an app is *run mode*: the app must stay on until the workflow finishes. Job machines and bucket storage are billed to the workspace's pod and don't appear in the app cost estimate.
 :::
 
 ## Instructor notes
@@ -406,7 +427,8 @@ Tested: dsub (November 2026, dsub 0.5.6, *All of Us* Jupyter app, CDR v9), inclu
 - Students in the same workspace share the project's **limits** on machines and CPUs. In a large class, have pairs share one run.
 - The commonest failures are **settings**, not code: a missing network flag, an image straight from Docker Hub, or a helper image that changed. The settings in `aou_dsub()` were tested in November 2026; if jobs fail with exit status 127 before the script runs, check the [dsub issues on GitHub](https://github.com/DataBiosphere/dsub/issues) for a newer working helper version.
 - The **comparison** in Part 4 (app vs job) is the key check. A small difference in p-values comes from the PLINK version (the image's 2020 version vs the app's newer one): a good moment to talk about **pinning and reporting versions**.
-- dsub's printed messages include the workspace project ID and the bucket address: **clear outputs** before committing.
+- dsub's printed messages include the workspace project ID, the bucket address, and your service account: **clear outputs** before committing, and share the notebook through GitHub, never by downloading it.
+- Students may look for their jobs on the **Workflows** tab: dsub jobs aren't there (it shows Cromwell and Nextflow). Use `dstat`.
 
 ## Key takeaways
 
@@ -415,7 +437,8 @@ Tested: dsub (November 2026, dsub 0.5.6, *All of Us* Jupyter app, CDR v9), inclu
 - **Test small first:** the script in the app, then one job, then all of them
 - **Every file a task needs must be an input**: the machine has nothing else
 - In *All of Us*: the private network, no public address, images from the **mirror**, and **pinned** versions
-- `dstat` to monitor, `ddel` to cancel, and the **log** to find out why a task failed
+- `dstat` to monitor, `ddel` to cancel, and the **log** to find out why a task failed, or where its time went
+- **Copying** big files can take longer than the analysis: use an **SSD** disk (`--disk-type pd-ssd`)
 - For **multi-step** pipelines, use a workflow language: **WDL** with Cromwell, or **Nextflow**
 
 ## Further reading
