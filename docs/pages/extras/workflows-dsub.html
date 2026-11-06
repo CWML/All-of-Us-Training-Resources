@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../pages/extras/ai-coding.html" rel="prev">
+<link href="../../pages/extras/workflows-for-beginners.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -410,6 +410,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workflows for Beginners</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../pages/extras/workflows-dsub.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Running Workflows: dsub, Cromwell, and Nextflow</span></a>
   </div>
@@ -494,7 +500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><strong>An Optional Extras class</strong> · R + dsub + PLINK · 110 minutes · builds on <a href="../../pages/courses/omics/4-2-gwas-plink.html">4.2 A GWAS with PLINK</a></p>
-<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/gwas_one_chr.sh" class="btn btn-outline-secondary btn-sm">The script it runs</a> <a href="../../pages/workspace/workflows.html" class="btn btn-outline-secondary btn-sm">The Workflows tab</a></p>
+<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/gwas_one_chr.sh" class="btn btn-outline-secondary btn-sm">The script it runs</a> <a href="../../pages/extras/workflows-for-beginners.html" class="btn btn-outline-secondary btn-sm">Workflows for Beginners</a> <a href="../../pages/workspace/workflows.html" class="btn btn-outline-secondary btn-sm">The Workflows tab</a></p>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>In <strong>4.2</strong> we ran a GWAS on <strong>one region</strong> of one chromosome, inside our app. A whole-genome analysis is <strong>22 or more</strong> such jobs, each with large files. Run one after another in the app, that takes hours, and the app must stay open the whole time.</p>
@@ -547,10 +553,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="time-and-cost" class="level3">
 <h3 class="anchored" data-anchor-id="time-and-cost">Time and cost</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <tbody>
 <tr class="odd">
 <td>⏱️ <strong>Class time</strong></td>
@@ -566,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td>📋 <strong>Before class</strong></td>
-<td>run <strong>4.1</strong> (and ideally <strong>4.2</strong>): the notebook reuses their files, or rebuilds them with the cohort query</td>
+<td>read <a href="../../pages/extras/workflows-for-beginners.html">Workflows for Beginners</a>; run <strong>4.1</strong> (and ideally <strong>4.2</strong>): the notebook reuses their files, or rebuilds them with the cohort query</td>
 </tr>
 <tr class="odd">
 <td>🖥️ <strong>App</strong></td>
@@ -689,38 +691,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="is-a-workflow-cheaper" class="level3">
 <h3 class="anchored" data-anchor-id="is-a-workflow-cheaper">Is a workflow cheaper?</h3>
-<p>Often <strong>faster</strong>; <strong>cheaper</strong> only sometimes. The total computing is about the same: 22 machines for 15 minutes cost about as much as 1 machine for 5½ hours. What changes is <strong>when</strong> you pay, and for <strong>what size</strong> of machine.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>A workflow <strong>saves</strong> money when…</th>
-<th>A workflow <strong>costs more</strong> when…</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>the alternative is a <strong>big app</strong> running for hours (including while you wait, or forget to stop it)</td>
-<td>the job is <strong>small</strong>: each machine takes a few minutes to start and copy its files, and that time is billed too</td>
-</tr>
-<tr class="even">
-<td>steps need <strong>different sizes</strong>: each task gets the machine it needs</td>
-<td>every task copies the <strong>same big files</strong> (one ACAF chromosome took about an hour just to copy)</td>
-</tr>
-<tr class="odd">
-<td>you use <strong>spot</strong> machines (<code>--preemptible</code>): much cheaper, and dsub restarts a task if Google stops it</td>
-<td>a <strong>mistake</strong> runs in every task: 22 tasks, 22 times the cost. That’s why we test in the app first</td>
-</tr>
-<tr class="even">
-<td>you <strong>stop the app</strong> while the jobs run</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>In this class, both ways cost about $1. The workflow’s gain is <strong>time</strong>: about 20 minutes instead of several hours.</p>
+<p>Often <strong>faster</strong>; <strong>cheaper</strong> only sometimes: the total computing is about the same, but you pay for each machine only while it works, at the size it needs. In this class, both ways cost about $1; the workflow’s gain is <strong>time</strong>. When it saves money and when it costs more: <a href="../../pages/extras/workflows-for-beginners.html#is-it-cheaper">Workflows for Beginners</a>.</p>
 </section>
 <section id="the-words" class="level3">
 <h3 class="anchored" data-anchor-id="the-words">The words</h3>
@@ -1807,8 +1778,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../pages/extras/ai-coding.html" class="pagination-link" aria-label="Coding with AI and GitHub">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Coding with AI and GitHub</span>
+      <a href="../../pages/extras/workflows-for-beginners.html" class="pagination-link" aria-label="Workflows for Beginners">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Workflows for Beginners</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

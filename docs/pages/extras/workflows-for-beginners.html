@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="What workflows are, why researchers use them in All of Us and elsewhere, when not to, and the ideas behind dsub, Cromwell, and Nextflow, in plain language">
+
+<title>Workflows for Beginners – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../pages/extras/workflows-dsub.html" rel="next">
+<link href="../../pages/extras/ai-coding.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/workspace/workspaces.html"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/index.html">
+ <span class="dropdown-text">All courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/core/index.html">
+ <span class="dropdown-text">Core series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/omics/index.html">
+ <span class="dropdown-text">Omics series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../pages/extras/extras.html" aria-current="page"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/extras/workflows-for-beginners.html">Workflows for Beginners</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional Extras</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/github-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/ai-coding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coding with AI and GitHub</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-for-beginners.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Workflows for Beginners</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-dsub.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Running Workflows: dsub, Cromwell, and Nextflow</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-big-picture-one-oven-or-a-kitchen-for-hire" id="toc-the-big-picture-one-oven-or-a-kitchen-for-hire" class="nav-link active" data-scroll-target="#the-big-picture-one-oven-or-a-kitchen-for-hire">The big picture: one oven, or a kitchen for hire</a></li>
+  <li><a href="#why-researchers-use-workflows" id="toc-why-researchers-use-workflows" class="nav-link" data-scroll-target="#why-researchers-use-workflows">Why researchers use workflows</a>
+  <ul class="collapse">
+  <li><a href="#why-in-all-of-us-in-particular" id="toc-why-in-all-of-us-in-particular" class="nav-link" data-scroll-target="#why-in-all-of-us-in-particular">Why in <em>All of Us</em> in particular</a></li>
+  <li><a href="#when-not-to-use-a-workflow" id="toc-when-not-to-use-a-workflow" class="nav-link" data-scroll-target="#when-not-to-use-a-workflow">When <strong>not</strong> to use a workflow</a></li>
+  </ul></li>
+  <li><a href="#is-it-cheaper" id="toc-is-it-cheaper" class="nav-link" data-scroll-target="#is-it-cheaper">Is it cheaper?</a></li>
+  <li><a href="#common-workflow-patterns" id="toc-common-workflow-patterns" class="nav-link" data-scroll-target="#common-workflow-patterns">Common workflow patterns</a>
+  <ul class="collapse">
+  <li><a href="#scattergather-split-run-in-parallel-combine" id="toc-scattergather-split-run-in-parallel-combine" class="nav-link" data-scroll-target="#scattergather-split-run-in-parallel-combine">Scatter–gather: split, run in parallel, combine</a></li>
+  <li><a href="#a-pipeline-steps-in-order" id="toc-a-pipeline-steps-in-order" class="nav-link" data-scroll-target="#a-pipeline-steps-in-order">A pipeline: steps in order</a></li>
+  <li><a href="#what-researchers-run-as-workflows" id="toc-what-researchers-run-as-workflows" class="nav-link" data-scroll-target="#what-researchers-run-as-workflows">What researchers run as workflows</a></li>
+  </ul></li>
+  <li><a href="#the-ideas-behind-them" id="toc-the-ideas-behind-them" class="nav-link" data-scroll-target="#the-ideas-behind-them">The ideas behind them</a>
+  <ul class="collapse">
+  <li><a href="#containers-and-images-the-kitchen-kit" id="toc-containers-and-images-the-kitchen-kit" class="nav-link" data-scroll-target="#containers-and-images-the-kitchen-kit">Containers and images: the kitchen kit</a></li>
+  <li><a href="#inputs-and-outputs-what-the-machine-can-see" id="toc-inputs-and-outputs-what-the-machine-can-see" class="nav-link" data-scroll-target="#inputs-and-outputs-what-the-machine-can-see">Inputs and outputs: what the machine can see</a></li>
+  <li><a href="#parallelism-and-limits" id="toc-parallelism-and-limits" class="nav-link" data-scroll-target="#parallelism-and-limits">Parallelism and limits</a></li>
+  <li><a href="#logs-your-first-stop" id="toc-logs-your-first-stop" class="nav-link" data-scroll-target="#logs-your-first-stop">Logs: your first stop</a></li>
+  <li><a href="#retries-spot-machines-and-resuming" id="toc-retries-spot-machines-and-resuming" class="nav-link" data-scroll-target="#retries-spot-machines-and-resuming">Retries, spot machines, and resuming</a></li>
+  <li><a href="#reproducibility-write-it-down" id="toc-reproducibility-write-it-down" class="nav-link" data-scroll-target="#reproducibility-write-it-down">Reproducibility: write it down</a></li>
+  </ul></li>
+  <li><a href="#the-tools-in-the-workbench" id="toc-the-tools-in-the-workbench" class="nav-link" data-scroll-target="#the-tools-in-the-workbench">The tools in the Workbench</a>
+  <ul class="collapse">
+  <li><a href="#outside-the-workbench" id="toc-outside-the-workbench" class="nav-link" data-scroll-target="#outside-the-workbench">Outside the Workbench</a></li>
+  </ul></li>
+  <li><a href="#workflows-and-the-all-of-us-rules" id="toc-workflows-and-the-all-of-us-rules" class="nav-link" data-scroll-target="#workflows-and-the-all-of-us-rules">Workflows and the <em>All of Us</em> rules</a></li>
+  <li><a href="#questions-beginners-ask" id="toc-questions-beginners-ask" class="nav-link" data-scroll-target="#questions-beginners-ask">Questions beginners ask</a></li>
+  <li><a href="#words-youll-meet" id="toc-words-youll-meet" class="nav-link" data-scroll-target="#words-youll-meet">Words you’ll meet</a></li>
+  <li><a href="#a-learning-path" id="toc-a-learning-path" class="nav-link" data-scroll-target="#a-learning-path">A learning path</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Workflows for Beginners</h1>
+</div>
+
+<div>
+  <div class="description">
+    What workflows are, why researchers use them in All of Us and elsewhere, when not to, and the ideas behind dsub, Cromwell, and Nextflow, in plain language
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>New to workflows? This page explains what they are, <strong>why</strong> researchers use them, and the ideas you’ll meet in the class <a href="../../pages/extras/workflows-dsub.html">Running Workflows</a>. You don’t need to read it all at once, and you don’t need to know any of it to use the <em>All of Us</em> data: most projects never need a workflow.</p>
+<section id="the-big-picture-one-oven-or-a-kitchen-for-hire" class="level2">
+<h2 class="anchored" data-anchor-id="the-big-picture-one-oven-or-a-kitchen-for-hire">The big picture: one oven, or a kitchen for hire</h2>
+<p>Imagine you have to bake <strong>22 cakes</strong>, each from its own bag of ingredients.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Baking at home (your <strong>app</strong>)</th>
+<th>Hiring a kitchen (a <strong>workflow</strong>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ovens</strong></td>
+<td>one, so one cake after another</td>
+<td>one per cake, all baking <strong>at once</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Size</strong></td>
+<td>your oven, whatever the cake</td>
+<td>a big oven for the big cakes, a small one for the small ones</td>
+</tr>
+<tr class="odd">
+<td><strong>You</strong></td>
+<td>stay home until the last cake is done</td>
+<td>send the order, and come back when it’s ready</td>
+</tr>
+<tr class="even">
+<td><strong>Paying</strong></td>
+<td>for your kitchen, all day</td>
+<td>for each oven <strong>only while it bakes</strong></td>
+</tr>
+</tbody>
+</table>
+<p>In workflow words:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>In the kitchen</th>
+<th>In a workflow</th>
+<th>In the class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>the <strong>recipe</strong></td>
+<td>the <strong>script</strong>: the commands to run</td>
+<td><code>gwas_one_chr.sh</code></td>
+</tr>
+<tr class="even">
+<td>the <strong>ingredients</strong></td>
+<td>the <strong>inputs</strong>: files copied onto each machine</td>
+<td>the ClinVar files for one chromosome, and our sample</td>
+</tr>
+<tr class="odd">
+<td>a <strong>kitchen kit</strong> with every tool already in it</td>
+<td>the <strong>image</strong> (container): the software, already installed</td>
+<td>PLINK 2</td>
+</tr>
+<tr class="even">
+<td>the <strong>ovens</strong></td>
+<td>the <strong>machines</strong> (virtual machines in the cloud)</td>
+<td>22 <code>n2-standard-2</code> machines</td>
+</tr>
+<tr class="odd">
+<td>the <strong>order ticket</strong> that lists every cake</td>
+<td>the <strong>tasks file</strong>, or the <strong>workflow file</strong></td>
+<td><code>gwas_tasks.tsv</code></td>
+</tr>
+<tr class="even">
+<td>the <strong>head chef</strong> who hands out the work</td>
+<td>the <strong>workflow engine</strong>: dsub, Cromwell, or Nextflow</td>
+<td>dsub</td>
+</tr>
+<tr class="odd">
+<td>the <strong>counter</strong> where finished cakes go</td>
+<td>your <strong>bucket</strong></td>
+<td><code>data/workflows/</code></td>
+</tr>
+<tr class="even">
+<td>the kitchen’s <strong>notes</strong> on each cake</td>
+<td>the <strong>logs</strong></td>
+<td><code>data/workflows/logs/</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-researchers-use-workflows" class="level2">
+<h2 class="anchored" data-anchor-id="why-researchers-use-workflows">Why researchers use workflows</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reason</th>
+<th>What it means</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>⏱️ <strong>Speed</strong></td>
+<td>many machines work <strong>in parallel</strong></td>
+<td>22 chromosomes in the time of the slowest one, instead of the sum of all 22</td>
+</tr>
+<tr class="even">
+<td>📈 <strong>Scale</strong></td>
+<td>each task gets a machine as <strong>big</strong> as it needs, far bigger than a laptop or an app</td>
+<td>32 CPUs and 400 GB of disk for one chromosome of the full genome data</td>
+</tr>
+<tr class="odd">
+<td>🔁 <strong>Reproducibility</strong></td>
+<td>the workflow file records <strong>every step</strong>, the <strong>software versions</strong>, and the <strong>settings</strong>. Rerun it next year and get the same results</td>
+<td>a reviewer asks you to rerun with a different filter: change one line, run again</td>
+</tr>
+<tr class="even">
+<td>🤝 <strong>Sharing</strong></td>
+<td>a colleague runs <strong>your</strong> workflow on their data, or you run a published one</td>
+<td>the GATK pipelines for finding variants; the nf-core pipelines for RNA-seq</td>
+</tr>
+<tr class="odd">
+<td>🛟 <strong>Recovery</strong></td>
+<td>if one task fails, rerun <strong>only that task</strong>. Cromwell and Nextflow can <strong>resume</strong> a pipeline where it stopped</td>
+<td>a machine is stopped after 3 hours: only its task starts again</td>
+</tr>
+<tr class="even">
+<td>💤 <strong>Hands-off</strong></td>
+<td>jobs run without you, even with your app <strong>stopped</strong></td>
+<td>launch before you go home; results in the morning</td>
+</tr>
+<tr class="odd">
+<td>💰 <strong>Cost control</strong></td>
+<td>you pay for each machine only while it works, and can use cheap <strong>spot</strong> machines</td>
+<td>(see <em>Is it cheaper?</em> below)</td>
+</tr>
+</tbody>
+</table>
+<section id="why-in-all-of-us-in-particular" class="level3">
+<h3 class="anchored" data-anchor-id="why-in-all-of-us-in-particular">Why in <em>All of Us</em> in particular</h3>
+<ul>
+<li><strong>The data is big.</strong> <em>All of Us</em> has hundreds of thousands of whole genomes. One chromosome of the main genome callset (ACAF) is tens to hundreds of GB; in the <em>All of Us</em> tutorial, just <strong>copying</strong> one onto a machine took an hour. An app can’t hold the whole genome at once.</li>
+<li><strong>The data can’t leave.</strong> At most universities, big jobs go to the university’s computing cluster. <em>All of Us</em> data <strong>must stay in the Workbench</strong>, so you can’t take it to a cluster (at Yale: the Center for Research Computing’s clusters). Workflows are how you get a <strong>cluster’s power inside</strong> the Workbench.</li>
+<li><strong>Apps are one machine.</strong> A bigger app costs more <strong>every hour</strong> it’s on, including while you read, write, or wait. Workflows use big machines only for the minutes they’re needed.</li>
+<li><strong>Publishing.</strong> Journals and reviewers increasingly ask for <strong>reproducible</strong> code. A workflow file in GitHub, with pinned versions, is exactly that, and it contains no data.</li>
+</ul>
+</section>
+<section id="when-not-to-use-a-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="when-not-to-use-a-workflow">When <strong>not</strong> to use a workflow</h3>
+<ul>
+<li><strong>Exploring</strong> the data, trying ideas, making plots: use the app.</li>
+<li><strong>Small</strong> data, or steps that take minutes: starting machines and copying files would take longer than the work.</li>
+<li><strong>BigQuery</strong> work (most of the core, survey, and wearables classes): BigQuery already runs in parallel on Google’s machines. You don’t need a workflow for SQL.</li>
+<li><strong>Steps you haven’t tested yet</strong>: get them working in the app first.</li>
+</ul>
+<p>👉 <strong>Rule of thumb:</strong> if you’d run the <strong>same step</strong> on <strong>many files</strong> (or one <strong>very big</strong> one), and it already works in your app, consider a workflow.</p>
+</section>
+</section>
+<section id="is-it-cheaper" class="level2">
+<h2 class="anchored" data-anchor-id="is-it-cheaper">Is it cheaper?</h2>
+<p>Often <strong>faster</strong>; <strong>cheaper</strong> only sometimes. The total computing is about the same: 22 machines for 15 minutes cost about as much as 1 machine for 5½ hours.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>A workflow <strong>saves</strong> money when…</th>
+<th>A workflow <strong>costs more</strong> when…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>the alternative is a <strong>big app</strong> running for hours (including while you wait, or forget to stop it)</td>
+<td>the job is <strong>small</strong>: each machine takes a few minutes to start and copy its files, and that time is billed too</td>
+</tr>
+<tr class="even">
+<td>steps need <strong>different sizes</strong>: each task gets the machine it needs</td>
+<td>every task copies the <strong>same big files</strong></td>
+</tr>
+<tr class="odd">
+<td>you use <strong>spot</strong> machines: much cheaper, and the engine restarts a task if Google stops its machine</td>
+<td>a <strong>mistake</strong> runs in every task: 22 tasks, 22 times the cost. Test in the app first</td>
+</tr>
+<tr class="even">
+<td>you <strong>stop the app</strong> while the jobs run</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Job machines and storage are billed to your workspace’s <strong>pod</strong>, like apps. They <strong>don’t</strong> appear in the app’s cost estimate, so estimate them yourself: machine price per hour × hours × number of tasks.</p>
+</section>
+<section id="common-workflow-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="common-workflow-patterns">Common workflow patterns</h2>
+<section id="scattergather-split-run-in-parallel-combine" class="level3">
+<h3 class="anchored" data-anchor-id="scattergather-split-run-in-parallel-combine">Scatter–gather: split, run in parallel, combine</h3>
+<p>The most common pattern, and the one in the class: <strong>scatter</strong> one job into many tasks, then <strong>gather</strong> the results.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>                ┌─► chr1  ─┐</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>one analysis ───┼─► chr2  ─┼───► one table of results</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  (scatter)     ├─► ...   ─┤        (gather)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                └─► chr22 ─┘</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can split by <strong>chromosome</strong> or <strong>region</strong> (genomics), by <strong>sample</strong> or <strong>person</strong> (sequencing data, images), by <strong>batch</strong> of files, or by <strong>setting</strong> (the same model with different parameters).</p>
+</section>
+<section id="a-pipeline-steps-in-order" class="level3">
+<h3 class="anchored" data-anchor-id="a-pipeline-steps-in-order">A pipeline: steps in order</h3>
+<p>Each step uses the outputs of the one before. Each step can scatter too.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>raw files ──► quality control ──► analysis ──► summary and plots</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>dsub runs <strong>one step</strong> per job, so you’d run (and check) each step yourself. <strong>Cromwell</strong> and <strong>Nextflow</strong> run the whole chain, in the right order, and start each step as soon as its inputs are ready.</p>
+</section>
+<section id="what-researchers-run-as-workflows" class="level3">
+<h3 class="anchored" data-anchor-id="what-researchers-run-as-workflows">What researchers run as workflows</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Typical workflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Genomics</strong></td>
+<td>GWAS by chromosome (as in the class); finding variants in each person’s sequence (CRAM → VCF); annotating or filtering variant files; polygenic scores</td>
+</tr>
+<tr class="even">
+<td><strong>RNA-seq</strong></td>
+<td>from raw reads to counts, one task per sample (e.g.&nbsp;the nf-core <strong>rnaseq</strong> pipeline)</td>
+</tr>
+<tr class="odd">
+<td><strong>Imaging</strong></td>
+<td>processing each scan the same way</td>
+</tr>
+<tr class="even">
+<td><strong>Text</strong></td>
+<td>running a language model over many documents</td>
+</tr>
+<tr class="odd">
+<td><strong>Wearables</strong></td>
+<td>summarizing minute-level data, one batch of people per task</td>
+</tr>
+<tr class="even">
+<td><strong>Statistics</strong></td>
+<td>simulations, bootstraps, permutation tests: thousands of independent runs</td>
+</tr>
+<tr class="odd">
+<td><strong>Machine learning</strong></td>
+<td>trying many model settings at once</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="the-ideas-behind-them" class="level2">
+<h2 class="anchored" data-anchor-id="the-ideas-behind-them">The ideas behind them</h2>
+<section id="containers-and-images-the-kitchen-kit" class="level3">
+<h3 class="anchored" data-anchor-id="containers-and-images-the-kitchen-kit">Containers and images: the kitchen kit</h3>
+<p>An <strong>image</strong> is a packaged computer system with the software already installed: PLINK, R and its packages, Python, and so on. A <strong>container</strong> is a copy of the image, running. Every task runs inside one, so:</p>
+<ul>
+<li>the software is the <strong>same</strong> on every machine, today and next year</li>
+<li>you don’t install anything on the machines</li>
+<li>others can rerun your work with the <strong>exact</strong> same software</li>
+</ul>
+<p>Images live in <strong>registries</strong> (e.g.&nbsp;Docker Hub, Google’s Artifact Registry) and have <strong>tags</strong>, which name a version: <code>plink2:alpha2.3_jan2020</code>. Two rules:</p>
+<ul>
+<li><strong>Pin the version.</strong> A tag like <code>latest</code> changes when a new version comes out, and your results (or your job) can change with it. That’s what broke every dsub job in <em>All of Us</em> in November 2026 (see the class).</li>
+<li><strong>In <em>All of Us</em>,</strong> job machines can’t reach Docker Hub. Use images from Google’s registries, or Docker Hub images through the <strong><em>All of Us</em> mirror</strong>.</li>
+</ul>
+<p>You don’t need to <strong>build</strong> images to start: ready-made ones exist for most tools (e.g.&nbsp;the <strong>BioContainers</strong> project has images for most bioinformatics software).</p>
+</section>
+<section id="inputs-and-outputs-what-the-machine-can-see" class="level3">
+<h3 class="anchored" data-anchor-id="inputs-and-outputs-what-the-machine-can-see">Inputs and outputs: what the machine can see</h3>
+<p>Each machine starts <strong>empty</strong>. It sees only the files you list as <strong>inputs</strong>: the engine copies them in (<em>localizing</em>) before your script runs, and copies the <strong>outputs</strong> back to your bucket (<em>delocalizing</em>) afterwards. So:</p>
+<ul>
+<li><strong>every file</strong> the script uses must be an input (in the class: the <code>.bim</code> and <code>.fam</code> files too, though the script never names them)</li>
+<li>copying takes <strong>time</strong>, and big files take a long time. Some engines can <strong>stream</strong> files instead of copying them (Nextflow in the Workbench can), which helps when a tool reads only part of a file</li>
+</ul>
+</section>
+<section id="parallelism-and-limits" class="level3">
+<h3 class="anchored" data-anchor-id="parallelism-and-limits">Parallelism and limits</h3>
+<p>Tasks that don’t depend on each other can run at the same time. But your project has <strong>limits</strong> (quotas) on how many machines and CPUs run at once. Above the limit, tasks <strong>wait</strong> in a queue: the job still finishes, just later.</p>
+</section>
+<section id="logs-your-first-stop" class="level3">
+<h3 class="anchored" data-anchor-id="logs-your-first-stop">Logs: your first stop</h3>
+<p>Every task saves a <strong>log</strong>: the engine’s messages (copying files, starting the script) and everything your script printed. When a task fails, read its log <strong>before</strong> changing anything.</p>
+</section>
+<section id="retries-spot-machines-and-resuming" class="level3">
+<h3 class="anchored" data-anchor-id="retries-spot-machines-and-resuming">Retries, spot machines, and resuming</h3>
+<ul>
+<li><strong>Retries:</strong> start a failed task again, automatically (<code>--retries</code> in dsub).</li>
+<li><strong>Spot machines</strong> (<em>preemptible</em>): much cheaper, but Google can stop them at any time. With retries, a stopped task starts again.</li>
+<li><strong>Resuming:</strong> Cromwell (<em>call caching</em>) and Nextflow (<code>-resume</code>) remember which steps finished, and skip them when you rerun the pipeline.</li>
+</ul>
+</section>
+<section id="reproducibility-write-it-down" class="level3">
+<h3 class="anchored" data-anchor-id="reproducibility-write-it-down">Reproducibility: write it down</h3>
+<p>Keep the workflow (script, tasks file, or workflow file) in <strong>GitHub</strong>, with the image versions pinned. Record the <strong>date</strong> and the <strong>data version</strong> (e.g.&nbsp;CDR v9). That’s your methods section, and it contains no data.</p>
+</section>
+</section>
+<section id="the-tools-in-the-workbench" class="level2">
+<h2 class="anchored" data-anchor-id="the-tools-in-the-workbench">The tools in the Workbench</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>dsub</th>
+<th>Cromwell</th>
+<th>Nextflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>You write</strong></td>
+<td>a shell script and one command</td>
+<td>a <strong>WDL</strong> file, plus a JSON file of inputs</td>
+<td>a <strong>Nextflow</strong> (<code>.nf</code>) file</td>
+</tr>
+<tr class="even">
+<td><strong>Think of it as</strong></td>
+<td>“run this script on many files”</td>
+<td>a <strong>pipeline</strong> described in a simple language</td>
+<td>a <strong>pipeline</strong> described in a programming language</td>
+</tr>
+<tr class="odd">
+<td><strong>Best for</strong></td>
+<td>one step on many files</td>
+<td>multi-step pipelines; many published genomics workflows</td>
+<td>multi-step pipelines; the <strong>nf-core</strong> community pipelines</td>
+</tr>
+<tr class="even">
+<td><strong>Run from</strong></td>
+<td>an app (terminal or notebook)</td>
+<td>the <strong>Workflows</strong> tab, or an app</td>
+<td>the <strong>Workflows</strong> tab, or an app</td>
+</tr>
+<tr class="odd">
+<td><strong>Also used at</strong></td>
+<td>Google Cloud</td>
+<td><strong>Terra</strong> (the Broad Institute’s platform), other clouds, clusters</td>
+<td>clusters, laptops, every major cloud</td>
+</tr>
+<tr class="even">
+<td><strong>Start with</strong></td>
+<td>the class <a href="../../pages/extras/workflows-dsub.html">Running Workflows</a></td>
+<td><a href="https://dockstore.org/">Dockstore</a> for ready-made workflows</td>
+<td><a href="https://nf-co.re/">nf-core</a> and <a href="https://training.nextflow.io/">Nextflow training</a></td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>Which should I learn?</strong> Start with <strong>dsub</strong>: it’s one command, and it teaches every idea on this page. Move to <strong>Nextflow</strong> or <strong>Cromwell</strong> when you need multi-step pipelines, or want to run a published one. Pick the one your field (or your collaborators) uses: much of genomics at the Broad Institute and on Terra uses WDL; nf-core uses Nextflow.</p>
+<section id="outside-the-workbench" class="level3">
+<h3 class="anchored" data-anchor-id="outside-the-workbench">Outside the Workbench</h3>
+<p>The same ideas work everywhere, with <strong>your own</strong> data (not <em>All of Us</em> data):</p>
+<ul>
+<li><strong>University clusters</strong> (e.g.&nbsp;Yale’s Center for Research Computing) run jobs with a scheduler called <strong>Slurm</strong>. A Slurm <strong>job array</strong> (<code>sbatch --array=1-22</code>) is the same idea as dsub’s tasks file.</li>
+<li><strong>Nextflow</strong> and <strong>Snakemake</strong> (a Python-based workflow tool, popular in academia) run on laptops, clusters, and clouds with the same workflow file.</li>
+<li><strong>Terra</strong> runs WDL workflows on Google Cloud, for many large research programs.</li>
+</ul>
+<p>So the skills from the class carry over to most research computing.</p>
+</section>
+</section>
+<section id="workflows-and-the-all-of-us-rules" class="level2">
+<h2 class="anchored" data-anchor-id="workflows-and-the-all-of-us-rules">Workflows and the <em>All of Us</em> rules</h2>
+<p>Workflows don’t change the rules:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>In a workflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data stays in the Workbench</td>
+<td>Jobs run in your workspace’s cloud project and private network, and write to your bucket, so the data stays inside</td>
+</tr>
+<tr class="even">
+<td>Outputs are <em>All of Us</em> data</td>
+<td>Job results and logs are as sensitive as anything else you make from the data. Keep them in your bucket</td>
+</tr>
+<tr class="odd">
+<td>No individual-level data in logs</td>
+<td>Don’t make scripts <strong>print</strong> rows of data, participant IDs, or dates: logs are saved, and are easy to copy</td>
+</tr>
+<tr class="even">
+<td>No counts of 1 to 20 when you share</td>
+<td>The same for workflow results: summarize first, then check</td>
+</tr>
+<tr class="odd">
+<td>Code goes to GitHub, data doesn’t</td>
+<td>Scripts and workflow files: yes. Tasks files with <strong>participant IDs</strong> in them: no</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="questions-beginners-ask" class="level2">
+<h2 class="anchored" data-anchor-id="questions-beginners-ask">Questions beginners ask</h2>
+<p><strong>Do I need to know Docker?</strong> No.&nbsp;Use ready-made images (the class uses PLINK’s). Learn to build your own later, if you need software that isn’t in any image.</p>
+<p><strong>Can a job run R?</strong> Yes: use an image with R in it (e.g.&nbsp;one of the <strong>rocker</strong> images, through the <em>All of Us</em> mirror), and run <code>Rscript my_script.R</code> as the command. Any R packages the script needs must be in the image, or installed by the script.</p>
+<p><strong>Can I close my browser, or stop the app, while jobs run?</strong> Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with <code>dstat</code>, or on the <strong>Workflows</strong> tab for Cromwell and Nextflow.</p>
+<p><strong>How do I know what a job cost?</strong> There’s no per-job bill. Estimate it: machine price per hour × hours × tasks, plus disks. The class shows how to get each task’s run time.</p>
+<p><strong>What if one task out of 22 fails?</strong> Read its log, fix the cause, and rerun <strong>only that task</strong> (in dsub, with the task’s row number after the tasks file).</p>
+<p><strong>Can I run a published workflow?</strong> Yes. Find it on <a href="https://dockstore.org/">Dockstore</a> or <a href="https://nf-co.re/">nf-core</a> and add it on the <strong>Workflows</strong> tab. Check its images first: in <em>All of Us</em>, they must come from Google’s registries or the mirror.</p>
+</section>
+<section id="words-youll-meet" class="level2">
+<h2 class="anchored" data-anchor-id="words-youll-meet">Words you’ll meet</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Word</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Workflow</strong> (pipeline)</td>
+<td>a set of steps, run for you, often on many files at once</td>
+</tr>
+<tr class="even">
+<td><strong>Workflow engine</strong></td>
+<td>the program that runs it: dsub, Cromwell, Nextflow</td>
+</tr>
+<tr class="odd">
+<td><strong>Job</strong>, <strong>task</strong></td>
+<td>one launch of a workflow; the separate pieces of work inside it (e.g.&nbsp;one per chromosome)</td>
+</tr>
+<tr class="even">
+<td><strong>Machine</strong> (virtual machine, VM)</td>
+<td>a computer in Google’s cloud, rented by the minute</td>
+</tr>
+<tr class="odd">
+<td><strong>Image</strong>, <strong>container</strong></td>
+<td>packaged software; a running copy of it</td>
+</tr>
+<tr class="even">
+<td><strong>Registry</strong>, <strong>tag</strong></td>
+<td>where images are kept; the name of one version</td>
+</tr>
+<tr class="odd">
+<td><strong>Mirror</strong></td>
+<td>a copy of Docker Hub inside Google Cloud, for <em>All of Us</em> workspaces</td>
+</tr>
+<tr class="even">
+<td><strong>Localize</strong>, <strong>delocalize</strong></td>
+<td>copy inputs onto the machine; copy outputs back to the bucket</td>
+</tr>
+<tr class="odd">
+<td><strong>Scatter</strong>, <strong>gather</strong></td>
+<td>split work into parallel tasks; combine their results</td>
+</tr>
+<tr class="even">
+<td><strong>Spot</strong> (preemptible)</td>
+<td>cheaper machines that Google can stop at any time</td>
+</tr>
+<tr class="odd">
+<td><strong>Quota</strong></td>
+<td>the limit on how many machines or CPUs your project can use at once</td>
+</tr>
+<tr class="even">
+<td><strong>Google Batch</strong></td>
+<td>the Google Cloud service the engines use to run machines</td>
+</tr>
+<tr class="odd">
+<td><strong>WDL</strong></td>
+<td><em>Workflow Description Language</em>, the language Cromwell runs</td>
+</tr>
+<tr class="even">
+<td><strong>Call caching</strong>, <strong>resume</strong></td>
+<td>reusing finished steps when a pipeline is rerun</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="a-learning-path" class="level2">
+<h2 class="anchored" data-anchor-id="a-learning-path">A learning path</h2>
+<ol type="1">
+<li><strong>Read</strong> this page, then do the class <a href="../../pages/extras/workflows-dsub.html">Running Workflows</a>: one script, one job, then 22.</li>
+<li><strong>Change</strong> the class’s script: a different filter, or a different PLINK command (e.g.&nbsp;allele frequencies of common variants). Test it in the app, then as a job.</li>
+<li><strong>Learn a workflow language</strong> on your own computer, with public example data: the free <a href="https://training.nextflow.io/">Nextflow training</a>, or the <a href="https://openwdl.org/">WDL documentation</a>.</li>
+<li><strong>Run a published workflow</strong> from <a href="https://dockstore.org/">Dockstore</a> or <a href="https://nf-co.re/">nf-core</a> on the <strong>Workflows</strong> tab, starting with its small test data.</li>
+</ol>
+</section>
+<section id="further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://github.com/DataBiosphere/dsub">dsub on GitHub</a>: the documentation and examples</li>
+<li><a href="https://support.workbench.verily.com/docs/">Verily Workbench documentation</a>: workflows in the Workbench (Cromwell, Nextflow, dsub)</li>
+<li><a href="https://openwdl.org/">OpenWDL</a>, <a href="https://www.nextflow.io/docs/latest/">Nextflow</a>, and <a href="https://snakemake.readthedocs.io/">Snakemake</a> documentation</li>
+<li><a href="https://dockstore.org/">Dockstore</a> and <a href="https://nf-co.re/">nf-core</a>: published workflows</li>
+<li>The <em>All of Us</em> tutorial workspace: <em>How to Use Workflow Tools</em> (dsub, Cromwell, and Nextflow notebooks)</li>
+<li>This site: <a href="../../pages/workspace/workflows.html">the Workflows tab</a> and the class <a href="../../pages/extras/workflows-dsub.html">Running Workflows</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../pages/extras/ai-coding.html" class="pagination-link" aria-label="Coding with AI and GitHub">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Coding with AI and GitHub</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../pages/extras/workflows-dsub.html" class="pagination-link" aria-label="Running Workflows: dsub, Cromwell, and Nextflow">
+        <span class="nav-page-text">Running Workflows: dsub, Cromwell, and Nextflow</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

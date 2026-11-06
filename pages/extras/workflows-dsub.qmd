@@ -8,6 +8,7 @@ code-annotations: below
 
 [Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb){.btn .btn-outline-primary .btn-sm}
 [The script it runs](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/gwas_one_chr.sh){.btn .btn-outline-secondary .btn-sm}
+[Workflows for Beginners](workflows-for-beginners.qmd){.btn .btn-outline-secondary .btn-sm}
 [The Workflows tab](../workspace/workflows.qmd){.btn .btn-outline-secondary .btn-sm}
 
 ## Overview
@@ -46,7 +47,7 @@ Most genomic analyses, and many others (imaging, long text, wearable data at min
 | ⏱️ **Class time** | 110 minutes |
 | ⏱️ **Run time** | about **30 minutes**, mostly waiting for jobs |
 | 💰 **Cost** | about **$1** per student: under $1 for 23 small job machines (`n2-standard-2`, about $0.10 an hour each, for 10 to 15 minutes), plus the app (about $0.27 an hour) |
-| 📋 **Before class** | run **4.1** (and ideally **4.2**): the notebook reuses their files, or rebuilds them with the cohort query |
+| 📋 **Before class** | read [Workflows for Beginners](workflows-for-beginners.qmd); run **4.1** (and ideally **4.2**): the notebook reuses their files, or rebuilds them with the cohort query |
 | 🖥️ **App** | an *All of Us* **Jupyter** app (it has dsub, `gcloud`, and PLINK) |
 
 ## Class plan
@@ -79,16 +80,7 @@ Most genomic analyses, and many others (imaging, long text, wearable data at min
 
 ### Is a workflow cheaper?
 
-Often **faster**; **cheaper** only sometimes. The total computing is about the same: 22 machines for 15 minutes cost about as much as 1 machine for 5½ hours. What changes is **when** you pay, and for **what size** of machine.
-
-| A workflow **saves** money when… | A workflow **costs more** when… |
-|---|---|
-| the alternative is a **big app** running for hours (including while you wait, or forget to stop it) | the job is **small**: each machine takes a few minutes to start and copy its files, and that time is billed too |
-| steps need **different sizes**: each task gets the machine it needs | every task copies the **same big files** (one ACAF chromosome took about an hour just to copy) |
-| you use **spot** machines (`--preemptible`): much cheaper, and dsub restarts a task if Google stops it | a **mistake** runs in every task: 22 tasks, 22 times the cost. That's why we test in the app first |
-| you **stop the app** while the jobs run | |
-
-In this class, both ways cost about $1. The workflow's gain is **time**: about 20 minutes instead of several hours.
+Often **faster**; **cheaper** only sometimes: the total computing is about the same, but you pay for each machine only while it works, at the size it needs. In this class, both ways cost about $1; the workflow's gain is **time**. When it saves money and when it costs more: [Workflows for Beginners](workflows-for-beginners.qmd#is-it-cheaper).
 
 ### The words
 

@@ -121,6 +121,7 @@ website:
         - pages/extras/extras.qmd
         - pages/extras/github-guide.qmd
         - pages/extras/ai-coding.qmd
+        - pages/extras/workflows-for-beginners.qmd
         - pages/extras/workflows-dsub.qmd
 
   page-footer:

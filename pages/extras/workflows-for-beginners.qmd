@@ -1,0 +1,240 @@
+---
+title: "Workflows for Beginners"
+description: "What workflows are, why researchers use them in All of Us and elsewhere, when not to, and the ideas behind dsub, Cromwell, and Nextflow, in plain language"
+---
+
+New to workflows? This page explains what they are, **why** researchers use them, and the ideas you'll meet in the class [Running Workflows](workflows-dsub.qmd). You don't need to read it all at once, and you don't need to know any of it to use the *All of Us* data: most projects never need a workflow.
+
+## The big picture: one oven, or a kitchen for hire
+
+Imagine you have to bake **22 cakes**, each from its own bag of ingredients.
+
+| | Baking at home (your **app**) | Hiring a kitchen (a **workflow**) |
+|---|---|---|
+| **Ovens** | one, so one cake after another | one per cake, all baking **at once** |
+| **Size** | your oven, whatever the cake | a big oven for the big cakes, a small one for the small ones |
+| **You** | stay home until the last cake is done | send the order, and come back when it's ready |
+| **Paying** | for your kitchen, all day | for each oven **only while it bakes** |
+
+In workflow words:
+
+| In the kitchen | In a workflow | In the class |
+|---|---|---|
+| the **recipe** | the **script**: the commands to run | `gwas_one_chr.sh` |
+| the **ingredients** | the **inputs**: files copied onto each machine | the ClinVar files for one chromosome, and our sample |
+| a **kitchen kit** with every tool already in it | the **image** (container): the software, already installed | PLINK 2 |
+| the **ovens** | the **machines** (virtual machines in the cloud) | 22 `n2-standard-2` machines |
+| the **order ticket** that lists every cake | the **tasks file**, or the **workflow file** | `gwas_tasks.tsv` |
+| the **head chef** who hands out the work | the **workflow engine**: dsub, Cromwell, or Nextflow | dsub |
+| the **counter** where finished cakes go | your **bucket** | `data/workflows/` |
+| the kitchen's **notes** on each cake | the **logs** | `data/workflows/logs/` |
+
+## Why researchers use workflows
+
+| Reason | What it means | Example |
+|---|---|---|
+| ⏱️ **Speed** | many machines work **in parallel** | 22 chromosomes in the time of the slowest one, instead of the sum of all 22 |
+| 📈 **Scale** | each task gets a machine as **big** as it needs, far bigger than a laptop or an app | 32 CPUs and 400 GB of disk for one chromosome of the full genome data |
+| 🔁 **Reproducibility** | the workflow file records **every step**, the **software versions**, and the **settings**. Rerun it next year and get the same results | a reviewer asks you to rerun with a different filter: change one line, run again |
+| 🤝 **Sharing** | a colleague runs **your** workflow on their data, or you run a published one | the GATK pipelines for finding variants; the nf-core pipelines for RNA-seq |
+| 🛟 **Recovery** | if one task fails, rerun **only that task**. Cromwell and Nextflow can **resume** a pipeline where it stopped | a machine is stopped after 3 hours: only its task starts again |
+| 💤 **Hands-off** | jobs run without you, even with your app **stopped** | launch before you go home; results in the morning |
+| 💰 **Cost control** | you pay for each machine only while it works, and can use cheap **spot** machines | (see *Is it cheaper?* below) |
+
+### Why in *All of Us* in particular
+
+- **The data is big.** *All of Us* has hundreds of thousands of whole genomes. One chromosome of the main genome callset (ACAF) is tens to hundreds of GB; in the *All of Us* tutorial, just **copying** one onto a machine took an hour. An app can't hold the whole genome at once.
+- **The data can't leave.** At most universities, big jobs go to the university's computing cluster. *All of Us* data **must stay in the Workbench**, so you can't take it to a cluster (at Yale: the Center for Research Computing's clusters). Workflows are how you get a **cluster's power inside** the Workbench.
+- **Apps are one machine.** A bigger app costs more **every hour** it's on, including while you read, write, or wait. Workflows use big machines only for the minutes they're needed.
+- **Publishing.** Journals and reviewers increasingly ask for **reproducible** code. A workflow file in GitHub, with pinned versions, is exactly that, and it contains no data.
+
+### When **not** to use a workflow
+
+- **Exploring** the data, trying ideas, making plots: use the app.
+- **Small** data, or steps that take minutes: starting machines and copying files would take longer than the work.
+- **BigQuery** work (most of the core, survey, and wearables classes): BigQuery already runs in parallel on Google's machines. You don't need a workflow for SQL.
+- **Steps you haven't tested yet**: get them working in the app first.
+
+👉 **Rule of thumb:** if you'd run the **same step** on **many files** (or one **very big** one), and it already works in your app, consider a workflow.
+
+## Is it cheaper?
+
+Often **faster**; **cheaper** only sometimes. The total computing is about the same: 22 machines for 15 minutes cost about as much as 1 machine for 5½ hours.
+
+| A workflow **saves** money when… | A workflow **costs more** when… |
+|---|---|
+| the alternative is a **big app** running for hours (including while you wait, or forget to stop it) | the job is **small**: each machine takes a few minutes to start and copy its files, and that time is billed too |
+| steps need **different sizes**: each task gets the machine it needs | every task copies the **same big files** |
+| you use **spot** machines: much cheaper, and the engine restarts a task if Google stops its machine | a **mistake** runs in every task: 22 tasks, 22 times the cost. Test in the app first |
+| you **stop the app** while the jobs run | |
+
+Job machines and storage are billed to your workspace's **pod**, like apps. They **don't** appear in the app's cost estimate, so estimate them yourself: machine price per hour × hours × number of tasks.
+
+## Common workflow patterns
+
+### Scatter–gather: split, run in parallel, combine
+
+The most common pattern, and the one in the class: **scatter** one job into many tasks, then **gather** the results.
+
+```{.default code-line-numbers="false"}
+                ┌─► chr1  ─┐
+one analysis ───┼─► chr2  ─┼───► one table of results
+  (scatter)     ├─► ...   ─┤        (gather)
+                └─► chr22 ─┘
+```
+
+You can split by **chromosome** or **region** (genomics), by **sample** or **person** (sequencing data, images), by **batch** of files, or by **setting** (the same model with different parameters).
+
+### A pipeline: steps in order
+
+Each step uses the outputs of the one before. Each step can scatter too.
+
+```{.default code-line-numbers="false"}
+raw files ──► quality control ──► analysis ──► summary and plots
+```
+
+dsub runs **one step** per job, so you'd run (and check) each step yourself. **Cromwell** and **Nextflow** run the whole chain, in the right order, and start each step as soon as its inputs are ready.
+
+### What researchers run as workflows
+
+| Field | Typical workflow |
+|---|---|
+| **Genomics** | GWAS by chromosome (as in the class); finding variants in each person's sequence (CRAM → VCF); annotating or filtering variant files; polygenic scores |
+| **RNA-seq** | from raw reads to counts, one task per sample (e.g. the nf-core **rnaseq** pipeline) |
+| **Imaging** | processing each scan the same way |
+| **Text** | running a language model over many documents |
+| **Wearables** | summarizing minute-level data, one batch of people per task |
+| **Statistics** | simulations, bootstraps, permutation tests: thousands of independent runs |
+| **Machine learning** | trying many model settings at once |
+
+## The ideas behind them
+
+### Containers and images: the kitchen kit
+
+An **image** is a packaged computer system with the software already installed: PLINK, R and its packages, Python, and so on. A **container** is a copy of the image, running. Every task runs inside one, so:
+
+- the software is the **same** on every machine, today and next year
+- you don't install anything on the machines
+- others can rerun your work with the **exact** same software
+
+Images live in **registries** (e.g. Docker Hub, Google's Artifact Registry) and have **tags**, which name a version: `plink2:alpha2.3_jan2020`. Two rules:
+
+- **Pin the version.** A tag like `latest` changes when a new version comes out, and your results (or your job) can change with it. That's what broke every dsub job in *All of Us* in November 2026 (see the class).
+- **In *All of Us*,** job machines can't reach Docker Hub. Use images from Google's registries, or Docker Hub images through the ***All of Us* mirror**.
+
+You don't need to **build** images to start: ready-made ones exist for most tools (e.g. the **BioContainers** project has images for most bioinformatics software).
+
+### Inputs and outputs: what the machine can see
+
+Each machine starts **empty**. It sees only the files you list as **inputs**: the engine copies them in (*localizing*) before your script runs, and copies the **outputs** back to your bucket (*delocalizing*) afterwards. So:
+
+- **every file** the script uses must be an input (in the class: the `.bim` and `.fam` files too, though the script never names them)
+- copying takes **time**, and big files take a long time. Some engines can **stream** files instead of copying them (Nextflow in the Workbench can), which helps when a tool reads only part of a file
+
+### Parallelism and limits
+
+Tasks that don't depend on each other can run at the same time. But your project has **limits** (quotas) on how many machines and CPUs run at once. Above the limit, tasks **wait** in a queue: the job still finishes, just later.
+
+### Logs: your first stop
+
+Every task saves a **log**: the engine's messages (copying files, starting the script) and everything your script printed. When a task fails, read its log **before** changing anything.
+
+### Retries, spot machines, and resuming
+
+- **Retries:** start a failed task again, automatically (`--retries` in dsub).
+- **Spot machines** (*preemptible*): much cheaper, but Google can stop them at any time. With retries, a stopped task starts again.
+- **Resuming:** Cromwell (*call caching*) and Nextflow (`-resume`) remember which steps finished, and skip them when you rerun the pipeline.
+
+### Reproducibility: write it down
+
+Keep the workflow (script, tasks file, or workflow file) in **GitHub**, with the image versions pinned. Record the **date** and the **data version** (e.g. CDR v9). That's your methods section, and it contains no data.
+
+## The tools in the Workbench
+
+| | dsub | Cromwell | Nextflow |
+|---|---|---|---|
+| **You write** | a shell script and one command | a **WDL** file, plus a JSON file of inputs | a **Nextflow** (`.nf`) file |
+| **Think of it as** | "run this script on many files" | a **pipeline** described in a simple language | a **pipeline** described in a programming language |
+| **Best for** | one step on many files | multi-step pipelines; many published genomics workflows | multi-step pipelines; the **nf-core** community pipelines |
+| **Run from** | an app (terminal or notebook) | the **Workflows** tab, or an app | the **Workflows** tab, or an app |
+| **Also used at** | Google Cloud | **Terra** (the Broad Institute's platform), other clouds, clusters | clusters, laptops, every major cloud |
+| **Start with** | the class [Running Workflows](workflows-dsub.qmd) | [Dockstore](https://dockstore.org/) for ready-made workflows | [nf-core](https://nf-co.re/) and [Nextflow training](https://training.nextflow.io/) |
+
+👉 **Which should I learn?** Start with **dsub**: it's one command, and it teaches every idea on this page. Move to **Nextflow** or **Cromwell** when you need multi-step pipelines, or want to run a published one. Pick the one your field (or your collaborators) uses: much of genomics at the Broad Institute and on Terra uses WDL; nf-core uses Nextflow.
+
+### Outside the Workbench
+
+The same ideas work everywhere, with **your own** data (not *All of Us* data):
+
+- **University clusters** (e.g. Yale's Center for Research Computing) run jobs with a scheduler called **Slurm**. A Slurm **job array** (`sbatch --array=1-22`) is the same idea as dsub's tasks file.
+- **Nextflow** and **Snakemake** (a Python-based workflow tool, popular in academia) run on laptops, clusters, and clouds with the same workflow file.
+- **Terra** runs WDL workflows on Google Cloud, for many large research programs.
+
+So the skills from the class carry over to most research computing.
+
+## Workflows and the *All of Us* rules
+
+Workflows don't change the rules:
+
+| Rule | In a workflow |
+|---|---|
+| Data stays in the Workbench | Jobs run in your workspace's cloud project and private network, and write to your bucket, so the data stays inside |
+| Outputs are *All of Us* data | Job results and logs are as sensitive as anything else you make from the data. Keep them in your bucket |
+| No individual-level data in logs | Don't make scripts **print** rows of data, participant IDs, or dates: logs are saved, and are easy to copy |
+| No counts of 1 to 20 when you share | The same for workflow results: summarize first, then check |
+| Code goes to GitHub, data doesn't | Scripts and workflow files: yes. Tasks files with **participant IDs** in them: no |
+
+## Questions beginners ask
+
+**Do I need to know Docker?**
+No. Use ready-made images (the class uses PLINK's). Learn to build your own later, if you need software that isn't in any image.
+
+**Can a job run R?**
+Yes: use an image with R in it (e.g. one of the **rocker** images, through the *All of Us* mirror), and run `Rscript my_script.R` as the command. Any R packages the script needs must be in the image, or installed by the script.
+
+**Can I close my browser, or stop the app, while jobs run?**
+Yes. The jobs run on their own machines, and their results go to your bucket. Check on them later with `dstat`, or on the **Workflows** tab for Cromwell and Nextflow.
+
+**How do I know what a job cost?**
+There's no per-job bill. Estimate it: machine price per hour × hours × tasks, plus disks. The class shows how to get each task's run time.
+
+**What if one task out of 22 fails?**
+Read its log, fix the cause, and rerun **only that task** (in dsub, with the task's row number after the tasks file).
+
+**Can I run a published workflow?**
+Yes. Find it on [Dockstore](https://dockstore.org/) or [nf-core](https://nf-co.re/) and add it on the **Workflows** tab. Check its images first: in *All of Us*, they must come from Google's registries or the mirror.
+
+## Words you'll meet
+
+| Word | Means |
+|---|---|
+| **Workflow** (pipeline) | a set of steps, run for you, often on many files at once |
+| **Workflow engine** | the program that runs it: dsub, Cromwell, Nextflow |
+| **Job**, **task** | one launch of a workflow; the separate pieces of work inside it (e.g. one per chromosome) |
+| **Machine** (virtual machine, VM) | a computer in Google's cloud, rented by the minute |
+| **Image**, **container** | packaged software; a running copy of it |
+| **Registry**, **tag** | where images are kept; the name of one version |
+| **Mirror** | a copy of Docker Hub inside Google Cloud, for *All of Us* workspaces |
+| **Localize**, **delocalize** | copy inputs onto the machine; copy outputs back to the bucket |
+| **Scatter**, **gather** | split work into parallel tasks; combine their results |
+| **Spot** (preemptible) | cheaper machines that Google can stop at any time |
+| **Quota** | the limit on how many machines or CPUs your project can use at once |
+| **Google Batch** | the Google Cloud service the engines use to run machines |
+| **WDL** | *Workflow Description Language*, the language Cromwell runs |
+| **Call caching**, **resume** | reusing finished steps when a pipeline is rerun |
+
+## A learning path
+
+1. **Read** this page, then do the class [Running Workflows](workflows-dsub.qmd): one script, one job, then 22.
+2. **Change** the class's script: a different filter, or a different PLINK command (e.g. allele frequencies of common variants). Test it in the app, then as a job.
+3. **Learn a workflow language** on your own computer, with public example data: the free [Nextflow training](https://training.nextflow.io/), or the [WDL documentation](https://openwdl.org/).
+4. **Run a published workflow** from [Dockstore](https://dockstore.org/) or [nf-core](https://nf-co.re/) on the **Workflows** tab, starting with its small test data.
+
+## Further reading
+
+- [dsub on GitHub](https://github.com/DataBiosphere/dsub): the documentation and examples
+- [Verily Workbench documentation](https://support.workbench.verily.com/docs/): workflows in the Workbench (Cromwell, Nextflow, dsub)
+- [OpenWDL](https://openwdl.org/), [Nextflow](https://www.nextflow.io/docs/latest/), and [Snakemake](https://snakemake.readthedocs.io/) documentation
+- [Dockstore](https://dockstore.org/) and [nf-core](https://nf-co.re/): published workflows
+- The *All of Us* tutorial workspace: *How to Use Workflow Tools* (dsub, Cromwell, and Nextflow notebooks)
+- This site: [the Workflows tab](../workspace/workflows.qmd) and the class [Running Workflows](workflows-dsub.qmd)
