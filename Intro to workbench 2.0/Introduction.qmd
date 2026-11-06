@@ -447,7 +447,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
 - When credits run out or expire:
   - You can't launch or open analysis environments
   - Stored resources (buckets, disks) **may be deleted**
-- Set up a **Google Cloud billing account** and **billing pod** *before* this happens (see *Getting a Google Cloud Billing Account at Yale*)
+- Set up a **Google Cloud billing account** and **billing pod** *before* this happens (at Yale: ask **2 to 3 weeks ahead**)
 
 ## Billing Pods
 
@@ -455,7 +455,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
   - Workspace costs are charged to the pod
   - Think of the pod as your billing account inside the Workbench
 - One pod can pay for **many workspaces**
-- You can **invite other users** to your pod (e.g., lab members)
+- You can **invite other users** to your pod (e.g., lab members): they bill to **your** account
 - All of Us researchers have the **Pod Manager** role, so you can create your own pod
 
 ::: fragment
@@ -471,16 +471,27 @@ Initial credits are linked to the personal user pod. Check a workspace's Workspa
 
 ## Getting a Google Cloud Billing Account at Yale
 
+**Ask 2 to 3 weeks before** your credits run out or expire: setup takes about 2 weeks.
+
 Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us billing account"** and include:
 
 - Your All of Us Workbench email (e.g., `yourname@researchallofus.org`)
 - Your **COA** number
-- Whether this is an **NIH-funded** project
+- Whether this is an **NIH-funded** project, and if so, the **NIH grant number** (set up through NIH STRIDES)
 
 Yale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your **pod**.
 
 ::: notes
-Yale Cloud Support may give additional or different guidance.
+Setup takes about 2 weeks because Burwood, Yale's Google reseller, requests the account from Google's distributor. Email is the way to ask for now; Yale Cloud Support is building a ServiceNow request form. Yale Cloud Support may give additional or different guidance.
+:::
+
+## Your Yale Billing Account
+
+- **Your own** Google Cloud billing account, charged to your COA
+- You **keep access**: link it to new pods, or relink pods, yourself, without asking Yale Cloud Support again
+
+::: fragment
+**Watch out:** anyone you invite to your pod can run workspaces billed to **your COA**. Invite only people on the **same grant**.
 :::
 
 # All of Us Tutorial Workspaces
