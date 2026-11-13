@@ -464,6 +464,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#a-task-in-each-language" id="toc-a-task-in-each-language" class="nav-link" data-scroll-target="#a-task-in-each-language">A task in each language</a></li>
   <li><a href="#the-all-of-us-settings-for-each" id="toc-the-all-of-us-settings-for-each" class="nav-link" data-scroll-target="#the-all-of-us-settings-for-each">The <em>All of Us</em> settings for each</a></li>
+  <li><a href="#three-ways-to-run-a-workflow" id="toc-three-ways-to-run-a-workflow" class="nav-link" data-scroll-target="#three-ways-to-run-a-workflow">Three ways to run a workflow</a></li>
+  <li><a href="#tested-cromwell-and-nextflow" id="toc-tested-cromwell-and-nextflow" class="nav-link" data-scroll-target="#tested-cromwell-and-nextflow">Tested: Cromwell and Nextflow</a></li>
   </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#instructor-tip-timing-and-pitfalls" id="toc-instructor-tip-timing-and-pitfalls" class="nav-link" data-scroll-target="#instructor-tip-timing-and-pitfalls">Instructor tip: timing and pitfalls</a></li>
@@ -501,7 +503,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><strong>An Optional Extras class</strong> · R + dsub + PLINK · 110 minutes · builds on <a href="../../pages/courses/omics/4-2-gwas-plink.html">4.2 A GWAS with PLINK</a></p>
-<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/gwas_one_chr.sh" class="btn btn-outline-secondary btn-sm">The script it runs</a> <a href="../../pages/extras/workflows-for-beginners.html" class="btn btn-outline-secondary btn-sm">Workflows for Beginners</a> <a href="../../pages/workspace/workflows.html" class="btn btn-outline-secondary btn-sm">The Workflows tab</a></p>
+<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_dsub.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/gwas_one_chr.sh" class="btn btn-outline-secondary btn-sm">The script it runs</a> <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_cromwell_nextflow.ipynb" class="btn btn-outline-secondary btn-sm">Cromwell and Nextflow notebook</a> <a href="../../pages/extras/workflows-for-beginners.html" class="btn btn-outline-secondary btn-sm">Workflows for Beginners</a> <a href="../../pages/workspace/workflows.html" class="btn btn-outline-secondary btn-sm">The Workflows tab</a></p>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>In <strong>4.2</strong> we ran a GWAS on <strong>one region</strong> of one chromosome, inside our app. A whole-genome analysis is <strong>22 or more</strong> such jobs, each with large files. Run one after another in the app, that takes hours, and the app must stay open the whole time.</p>
@@ -633,7 +635,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>1:35</td>
 <td><strong>8. Cromwell and Nextflow</strong></td>
-<td>discuss</td>
+<td>discuss; watch a demo of the Workflows tab</td>
 </tr>
 <tr class="odd">
 <td>1:45</td>
@@ -1241,14 +1243,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>All three run their tasks on <strong>Google Batch</strong>, so the same <em>All of Us</em> rules apply: the private network, no public addresses, images from Google registries (or the <em>All of Us</em> mirror), and pinned versions. Each tool takes them in a short <strong>configuration file</strong>.</p>
 <section id="a-task-in-each-language" class="level3">
 <h3 class="anchored" data-anchor-id="a-task-in-each-language">A task in each language</h3>
-<p>The same idea in each tool: PLINK on one chromosome, here allele frequencies of the common variants (<code>--maf 0.01 --freq</code>). These follow the <em>All of Us</em> tutorial notebooks (folder <em>How to Use Workflow Tools</em> in the tutorial workspace); we haven’t run them ourselves yet.</p>
+<p>The same idea in each tool: PLINK on one chromosome, here allele frequencies of the common variants (<code>--maf 0.01 --freq</code>). They’re based on the <em>All of Us</em> tutorial notebooks (folder <em>How to Use Workflow Tools</em> in the tutorial workspace), and <strong>we ran both</strong> in November 2026: both gave exactly the same frequencies as PLINK in the app (see <a href="#tested-cromwell-and-nextflow">Tested: Cromwell and Nextflow</a>).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">WDL (Cromwell)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Nextflow</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>version 1.0</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>workflow gwas_one_chr {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>workflow plink_freq {</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  input {</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    File bed</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    File bim</span>
@@ -1256,27 +1258,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    String docker_image</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  call plink_check { input: bed = bed, bim = bim, fam = fam, docker_image = docker_image }</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>task plink_check {</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  input {</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    File bed</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    File bim</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    File fam</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    String docker_image</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  command {</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    plink2 --bed ~{bed} --bim ~{bim} --fam ~{fam} --maf 0.01 --freq --out chr</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  output {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    File freq = plink_check.freq</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>task plink_check {</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  input {</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    File bed</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    File bim</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    File fam</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    String docker_image</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  output {</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    File freq = "chr.afreq"</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  command {</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    plink2 --bed ~{bed} --bim ~{bim} --fam ~{fam} --maf 0.01 --freq --out chr</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  runtime {</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    docker: docker_image</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    machineType: "n2-standard-2"</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The inputs go in a JSON file: the three <code>gs://</code> paths, and the image from the <em>All of Us</em> mirror.</p>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  output {</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    File freq = "chr.afreq"</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  runtime {</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    docker: docker_image</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    machineType: "n2-standard-2"</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    disks: "local-disk 30 SSD"   # Cromwell copies the inputs here: SSD, as for dsub</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The inputs go in a JSON file (in an app) or a form (on the Workflows tab): the three <code>gs://</code> paths, and the image from the <em>All of Us</em> mirror.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>params.plinkDir = "gs://vwb-aou-datasets-controlled/v9/wgs/short_read/snpindel/clinvar/plink_bed"</span>
@@ -1284,27 +1290,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>process plink_check {</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  container "${params.mirror}/biocontainer/plink2:alpha2.3_jan2020"</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  input:</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  tuple val(chr), path(bed), path(bim), path(fam)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  output:</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  path "chr${chr}.afreq"</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  script:</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  """</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  plink2 --bed ${bed} --bim ${bim} --fam ${fam} --maf 0.01 --freq --out chr${chr}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  cpus 2</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  memory "8 GB"</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  input:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  tuple val(chr), path(bed), path(bim), path(fam)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  output:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  path "chr${chr}.afreq"</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  script:</span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  """</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>workflow {</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  Channel.of(19..22)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    .map { c -&gt; tuple(c, file("${params.plinkDir}/clinvar.chr${c}.bed"),</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                         file("${params.plinkDir}/clinvar.chr${c}.bim"),</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                         file("${params.plinkDir}/clinvar.chr${c}.fam")) }</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    | plink_check</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Nextflow runs one task per chromosome on its own, in parallel.</p>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  plink2 --bed ${bed} --bim ${bim} --fam ${fam} --maf 0.01 --freq --out chr${chr}</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  """</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>workflow {</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  Channel.of(19..22)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    .map { c -&gt; tuple(c, file("${params.plinkDir}/clinvar.chr${c}.bed"),</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                         file("${params.plinkDir}/clinvar.chr${c}.bim"),</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>                         file("${params.plinkDir}/clinvar.chr${c}.fam")) }</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    | plink_check</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nextflow runs one task per chromosome on its own, in parallel. Unlike dsub and Cromwell, it doesn’t copy <code>gs://</code> inputs onto the machine first: it <strong>mounts</strong> the bucket and reads the files as it goes.</p>
 </div>
 </div>
 </div>
@@ -1357,12 +1365,181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td>Paying for <em>All of Us</em> files</td>
-<td></td>
+<td><code>filesystems { gcs { project = … } }</code></td>
 <td><code>google.enableRequesterPaysBuckets = true</code></td>
+</tr>
+<tr class="even">
+<td>Helper image (copies files), <strong>pinned</strong></td>
+<td><code>google.cloud-sdk-image-url = "gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim"</code></td>
+<td><code>google.batch.copyImage = "gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-alpine"</code></td>
+</tr>
+<tr class="odd">
+<td>Default image for tasks</td>
+<td></td>
+<td><code>process.container</code>: an image from the mirror that has <code>ps</code> (we used the PLINK image)</td>
 </tr>
 </tbody>
 </table>
-<p>The <em>All of Us</em> tutorial notebooks have complete configuration files. Check two things in them: that <strong>every image</strong> comes from a Google registry or the <em>All of Us</em> mirror (not straight from Docker Hub), and that helper images, such as Nextflow’s <code>google.batch.copyImage</code>, use a <strong>pinned version</strong>. The tutorials read the service account from <code>PET_SA_EMAIL</code>; if that’s empty in your app, use <code>gcloud config get-value account</code>, as for dsub.</p>
+<p>The <em>All of Us</em> tutorial notebooks have complete configuration files; our <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_cromwell_nextflow.ipynb">test notebook</a> has the versions that worked, with the changes marked. Check three things in any configuration: that <strong>every image</strong> comes from a Google registry or the <em>All of Us</em> mirror (not straight from Docker Hub), that <strong>helper images</strong> use a pinned version, and that Nextflow’s images include <code>ps</code>. The tutorials read the service account from <code>PET_SA_EMAIL</code>; it was empty in our app, so we used <code>gcloud config get-value account</code>, as for dsub.</p>
+</section>
+<section id="three-ways-to-run-a-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="three-ways-to-run-a-workflow">Three ways to run a workflow</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Cromwell in an app (<em>run mode</em>)</th>
+<th>Cromwell on the <strong>Workflows tab</strong> (<em>server mode</em>)</th>
+<th>Nextflow in an app</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Start it with</strong></td>
+<td><code>java -jar $CROMWELL_JAR run plink_freq.wdl -i inputs.json</code></td>
+<td>the <strong>Workflows</strong> tab: add the workflow, then <strong>+ New job</strong></td>
+<td><code>nextflow run plink_freq.nf -c nextflow.config</code></td>
+</tr>
+<tr class="even">
+<td><strong>Inputs</strong></td>
+<td>a JSON file</td>
+<td>a <strong>form</strong>, built from the WDL (or an input table, for a batch)</td>
+<td>in the <code>.nf</code> file, or <code>--param value</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Settings</strong></td>
+<td>your <code>cromwell.conf</code></td>
+<td>set by the Workbench: nothing to write</td>
+<td>your <code>nextflow.config</code></td>
+</tr>
+<tr class="even">
+<td><strong>Does the app need to stay on?</strong></td>
+<td><strong>yes</strong>, until it finishes</td>
+<td><strong>no</strong>: no app needed</td>
+<td><strong>yes</strong>, until it finishes</td>
+</tr>
+<tr class="odd">
+<td><strong>Results</strong></td>
+<td><code>&lt;work folder&gt;/cromwell-executions/&lt;workflow&gt;/&lt;id&gt;/call-&lt;task&gt;/</code></td>
+<td><code>&lt;bucket&gt;/&lt;job name&gt;/&lt;workflow&gt;/&lt;id&gt;/call-&lt;task&gt;/</code></td>
+<td>the work folder, or a <code>publishDir</code> you choose</td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>For most students, the Workflows tab is the easiest way to run WDL:</strong> no configuration file, no app, and a page to watch the job on. How to use it: <a href="../../pages/workspace/workflows.html">the Workflows tab</a>.</p>
+</section>
+<section id="tested-cromwell-and-nextflow" class="level3">
+<h3 class="anchored" data-anchor-id="tested-cromwell-and-nextflow">Tested: Cromwell and Nextflow</h3>
+<p>We ran each tool in an <em>All of Us</em> workspace in November 2026 (Jupyter app with OpenJDK 17, <strong>Cromwell 92</strong>, <strong>Nextflow 25.10.2</strong>; CDR v9), with the files from <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/workflows/workflows_cromwell_nextflow.ipynb">our test notebook</a>. The check: allele frequencies on chromosome 21 (28,502 common variants), compared with PLINK in the app (0.5 minutes).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Result</th>
+<th>Minutes</th>
+<th>Same as the app?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cromwell <em>hello world</em>, in an app</td>
+<td>✅ worked (after the fix below)</td>
+<td>3.5</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Cromwell PLINK, chromosome 21, in an app</td>
+<td>✅ worked</td>
+<td>4.3</td>
+<td>yes: all variants, difference 0</td>
+</tr>
+<tr class="odd">
+<td>Cromwell PLINK, chromosome 21, <strong>Workflows tab</strong></td>
+<td>✅ worked</td>
+<td>about 4</td>
+<td>yes: all variants, difference 0</td>
+</tr>
+<tr class="even">
+<td>Cromwell <em>hello world</em> with an image straight from <strong>Docker Hub</strong></td>
+<td>❌ failed</td>
+<td>3.5</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Nextflow <em>hello</em>, in an app</td>
+<td>✅ worked (after the fix below)</td>
+<td>2.1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Nextflow PLINK, chromosomes 19 to 22 at once, in an app</td>
+<td>✅ worked</td>
+<td>3.4</td>
+<td>yes (chromosome 21: all variants)</td>
+</tr>
+</tbody>
+</table>
+<p>Each run took <strong>3 to 4 minutes</strong>, mostly starting machines: PLINK itself took 20 seconds to 2 minutes per chromosome. As for dsub, tiny jobs don’t belong in a workflow.</p>
+<section id="what-we-learned-testing-cromwell-and-nextflow" class="level4">
+<h4 class="anchored" data-anchor-id="what-we-learned-testing-cromwell-and-nextflow">What we learned testing Cromwell and Nextflow</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What happened</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Every Cromwell task in an app failed within 3 minutes: <em>“The job was stopped before the command finished”</em>. The task folder had only Cromwell’s scripts (no <code>rc</code>, <code>stdout</code>, or <code>stderr</code>)</td>
+<td>the <strong>same break as dsub</strong>: Cromwell copies files with Google’s Cloud SDK image, and version 592 broke it. <strong>Pin version 591</strong> in <code>cromwell.conf</code> (<code>google.cloud-sdk-image-url</code>). The <em>All of Us</em> tutorial’s configuration doesn’t have this line</td>
+</tr>
+<tr class="even">
+<td>The <strong>Workflows tab</strong> ran the same WDL with no fix</td>
+<td>the tab runs its own Cromwell, set up by the Workbench, so it wasn’t affected</td>
+</tr>
+<tr class="odd">
+<td>The Nextflow <em>hello</em> task failed: <em>“Command ‘ps’ required by nextflow to collect task metrics cannot be found”</em></td>
+<td>Nextflow runs <code>ps</code> <strong>inside your container</strong> to measure each task. The tutorial’s default image (<code>ubuntu-slim</code>) doesn’t have it, and nor does the official <code>ubuntu</code> image. Use an image that does (our PLINK image did), or install the <code>procps</code> package in your own</td>
+</tr>
+<tr class="even">
+<td>Nextflow said <em>“Permission denied for all log views”</em></td>
+<td><em>All of Us</em> blocks Google’s job logs. Read the failed task’s own files instead: <code>.command.err</code> and <code>.command.log</code>, in its work folder (<code>…/nextflow-scratch/xx/…</code>)</td>
+</tr>
+<tr class="odd">
+<td>Cromwell printed <code>MANIFEST_UNKNOWN … falling back to OCI manifest</code></td>
+<td>harmless: Cromwell couldn’t fingerprint the image (used only to reuse earlier results)</td>
+</tr>
+<tr class="even">
+<td>The image straight from Docker Hub failed</td>
+<td>as for dsub: use the <strong><em>All of Us</em> mirror</strong> for every image, in every tool</td>
+</tr>
+<tr class="odd">
+<td>The Workflows tab’s bucket list opened on <code>dataproc-staging-…</code>, with <em>“0 workflows found”</em></td>
+<td>choose <strong>your workspace bucket</strong> in the list; the tab then finds <code>.wdl</code> files in all its folders</td>
+</tr>
+<tr class="even">
+<td>Halfway through, the notebook’s R session restarted, and every result in memory was gone</td>
+<td>files on disk and in the bucket survive. Rerun the <strong>setup</strong> cells, not <em>Run All</em> (it would rerun every test). In run mode, a workflow also stops if the <strong>app</strong> stops: watch the auto-stop setting</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1375,10 +1552,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Tested: dsub (November 2026, dsub 0.5.6, <em>All of Us</em> Jupyter app, CDR v9): the chromosome 21 job, all 22 tasks (they matched the app), and chromosome 1 on standard and SSD disks. The Cromwell and Nextflow examples follow the <em>All of Us</em> tutorial notebooks and the Verily documentation; we haven’t run them ourselves yet. The tutorials note that the Nextflow web interface (Seqera) doesn’t work in <em>All of Us</em> workspaces, because they have no internet access, and that the default Nextflow is version 25.10 (version 26.04 has a stricter syntax). The Workflows tab runs Cromwell in <em>server mode</em>; running <code>java -jar $CROMWELL_JAR run</code> in an app is <em>run mode</em>: the app must stay on until the workflow finishes. Job machines and bucket storage are billed to the workspace’s pod and don’t appear in the app cost estimate.</p>
+<p>Tested November 2026 (<em>All of Us</em> Jupyter app, CDR v9): dsub 0.5.6 (the chromosome 21 job, all 22 tasks, chromosome 1 on standard and SSD disks), Cromwell 92 in run mode and on the Workflows tab, and Nextflow 25.10.2 in an app. Not tested: Nextflow from the Workflows tab, batch jobs (input tables) on the Workflows tab, and the ACAF files. The pinned 591 helper images will be deleted by Google about 12 months after release: <strong>check around November 2027</strong> and move to a newer version that works. The tutorials note that the Nextflow web interface (Seqera) doesn’t work in <em>All of Us</em> workspaces, because they have no internet access, and that Nextflow 26.04 has a stricter syntax than the app’s 25.10. Job machines and bucket storage are billed to the workspace’s pod and don’t appear in the app cost estimate. For a 2-hour class, demo the Workflows tab live (about 10 minutes, including the 4-minute run) rather than run mode.</p>
 </div>
 </div>
 </div>
+</section>
 </section>
 </section>
 <section id="instructor-notes" class="level2">
@@ -1405,7 +1583,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>In <em>All of Us</em>: the private network, no public address, images from the <strong>mirror</strong>, and <strong>pinned</strong> versions</li>
 <li><code>dstat</code> to monitor, <code>ddel</code> to cancel, and the <strong>log</strong> to find out why a task failed, or where its time went</li>
 <li><strong>Copying</strong> big files can take longer than the analysis: use an <strong>SSD</strong> disk (<code>--disk-type pd-ssd</code>)</li>
-<li>For <strong>multi-step</strong> pipelines, use a workflow language: <strong>WDL</strong> with Cromwell, or <strong>Nextflow</strong></li>
+<li>For <strong>multi-step</strong> pipelines, use a workflow language: <strong>WDL</strong> with Cromwell, or <strong>Nextflow</strong>. The <strong>Workflows tab</strong> runs WDL with no configuration file and no app</li>
+<li><strong>Pin helper images</strong> in every tool (dsub, Cromwell, Nextflow): one new version broke both dsub and Cromwell in November 2026</li>
 </ul>
 </section>
 <section id="further-reading" class="level2">
