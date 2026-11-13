@@ -2315,8 +2315,8 @@ A **pipeline** that runs analysis steps for you, in order or in parallel, **with
 
 | Tool | Language | Where you run it |
 |---|---|---|
-| **Cromwell** | WDL | **Workflows** tab (or CLI) |
-| **Nextflow** | Nextflow (`.nf`) | **Workflows** tab (or CLI) |
+| **Cromwell** | WDL | **Workflows** tab (or an app) |
+| **Nextflow** | Nextflow (`.nf`) | **Workflows** tab (or an app) |
 | **dsub** | Shell commands, one step | An app's **terminal** |
 
 ::: {.fragment}
@@ -2347,7 +2347,7 @@ Source: Verily, "Workflows overview" and "Workflow engines". All three tools use
 ::: {.column .side width="48%"}
 **Step 1: Provide source.** Where's the workflow file?
 
-- **Workspace bucket:** pick the bucket. Workbench lists the workflow files it finds there (search by name).
+- **Workspace bucket:** pick **your workspace bucket**. Workbench lists the workflow files it finds there, by folder (search by path).
 - **Git repository:** a repo with the workflow (see *Optional Extras: GitHub*)
 
 Select the workflow → **Next**
@@ -2361,16 +2361,17 @@ Upload the workflow file (`.wdl` or `.nf`) to your bucket **first**. Until there
 ::::
 
 ::: notes
-The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.
+The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say "0 workflows found": choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g. data/workflows/. Nextflow workflows should include a nextflow.config file next to the .nf file.
 :::
 
 ## Running a Workflow
 
 **Setup** tab → select the workflow → **+ New job**
 
-1. Fill in the **inputs**. Workbench builds the form from the workflow file.
-2. Choose an **output bucket** for the results
-3. Start the job, then follow it on **Job status**: each task's progress, logs, and outputs
+1. **Job details:** a name, and *Run a single job* (or a batch)
+2. **Inputs:** a **form**, one box per input in the workflow. `gs://` paths for files; plain text (no quotation marks) for strings
+3. **Outputs:** your bucket, and a folder named after the job
+4. **Submit job**, then follow it on **Job status**: *Starting* → *Running* → *Completed*
 
 ::: {.fragment}
 **Batch jobs:** run one WDL workflow **many times in parallel**, e.g., once per sample
@@ -2380,7 +2381,24 @@ The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for
 :::
 
 ::: notes
-Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
+Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to <bucket>/<job name>/<workflow>/<job ID>/call-<task>/. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
+:::
+
+## A Workflow Job, Tested
+
+:::: {.columns}
+::: {.column width="50%"}
+![The input form](images/wf-job-inputs.png){fig-alt="Creating new job dialog, step 2 Prepare inputs: an input form with the keys plink_freq.bed, .bim, and .fam (type File) and plink_freq.docker_image (type String), each filled in with a gs:// path or the image address."}
+:::
+::: {.column width="50%"}
+![Job status: finished](images/wf-job-status.png){fig-alt="Workflows tab, Job status sub-tab: one WDL job named plink_freq_job with status Completed, its job ID, and the time it was last updated."}
+:::
+::::
+
+**PLINK on chromosome 21** (a WDL from *Optional Extras: Running Workflows*): about **4 minutes** from **Submit** to *Completed*, with the same results as PLINK in an app. No configuration file, and no app needed.
+
+::: notes
+Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab's Cromwell wasn't affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Not tested yet: batch jobs, Git sources, and Nextflow from the tab.
 :::
 
 ## dsub: Jobs from an App

@@ -446,7 +446,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-is-a-workflow" id="toc-what-is-a-workflow" class="nav-link" data-scroll-target="#what-is-a-workflow">What Is a Workflow?</a></li>
   <li><a href="#adding-a-workflow" id="toc-adding-a-workflow" class="nav-link" data-scroll-target="#adding-a-workflow">Adding a Workflow</a></li>
   <li><a href="#running-a-workflow" id="toc-running-a-workflow" class="nav-link" data-scroll-target="#running-a-workflow">Running a Workflow</a></li>
-  <li><a href="#dsub-jobs-from-an-app" id="toc-dsub-jobs-from-an-app" class="nav-link" data-scroll-target="#dsub-jobs-from-an-app">dsub: Jobs from an App</a></li>
   </ul>
 </nav>
     </div>
@@ -522,12 +521,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><strong>Cromwell</strong></td>
 <td>WDL</td>
-<td><strong>Workflows</strong> tab (or CLI)</td>
+<td><strong>Workflows</strong> tab (or an app)</td>
 </tr>
 <tr class="even">
 <td><strong>Nextflow</strong></td>
 <td>Nextflow (<code>.nf</code>)</td>
-<td><strong>Workflows</strong> tab (or CLI)</td>
+<td><strong>Workflows</strong> tab (or an app)</td>
 </tr>
 <tr class="odd">
 <td><strong>dsub</strong></td>
@@ -574,7 +573,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="g-col-12 g-col-md-6">
 <p><strong>Step 1: Provide source.</strong> Where’s the workflow file?</p>
 <ul>
-<li><strong>Workspace bucket:</strong> pick the bucket. Workbench lists the workflow files it finds there (search by name).</li>
+<li><strong>Workspace bucket:</strong> pick <strong>your workspace bucket</strong>. Workbench lists the workflow files it finds there, by folder (search by path).</li>
 <li><strong>Git repository:</strong> a repo with the workflow (see the <a href="../../pages/extras/github-guide.html">GitHub guide</a>)</li>
 </ul>
 <p>Select the workflow → <strong>Next</strong></p>
@@ -594,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.</p>
+<p>The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say “0 workflows found”: choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g.&nbsp;data/workflows/. Nextflow workflows should include a nextflow.config file next to the .nf file.</p>
 </div>
 </div>
 </div>
@@ -603,15 +602,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="running-a-workflow">Running a Workflow</h2>
 <p><strong>Setup</strong> tab → select the workflow → <strong>+ New job</strong></p>
 <ol type="1">
-<li>Fill in the <strong>inputs</strong>. Workbench builds the form from the workflow file.</li>
-<li>Choose an <strong>output bucket</strong> for the results</li>
-<li>Start the job, then follow it on <strong>Job status</strong>: each task’s progress, logs, and outputs</li>
+<li><strong>Job details:</strong> a name, and <em>Run a single job</em> (or a batch)</li>
+<li><strong>Inputs:</strong> a <strong>form</strong>, one box per input in the workflow. <code>gs://</code> paths for files; plain text (no quotation marks) for strings</li>
+<li><strong>Outputs:</strong> your bucket, and a folder named after the job</li>
+<li><strong>Submit job</strong>, then follow it on <strong>Job status</strong>: <em>Starting</em> → <em>Running</em> → <em>Completed</em></li>
 </ol>
 <p><strong>Batch jobs:</strong> run one WDL workflow <strong>many times in parallel</strong>, e.g., once per sample</p>
 <ul>
 <li>Choose <em>Run a batch job with inputs defined by an input table</em></li>
 <li>Upload a <strong>CSV</strong> (one row per run), then match its columns to the workflow’s inputs</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to <bucket>/<job name="">/<workflow>/<job id="">/call-
+<task>
+<p>/. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+<p>:::</p>
+<section id="a-workflow-job-tested" class="level2">
+<h2 class="anchored" data-anchor-id="a-workflow-job-tested">A Workflow Job, Tested</h2>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../Intro to workbench 2.0/images/wf-job-inputs.png" class="img-fluid figure-img" alt="Creating new job dialog, step 2 Prepare inputs: an input form with the keys plink_freq.bed, .bim, and .fam (type File) and plink_freq.docker_image (type String), each filled in with a gs:// path or the image address."></p>
+<figcaption>The input form</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-md-6">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../Intro to workbench 2.0/images/wf-job-status.png" class="img-fluid figure-img" alt="Workflows tab, Job status sub-tab: one WDL job named plink_freq_job with status Completed, its job ID, and the time it was last updated."></p>
+<figcaption>Job status: finished</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>PLINK on chromosome 21</strong> (a WDL from <em>Optional Extras: Running Workflows</em>): about <strong>4 minutes</strong> from <strong>Submit</strong> to <em>Completed</em>, with the same results as PLINK in an app. No configuration file, and no app needed.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Instructor tip">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -624,7 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+<p>Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab’s Cromwell wasn’t affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Not tested yet: batch jobs, Git sources, and Nextflow from the tab.</p>
 </div>
 </div>
 </div>
@@ -670,6 +707,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+</section>
+</task></job></workflow></job></bucket></div>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
