@@ -163,7 +163,7 @@ Keep the workflow (script, tasks file, or workflow file) in **GitHub**, with the
 | **Also used at** | Google Cloud | **Terra** (the Broad Institute's platform), other clouds, clusters | clusters, laptops, every major cloud |
 | **Start with** | the class [Running Workflows](workflows-dsub.qmd) | [Dockstore](https://dockstore.org/) for ready-made workflows | [nf-core](https://nf-co.re/) and [Nextflow training](https://training.nextflow.io/) |
 
-👉 **Which should I learn?** Start with **dsub**: it's one command, and it teaches every idea on this page. Move to **Nextflow** or **Cromwell** when you need multi-step pipelines, or want to run a published one. Pick the one your field (or your collaborators) uses: much of genomics at the Broad Institute and on Terra uses WDL; nf-core uses Nextflow.
+👉 **Which should I learn?** Start with **dsub**: it's one command, and it teaches every idea on this page. Move to **Nextflow** or **Cromwell** when you need multi-step pipelines, or want to run a published one. Pick the one your field (or your collaborators) uses: much of genomics at the Broad Institute and on Terra uses WDL; nf-core uses Nextflow. What each does best in *All of Us*, from our tests: [Which one should I use?](workflows-dsub.qmd#which-one-should-i-use)
 
 ### Outside the Workbench
 

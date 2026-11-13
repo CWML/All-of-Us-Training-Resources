@@ -327,6 +327,25 @@ dsub is the **simplest** tool: one script, a table of tasks. It's great for **on
 
 All three run their tasks on **Google Batch**, so the same *All of Us* rules apply: the private network, no public addresses, images from Google registries (or the *All of Us* mirror), and pinned versions. Each tool takes them in a short **configuration file**.
 
+### Which one should I use?
+
+All three gave the same answer in our tests, in about the same time. What differs is **how much you write**, **where you run it**, and **what's already written for you**.
+
+| | What it does best | The catch (in *All of Us*) |
+|---|---|---|
+| **dsub** | The **simplest**: your shell script, plus a table with one row per file. The fastest way to run **one step on many files**. You can check each job with `dstat` and read its log | **One step per job**: for a pipeline, you run and check each step yourself. No **resume**. Jobs don't show on the Workflows tab. You need an app to start them |
+| **Cromwell** (WDL) | The **Workflows tab**: no configuration file, no app, inputs in a **form**, a page to watch the job, and **batch jobs** from a table. **Call caching** skips steps that already finished. Many published genomics pipelines are written in WDL (GATK, the Broad Institute, [Dockstore](https://dockstore.org/)) | WDL is **wordy**: inputs, outputs, and runtime for every task. In an app (*run mode*) you need your own `cromwell.conf`, with the pinned helper image, and the app must stay on |
+| **Nextflow** | **Short** pipeline files, and many tasks at once with very little code (`Channel.of(19..22)`). `-resume` restarts where a pipeline stopped. It **streams** bucket files instead of copying them, which helps when a tool reads only part of a file. The large [nf-core](https://nf-co.re/) community of pipelines | Every image must include `ps`. Google's job logs are blocked, so you read errors from the task's work folder. The Seqera web interface doesn't work. Ready-made nf-core pipelines download code and images from the internet: inside the perimeter, they need extra setup (we haven't tried one) |
+
+👉 **A simple rule:**
+
+1. **One step, many files** (one command per chromosome or sample): **dsub**.
+2. **A published WDL pipeline**, or you'd rather **click than configure**: **Cromwell on the Workflows tab**.
+3. **Your own multi-step pipeline**, or your lab already uses Nextflow: **Nextflow**.
+4. **Not sure?** Start with dsub. It teaches every idea, and the script you write moves into a WDL `command` or a Nextflow `script` almost unchanged.
+
+Your **collaborators** matter too: a pipeline in the language your lab or field already uses is easier to share and get help with.
+
 ### A task in each language
 
 The same idea in each tool: PLINK on one chromosome, here allele frequencies of the common variants (`--maf 0.01 --freq`). They're based on the *All of Us* tutorial notebooks (folder *How to Use Workflow Tools* in the tutorial workspace), and **we ran both** in November 2026: both gave exactly the same frequencies as PLINK in the app (see [Tested: Cromwell and Nextflow](#tested-cromwell-and-nextflow)).

@@ -462,6 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#scaling-up-from-clinvar-to-acaf" id="toc-scaling-up-from-clinvar-to-acaf" class="nav-link" data-scroll-target="#scaling-up-from-clinvar-to-acaf">Scaling up: from ClinVar to ACAF</a></li>
   <li><a href="#cromwell-and-nextflow" id="toc-cromwell-and-nextflow" class="nav-link" data-scroll-target="#cromwell-and-nextflow">Cromwell and Nextflow</a>
   <ul class="collapse">
+  <li><a href="#which-one-should-i-use" id="toc-which-one-should-i-use" class="nav-link" data-scroll-target="#which-one-should-i-use">Which one should I use?</a></li>
   <li><a href="#a-task-in-each-language" id="toc-a-task-in-each-language" class="nav-link" data-scroll-target="#a-task-in-each-language">A task in each language</a></li>
   <li><a href="#the-all-of-us-settings-for-each" id="toc-the-all-of-us-settings-for-each" class="nav-link" data-scroll-target="#the-all-of-us-settings-for-each">The <em>All of Us</em> settings for each</a></li>
   <li><a href="#three-ways-to-run-a-workflow" id="toc-three-ways-to-run-a-workflow" class="nav-link" data-scroll-target="#three-ways-to-run-a-workflow">Three ways to run a workflow</a></li>
@@ -1241,6 +1242,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>All three run their tasks on <strong>Google Batch</strong>, so the same <em>All of Us</em> rules apply: the private network, no public addresses, images from Google registries (or the <em>All of Us</em> mirror), and pinned versions. Each tool takes them in a short <strong>configuration file</strong>.</p>
+<section id="which-one-should-i-use" class="level3">
+<h3 class="anchored" data-anchor-id="which-one-should-i-use">Which one should I use?</h3>
+<p>All three gave the same answer in our tests, in about the same time. What differs is <strong>how much you write</strong>, <strong>where you run it</strong>, and <strong>what’s already written for you</strong>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>What it does best</th>
+<th>The catch (in <em>All of Us</em>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>dsub</strong></td>
+<td>The <strong>simplest</strong>: your shell script, plus a table with one row per file. The fastest way to run <strong>one step on many files</strong>. You can check each job with <code>dstat</code> and read its log</td>
+<td><strong>One step per job</strong>: for a pipeline, you run and check each step yourself. No <strong>resume</strong>. Jobs don’t show on the Workflows tab. You need an app to start them</td>
+</tr>
+<tr class="even">
+<td><strong>Cromwell</strong> (WDL)</td>
+<td>The <strong>Workflows tab</strong>: no configuration file, no app, inputs in a <strong>form</strong>, a page to watch the job, and <strong>batch jobs</strong> from a table. <strong>Call caching</strong> skips steps that already finished. Many published genomics pipelines are written in WDL (GATK, the Broad Institute, <a href="https://dockstore.org/">Dockstore</a>)</td>
+<td>WDL is <strong>wordy</strong>: inputs, outputs, and runtime for every task. In an app (<em>run mode</em>) you need your own <code>cromwell.conf</code>, with the pinned helper image, and the app must stay on</td>
+</tr>
+<tr class="odd">
+<td><strong>Nextflow</strong></td>
+<td><strong>Short</strong> pipeline files, and many tasks at once with very little code (<code>Channel.of(19..22)</code>). <code>-resume</code> restarts where a pipeline stopped. It <strong>streams</strong> bucket files instead of copying them, which helps when a tool reads only part of a file. The large <a href="https://nf-co.re/">nf-core</a> community of pipelines</td>
+<td>Every image must include <code>ps</code>. Google’s job logs are blocked, so you read errors from the task’s work folder. The Seqera web interface doesn’t work. Ready-made nf-core pipelines download code and images from the internet: inside the perimeter, they need extra setup (we haven’t tried one)</td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>A simple rule:</strong></p>
+<ol type="1">
+<li><strong>One step, many files</strong> (one command per chromosome or sample): <strong>dsub</strong>.</li>
+<li><strong>A published WDL pipeline</strong>, or you’d rather <strong>click than configure</strong>: <strong>Cromwell on the Workflows tab</strong>.</li>
+<li><strong>Your own multi-step pipeline</strong>, or your lab already uses Nextflow: <strong>Nextflow</strong>.</li>
+<li><strong>Not sure?</strong> Start with dsub. It teaches every idea, and the script you write moves into a WDL <code>command</code> or a Nextflow <code>script</code> almost unchanged.</li>
+</ol>
+<p>Your <strong>collaborators</strong> matter too: a pipeline in the language your lab or field already uses is easier to share and get help with.</p>
+</section>
 <section id="a-task-in-each-language" class="level3">
 <h3 class="anchored" data-anchor-id="a-task-in-each-language">A task in each language</h3>
 <p>The same idea in each tool: PLINK on one chromosome, here allele frequencies of the common variants (<code>--maf 0.01 --freq</code>). They’re based on the <em>All of Us</em> tutorial notebooks (folder <em>How to Use Workflow Tools</em> in the tutorial workspace), and <strong>we ran both</strong> in November 2026: both gave exactly the same frequencies as PLINK in the app (see <a href="#tested-cromwell-and-nextflow">Tested: Cromwell and Nextflow</a>).</p>
