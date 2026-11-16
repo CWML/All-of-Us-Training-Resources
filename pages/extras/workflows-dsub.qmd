@@ -321,7 +321,7 @@ dsub is the **simplest** tool: one script, a table of tasks. It's great for **on
 |---|---|---|---|
 | **You write** | a shell script and a dsub command | a **WDL** file (*Workflow Description Language*) and a JSON file of inputs | a **Nextflow** (`.nf`) file |
 | **Best for** | one step on many files | multi-step pipelines; many published genomics workflows (e.g. GATK) | multi-step pipelines; the **nf-core** community pipelines |
-| **Run from** | an app's terminal or notebook | the **[Workflows tab](../workspace/workflows.qmd)**, or `java -jar $CROMWELL_JAR run …` in an app | the **Workflows tab**, or `nextflow run …` in an app |
+| **Run from** | an app's terminal or notebook | the **[Workflows tab](../workspace/workflows.qmd)**, or `java -jar $CROMWELL_JAR run …` in an app | `nextflow run …` in an app (in *All of Us*, the Workflows tab doesn't offer Nextflow: tested November 2026) |
 | **Ready-made workflows** | | [Dockstore](https://dockstore.org/) | [nf-core](https://nf-co.re/), [Dockstore](https://dockstore.org/) |
 | **Learning curve** | low | medium | medium |
 
@@ -335,13 +335,13 @@ All three gave the same answer in our tests, in about the same time. What differ
 |---|---|---|
 | **dsub** | The **simplest**: your shell script, plus a table with one row per file. The fastest way to run **one step on many files**. You can check each job with `dstat` and read its log | **One step per job**: for a pipeline, you run and check each step yourself. No **resume**. Jobs don't show on the Workflows tab. You need an app to start them |
 | **Cromwell** (WDL) | The **Workflows tab**: no configuration file, no app, inputs in a **form**, a page to watch the job, and **batch jobs** from a table. **Call caching** skips steps that already finished. Many published genomics pipelines are written in WDL (GATK, the Broad Institute, [Dockstore](https://dockstore.org/)) | WDL is **wordy**: inputs, outputs, and runtime for every task. In an app (*run mode*) you need your own `cromwell.conf`, with the pinned helper image, and the app must stay on |
-| **Nextflow** | **Short** pipeline files, and many tasks at once with very little code (`Channel.of(19..22)`). `-resume` restarts where a pipeline stopped. It **streams** bucket files instead of copying them, which helps when a tool reads only part of a file. The large [nf-core](https://nf-co.re/) community of pipelines | Every image must include `ps`. Google's job logs are blocked, so you read errors from the task's work folder. The Seqera web interface doesn't work. Ready-made nf-core pipelines download code and images from the internet: inside the perimeter, they need extra setup (we haven't tried one) |
+| **Nextflow** | **Short** pipeline files, and many tasks at once with very little code (`Channel.of(19..22)`). `-resume` restarts where a pipeline stopped. It **streams** bucket files instead of copying them, which helps when a tool reads only part of a file. The large [nf-core](https://nf-co.re/) community of pipelines | Runs **only from an app** (the Workflows tab doesn't offer it in *All of Us*), so the app must stay on. Every image must include `ps`. Google's job logs are blocked, so you read errors from the task's work folder. The Seqera web interface doesn't work. Ready-made nf-core pipelines download code and images from the internet: inside the perimeter, they need extra setup (we haven't tried one) |
 
 👉 **A simple rule:**
 
 1. **One step, many files** (one command per chromosome or sample): **dsub**.
 2. **A published WDL pipeline**, or you'd rather **click than configure**: **Cromwell on the Workflows tab**.
-3. **Your own multi-step pipeline**, or your lab already uses Nextflow: **Nextflow**.
+3. **Your own multi-step pipeline**, or your lab already uses Nextflow: **Nextflow**, from an app.
 4. **Not sure?** Start with dsub. It teaches every idea, and the script you write moves into a WDL `command` or a Nextflow `script` almost unchanged.
 
 Your **collaborators** matter too: a pipeline in the language your lab or field already uses is easier to share and get help with.
@@ -451,9 +451,26 @@ The *All of Us* tutorial notebooks have complete configuration files; our [test 
 | **Inputs** | a JSON file | a **form**, built from the WDL (or an input table, for a batch) | in the `.nf` file, or `--param value` |
 | **Settings** | your `cromwell.conf` | set by the Workbench: nothing to write | your `nextflow.config` |
 | **Does the app need to stay on?** | **yes**, until it finishes | **no**: no app needed | **yes**, until it finishes |
-| **Results** | `<work folder>/cromwell-executions/<workflow>/<id>/call-<task>/` | `<bucket>/<job name>/<workflow>/<id>/call-<task>/` | the work folder, or a `publishDir` you choose |
+| **Results** | `<work folder>/cromwell-executions/<workflow>/<id>/call-<task>/` | `<output bucket>/<job name>/<workflow>/<id>/call-<task>/`: check which **output bucket** you chose | the work folder, or a `publishDir` you choose |
+| **The workflow file comes from** | the app's disk | your **bucket**, or a **GitHub** repository (link your GitHub account first) | the app's disk |
 
 👉 **For most students, the Workflows tab is the easiest way to run WDL:** no configuration file, no app, and a page to watch the job on. How to use it: [the Workflows tab](../workspace/workflows.qmd).
+
+#### On the Workflows tab: a single job or a batch job?
+
+When you start a **New job**, the tab asks *"Run this workflow multiple times?"*
+
+| | Single job | Batch job |
+|---|---|---|
+| **Runs the workflow** | once | **once per row** of a table, all at the same time |
+| **Inputs** | a form: you type each value | a **CSV table** in your bucket, one row per run, one column per input. You type which **column** goes with which input (in *All of Us*, the tab can't preview the table) |
+| **Also needs** | | a **reference column** that labels each run (e.g. `chr` or a sample ID) |
+| **On Job status** | one row | **one row** for the batch, with *Number of jobs* (e.g. 4) |
+| **Results** | `<job name>/<workflow>/<id>/call-<task>/` | the same, with **one `<id>` folder per row** |
+| **Use it for** | testing, or one file | the same step on **many** files: chromosomes, samples. The tab's version of dsub's `--tasks` |
+| **Our test** | chromosome 21: about **4 minutes** | chromosomes 19 to 22: about **11 minutes** for all 4, and chromosome 21 matched the single job exactly |
+
+👉 **Test with a single job first**, then run the batch: a mistake in the WDL then costs one run, not one per row.
 
 ### Tested: Cromwell and Nextflow
 
@@ -467,8 +484,11 @@ We ran each tool in an *All of Us* workspace in November 2026 (Jupyter app with 
 | Cromwell *hello world* with an image straight from **Docker Hub** | ❌ failed | 3.5 | |
 | Nextflow *hello*, in an app | ✅ worked (after the fix below) | 2.1 | |
 | Nextflow PLINK, chromosomes 19 to 22 at once, in an app | ✅ worked | 3.4 | yes (chromosome 21: all variants) |
+| Cromwell **batch job** on the Workflows tab: chromosomes 19 to 22 from a table | ✅ worked | about 11 | yes (chromosome 21: all variants) |
+| Cromwell on the Workflows tab, with the WDL straight from **GitHub** | ✅ worked | 3.9 | yes: all variants, difference 0 |
+| **Nextflow** on the Workflows tab | ❌ not offered: the tab lists only `.wdl` files, from a bucket or GitHub | | |
 
-Each run took **3 to 4 minutes**, mostly starting machines: PLINK itself took 20 seconds to 2 minutes per chromosome. As for dsub, tiny jobs don't belong in a workflow.
+Each single run took **3 to 4 minutes**, mostly starting machines: PLINK itself took 20 seconds to 2 minutes per chromosome. As for dsub, tiny jobs don't belong in a workflow.
 
 #### What we learned testing Cromwell and Nextflow
 
@@ -481,10 +501,16 @@ Each run took **3 to 4 minutes**, mostly starting machines: PLINK itself took 20
 | Cromwell printed `MANIFEST_UNKNOWN … falling back to OCI manifest` | harmless: Cromwell couldn't fingerprint the image (used only to reuse earlier results) |
 | The image straight from Docker Hub failed | as for dsub: use the ***All of Us* mirror** for every image, in every tool |
 | The Workflows tab's bucket list opened on `dataproc-staging-…`, with *"0 workflows found"* | choose **your workspace bucket** in the list; the tab then finds `.wdl` files in all its folders |
+| One job's results went to the `dataproc-staging-…` bucket: the **output** step had picked it | check the **output bucket** on the last step of every new job |
+| The page showed that bucket as `dataproc-staging-aou-rw-…`, but its `gs://` address was `dataproc-staging-wb-…` | a bucket's **name** on the page isn't always its address: the **Cloud ID** (Resources tab, or the job's outputs) is |
+| For a batch job, the tab said the perimeter *"prevents reading the input table"* | type each input's **column name** exactly as in the CSV header, and name a **reference column** (e.g. `chr`) that labels each run |
+| A Git source asked us to *"Link your GitHub account"* | Workbench account settings → GitHub → install Verily's GitHub app. Choose **only the repositories** you need, not all of them |
+| The job's **Inputs → View** showed `--` for every value, though the job used them | a display problem: keep your own record of the inputs (e.g. the CSV, or a JSON file) |
+| The tab didn't list `.nf` files: not `plink_freq.nf`, not `main.nf` next to a `nextflow.config`, from the bucket or from GitHub | in *All of Us*, run Nextflow **from an app** |
 | Halfway through, the notebook's R session restarted, and every result in memory was gone | files on disk and in the bucket survive. Rerun the **setup** cells, not *Run All* (it would rerun every test). In run mode, a workflow also stops if the **app** stops: watch the auto-stop setting |
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-Tested November 2026 (*All of Us* Jupyter app, CDR v9): dsub 0.5.6 (the chromosome 21 job, all 22 tasks, chromosome 1 on standard and SSD disks), Cromwell 92 in run mode and on the Workflows tab, and Nextflow 25.10.2 in an app. Not tested: Nextflow from the Workflows tab, batch jobs (input tables) on the Workflows tab, and the ACAF files. The pinned 591 helper images will be deleted by Google about 12 months after release: **check around November 2027** and move to a newer version that works. The tutorials note that the Nextflow web interface (Seqera) doesn't work in *All of Us* workspaces, because they have no internet access, and that Nextflow 26.04 has a stricter syntax than the app's 25.10. Job machines and bucket storage are billed to the workspace's pod and don't appear in the app cost estimate. For a 2-hour class, demo the Workflows tab live (about 10 minutes, including the 4-minute run) rather than run mode.
+Tested November 2026 (*All of Us* Jupyter app, CDR v9): dsub 0.5.6 (the chromosome 21 job, all 22 tasks, chromosome 1 on standard and SSD disks), Cromwell 92 in run mode and on the Workflows tab, and Nextflow 25.10.2 in an app. Also tested on the Workflows tab: a batch job from an input table (chromosomes 19 to 22), and a WDL from GitHub (branch main). The tab didn't offer Nextflow. Not tested: the ACAF files, nf-core pipelines, and the tab's JSON mapper file for batch inputs. With call caching on, an identical rerun should finish in seconds (not yet tried): worth showing in class. The pinned 591 helper images will be deleted by Google about 12 months after release: **check around November 2027** and move to a newer version that works. The tutorials note that the Nextflow web interface (Seqera) doesn't work in *All of Us* workspaces, because they have no internet access, and that Nextflow 26.04 has a stricter syntax than the app's 25.10. Job machines and bucket storage are billed to the workspace's pod and don't appear in the app cost estimate. For a 2-hour class, demo the Workflows tab live (about 10 minutes, including the 4-minute run) rather than run mode.
 :::
 
 ## Instructor notes

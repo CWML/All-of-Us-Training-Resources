@@ -3772,6 +3772,11 @@ Maximilian Wegener, MPH
 <p>A <strong>pipeline</strong> that runs analysis steps for you, in order or in parallel, <strong>without an app running</strong>. Each step runs in its own container on a temporary cloud machine.</p>
 <p><strong>Use it when you need to:</strong> run the same analysis on many files or samples (e.g., genomics), or make it easy to reproduce and share</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Tool</th>
@@ -3788,7 +3793,7 @@ Maximilian Wegener, MPH
 <tr class="even">
 <td><strong>Nextflow</strong></td>
 <td>Nextflow (<code>.nf</code>)</td>
-<td><strong>Workflows</strong> tab (or an app)</td>
+<td>An app (in <em>All of Us</em>, the tab offers WDL only)</td>
 </tr>
 <tr class="odd">
 <td><strong>dsub</strong></td>
@@ -3834,7 +3839,7 @@ Maximilian Wegener, MPH
 <p><strong>Step 1: Provide source.</strong> Where’s the workflow file?</p>
 <ul>
 <li><strong>Workspace bucket:</strong> pick <strong>your workspace bucket</strong>. Workbench lists the workflow files it finds there, by folder (search by path).</li>
-<li><strong>Git repository:</strong> a repo with the workflow (see <em>Optional Extras: GitHub</em>)</li>
+<li><strong>Git repository:</strong> a repo with the workflow (see <em>Optional Extras: GitHub</em>). Link your GitHub account first</li>
 </ul>
 <p>Select the workflow → <strong>Next</strong></p>
 <p><strong>Step 2: Review details</strong> → add it</p>
@@ -3843,7 +3848,7 @@ Maximilian Wegener, MPH
 </div>
 </div></div>
 <aside class="notes">
-<p>The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say “0 workflows found”: choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g.&nbsp;data/workflows/. Nextflow workflows should include a nextflow.config file next to the .nf file.</p>
+<p>The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say “0 workflows found”: choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g.&nbsp;data/workflows/. In our All of Us workspace (November 2026) the tab listed only .wdl files: no .nf files, from a bucket or from GitHub, even main.nf next to a nextflow.config. Run Nextflow from an app. Git sources: the tab first asks you to link your GitHub account (Workbench account settings, GitHub, then install Verily’s GitHub app); choose only the repositories you need, not all. You then pick a branch or a tag; a tag keeps a class on a fixed version. The workflow’s details save the repository, file, and branch.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3862,21 +3867,31 @@ Maximilian Wegener, MPH
 <ol type="1">
 <li><strong>Job details:</strong> a name, and <em>Run a single job</em> (or a batch)</li>
 <li><strong>Inputs:</strong> a <strong>form</strong>, one box per input in the workflow. <code>gs://</code> paths for files; plain text (no quotation marks) for strings</li>
-<li><strong>Outputs:</strong> your bucket, and a folder named after the job</li>
+<li><strong>Outputs:</strong> <strong>check the bucket</strong> (it can default to <code>dataproc-staging-…</code>), and a folder named after the job</li>
 <li><strong>Submit job</strong>, then follow it on <strong>Job status</strong>: <em>Starting</em> → <em>Running</em> → <em>Completed</em></li>
 </ol>
 <div class="fragment">
 <p><strong>Batch jobs:</strong> run one WDL workflow <strong>many times in parallel</strong>, e.g., once per sample</p>
 <ul>
 <li>Choose <em>Run a batch job with inputs defined by an input table</em></li>
-<li>Upload a <strong>CSV</strong> (one row per run), then match its columns to the workflow’s inputs</li>
+<li>Pick a <strong>CSV</strong> in your bucket (one row per run), type which <strong>column</strong> goes with each input, and name a <strong>reference column</strong> that labels each run</li>
+<li><strong>Test with a single job first</strong></li>
 </ul>
 </div>
 <aside class="notes">
-Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to <bucket>/<job name="">/<workflow>/<job id="">/call-
-<task>
-<p>/. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
-<p>:::</p>
+<p>Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to <code>&lt;bucket&gt;/&lt;job name&gt;/&lt;workflow&gt;/&lt;job ID&gt;/call-&lt;task&gt;/</code>. Single job vs batch job: a single job runs the workflow once, with inputs typed into a form; a batch job runs it once per row of a CSV table in the bucket, all at the same time. In All of Us the tab can’t preview the table (perimeter), so you type the column name for each input, exactly as in the CSV header, plus a reference column that labels each run (e.g.&nbsp;chr). Job status shows a batch as one row with its number of jobs; results get one job ID folder per row. Tested November 2026: a single job on chromosome 21 took about 4 minutes; a batch of chromosomes 19 to 22 took about 11 minutes, and its chromosome 21 result matched exactly. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="a-workflow-job-tested" class="slide level2">
 <h2>A Workflow Job, Tested</h2>
 <div class="columns">
@@ -3897,7 +3912,7 @@ Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create
 </div></div>
 <p><strong>PLINK on chromosome 21</strong> (a WDL from <em>Optional Extras: Running Workflows</em>): about <strong>4 minutes</strong> from <strong>Submit</strong> to <em>Completed</em>, with the same results as PLINK in an app. No configuration file, and no app needed.</p>
 <aside class="notes">
-<p>Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab’s Cromwell wasn’t affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Not tested yet: batch jobs, Git sources, and Nextflow from the tab.</p>
+<p>Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab’s Cromwell wasn’t affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Also tested: a batch job (chromosomes 19 to 22 from a CSV table, about 11 minutes) and the same WDL from GitHub (3 minutes 55); both matched. One job’s outputs went to the dataproc-staging bucket because the output step had picked it, and that bucket’s gs:// address (Cloud ID: dataproc-staging-wb-…) differed from its name on the page (dataproc-staging-aou-rw-…). The job’s Inputs view showed – for every value, though the job used them. The job details page shows who started it (an email): paint it out in screenshots.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3944,7 +3959,8 @@ Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
+</section></section>
+<section>
 <section id="storage-costs" class="title-slide slide level1 center">
 <h1>Storage &amp; Costs</h1>
 
@@ -3994,8 +4010,8 @@ Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-
+</section></section>
+<section>
 <section id="optional-extras" class="title-slide slide level1 center">
 <h1>Optional Extras</h1>
 
@@ -4237,8 +4253,8 @@ Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create
 <li><em>“Here’s my R code and the error message. What’s wrong?”</em></li>
 <li><em>“Make a fake data frame with columns person_id, age, and diabetes so I can test this code.”</em></li>
 </ul>
-</section>
-
+</section></section>
+<section>
 <section id="wrap-up" class="title-slide slide level1 center">
 <h1>Wrap-up</h1>
 
@@ -4299,19 +4315,6 @@ Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create
 <h2>Course Survey</h2>
 <p><a href="https://yalesurvey.ca1.qualtrics.com/jfe/form/SV_cZOk3RQmTrQLhYy">Course survey</a></p>
 
-</section>
-
-</task></job></workflow></job></bucket><style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
