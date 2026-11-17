@@ -12,10 +12,10 @@ This repository holds **training materials** for the *All of Us* Researcher Work
 
 - Controlled Tier **CDR v9** in BigQuery: `wb-silky-artichoke-2408.C2025Q4R6`, in the **OMOP** Common Data Model. SQL is BigQuery Standard SQL.
 - Apple HealthKit is a separate dataset: `wb-silky-artichoke-2408.C_V9_R6_offcycle_healthkit` (long format; `value` is text).
-- R uses the tidyverse and bigrquery. **Settings and helpers are in `notebooks/aou_setup.R`**: `run_query()`, `save_data()`, `load_data()`, `hide_small_counts()`, `load_cohort_sample()`, `run_if_cheap()`, `last_query_cost()`, `aou_data_dir()`. Use them; don't rewrite them.
+- R uses the tidyverse and bigrquery. **Settings and helpers are in `notebooks/aou_setup.R`** (each person's bucket name is in `notebooks/my_settings.R`, which Git ignores: never commit it): `run_query()`, `save_data()`, `load_data()`, `hide_small_counts()`, `load_cohort_sample()`, `run_if_cheap()`, `last_query_cost()`, `aou_data_dir()`. Use them; don't rewrite them.
 - Every series uses the shared cohort query `notebooks/sql/t2d_cohort.sql` (type 2 diabetes cases vs controls).
 - `WORKSPACE_CDR` and `WORKSPACE_BUCKET` are **not** set in Workbench 2.0.
-- Notebooks live in series folders (`core/`, `omics/`, `surveys/`, `wearables/`) and load `../aou_setup.R`.
+- Notebooks live in series folders (`core/`, `omics/`, `surveys/`, `wearables/`, `workflows/`) and load `../aou_setup.R`.
 
 ## Check, don't guess
 

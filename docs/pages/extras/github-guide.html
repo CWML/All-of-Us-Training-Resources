@@ -417,6 +417,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Coding with AI and GitHub</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workflows for Beginners</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-dsub.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Running Workflows: dsub, Cromwell, and Nextflow</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -665,9 +677,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="keep-your-personal-settings-out-of-git">Keep your personal settings out of Git</h2>
 <p>Notebooks often need one or two lines that differ for each person, such as your <strong>bucket name</strong>. If you edit them in a shared file, every <code>git pull</code> can conflict with your edit, and every commit risks pushing it.</p>
 <ul>
-<li><strong>Before pulling:</strong> <code>git stash</code>, then <code>git pull</code>, then <code>git stash pop</code> puts your edit back on top of the new version.</li>
-<li><strong>Before committing:</strong> check <code>git diff</code> for your setting, and leave that file out: <code>git restore --staged &lt;file&gt;</code>.</li>
-<li><strong>Better:</strong> keep personal settings in a file Git ignores (e.g.&nbsp;<code>my_settings.R</code>, listed in <code>.gitignore</code>), and have the shared code read it.</li>
+<li><strong>Best:</strong> keep personal settings in a file Git ignores, and have the shared code read it. Our notebooks do this: <code>0.0 setup</code> saves your bucket name in <code>notebooks/my_settings.R</code>, <code>.gitignore</code> lists that file, and <code>aou_setup.R</code> reads it. So <code>git pull</code> never clashes with it, and it can’t be committed by mistake.</li>
+<li><strong>If you did edit a shared file:</strong> <code>git stash</code>, then <code>git pull</code>, then <code>git stash pop</code> puts your edit back on top of the new version. Before committing, check <code>git diff</code> for your setting, and leave that file out: <code>git restore --staged &lt;file&gt;</code>.</li>
 </ul>
 </section>
 <section id="protect-your-github-account" class="level2">
@@ -688,6 +699,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>For Path A: <strong>write access</strong> to the existing repo (ask the repo or organization owner to add you)</li>
 </ul>
 <p>You do <strong>not</strong> need to install anything on your own computer. Everything happens in a terminal inside a Workbench app, where the Workbench CLI (<code>wb</code>) and Git are already installed and you’re already logged in.</p>
+<p>Work <strong>inside</strong> the app on purpose: Controlled Tier workspaces are in a security <strong>perimeter</strong>, so the data can’t be reached from your own computer, even with <code>wb</code>, <code>gcloud</code>, or <code>bq</code>. Git and GitHub work normally from inside the app. Only <strong>code</strong> should travel that way.</p>
 </section>
 <section id="step-1-start-an-app-and-open-a-terminal" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-start-an-app-and-open-a-terminal">Step 1: Start an app and open a terminal</h2>
@@ -1049,7 +1061,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="kw">&amp;&amp;</span> <span class="fu">git</span> clone git@github.com:OWNER/REPO.git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> REPO</span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily cycle</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash <span class="kw">&amp;&amp;</span> <span class="fu">git</span> pull <span class="kw">&amp;&amp;</span> <span class="fu">git</span> stash pop    <span class="co"># keeps your personal settings</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                                  <span class="co"># your settings in my_settings.R are untouched</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
@@ -1057,10 +1069,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span></span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>References:</strong> - Verily Workbench: <a href="https://support.workbench.verily.com/docs/guides/cloud_apps/git_integrations/">Git integrations with cloud apps</a> - Verily Workbench: <a href="https://support.workbench.verily.com/docs/guides/cli/cli_install_and_run/">Install and run the Workbench CLI</a> - GitHub: <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Adding a new SSH key to your account</a></p>
-<!-- section-nav -->
-<div class="section-nav">
-<p><a href="../../pages/resources.html" class="section-nav-next">Next section: Resources →</a></p>
-</div>
 
 
 </section>

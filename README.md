@@ -89,6 +89,7 @@ R and Python notebooks in **series**, in `notebooks/`: each notebook does one th
 
 - **`notebooks/core/`** (1.1–3.4): one study from start to finish, people **with type 2 diabetes** vs **without diabetes**, including time to chronic kidney disease (CKD): build the cohort with SQL; clean, reshape, and join; Table 1, logistic and linear regression, survival analysis.
 - **`notebooks/omics/`** (4.1–4.7): genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, and proteomics, around type 2 diabetes and the *TCF7L2* variant rs7903146.
+- **`notebooks/workflows/`** (Optional Extras): run one analysis on many files at once with **dsub**, e.g. the 4.2 GWAS on all 22 chromosomes, with the settings *All of Us* needs.
 - Planned: **surveys** (5.x) and **wearables** (6.x).
 
 Every series uses the same cohort query, `notebooks/sql/t2d_cohort.sql`.
@@ -97,7 +98,7 @@ The core series:
 
 | Notebook | What it does |
 |---|---|
-| `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions |
+| `aou_setup.R` | Shared settings (the dataset) and helper functions. Your bucket name goes in `my_settings.R` (made by `0.0 setup`, ignored by Git) |
 | `0.0 setup` | Checks your settings and the connection to the data |
 | `1.1 build_cohorts` | The OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements |
 | `1.2 survival_data` | Time zero, event, and censoring; first CKD dates; follow-up |
@@ -122,7 +123,7 @@ The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They
    - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward.
    - **Download and upload:** download the whole `notebooks/` folder from GitHub and upload it **with its subfolders**: the notebooks in `core/` and `omics/` load `aou_setup.R` and `sql/` from the folder above.
 3. Launch an app (e.g., AoU Jupyter, which has R and Python kernels).
-4. Open **`0.0 setup`** and follow it: it has you edit two lines in `aou_setup.R`.
+4. Open **`0.0 setup`** and follow it: it saves your bucket's folder name in `notebooks/my_settings.R` (Git ignores it, so pulling new versions never clashes with it).
 5. Run a series in order: core `1.1` → `1.2` → `2.1` → `2.2` → `2.3` → `3.1` to `3.4` (the queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files), or omics `4.1` → `4.7`.
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).
@@ -153,7 +154,7 @@ chmod +x .git/hooks/pre-commit
 All-of-Us-Training-Resources/
 ├── README.md, AGENTS.md     this file; instructions for AI assistants (CLAUDE.md points to AGENTS.md)
 ├── .gitignore               keeps data files, private notes, and reference documents out of Git
-├── notebooks/               the classes: aou_setup.R (settings and helpers), sql/, core/, omics/, surveys/, wearables/
+├── notebooks/               the classes: aou_setup.R (settings and helpers), sql/, core/, omics/, surveys/, wearables/, workflows/
 ├── pages/, index.qmd        the website's pages (Quarto); built into docs/
 ├── Intro to workbench 2.0/  the slide deck
 ├── tools/                   check_notebooks.py (the safety check) and the site-building scripts

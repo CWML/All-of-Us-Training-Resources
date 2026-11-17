@@ -1176,7 +1176,7 @@ Maximilian Wegener, MPH
 <li>You can’t launch or open analysis environments</li>
 <li>Stored resources (buckets, disks) <strong>may be deleted</strong></li>
 </ul></li>
-<li>Set up a <strong>Google Cloud billing account</strong> and <strong>billing pod</strong> <em>before</em> this happens (see <em>Getting a Google Cloud Billing Account at Yale</em>)</li>
+<li>Set up a <strong>Google Cloud billing account</strong> and <strong>billing pod</strong> <em>before</em> this happens (at Yale: ask <strong>2 to 3 weeks ahead</strong>)</li>
 </ul>
 </section>
 <section id="billing-pods" class="slide level2">
@@ -1188,7 +1188,7 @@ Maximilian Wegener, MPH
 <li>Think of the pod as your billing account inside the Workbench</li>
 </ul></li>
 <li>One pod can pay for <strong>many workspaces</strong></li>
-<li>You can <strong>invite other users</strong> to your pod (e.g., lab members)</li>
+<li>You can <strong>invite other users</strong> to your pod (e.g., lab members): they bill to <strong>your</strong> account</li>
 <li>All of Us researchers have the <strong>Pod Manager</strong> role, so you can create your own pod</li>
 </ul>
 <div class="fragment">
@@ -1214,15 +1214,16 @@ Maximilian Wegener, MPH
 </section>
 <section id="getting-a-google-cloud-billing-account-at-yale" class="slide level2">
 <h2>Getting a Google Cloud Billing Account at Yale</h2>
+<p><strong>Ask 2 to 3 weeks before</strong> your credits run out or expire: setup takes about 2 weeks.</p>
 <p>Email <strong>cloud.support@yale.edu</strong> with the subject <strong>“setting up an All of Us billing account”</strong> and include:</p>
 <ul>
 <li>Your All of Us Workbench email (e.g., <code>yourname@researchallofus.org</code>)</li>
 <li>Your <strong>COA</strong> number</li>
-<li>Whether this is an <strong>NIH-funded</strong> project</li>
+<li>Whether this is an <strong>NIH-funded</strong> project, and if so, the <strong>NIH grant number</strong> (set up through NIH STRIDES)</li>
 </ul>
 <p>Yale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your <strong>pod</strong>.</p>
 <aside class="notes">
-<p>Yale Cloud Support may give additional or different guidance.</p>
+<p>Setup takes about 2 weeks because Burwood, Yale’s Google reseller, requests the account from Google’s distributor. Email is the way to ask for now; Yale Cloud Support is building a ServiceNow request form. Yale Cloud Support may give additional or different guidance.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1234,6 +1235,16 @@ Maximilian Wegener, MPH
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="your-yale-billing-account" class="slide level2">
+<h2>Your Yale Billing Account</h2>
+<ul>
+<li><strong>Your own</strong> Google Cloud billing account, charged to your COA</li>
+<li>You <strong>keep access</strong>: link it to new pods, or relink pods, yourself, without asking Yale Cloud Support again</li>
+</ul>
+<div class="fragment">
+<p><strong>Watch out:</strong> anyone you invite to your pod can run workspaces billed to <strong>your COA</strong>. Invite only people on the <strong>same grant</strong>.</p>
+</div>
 </section></section>
 <section>
 <section id="all-of-us-tutorial-workspaces" class="title-slide slide level1 center">
@@ -2738,6 +2749,7 @@ Maximilian Wegener, MPH
 </div></div>
 <div class="fragment">
 <p>👉 Handy for checking that an export arrived, or finding a file’s path</p>
+<p>🔒 <strong>The perimeter also means:</strong> you can’t reach the data <strong>from your own computer</strong>, even with the command-line tools (<code>wb</code>, <code>gcloud</code>, <code>bq</code>): work in an app. And downloading a file from an app to your computer is <strong>logged</strong> (egress logs). Large transfers can trigger alerts, an app shutdown, or suspended access. Keep data in the Workbench.</p>
 </div>
 <aside class="notes">
 <p>This bucket (rw-migration-aou-rw-…) is the migration bucket of a workspace moved from the classic Workbench. The .Trash-1000 and .Trash-1001 folders are most likely JupyterLab’s trash for files deleted from the mounted bucket; they still take up storage until emptied. Bucket resources on the Resources tab also have a Browse button (seen on the vwb-aou-datasets-controlled-v9 bucket). Verily notes that in perimeter workspaces browsing only works if the perimeter administrator has enabled it; this training uses the Google Cloud console route instead.</p>
@@ -3760,6 +3772,11 @@ Maximilian Wegener, MPH
 <p>A <strong>pipeline</strong> that runs analysis steps for you, in order or in parallel, <strong>without an app running</strong>. Each step runs in its own container on a temporary cloud machine.</p>
 <p><strong>Use it when you need to:</strong> run the same analysis on many files or samples (e.g., genomics), or make it easy to reproduce and share</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Tool</th>
@@ -3771,12 +3788,12 @@ Maximilian Wegener, MPH
 <tr class="odd">
 <td><strong>Cromwell</strong></td>
 <td>WDL</td>
-<td><strong>Workflows</strong> tab (or CLI)</td>
+<td><strong>Workflows</strong> tab (or an app)</td>
 </tr>
 <tr class="even">
 <td><strong>Nextflow</strong></td>
 <td>Nextflow (<code>.nf</code>)</td>
-<td><strong>Workflows</strong> tab (or CLI)</td>
+<td>An app (in <em>All of Us</em>, the tab offers WDL only)</td>
 </tr>
 <tr class="odd">
 <td><strong>dsub</strong></td>
@@ -3821,8 +3838,8 @@ Maximilian Wegener, MPH
 </div><div class="column side" style="width:48%;">
 <p><strong>Step 1: Provide source.</strong> Where’s the workflow file?</p>
 <ul>
-<li><strong>Workspace bucket:</strong> pick the bucket. Workbench lists the workflow files it finds there (search by name).</li>
-<li><strong>Git repository:</strong> a repo with the workflow (see <em>Optional Extras: GitHub</em>)</li>
+<li><strong>Workspace bucket:</strong> pick <strong>your workspace bucket</strong>. Workbench lists the workflow files it finds there, by folder (search by path).</li>
+<li><strong>Git repository:</strong> a repo with the workflow (see <em>Optional Extras: GitHub</em>). Link your GitHub account first</li>
 </ul>
 <p>Select the workflow → <strong>Next</strong></p>
 <p><strong>Step 2: Review details</strong> → add it</p>
@@ -3831,7 +3848,7 @@ Maximilian Wegener, MPH
 </div>
 </div></div>
 <aside class="notes">
-<p>The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.</p>
+<p>The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say “0 workflows found”: choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g.&nbsp;data/workflows/. In our All of Us workspace (November 2026) the tab listed only .wdl files: no .nf files, from a bucket or from GitHub, even main.nf next to a nextflow.config. Run Nextflow from an app. Git sources: the tab first asks you to link your GitHub account (Workbench account settings, GitHub, then install Verily’s GitHub app); choose only the repositories you need, not all. You then pick a branch or a tag; a tag keeps a class on a fixed version. The workflow’s details save the repository, file, and branch.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3848,19 +3865,54 @@ Maximilian Wegener, MPH
 <h2>Running a Workflow</h2>
 <p><strong>Setup</strong> tab → select the workflow → <strong>+ New job</strong></p>
 <ol type="1">
-<li>Fill in the <strong>inputs</strong>. Workbench builds the form from the workflow file.</li>
-<li>Choose an <strong>output bucket</strong> for the results</li>
-<li>Start the job, then follow it on <strong>Job status</strong>: each task’s progress, logs, and outputs</li>
+<li><strong>Job details:</strong> a name, and <em>Run a single job</em> (or a batch)</li>
+<li><strong>Inputs:</strong> a <strong>form</strong>, one box per input in the workflow. <code>gs://</code> paths for files; plain text (no quotation marks) for strings</li>
+<li><strong>Outputs:</strong> <strong>check the bucket</strong> (it can default to <code>dataproc-staging-…</code>), and a folder named after the job</li>
+<li><strong>Submit job</strong>, then follow it on <strong>Job status</strong>: <em>Starting</em> → <em>Running</em> → <em>Completed</em></li>
 </ol>
 <div class="fragment">
 <p><strong>Batch jobs:</strong> run one WDL workflow <strong>many times in parallel</strong>, e.g., once per sample</p>
 <ul>
 <li>Choose <em>Run a batch job with inputs defined by an input table</em></li>
-<li>Upload a <strong>CSV</strong> (one row per run), then match its columns to the workflow’s inputs</li>
+<li>Pick a <strong>CSV</strong> in your bucket (one row per run), type which <strong>column</strong> goes with each input, and name a <strong>reference column</strong> that labels each run</li>
+<li><strong>Test with a single job first</strong></li>
 </ul>
 </div>
 <aside class="notes">
-<p>Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+<p>Source: Verily, “Use the Cromwell engine to run WDL workflows” and “Create batch jobs”. Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to <code>&lt;bucket&gt;/&lt;job name&gt;/&lt;workflow&gt;/&lt;job ID&gt;/call-&lt;task&gt;/</code>. Single job vs batch job: a single job runs the workflow once, with inputs typed into a form; a batch job runs it once per row of a CSV table in the bucket, all at the same time. In All of Us the tab can’t preview the table (perimeter), so you type the column name for each input, exactly as in the CSV header, plus a reference column that labels each run (e.g.&nbsp;chr). Job status shows a batch as one row with its number of jobs; results get one job ID folder per row. Tested November 2026: a single job on chromosome 21 took about 4 minutes; a batch of chromosomes 19 to 22 took about 11 minutes, and its chromosome 21 result matched exactly. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-workflow-job-tested" class="slide level2">
+<h2>A Workflow Job, Tested</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/wf-job-inputs.png" alt="Creating new job dialog, step 2 Prepare inputs: an input form with the keys plink_freq.bed, .bim, and .fam (type File) and plink_freq.docker_image (type String), each filled in with a gs:// path or the image address."></p>
+<figcaption>The input form</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/wf-job-status.png" alt="Workflows tab, Job status sub-tab: one WDL job named plink_freq_job with status Completed, its job ID, and the time it was last updated."></p>
+<figcaption>Job status: finished</figcaption>
+</figure>
+</div>
+</div></div>
+<p><strong>PLINK on chromosome 21</strong> (a WDL from <em>Optional Extras: Running Workflows</em>): about <strong>4 minutes</strong> from <strong>Submit</strong> to <em>Completed</em>, with the same results as PLINK in an app. No configuration file, and no app needed.</p>
+<aside class="notes">
+<p>Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab’s Cromwell wasn’t affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Also tested: a batch job (chromosomes 19 to 22 from a CSV table, about 11 minutes) and the same WDL from GitHub (3 minutes 55); both matched. One job’s outputs went to the dataproc-staging bucket because the output step had picked it, and that bucket’s gs:// address (Cloud ID: dataproc-staging-wb-…) differed from its name on the page (dataproc-staging-aou-rw-…). The job’s Inputs view showed – for every value, though the job used them. The job details page shows who started it (an email): paint it out in screenshots.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3875,24 +3927,27 @@ Maximilian Wegener, MPH
 </section>
 <section id="dsub-jobs-from-an-app" class="slide level2">
 <h2>dsub: Jobs from an App</h2>
-<p>For <strong>one-step</strong> jobs, e.g., run a command on many files. It comes with apps created after <strong>June 2025</strong>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub_activate</span>                        <span class="co"># turn on dsub in the terminal</span></span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="dt">\</span></span>
-<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
-<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">${PET_SA_EMAIL}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
-<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
-<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
-<span id="cb11-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="op">&lt;</span>container image with samtools<span class="op">&gt;</span> <span class="dt">\</span></span>
-<span id="cb11-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
-<span id="cb11-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For <strong>one-step</strong> jobs, e.g., run a command on many files. dsub is ready to use in <em>All of Us</em> Jupyter apps. In <em>All of Us</em>, every job needs the <strong>network</strong> settings, <strong>no public address</strong>, and an image from the <strong><em>All of Us</em> mirror</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DSUB_CLOUD_SDK_IMAGE</span><span class="op">=</span>gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="va">MIRROR</span><span class="op">=</span>us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod</span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="ex">dsub</span> <span class="at">--provider</span> google-batch <span class="dt">\</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="at">--user-project</span> <span class="st">"</span><span class="va">${GOOGLE_CLOUD_PROJECT}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--regions</span> us-central1 <span class="at">--use-private-address</span> <span class="dt">\</span></span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--network</span> global/networks/network <span class="dt">\</span></span>
+<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--subnetwork</span> regions/us-central1/subnetworks/subnetwork <span class="dt">\</span></span>
+<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--service-account</span> <span class="st">"</span><span class="va">$(</span><span class="ex">gcloud</span> config get-value account<span class="va">)</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb11-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--logging</span> gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/logs/ <span class="dt">\</span></span>
+<span id="cb11-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--input</span>  BAM=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam <span class="dt">\</span></span>
+<span id="cb11-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> BAI=gs://<span class="op">&lt;</span>your-bucket<span class="op">&gt;</span>/sample.bam.bai <span class="dt">\</span></span>
+<span id="cb11-13"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image</span>  <span class="st">"</span><span class="va">${MIRROR}</span><span class="st">/biocontainers/samtools:&lt;version&gt;"</span> <span class="dt">\</span></span>
+<span id="cb11-14"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--command</span> <span class="st">'samtools index ${BAM} ${BAI}'</span> <span class="dt">\</span></span>
+<span id="cb11-15"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment">
-<p>👉 More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
+<p>👉 A full class, tested in <em>All of Us</em>: <strong>Running Workflows</strong> (Optional Extras on the website). More examples: tutorial notebook <code>05_How_to_use_workflow_tools</code> (dsub, Cromwell, Nextflow)</p>
 </div>
 <aside class="notes">
-<p>Source: Verily, “Run dsub jobs”. Verily’s example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.</p>
+<p>Source: Verily, “Run dsub jobs”, and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without –use-private-address and the network settings, jobs can’t start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub’s helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
