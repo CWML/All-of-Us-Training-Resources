@@ -12,6 +12,9 @@ Cohort Notes.pptx
 Untitled*.ipynb
 hail-*.log
 
+# Your own settings (your bucket name): saved by 0.0 setup, read by aou_setup.R
+/notebooks/my_settings.R
+
 # All of Us data: never in Git (and never on your computer)
 /data/
 *.csv

@@ -93,7 +93,7 @@ WHERE ca.ancestor_concept_id = 201826     -- type 2 diabetes, and everything und
    ```bash
    cd ~/repos/All-of-Us-Training-Resources
    git checkout -- notebooks/
-   git stash && git pull && git stash pop
+   git pull
    ```
 3. Open `notebooks/core/1.1 build_cohorts.ipynb`, with the **R** kernel.
 4. Run the first cell: it ends with *Setup done*, then a table where every row is `TRUE`.

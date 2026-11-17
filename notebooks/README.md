@@ -7,8 +7,9 @@ R and Python notebooks for learning to analyse *All of Us* data in the Researche
 ```
 notebooks/
 ├── 0.0 setup.ipynb        start here
-├── aou_setup.R            settings you edit once + helper functions (R)
-├── aou_setup.py           the same settings for Python notebooks (read from aou_setup.R)
+├── aou_setup.R            shared settings + helper functions (R)
+├── aou_setup.py           the same settings for Python notebooks (read from the .R files)
+├── my_settings.R          your bucket name (made by 0.0 setup; Git ignores it)
 ├── sql/                   the shared type 2 diabetes cohort query
 ├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse
 ├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics
@@ -26,7 +27,7 @@ Nine R notebooks that take one study from start to finish: people **with type 2 
 
 | Notebook | What it does | Time |
 |---|---|---|
-| [`aou_setup.R`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/aou_setup.R) | Settings you edit once (bucket and dataset) and shared helper functions | |
+| [`aou_setup.R`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/aou_setup.R) | Shared settings (the dataset) and helper functions. Your bucket name goes in `my_settings.R`, made by `0.0 setup` and ignored by Git | |
 | [`0.0 setup`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/0.0%20setup.ipynb) | Checks your settings and the connection to the data | |
 | [`1.1 build_cohorts`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.1%20build_cohorts.ipynb) | The OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements | 90 min |
 | [`1.2 survival_data`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/core/1.2%20survival_data.ipynb) | Time zero, event, and censoring; first CKD dates; follow-up | 60 min |
@@ -83,9 +84,7 @@ You need an *All of Us* workspace with the **Controlled Tier** data collection a
    - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward.
    - **Download and upload:** download the whole `notebooks/` folder and upload it to your app **with its subfolders**, so `aou_setup.R` and `sql/` stay one level above the series folders.
 2. **Launch an app**, e.g. AoU Jupyter (it has R and Python kernels).
-3. Open **`0.0 setup`** and follow it. It has you edit two lines in `aou_setup.R`:
-   - `BUCKET_NAME`: your bucket's folder name
-   - `CURRENT_DATASET`: the dataset. It's already set to Controlled Tier CDR v9 (`wb-silky-artichoke-2408.C2025Q4R6`). **Don't** copy it from a Data Explorer query: the Data Explorer currently uses CDR v8 (`C2024Q3R9`)
+3. Open **`0.0 setup`** and follow it. It saves your bucket's folder name in `my_settings.R`, a file Git ignores, so `git pull` never clashes with it. The dataset (`CURRENT_DATASET` in `aou_setup.R`) is already set to Controlled Tier CDR v9 (`wb-silky-artichoke-2408.C2025Q4R6`). **Don't** copy one from a Data Explorer query: the Data Explorer currently uses CDR v8 (`C2024Q3R9`)
 4. Run a series in order: core `1.1` → `1.2` → `2.1` → `2.2` → `2.3` → `3.1` to `3.4`; or omics `4.1` → `4.7`.
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).

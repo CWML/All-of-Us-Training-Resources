@@ -7,11 +7,13 @@
 # Keep this file in notebooks/, with sql/ and the series folders.
 # =============================================================================
 
-# ---- 1. EDIT THESE TWO SETTINGS ---------------------------------------------
+# ---- 1. SETTINGS -------------------------------------------------------------
 
 # Your bucket's folder name: the name shown on the Resources tab. If the bucket
 # is inside a folder on the Resources tab, include it: "my_folder/my-bucket".
-# Not sure? Run 0.0 setup: it lists the folders it finds.
+# Don't change it here: 0.0 setup saves yours in my_settings.R, next to this
+# file, and that file replaces this default (see the end of this section).
+# Git ignores my_settings.R, so `git pull` never clashes with your bucket name.
 BUCKET_NAME <- "workspace-bucket"
 
 # The All of Us dataset (CDR) to query: "<project-id>.<dataset-id>".
@@ -19,6 +21,11 @@ BUCKET_NAME <- "workspace-bucket"
 # currently uses CDR v8 (C2024Q3R9), and v8 participant IDs don't match v9.
 # Controlled Tier CDR v9 is C2025Q4R6.
 CURRENT_DATASET <- "wb-silky-artichoke-2408.C2025Q4R6"
+
+# Your own settings, if you have saved them (0.0 setup, Step 2). Notebooks load
+# this file from notebooks/ or from a series folder one level below, so look in both.
+SETTINGS_FILE <- file.path(if (file.exists("aou_setup.R")) "." else "..", "my_settings.R")
+if (file.exists(SETTINGS_FILE)) source(SETTINGS_FILE)
 
 # ---- 2. NOTHING BELOW NEEDS TO CHANGE ----------------------------------------
 
@@ -55,7 +62,7 @@ if (!dir.exists(BUCKET_DIR)) {
   stop("Can't find your bucket folder: ", BUCKET_DIR,
        "\nFolders found in ~/workspace: ",
        if (length(found)) paste(basename(found), collapse = ", ") else "none",
-       "\nUpdate BUCKET_NAME in aou_setup.R (or create a bucket on the Resources tab).",
+       "\nSave your bucket's folder name with 0.0 setup, Step 2 (or create a bucket on the Resources tab).",
        call. = FALSE)
 }
 dir.create(DATA_DIR, showWarnings = FALSE)
