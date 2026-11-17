@@ -983,7 +983,7 @@
     "href": "pages/examples/notebooks.html#folder-layout",
     "title": "Example Notebooks",
     "section": "Folder layout",
-    "text": "Folder layout\nnotebooks/\n├── 0.0 setup.ipynb        start here\n├── aou_setup.R            settings you edit once + helper functions (R)\n├── aou_setup.py           the same settings for Python notebooks (read from aou_setup.R)\n├── sql/                   the shared type 2 diabetes cohort query\n├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse\n├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics\n├── surveys/               5.1 – 5.3 (coming soon)\n├── wearables/             6.1 – 6.3 (coming soon)\n├── workflows/             an Optional Extras class: run one analysis on many files with dsub\n└── archive/               earlier versions\nNotebooks in a series folder load the shared files from the folder above (source(\"../aou_setup.R\")), so keep this layout: cloning the repository does that for you.",
+    "text": "Folder layout\nnotebooks/\n├── 0.0 setup.ipynb        start here\n├── aou_setup.R            shared settings + helper functions (R)\n├── aou_setup.py           the same settings for Python notebooks (read from the .R files)\n├── my_settings.R          your bucket name (made by 0.0 setup; Git ignores it)\n├── sql/                   the shared type 2 diabetes cohort query\n├── core/                  1.1 – 3.4: build a cohort; clean, reshape, join; analyse\n├── omics/                 4.1 – 4.7: genomes, GWAS, PheWAS, RNA-seq, proteomics\n├── surveys/               5.1 – 5.3 (coming soon)\n├── wearables/             6.1 – 6.3 (coming soon)\n├── workflows/             an Optional Extras class: run one analysis on many files with dsub\n└── archive/               earlier versions\nNotebooks in a series folder load the shared files from the folder above (source(\"../aou_setup.R\")), so keep this layout: cloning the repository does that for you.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -994,7 +994,7 @@
     "href": "pages/examples/notebooks.html#core-series-core",
     "title": "Example Notebooks",
     "section": "Core series (core/)",
-    "text": "Core series (core/)\nNine R notebooks that take one study from start to finish: people with type 2 diabetes (cases) compared with people without diabetes (controls), including time to chronic kidney disease (CKD) after diagnosis. They use the same cohort query as every other series (sql/t2d_cohort.sql) and a sample of 5,000 cases and 5,000 controls. Every notebook opens with an “Analysis at a glance” box and a time and cost estimate.\n\n\n\nNotebook\nWhat it does\nTime\n\n\n\n\naou_setup.R\nSettings you edit once (bucket and dataset) and shared helper functions\n\n\n\n0.0 setup\nChecks your settings and the connection to the data\n\n\n\n1.1 build_cohorts\nThe OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements\n90 min\n\n\n1.2 survival_data\nTime zero, event, and censoring; first CKD dates; follow-up\n60 min\n\n\n2.1 clean\nTypes, non-answers, messy text, duplicates, units, plausible ranges, missing data, a cleaning log\n105 min\n\n\n2.2 reshape\nLong vs wide; one value per person; pivot_wider() and pivot_longer()\n70 min\n\n\n2.3 join_and_bind\nbind_rows(); left, inner, full, and anti joins; checks after every join; the analysis table\n75 min\n\n\n3.1 table_one\nA Table 1 with your own functions; missing data; the small-count check\n75 min\n\n\n3.2 logistic_regression\nOdds ratios for type 2 diabetes; adjustment; reverse causation\n85 min\n\n\n3.3 linear_regression\nSystolic blood pressure; model comparison; residuals\n75 min\n\n\n3.4 survival_analysis\nKaplan–Meier curves (ggplot2), log-rank test, Cox model, proportional hazards\n90 min\n\n\n\nVariables used: age, sex at birth, gender, race, ethnicity; two PTSD survey questions (asked only of people who reported PTSD); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; type 2 diabetes and CKD dates; EHR and death dates.\n\nHow they fit together\nsql/t2d_cohort.sql\n     │\n1.1 build_cohorts ──► cohort_sample.csv, survey_raw.csv, measurement_raw.csv\n1.2 survival_data ──► ckd_dates.csv\n     │\n2.1 clean ─────────► cohort_clean.csv, survey_clean.csv, measurement_clean.csv\n2.2 reshape ───────► survey_wide.csv, measurements_wide.csv\n2.3 join_and_bind ─► final_analysis.csv\n     │\n3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival\nOnly 1.1 and 1.2 query BigQuery (about $2 to $3 in total); every later notebook reads the saved files, so a class can start at any notebook once the data is saved.",
+    "text": "Core series (core/)\nNine R notebooks that take one study from start to finish: people with type 2 diabetes (cases) compared with people without diabetes (controls), including time to chronic kidney disease (CKD) after diagnosis. They use the same cohort query as every other series (sql/t2d_cohort.sql) and a sample of 5,000 cases and 5,000 controls. Every notebook opens with an “Analysis at a glance” box and a time and cost estimate.\n\n\n\nNotebook\nWhat it does\nTime\n\n\n\n\naou_setup.R\nShared settings (the dataset) and helper functions. Your bucket name goes in my_settings.R, made by 0.0 setup and ignored by Git\n\n\n\n0.0 setup\nChecks your settings and the connection to the data\n\n\n\n1.1 build_cohorts\nThe OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements\n90 min\n\n\n1.2 survival_data\nTime zero, event, and censoring; first CKD dates; follow-up\n60 min\n\n\n2.1 clean\nTypes, non-answers, messy text, duplicates, units, plausible ranges, missing data, a cleaning log\n105 min\n\n\n2.2 reshape\nLong vs wide; one value per person; pivot_wider() and pivot_longer()\n70 min\n\n\n2.3 join_and_bind\nbind_rows(); left, inner, full, and anti joins; checks after every join; the analysis table\n75 min\n\n\n3.1 table_one\nA Table 1 with your own functions; missing data; the small-count check\n75 min\n\n\n3.2 logistic_regression\nOdds ratios for type 2 diabetes; adjustment; reverse causation\n85 min\n\n\n3.3 linear_regression\nSystolic blood pressure; model comparison; residuals\n75 min\n\n\n3.4 survival_analysis\nKaplan–Meier curves (ggplot2), log-rank test, Cox model, proportional hazards\n90 min\n\n\n\nVariables used: age, sex at birth, gender, race, ethnicity; two PTSD survey questions (asked only of people who reported PTSD); BMI, systolic blood pressure, LDL cholesterol, and HbA1c; type 2 diabetes and CKD dates; EHR and death dates.\n\nHow they fit together\nsql/t2d_cohort.sql\n     │\n1.1 build_cohorts ──► cohort_sample.csv, survey_raw.csv, measurement_raw.csv\n1.2 survival_data ──► ckd_dates.csv\n     │\n2.1 clean ─────────► cohort_clean.csv, survey_clean.csv, measurement_clean.csv\n2.2 reshape ───────► survey_wide.csv, measurements_wide.csv\n2.3 join_and_bind ─► final_analysis.csv\n     │\n3.1 table_one · 3.2 logistic · 3.3 linear · 3.4 survival\nOnly 1.1 and 1.2 query BigQuery (about $2 to $3 in total); every later notebook reads the saved files, so a class can start at any notebook once the data is saved.",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -1016,7 +1016,7 @@
     "href": "pages/examples/notebooks.html#getting-started",
     "title": "Example Notebooks",
     "section": "Getting started",
-    "text": "Getting started\nYou need an All of Us workspace with the Controlled Tier data collection and a bucket (Resources tab → + New resource → Cloud Storage bucket).\n\nGet the notebooks into your workspace, either way:\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward.\nDownload and upload: download the whole notebooks/ folder and upload it to your app with its subfolders, so aou_setup.R and sql/ stay one level above the series folders.\n\nLaunch an app, e.g. AoU Jupyter (it has R and Python kernels).\nOpen 0.0 setup and follow it. It has you edit two lines in aou_setup.R:\n\nBUCKET_NAME: your bucket’s folder name\nCURRENT_DATASET: the dataset. It’s already set to Controlled Tier CDR v9 (wb-silky-artichoke-2408.C2025Q4R6). Don’t copy it from a Data Explorer query: the Data Explorer currently uses CDR v8 (C2024Q3R9)\n\nRun a series in order: core 1.1 → 1.2 → 2.1 → 2.2 → 2.3 → 3.1 to 3.4; or omics 4.1 → 4.7.\n\nR packages: tidyverse, lubridate, bigrquery, broom, survival. aou_setup.R installs any that are missing the first time it runs (this can take a few minutes).",
+    "text": "Getting started\nYou need an All of Us workspace with the Controlled Tier data collection and a bucket (Resources tab → + New resource → Cloud Storage bucket).\n\nGet the notebooks into your workspace, either way:\n\nClone this repository: in your workspace, go to Apps → Git repositories → + Add repository and enter https://github.com/CWML/All-of-Us-Training-Resources.git. It’s cloned into apps you create afterward.\nDownload and upload: download the whole notebooks/ folder and upload it to your app with its subfolders, so aou_setup.R and sql/ stay one level above the series folders.\n\nLaunch an app, e.g. AoU Jupyter (it has R and Python kernels).\nOpen 0.0 setup and follow it. It saves your bucket’s folder name in my_settings.R, a file Git ignores, so git pull never clashes with it. The dataset (CURRENT_DATASET in aou_setup.R) is already set to Controlled Tier CDR v9 (wb-silky-artichoke-2408.C2025Q4R6). Don’t copy one from a Data Explorer query: the Data Explorer currently uses CDR v8 (C2024Q3R9)\nRun a series in order: core 1.1 → 1.2 → 2.1 → 2.2 → 2.3 → 3.1 to 3.4; or omics 4.1 → 4.7.\n\nR packages: tidyverse, lubridate, bigrquery, broom, survival. aou_setup.R installs any that are missing the first time it runs (this can take a few minutes).",
     "crumbs": [
       "Learn by Example",
       "Example Notebooks"
@@ -1152,6 +1152,248 @@
     "crumbs": [
       "Data",
       "Data Collections"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html",
+    "href": "pages/courses/surveys/5-3-social-factors.html",
+    "title": "5.3 Social Factors",
+    "section": "",
+    "text": "Survey series, class 3 of 3 · R + SQL · 90 minutes\nOpen the notebook on GitHub Survey series overview",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#overview",
+    "href": "pages/courses/surveys/5-3-social-factors.html#overview",
+    "title": "5.3 Social Factors",
+    "section": "Overview",
+    "text": "Overview\nHow much people earn, how much schooling they had, whether they have health insurance, and whether they can afford enough food all shape their health. These are social determinants of health, and type 2 diabetes is one of the conditions most closely tied to them. In this class we code four social factors from the surveys, compare cases and controls, and answer the question 5.2 left open: is the link between alcohol and diabetes explained by confounding?\n\nWhy this class matters\nSocial factors are among the strongest risk factors for type 2 diabetes, and the most common confounders of other links. This class shows confounding happening, on real data: an odds ratio that changes when a confounder is added. It’s also where careful language matters most.\n\n\nBy the end you’ll be able to\n\nTurn ordered answers (income, education) into groups, and keep Prefer not to answer as a category\nFind and code questions from the Social Determinants of Health survey\nCompare social factors between cases and controls, and model them with logistic regression\nShow confounding: how an odds ratio changes when a confounder is added, on the same people\nTell a confounder from a step on the path (a mediator), and describe social factors as associations\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAre income, education, health insurance, and food insecurity linked to type 2 diabetes? Does adjusting for them explain the alcohol result from 5.2?\n\n\n🧪 The analysis\nPercents by group; logistic regression adjusted for age and sex; the 5.2 alcohol model with and without income and education, on the same people\n\n\n🎯 Why\nSocial factors are strong risk factors, and common confounders of other links\n\n\n✅ What we conclude\nHow strongly each factor is linked to type 2 diabetes, and how much of the alcohol and smoking links they explain\n\n\n⚠️ What it can’t tell us\nCause. Diabetes can also lower income; and these factors reflect circumstances (where people live, discrimination, access to care), not individual choices\n\n\n🔗 Connections\nUses files from 5.1 and 5.2; models from 3.2; “who gets diagnosed” from 3.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nabout 3 minutes\n\n\n💰 Cost\nabout $1.50 per student: two queries on ds_survey, plus the app\n\n\n📋 Before class\nrun 5.1 and 5.2: this class uses their files",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#class-plan",
+    "href": "pages/courses/surveys/5-3-social-factors.html#class-plan",
+    "title": "5.3 Social Factors",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: social determinants, confounding, mediators, careful words\nlisten, ask\n\n\n0:15\n2. Setup: find the questions by code and by text\nrun the cells\n\n\n0:25\n3. Income, education, insurance\nrun the cells\n\n\n0:45\n4. Food insecurity\nrun the cells\n\n\n0:55\n5. Describe and model; a forest plot\n✋ Try It Out (5 min)\n\n\n1:10\n6. Confounding: alcohol, again\npredict, then run\n\n\n1:25\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#key-concepts",
+    "href": "pages/courses/surveys/5-3-social-factors.html#key-concepts",
+    "title": "5.3 Social Factors",
+    "section": "Key concepts",
+    "text": "Key concepts\n\n\n\n\n\n\n\n\nFactor\nSurvey\nQuestion (short)\n\n\n\n\nIncome\nThe Basics\nannual household income, in ranges\n\n\nEducation\nThe Basics\nhighest grade or degree completed\n\n\nHealth insurance\nThe Basics\ndo you have health insurance?\n\n\nFood insecurity\nSocial Determinants of Health\nworried food would run out; food didn’t last (the Hunger Vital Sign)\n\n\n\n\nConfounder or mediator?\n\n\n\n\n\n\n\n\n\n\nComes…\nAdjust for it?\nExample\n\n\n\n\nConfounder\nbefore both the factor and the outcome\nyes\nincome, for the alcohol–diabetes link\n\n\nMediator\nbetween the factor and the outcome\nnot if you want the total effect\nBMI, for the income–diabetes link\n\n\n\nTo see confounding fairly, compare models on the same people: glm() drops anyone missing a variable, so a model with more variables can quietly use fewer people.\n\n\nCareful words\nWrite “people with lower incomes had higher odds of type 2 diabetes”, not “low income causes diabetes”. Social factors reflect circumstances and structures, and diabetes can itself lower income.",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#follow-along-in-the-workbench",
+    "href": "pages/courses/surveys/5-3-social-factors.html#follow-along-in-the-workbench",
+    "title": "5.3 Social Factors",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/surveys/5.3 social_factors.ipynb, with the R kernel.",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#try-it-out",
+    "href": "pages/courses/surveys/5-3-social-factors.html#try-it-out",
+    "title": "5.3 Social Factors",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 5, “Your turn”\n\n\n\nIn the question dictionary, find a Healthcare Access & Utilization question about delaying or not getting care because of cost. How many people answered it?\n✅ Check: several questions about delaying care, or skipping care or medicines, because of cost. It’s a later survey: about half our sample took it.",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#code-walk-through",
+    "href": "pages/courses/surveys/5-3-social-factors.html#code-walk-through",
+    "title": "5.3 Social Factors",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nIncome: nine ranges to four groups, plus Prefer not to answer\nincome = case_when(\n1  answer %in% c(\"less 10k\", \"10k 25k\")                 ~ \"Under $25k\",\n  answer %in% c(\"25k 35k\", \"35k 50k\")                  ~ \"$25k to $50k\",\n  answer %in% c(\"50k 75k\", \"75k 100k\")                 ~ \"$50k to $100k\",\n  answer %in% c(\"100k 150k\", \"150k 200k\", \"more 200k\") ~ \"$100k or more\",\n2  answer == \"PMI: Prefer Not To Answer\"                ~ \"Prefer not to answer\",\n  TRUE                                                 ~ NA_character_),\n3income = factor(income, levels = c(\"$100k or more\", …))\n\n1\n\nCombine neighbouring ranges: nine small groups give unstable odds ratios.\n\n2\n\nKeep Prefer not to answer as its own group: it’s common, and more common in cases.\n\n3\n\nThe first level is the model’s reference: every odds ratio compares a group with the highest incomes.\n\n\n\n\nConfounding, on the same people\nconfounding_data &lt;- model_data %&gt;%\n  left_join(lifestyle, by = \"person_id\") %&gt;%\n1  drop_na(t2d, age10, sex_at_birth, smoking_status, alcohol_use, income, education)\n\nm_5_2      &lt;- glm(t2d ~ age10 + sex_at_birth + smoking_status + alcohol_use,\n2                  family = binomial, data = confounding_data)\nm_adjusted &lt;- glm(t2d ~ age10 + sex_at_birth + smoking_status + alcohol_use + income + education,\n3                  family = binomial, data = confounding_data)\n\n1\n\nKeep only people with every variable, so both models use exactly the same rows.\n\n2\n\nThe model from 5.2.\n\n3\n\nThe same model, plus income and education. Any change in the alcohol odds ratios comes from the adjustment, not from different people.",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#what-we-found",
+    "href": "pages/courses/surveys/5-3-social-factors.html#what-we-found",
+    "title": "5.3 Social Factors",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in November 2026 (CDR v9), 5,000 cases and 5,000 controls.\n\nCases and controls\n\n\n\n\nCases\nControls\n\n\n\n\nHousehold income under $25k\n29.8%\n20.8%\n\n\nHousehold income $100k or more\n16.4%\n29.2%\n\n\nIncome: prefer not to answer\n17.6%\n13.0%\n\n\nCollege degree\n34.8%\n53.3%\n\n\nHealth insurance\n95.0%\n94.7%\n\n\nFood insecure (of those who answered)\n24.4%\n15.3%\n\n\n\n\n\nOdds ratios\n\n\nIncome showed a clear gradient: OR 1.27, 1.81, and 2.15 as income fell, compared with $100k or more. Prefer not to answer (OR 1.86) looked like the lower-income groups.\nEducation: no college degree went with about twice the odds, even adjusted for income.\nFood insecurity: OR 1.93, after adjusting for income.\nNo health insurance: OR 0.78, lower odds. Not protection: diabetes is diagnosed in health care, and people without insurance see doctors less, so their diabetes is less often found and recorded.\n\n\n\nConfounding: the 5.2 results, adjusted for income and education\n\n\n\n\n\n\n\n\nSame people\nAs in 5.2\n+ income and education\n\n\n\n\nAlcohol monthly or less (vs never drank)\n0.79 (0.67 to 0.93)\n0.97 (0.82 to 1.15)\n\n\nAlcohol 2–4 times a month\n0.51 (0.43 to 0.61)\n0.71 (0.59 to 0.86)\n\n\nAlcohol 2+ times a week\n0.27 (0.23 to 0.33)\n0.40 (0.33 to 0.49)\n\n\nCurrent smoker (vs never)\n1.38 (1.21 to 1.58)\n0.91 (0.79 to 1.05)\n\n\n\n\nAlcohol: every odds ratio moved toward 1. Income and education explained a large part of the alcohol link; regular drinking still had lower odds, which other unmeasured factors may explain.\nSmoking: current smoking went from higher odds to no clear difference. Much of its apparent link was confounding by income and education.\n\n💬 Discuss: should we also adjust for BMI? (It could be a confounder, or on the path: it depends on the question, and on what comes first.)",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#instructor-notes",
+    "href": "pages/courses/surveys/5-3-social-factors.html#instructor-notes",
+    "title": "5.3 Social Factors",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nLanguage matters most here. Model “people with lower incomes had higher odds”, never “the poor get diabetes”.\nBefore Part 6, ask students to predict how far the alcohol odds ratio will move. Then show the smoking row: most don’t expect it to change too.\nThe insurance puzzle (lower odds without insurance): ask why before explaining under-diagnosis. It connects to “who gets tested” in 3.4.\nBoth food questions say “worried”: a pattern meant to pick one matches both. The notebook uses run out to tell them apart: a good reminder to check every match.",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#key-takeaways",
+    "href": "pages/courses/surveys/5-3-social-factors.html#key-takeaways",
+    "title": "5.3 Social Factors",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nCombine ordered answers into groups; keep Prefer not to answer as its own group when it’s common\nLook for gradients across income and education\nShow confounding by fitting models with and without a variable, on the same people\nAsk whether a variable is a confounder or a mediator before adjusting for it\nA “protective” result can be a sign of who gets diagnosed\nSocial factors are associations, reflecting circumstances, not choices or biology",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-3-social-factors.html#next",
+    "href": "pages/courses/surveys/5-3-social-factors.html#next",
+    "title": "5.3 Social Factors",
+    "section": "Next",
+    "text": "Next\nThat’s the end of the survey series. The wearables series (coming soon) adds Fitbit data: steps, sleep, and heart rate.",
+    "crumbs": [
+      "Surveys",
+      "5.3 Social Factors"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html",
+    "href": "pages/courses/surveys/5-1-survey-basics.html",
+    "title": "5.1 Survey Basics",
+    "section": "",
+    "text": "Survey series, class 1 of 3 · R + SQL · 90 minutes\nOpen the notebook on GitHub Survey series overview",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#overview",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#overview",
+    "title": "5.1 Survey Basics",
+    "section": "Overview",
+    "text": "Overview\nMost All of Us participants answer surveys about their background, health, habits, family, and life circumstances. Survey answers tell us things health records rarely do (smoking, income, family history), but they have their own structure and their own traps. In this class we learn how the survey data is organised, how to find the questions we need, and how to turn raw answers into a clean table with one row per person.\n\nWhy this class matters\nSurvey answers are easy to misread. A missing answer, a skipped answer, and “prefer not to answer” mean different things, and a missing answer often means the question was never asked. Treating them all as “no” or as “missing” quietly changes who is in an analysis. And the people who answer later, optional surveys aren’t a random sample.\n\n\nBy the end you’ll be able to\n\nName the All of Us surveys, and explain why each was answered by a different number of people\nFind questions by text and by concept ID, in the Workbench and in the public Survey Explorer\nTell the non-answers apart, and know when PMI: None or PMI: Other is a real answer\nExplain skip logic: why a missing answer often means “never asked”\nHandle select all that apply questions (several answers per person)\nBuild a tidy table with one row per person, and compare cases and controls\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWhich surveys did the people in our cohort answer, and how do we turn their answers into usable variables?\n\n\n🧪 The analysis\nFour BigQuery queries (the surveys, a question dictionary, who answered what, five example questions); counts and percents by group\n\n\n🎯 Why\nCoding non-answers and skip logic correctly decides who is in every later analysis\n\n\n✅ What we conclude\nWhich surveys and questions we can use, how complete they are in cases and controls, and how to code them\n\n\n⚠️ What it can’t tell us\nAnything about cause. And people who answer later surveys aren’t a random sample\n\n\n🔗 Connections\nUses the sample from 1.1; builds on 2.1 (cleaning), 2.2 (reshaping), 3.1 (Table 1); 5.2 and 5.3 use these skills\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nabout 5 minutes. Slowest: the question dictionary\n\n\n💰 Cost\nabout $2 per student: four queries on ds_survey, a large table, plus the app\n\n\n📋 Before class\n0.0 setup run once. cohort_sample.csv from 1.1 is used if it’s in your bucket; otherwise the notebook makes it",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#class-plan",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#class-plan",
+    "title": "5.1 Survey Basics",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: surveys, questions, answers, non-answers, skip logic\nlisten, ask\n\n\n0:15\n2. Setup: load the sample; the columns of ds_survey\nrun the cells\n\n\n0:20\n3. The ten surveys, and who answered them\nrun the cells, discuss\n\n\n0:35\n4. Finding questions: a question dictionary\n✋ Try It Out 1 (5 min)\n\n\n0:50\n5. Answers: non-answers, several answers, skip logic\nrun the cells, discuss\n\n\n1:10\n6. One row per person; cases vs controls; an ordinal model\n✋ Try It Out 2 (5 min)\n\n\n1:20\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#key-concepts",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#key-concepts",
+    "title": "5.1 Survey Basics",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nHow the surveys work\nParticipants answer surveys online (or with staff), one module at a time. The Basics, Overall Health, and Lifestyle are answered when people join, so almost everyone has them. The others are offered later and are optional, so fewer people answer them.\n\n\n\n\n\n\n\n\nWord\nMeans\nExample\n\n\n\n\nSurvey (module)\none questionnaire\nLifestyle\n\n\nQuestion\none item, with a concept ID and a concept code\n1585857, Smoking_100CigsLifetime\n\n\nAnswer\nthe option chosen, also with a concept ID\nYes\n\n\nSelect all that apply\nseveral answers allowed: one row per answer\nrace: White and Asian\n\n\nSkip logic\nfollow-up questions shown only after certain answers\n“How often do you smoke now?” only after Yes to 100 cigarettes\n\n\n\nThe answers are in the ds_survey table (questions and answers as text, plus their concept IDs). The standard OMOP observation table holds the same answers as concept IDs.\n\n\nNon-answers\n\n\n\n\n\n\n\n\nCode\nMeans\nUsually treat as\n\n\n\n\nPMI: Skip\nsaw the question, and skipped it\nmissing\n\n\nPMI: Prefer Not To Answer\nchose “prefer not to answer”\nmissing, or its own category\n\n\nPMI: Dont Know, PMI: Not Sure\nchose “don’t know” or “not sure”\nmissing, or its own category\n\n\nPMI: None\nchose “none of these”\noften a real answer\n\n\nPMI: Other\nchose “other”\na real answer\n\n\nPMI: Does Not Apply To Me\nchose “does not apply”\na real answer\n\n\nno row at all\nnot asked (skip logic), or never took the survey\ndepends on why: check\n\n\n\nPMI is the program’s former name, the Precision Medicine Initiative.\n\n\nWhere to read the questions\n\nSurvey Explorer: every survey’s questions, answer options, and branching, plus the Survey Data Codebooks\nData Browser: how many participants gave each answer\nIn the Workbench: the question dictionary built in Part 4\n\n\n\nCommon ways to analyse survey answers\n\n\n\n\n\n\n\n\n\nAnswer type\nExample\nSummarise with\nModel with\n\n\n\n\nYes / no\nsmoked 100 cigarettes\nn (%)\nlogistic regression\n\n\nOrdered (a scale)\ngeneral health: Excellent … Poor\nn (%) per level\nordinal logistic regression (MASS::polr()), or collapse to yes/no\n\n\nCategories, no order\nmarital status\nn (%) per level\nmultinomial regression, or one category vs the rest\n\n\nSelect all that apply\nrace; who in your family\none yes/no column per option\none model per option\n\n\nSeveral questions on one topic\nthe two food questions in 5.3\na score, using the published scoring rule if there is one\nlinear regression on the score\n\n\nNumbers and counts\ndrinks per day\nmean (SD) or median (IQR)\nlinear, or Poisson for counts\n\n\n\nMissing answers: dropping them (a complete-case analysis) changes who is compared if some groups skip more. Alternatives: keep Prefer not to answer as its own category, or multiple imputation (the mice package).\n\n\nNo survey weights\nNational surveys like NHANES and BRFSS choose people at random and give each a survey weight (how many people in the US population they stand for), so their percents estimate the whole country. All of Us participants volunteer, and the program deliberately oversamples groups that research has often left out. There are no survey weights, so:\n\n\n\n\n\n\n\n\nCan we say it?\n\n\n\n\n“In our sample, 41% of cases rated their health fair or poor”\n✅ it describes our sample\n\n\n“41% of Americans with diabetes rate their health fair or poor”\n❌ our sample isn’t a random sample of the country\n\n\nHow common diabetes is, from our sample\n❌ our sample is half cases by design\n\n\n“People with diabetes had higher odds of fair or poor health”\n⚠️ with care: comparisons within a cohort transfer better than percents, but selection can still bias them\n\n\n\nFor population numbers: report sample estimates and say who the sample is; build approximate weights from Census totals (e.g. raking with survey::rake()); or compare with NHANES or BRFSS.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#follow-along-in-the-workbench",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#follow-along-in-the-workbench",
+    "title": "5.1 Survey Basics",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/surveys/5.1 survey_basics.ipynb, with the R kernel.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#try-it-out",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#try-it-out",
+    "title": "5.1 Survey Basics",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nFind the questions about food (e.g. worrying that food would run out). Which survey are they in, and how many people answered them?\n✅ Check: questions from Social Determinants of Health, answered by far fewer people than The Basics.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nMake an income variable, keeping Prefer Not To Answer as its own category. Who prefers not to give their income, cases or controls?\n✅ Check: one row per income category and group; Prefer not to answer is one of the largest categories.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#code-walk-through",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#code-walk-through",
+    "title": "5.1 Survey Basics",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nA question dictionary\nquestions &lt;- run_query(str_glue(\"\n  WITH q AS (\n    SELECT survey, question_concept_id,\n1           ANY_VALUE(question)       AS question,\n           COUNT(DISTINCT person_id) AS n_people\n    FROM `{CURRENT_DATASET}.ds_survey`\n    GROUP BY survey, question_concept_id\n  )\n  SELECT q.*, c.concept_code\n  FROM q\n2  LEFT JOIN `{CURRENT_DATASET}.concept` AS c ON c.concept_id = q.question_concept_id\n\"))\n3save_data(questions, \"survey_questions.csv\")\n\n4find_questions &lt;- function(pattern) {\n  questions %&gt;%\n    filter(str_detect(question, regex(pattern, ignore_case = TRUE))) %&gt;%\n    arrange(desc(n_people))\n}\nfind_questions(\"smok\")\n\n1\n\nOne row per question. ANY_VALUE() picks one text per ID: the same ID can be worded slightly differently in different survey versions.\n\n2\n\nThe concept code (e.g. Smoking_100CigsLifetime) from the concept table: the name used in the codebooks.\n\n3\n\nSaved to your bucket, so you query once and search for free.\n\n4\n\nSearch the dictionary by a word or pattern, ignoring upper and lower case.\n\n\n\n\nSkip logic: one smoking variable from two questions\nsmoking &lt;- smoking %&gt;%\n1  mutate(smoking_status = case_when(\n2    str_detect(smoked_100, regex(\"^no$\", ignore_case = TRUE))                    ~ \"Never\",\n    str_detect(smoke_frequency, regex(\"every day|some days\", ignore_case = TRUE)) ~ \"Current\",\n    str_detect(smoked_100, regex(\"^yes$\", ignore_case = TRUE)) &\n3      str_detect(smoke_frequency, regex(\"not at all\", ignore_case = TRUE))        ~ \"Former\",\n    TRUE                                                                          ~ NA_character_))\n\n1\n\ncase_when() checks each rule in order, and uses the first that’s true.\n\n2\n\nNo to 100 cigarettes: never asked the follow-up, so a never smoker, not “missing”.\n\n3\n\nFormer needs Yes first: someone who skipped the first question and answered Not At All could be a former smoker or someone who never smoked.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#what-we-found",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#what-we-found",
+    "title": "5.1 Survey Basics",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9).\n\nThe ten surveys\n\n\n\n\n\n\n\n\n\n\nSurvey\nPeople who answered (all of All of Us)\nQuestions\nOur sample: cases\nOur sample: controls\n\n\n\n\nThe Basics\n746,993\n34\n100%\n100%\n\n\nOverall Health\n680,103\n24\n99.0%\n98.6%\n\n\nLifestyle\n674,065\n31\n98.8%\n98.4%\n\n\nHealthcare Access & Utilization\n368,572\n57\n53.0%\n58.6%\n\n\nPersonal and Family Health History\n354,743\n606\n48.9%\n56.6%\n\n\nSocial Determinants of Health\n314,521\n81\n41.5%\n49.9%\n\n\nCOVID-19 Vaccine Survey\n167,718\n72\n25.4%\n26.7%\n\n\nBehavioral Health and Personality\n139,637\n60\n18.7%\n24.7%\n\n\nEmotional Health History and Well-Being\n137,946\n103\n18.4%\n23.9%\n\n\nCOVID-19 Participant Experience (COPE)\n103,323\n192\n15.5%\n18.1%\n\n\n\n\nCases answered every later survey less often than controls. Any comparison that uses a later survey includes only part of each group, and a different part.\nPeople who answered Social Determinants of Health were a little older (mean age 60 vs 58), more often female (62% vs 57%), and less often cases (45% vs 54%) than those who didn’t.\nWhen: the enrollment surveys span 2017 to 2024; Social Determinants of Health started in 2021, the two newest surveys in 2023.\n\n\n\nFinding questions\n\n1,260 survey questions in CDR v9. Personal and Family Health History alone has 606: each condition is its own question.\nSkip logic shows in the counts: about 674,000 people answered Smoking: 100 Cigs Lifetime, but only about 261,000 the follow-up questions, the people who said Yes.\nIncluding yourself, who in your family has had type 2 diabetes? (select all that apply) was answered by about 199,000 people. 5.2 uses it.\n\n\n\nAnswers and non-answers\n\nNon-answers were 1–2% for most questions. Income was the exception: about 14% Prefer Not To Answer and 7% Skip, and more often in cases (24%) than in controls (18%).\nRace is one combined race and ethnicity question, with several answers allowed: about 7% of our sample chose more than one.\nSmoking: everyone who said No to 100 cigarettes had no follow-up answer (never asked), but many who skipped the first question did get the follow-up. Combined: about 56% never, 26% former, and 14% current smokers.\n\n\n\nSelf-rated general health\n\n\n\nGeneral health\nCases\nControls\n\n\n\n\nExcellent\n3.2%\n12.8%\n\n\nVery good\n18.2%\n33.8%\n\n\nGood\n37.4%\n33.2%\n\n\nFair\n32.1%\n16.2%\n\n\nPoor\n9.1%\n4.0%\n\n\n\n\n\n\nModelling an ordered answer\n\n\n\n\n\n\n\n\nAdjusted for age and sex\nLogistic: fair or poor\nOrdinal: a worse category\n\n\n\n\nType 2 diabetes\n3.22 (2.92 to 3.54)\n3.49 (3.23 to 3.77)\n\n\nAge, per 10 years\n0.86 (0.84 to 0.89)\n0.87 (0.85 to 0.89)\n\n\nMale (vs female)\n0.82 (0.75 to 0.90)\n0.81 (0.75 to 0.88)\n\n\n\n\nDiabetes: about 3.5 times the odds of rating health one category worse. The two models agree; the ordinal model uses all five levels, so its interval is narrower.\nAge: older people rated their health slightly better once diabetes and sex were accounted for: people tend to rate their health compared with others their age.\n\n💬 Discuss: cases are also older (3.1), and age affects self-rated health too. How would you compare like with like? (A model adjusted for age: the notebook fits a logistic model for fair or poor and an ordinal model that keeps all five levels.) And who do these percents describe? Our sample, not all Americans: there are no survey weights.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#instructor-notes",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#instructor-notes",
+    "title": "5.1 Survey Basics",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nWho answers later surveys is the best moment of the class: ask students to guess which group answers more before showing the table.\nPMI comes up every time: it’s the program’s former name, the Precision Medicine Initiative.\nStudents often ask why the survey race differs from the race column in the cohort file: the program maps the same question to the person table with its own rules for several answers and non-answers.\nPMI: Dont Know has no apostrophe: a filter on \"Don't Know\" silently matches nothing.\nIf time is short, skip the “Who answers a later survey?” cell and the income exercise.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#key-takeaways",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#key-takeaways",
+    "title": "5.1 Survey Basics",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nAll of Us has ten surveys; later ones were answered by fewer, and different, people\nFind questions in a dictionary (or the Survey Explorer), then query by concept ID\nNon-answers start with PMI:; some (None, Other, Does Not Apply To Me) are real answers\nA missing answer can mean “never asked”: use the skip logic\nSelect-all questions give several rows per person: reshape before joining\nAnswers have dates: check whether they came before or after a diagnosis",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-1-survey-basics.html#next",
+    "href": "pages/courses/surveys/5-1-survey-basics.html#next",
+    "title": "5.1 Survey Basics",
+    "section": "Next",
+    "text": "Next\n5.2 Family history and lifestyle: family history of diabetes, smoking, and alcohol, in cases and controls.",
+    "crumbs": [
+      "Surveys",
+      "5.1 Survey Basics"
     ]
   },
   {
@@ -3742,6 +3984,204 @@
     ]
   },
   {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "",
+    "text": "Survey series, class 2 of 3 · R + SQL · 90 minutes\nOpen the notebook on GitHub Survey series overview",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#overview",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#overview",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Overview",
+    "text": "Overview\nType 2 diabetes runs in families, and is linked to habits like smoking and drinking. Health records rarely capture these, but the All of Us surveys do. In this class we turn family history of diabetes, smoking, and alcohol into variables, and ask how they relate to type 2 diabetes. Along the way we meet the biggest trap in survey analysis: answers given after a diagnosis.\n\nWhy this class matters\nA survey answer describes a person when they answered, and most people with diabetes answered years after their diagnosis. Their answers can reflect the diagnosis (people quit smoking after it), and other differences between groups, like income, can create links that aren’t causal. This class shows how to check these explanations, not just name them.\n\n\nBy the end you’ll be able to\n\nCode a select all that apply family history question into one variable per relative\nChoose the right denominator: who could have answered a question at all\nCompare self-reported diabetes with the health records\nCheck when a survey was answered relative to a diagnosis, and explain reverse causation\nFit age- and sex-adjusted logistic regression models, and run sensitivity analyses\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAre family history of diabetes, smoking, and alcohol use linked to type 2 diabetes?\n\n\n🧪 The analysis\nPercents by group; logistic regression adjusted for age and sex; the same model with only cases who answered before diagnosis; two ways to code a skipped answer\n\n\n🎯 Why\nLogistic regression compares the odds of diabetes, adjusted for age and sex, which differ between groups\n\n\n✅ What we conclude\nHow strongly each factor is linked to type 2 diabetes, and how much answer timing and coding choices matter\n\n\n⚠️ What it can’t tell us\nCause. Most answers came after diagnosis; income and health can confound; family history is reported, not verified\n\n\n🔗 Connections\nUses files from 5.1; models from 3.2; family history connects to the genetics of 4.2; confounding by income leads to 5.3\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n90 minutes\n\n\n⏱️ Run time\nabout 3 minutes\n\n\n💰 Cost\nabout $1.50 per student: two queries on ds_survey, plus the app\n\n\n📋 Before class\nrun 5.1: this class uses its question dictionary and survey_basics.csv",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#class-plan",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#class-plan",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: family history, denominators, reverse causation, confounding\nlisten, ask\n\n\n0:15\n2. Setup: find the alcohol questions by concept code\nrun the cells\n\n\n0:20\n3. When did people answer?\nrun the cells, discuss\n\n\n0:30\n4. Family history: group relatives, the denominator, self-report vs records\n✋ Try It Out 1 (5 min)\n\n\n0:50\n5. Alcohol\nrun the cells\n\n\n1:00\n6. Describe and model; a forest plot\n✋ Try It Out 2 (5 min)\n\n\n1:15\n7. Sensitivity analyses: before diagnosis; what a skip means\ndiscuss\n\n\n1:25\nWrap-up",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#key-concepts",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#key-concepts",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nFamily history, and its denominator\nIncluding yourself, who in your family has had type 2 diabetes? Select all that apply. The answers name family members (Mother, Sibling, …) and Self, so one question gives family history and self-reported diabetes.\nThe question is in Personal and Family Health History, which only about half our sample took. So who counts as “no family history”?\n\n\n\n\n\n\n\n\nTook the survey?\nAnswer to this question\nFamily history\n\n\n\n\nno\nnone\nunknown (NA)\n\n\nyes\nnone\nno relative reported\n\n\nyes\na relative\nyes\n\n\nyes\nonly PMI: Skip\nunclear: unknown, or “no one”? (tested in Part 7)\n\n\n\n\n\nReverse causation and confounding\n\n\n\n\n\n\n\n\n\nMeans\nExample\n\n\n\n\nReverse causation\nthe outcome changes the “risk factor”\npeople quit smoking after a diabetes diagnosis\n\n\nSick quitter\npeople stop a habit because they’re ill\nnon-drinkers who stopped for health reasons\n\n\nConfounding\na third factor is linked to both\nincome is linked to drinking and to diabetes\n\n\nSensitivity analysis\nrerun with a different, defensible choice\nonly cases who answered before diagnosis",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#follow-along-in-the-workbench",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#follow-along-in-the-workbench",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/surveys/5.2 family_history_lifestyle.ipynb, with the R kernel.",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#try-it-out",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#try-it-out",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nIs a mother with type 2 diabetes reported more often than a father?\n✅ Check: mothers were reported a little more often in our test run. People often know more about their mother’s health: reporting shapes survey data.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 6, “Your turn”\n\n\n\nDoes the family history odds ratio change if you also adjust for smoking and alcohol?\n✅ Check: compare the two odds ratios. If they’re close, family history isn’t explained by smoking or drinking.",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#code-walk-through",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#code-walk-through",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nOne column per relative\nfamily &lt;- family %&gt;%\n  mutate(member   = if_else(str_starts(answer, \"PMI:\"), answer,\n1                            str_trim(str_extract(answer, \"[^?:-]+$\"))),\n         relative = case_when(\n           str_starts(answer, \"PMI:\")                                     ~ \"non-answer\",\n           str_detect(member, regex(\"^self$\", ignore_case = TRUE))        ~ \"self\",\n2           str_detect(member, regex(\"grand\", ignore_case = TRUE))         ~ \"grandparent\",\n           str_detect(member, regex(\"mother|father\", ignore_case = TRUE)) ~ \"parent\",\n           …))\n\nfamily_wide &lt;- family %&gt;%\n  filter(relative != \"non-answer\") %&gt;%\n3  distinct(person_id, relative) %&gt;%\n  mutate(value = TRUE) %&gt;%\n4  pivot_wider(names_from = relative, values_from = value, values_fill = FALSE)\n\n1\n\nKeep only the family member, the text after the last ?, -, or :. The question says “Including yourself”, so searching the whole answer for self matches every row.\n\n2\n\nOrder matters: Grandmother contains mother, so grandparents are checked first.\n\n3\n\nOne row per person per group: Mother and Father make one parent.\n\n4\n\nOne TRUE/FALSE column per group (2.2).\n\n\n\n\nOnly cases who answered before diagnosis\nbefore_data &lt;- model_data %&gt;%\n1  filter(cohort == \"control\" | lifestyle_date &lt; first_t2d_date)\n\nm_before &lt;- glm(t2d ~ age10 + sex_at_birth + smoking_status + alcohol_use,\n2                family = binomial, data = before_data)\n\n1\n\nAll controls, and only the cases whose Lifestyle answers came before their first type 2 diabetes date: their answers can’t reflect the diagnosis.\n\n2\n\nThe same model as before, so the odds ratios can be compared side by side.",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#what-we-found",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#what-we-found",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in October 2026 (CDR v9), 5,000 cases and 5,000 controls.\n\nTiming and family history\n\n77% of cases answered the Lifestyle survey after their diabetes was first recorded, a median of 2.6 years after.\nFamily history (a parent or sibling): 45% of cases and 26% of controls who took the survey.\nSelf-report vs records: only 59% of cases reported Self, and about 2% of controls did. Neither source is perfect.\nPMI: Skip was one of the most common answers to the select-all family question: about 1 in 5 people who took the survey had only a skip, more often controls.\n\n\n\nOdds ratios\n\n\n\n\n\n\n\n\nAdjusted for age and sex\nAll cases\nCases who answered before diagnosis\n\n\n\n\nFamily history (parent or sibling)\n2.47 (2.16 to 2.83)\n\n\n\nFormer smoker (vs never)\n1.24 (1.12 to 1.38)\n1.25 (1.06 to 1.48)\n\n\nCurrent smoker (vs never)\n1.32 (1.16 to 1.50)\n1.71 (1.41 to 2.06)\n\n\nAlcohol: none in past year (vs never drank)\n0.87 (0.73 to 1.03)\n0.76 (0.58 to 0.98)\n\n\nAlcohol: monthly or less\n0.74 (0.64 to 0.87)\n0.70 (0.55 to 0.88)\n\n\nAlcohol: 2–4 times a month\n0.48 (0.41 to 0.57)\n0.59 (0.46 to 0.77)\n\n\nAlcohol: 2+ times a week\n0.26 (0.22 to 0.30)\n0.31 (0.24 to 0.41)\n\n\n\n\n\nFamily history had the strongest link: about two and a half times the odds. Counting a skipped answer as “no family history” instead of unknown raised it to 2.95 (2.59 to 3.36), because controls skipped more often. The link is strong either way, but its size depends on the coding choice: report both.\nCurrent smoking rose from 1.32 to 1.71 with cases who answered before diagnosis, as reverse causation predicts: some smokers quit after diagnosis, which hides part of the link in later answers.\nAlcohol: the more often people drank, the lower their odds, and this barely changed with answers given before diagnosis. So it isn’t mainly people cutting down after diagnosis. It still doesn’t show that alcohol prevents diabetes: confounding by income, education, and health is a likely explanation, which 5.3 examines.\n\n💬 Discuss: cases who answered before their diagnosis were diagnosed after joining All of Us. How might they differ from cases diagnosed long ago?",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#instructor-notes",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#instructor-notes",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe alcohol result always prompts “so drinking prevents diabetes?” Ask students for explanations before Part 7: reverse causation, sick quitters, confounding by income and health. Part 7 rules out the first as the main one; 5.3 looks at income.\nThe “self” bug is worth showing: searching the whole answer for self matches every row, because the question says “Including yourself”. Always check how answers were grouped.\nFamily history and genes: link back to 4.2. Family history captures many genes and a shared household.\nWhy not count everyone without an answer as “no family history”? Half the sample never took the survey: they’re unknown, not “no”.",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#key-takeaways",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#key-takeaways",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA select-all question becomes one column per relative, after checking how each answer was grouped\nChoose the denominator carefully: no answer can mean “no”, “never asked”, or “skipped”\nSelf-reported diabetes and the records mostly agree: a useful check of any case definition\nMost answers came after diagnosis: test for reverse causation, and think about confounding\nSensitivity analyses show which conclusions hold up",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/5-2-family-history-lifestyle.html#next",
+    "href": "pages/courses/surveys/5-2-family-history-lifestyle.html#next",
+    "title": "5.2 Family History and Lifestyle",
+    "section": "Next",
+    "text": "Next\n5.3 Social factors: income, education, food security, and health care access, and type 2 diabetes.",
+    "crumbs": [
+      "Surveys",
+      "5.2 Family History and Lifestyle"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html",
+    "href": "pages/courses/surveys/index.html",
+    "title": "Survey Series",
+    "section": "",
+    "text": "Three R classes on the All of Us survey data, with the same cohort as every other series: people with type 2 diabetes compared with people without diabetes.\nSurveys tell us what health records rarely do: smoking, family history, income, food security, access to care. They also have their own traps: non-answers, questions that were never asked, several answers per question, and later surveys answered by only some participants. This series teaches you to read and code survey answers correctly, then to use them in an analysis.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#the-classes",
+    "href": "pages/courses/surveys/index.html#the-classes",
+    "title": "Survey Series",
+    "section": "The classes",
+    "text": "The classes\n\n\n\nClass\nTime\nWhat you learn\n\n\n\n\n5.1 Survey basics\n90 min\nThe ten surveys and who answered them; finding questions; non-answers, skip logic, select-all questions; one row per person\n\n\n5.2 Family history and lifestyle\n90 min\nFamily history, smoking, and alcohol; denominators; self-report vs records; reverse causation and sensitivity analyses\n\n\n5.3 Social factors\n90 min\nIncome, education, insurance, and food insecurity; confounding shown on the same people; confounders vs mediators",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#who-the-results-describe",
+    "href": "pages/courses/surveys/index.html#who-the-results-describe",
+    "title": "Survey Series",
+    "section": "Who the results describe",
+    "text": "Who the results describe\nAll of Us participants volunteer: unlike NHANES or BRFSS, there are no survey weights, so percents from these classes describe our sample, not the US population. Our sample is also half cases by design. Class 5.1 explains what that means, and the options when you need population numbers.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#the-cohort",
+    "href": "pages/courses/surveys/index.html#the-cohort",
+    "title": "Survey Series",
+    "section": "The cohort",
+    "text": "The cohort\nThe same cohort as the core series: a random sample of 5,000 cases and 5,000 controls from the shared query (notebooks/sql/t2d_cohort.sql). The notebooks load cohort_sample.csv from 1.1, or make it if it’s missing, so this series can start without the core series.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#what-you-need",
+    "href": "pages/courses/surveys/index.html#what-you-need",
+    "title": "Survey Series",
+    "section": "What you need",
+    "text": "What you need\n\nAn All of Us Controlled Tier workspace with a bucket, and the course notebooks in your app (see the Notebooks page).\nNotebook 0.0 setup, run once.\nHelpful, not required: 2.1 clean, 2.2 reshape, and 3.1 Table One from the core series.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#what-it-costs",
+    "href": "pages/courses/surveys/index.html#what-it-costs",
+    "title": "Survey Series",
+    "section": "What it costs",
+    "text": "What it costs\n\n\n\n\n\n\n\n\nCost\n\n\n\n\n5.1\nabout $1 to $2 in queries: ds_survey is a large table\n\n\n5.2\nabout $1 in queries\n\n\n5.3\nabout $1 in queries\n\n\nThe app, while running\nabout $0.27 an hour\n\n\nThe app’s disk\nabout $0.70 a day, even while the app is stopped\n\n\n\nStop your app after each class.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/surveys/index.html#keep-all-of-us-data-in-the-workbench",
+    "href": "pages/courses/surveys/index.html#keep-all-of-us-data-in-the-workbench",
+    "title": "Survey Series",
+    "section": "Keep All of Us data in the Workbench",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data, or counts of 1 to 20 (including counts that could be worked out from others). The results on these pages are summary statistics from our test runs.\nThe results on these pages come from the All of Us Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge All of Us participants for their contributions. See Acknowledgment and data availability.",
+    "crumbs": [
+      "Surveys",
+      "Survey Series"
+    ]
+  },
+  {
     "objectID": "pages/data/data-explorer.html",
     "href": "pages/data/data-explorer.html",
     "title": "Data Explorer",
@@ -4730,22 +5170,22 @@
     ]
   },
   {
-    "objectID": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
-    "href": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
+    "objectID": "pages/workspace/workflows.html#a-workflow-job-tested",
+    "href": "pages/workspace/workflows.html#a-workflow-job-tested",
     "title": "Workflows",
-    "section": "dsub: Jobs from an App",
-    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. dsub is ready to use in All of Us Jupyter apps. In All of Us, every job needs the network settings, no public address, and an image from the All of Us mirror:\nexport DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim\nMIRROR=us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod\n\ndsub --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" --user-project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --regions us-central1 --use-private-address \\\n  --network global/networks/network \\\n  --subnetwork regions/us-central1/subnetworks/subnetwork \\\n  --service-account \"$(gcloud config get-value account)\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  \"${MIRROR}/biocontainers/samtools:&lt;version&gt;\" \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 A full class, tested in All of Us: Running Workflows. More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”, and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without –use-private-address and the network settings, jobs can’t start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub’s helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.\n\n\n\n\n\nNext section: Data →",
+    "section": "A Workflow Job, Tested",
+    "text": "A Workflow Job, Tested\n\n\n\n\n\nThe input form\n\n\n\n\n\n\n\nJob status: finished\n\n\n\n\nPLINK on chromosome 21 (a WDL from Optional Extras: Running Workflows): about 4 minutes from Submit to Completed, with the same results as PLINK in an app. No configuration file, and no app needed.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nTested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab’s Cromwell wasn’t affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Also tested: a batch job (chromosomes 19 to 22 from a CSV table, about 11 minutes) and the same WDL from GitHub (3 minutes 55); both matched. One job’s outputs went to the dataproc-staging bucket because the output step had picked it, and that bucket’s gs:// address (Cloud ID: dataproc-staging-wb-…) differed from its name on the page (dataproc-staging-aou-rw-…). The job’s Inputs view showed – for every value, though the job used them. The job details page shows who started it (an email): paint it out in screenshots.",
     "crumbs": [
       "Your Workspace",
       "Workflows"
     ]
   },
   {
-    "objectID": "pages/workspace/workflows.html#a-workflow-job-tested",
-    "href": "pages/workspace/workflows.html#a-workflow-job-tested",
+    "objectID": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
+    "href": "pages/workspace/workflows.html#dsub-jobs-from-an-app",
     "title": "Workflows",
-    "section": "A Workflow Job, Tested",
-    "text": "A Workflow Job, Tested\n\n\n\n\n\nThe input form\n\n\n\n\n\n\n\nJob status: finished\n\n\n\n\nPLINK on chromosome 21 (a WDL from Optional Extras: Running Workflows): about 4 minutes from Submit to Completed, with the same results as PLINK in an app. No configuration file, and no app needed.\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nTested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab’s Cromwell wasn’t affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Also tested: a batch job (chromosomes 19 to 22 from a CSV table, about 11 minutes) and the same WDL from GitHub (3 minutes 55); both matched. One job’s outputs went to the dataproc-staging bucket because the output step had picked it, and that bucket’s gs:// address (Cloud ID: dataproc-staging-wb-…) differed from its name on the page (dataproc-staging-aou-rw-…). The job’s Inputs view showed – for every value, though the job used them. The job details page shows who started it (an email): paint it out in screenshots.",
+    "section": "dsub: Jobs from an App",
+    "text": "dsub: Jobs from an App\nFor one-step jobs, e.g., run a command on many files. dsub is ready to use in All of Us Jupyter apps. In All of Us, every job needs the network settings, no public address, and an image from the All of Us mirror:\nexport DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim\nMIRROR=us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod\n\ndsub --provider google-batch \\\n  --project \"${GOOGLE_CLOUD_PROJECT}\" --user-project \"${GOOGLE_CLOUD_PROJECT}\" \\\n  --regions us-central1 --use-private-address \\\n  --network global/networks/network \\\n  --subnetwork regions/us-central1/subnetworks/subnetwork \\\n  --service-account \"$(gcloud config get-value account)\" \\\n  --logging gs://&lt;your-bucket&gt;/logs/ \\\n  --input  BAM=gs://&lt;your-bucket&gt;/sample.bam \\\n  --output BAI=gs://&lt;your-bucket&gt;/sample.bam.bai \\\n  --image  \"${MIRROR}/biocontainers/samtools:&lt;version&gt;\" \\\n  --command 'samtools index ${BAM} ${BAI}' \\\n  --wait\n👉 A full class, tested in All of Us: Running Workflows. More examples: tutorial notebook 05_How_to_use_workflow_tools (dsub, Cromwell, Nextflow)\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\nSource: Verily, “Run dsub jobs”, and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without –use-private-address and the network settings, jobs can’t start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub’s helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.\n\n\n\n\n\nNext section: Data →",
     "crumbs": [
       "Your Workspace",
       "Workflows"
