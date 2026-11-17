@@ -98,7 +98,7 @@ The core series:
 
 | Notebook | What it does |
 |---|---|
-| `aou_setup.R` | Settings you edit once (bucket and dataset) and shared helper functions |
+| `aou_setup.R` | Shared settings (the dataset) and helper functions. Your bucket name goes in `my_settings.R` (made by `0.0 setup`, ignored by Git) |
 | `0.0 setup` | Checks your settings and the connection to the data |
 | `1.1 build_cohorts` | The OMOP tables, concept IDs, and SQL; the cohort query; a sample; survey answers and measurements |
 | `1.2 survival_data` | Time zero, event, and censoring; first CKD dates; follow-up |
@@ -123,7 +123,7 @@ The notebooks only run **inside an *All of Us* workspace** (Workbench 2.0). They
    - **Clone this repository:** in your workspace, go to **Apps** → **Git repositories** → **+ Add repository** and enter `https://github.com/CWML/All-of-Us-Training-Resources.git`. It's cloned into apps you create afterward.
    - **Download and upload:** download the whole `notebooks/` folder from GitHub and upload it **with its subfolders**: the notebooks in `core/` and `omics/` load `aou_setup.R` and `sql/` from the folder above.
 3. Launch an app (e.g., AoU Jupyter, which has R and Python kernels).
-4. Open **`0.0 setup`** and follow it: it has you edit two lines in `aou_setup.R`.
+4. Open **`0.0 setup`** and follow it: it saves your bucket's folder name in `notebooks/my_settings.R` (Git ignores it, so pulling new versions never clashes with it).
 5. Run a series in order: core `1.1` → `1.2` → `2.1` → `2.2` → `2.3` → `3.1` to `3.4` (the queries in `1.1` and `1.2` only need to run once; later notebooks read the saved files), or omics `4.1` → `4.7`.
 
 **R packages:** `tidyverse`, `lubridate`, `bigrquery`, `broom`, `survival`. `aou_setup.R` installs any that are missing the first time it runs (this can take a few minutes).

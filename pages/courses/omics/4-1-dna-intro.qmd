@@ -101,9 +101,9 @@ One chromosome is **80 GB**, so the class never reads a whole one: PLINK **jumps
    ```bash
    cd ~/repos/All-of-Us-Training-Resources
    git checkout -- notebooks/
-   git stash && git pull && git stash pop
+   git pull
    ```
-   The first line discards any outputs saved in your copy of the notebooks; the stash keeps your bucket name in `aou_setup.R`.
+   The first line discards any outputs saved in your copy of the notebooks. Your bucket name is safe: it's in `my_settings.R`, which Git ignores (see `0.0 setup`, Step 2).
 3. In the file browser on the left, open `repos` → `All-of-Us-Training-Resources` → `notebooks` → `omics` → **`4.1 dna_intro.ipynb`**.
 4. Check the kernel (top right of the notebook) says **R**. If it doesn't, click it and choose **R**.
 5. Run the first code cell (**Shift + Enter**). It should end with *Setup done*, followed by your dataset and data folder.

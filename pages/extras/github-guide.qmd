@@ -141,9 +141,8 @@ On a pull request, read the **Files changed** tab before merging. A notebook cha
 
 Notebooks often need one or two lines that differ for each person, such as your **bucket name**. If you edit them in a shared file, every `git pull` can conflict with your edit, and every commit risks pushing it.
 
-- **Before pulling:** `git stash`, then `git pull`, then `git stash pop` puts your edit back on top of the new version.
-- **Before committing:** check `git diff` for your setting, and leave that file out: `git restore --staged <file>`.
-- **Better:** keep personal settings in a file Git ignores (e.g. `my_settings.R`, listed in `.gitignore`), and have the shared code read it.
+- **Best:** keep personal settings in a file Git ignores, and have the shared code read it. Our notebooks do this: `0.0 setup` saves your bucket name in `notebooks/my_settings.R`, `.gitignore` lists that file, and `aou_setup.R` reads it. So `git pull` never clashes with it, and it can't be committed by mistake.
+- **If you did edit a shared file:** `git stash`, then `git pull`, then `git stash pop` puts your edit back on top of the new version. Before committing, check `git diff` for your setting, and leave that file out: `git restore --staged <file>`.
 
 
 ## Protect your GitHub account
@@ -501,7 +500,7 @@ git config --global user.email "your-email"
 cd ~ && git clone git@github.com:OWNER/REPO.git && cd REPO
 
 # Daily cycle
-git stash && git pull && git stash pop    # keeps your personal settings
+git pull                                  # your settings in my_settings.R are untouched
 jupyter nbconvert --clear-output --inplace notebooks/*.ipynb
 git status
 git add notebooks
