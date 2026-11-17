@@ -447,7 +447,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
 - When credits run out or expire:
   - You can't launch or open analysis environments
   - Stored resources (buckets, disks) **may be deleted**
-- Set up a **Google Cloud billing account** and **billing pod** *before* this happens (see *Getting a Google Cloud Billing Account at Yale*)
+- Set up a **Google Cloud billing account** and **billing pod** *before* this happens (at Yale: ask **2 to 3 weeks ahead**)
 
 ## Billing Pods
 
@@ -455,7 +455,7 @@ For All of Us workspaces, collaborators also need their own All of Us data acces
   - Workspace costs are charged to the pod
   - Think of the pod as your billing account inside the Workbench
 - One pod can pay for **many workspaces**
-- You can **invite other users** to your pod (e.g., lab members)
+- You can **invite other users** to your pod (e.g., lab members): they bill to **your** account
 - All of Us researchers have the **Pod Manager** role, so you can create your own pod
 
 ::: fragment
@@ -471,16 +471,27 @@ Initial credits are linked to the personal user pod. Check a workspace's Workspa
 
 ## Getting a Google Cloud Billing Account at Yale
 
+**Ask 2 to 3 weeks before** your credits run out or expire: setup takes about 2 weeks.
+
 Email **cloud.support\@yale.edu** with the subject **"setting up an All of Us billing account"** and include:
 
 - Your All of Us Workbench email (e.g., `yourname@researchallofus.org`)
 - Your **COA** number
-- Whether this is an **NIH-funded** project
+- Whether this is an **NIH-funded** project, and if so, the **NIH grant number** (set up through NIH STRIDES)
 
 Yale Cloud Support will send the next steps for linking the Google Cloud billing account and creating your **pod**.
 
 ::: notes
-Yale Cloud Support may give additional or different guidance.
+Setup takes about 2 weeks because Burwood, Yale's Google reseller, requests the account from Google's distributor. Email is the way to ask for now; Yale Cloud Support is building a ServiceNow request form. Yale Cloud Support may give additional or different guidance.
+:::
+
+## Your Yale Billing Account
+
+- **Your own** Google Cloud billing account, charged to your COA
+- You **keep access**: link it to new pods, or relink pods, yourself, without asking Yale Cloud Support again
+
+::: fragment
+**Watch out:** anyone you invite to your pod can run workspaces billed to **your COA**. Invite only people on the **same grant**.
 :::
 
 # All of Us Tutorial Workspaces
@@ -1621,6 +1632,8 @@ The details panel also shows the workspace **ID**, **default region**, **pod**, 
 
 ::: {.fragment}
 👉 Handy for checking that an export arrived, or finding a file's path
+
+🔒 **The perimeter also means:** you can't reach the data **from your own computer**, even with the command-line tools (`wb`, `gcloud`, `bq`): work in an app. And downloading a file from an app to your computer is **logged** (egress logs). Large transfers can trigger alerts, an app shutdown, or suspended access. Keep data in the Workbench.
 :::
 
 ::: notes
@@ -2302,8 +2315,8 @@ A **pipeline** that runs analysis steps for you, in order or in parallel, **with
 
 | Tool | Language | Where you run it |
 |---|---|---|
-| **Cromwell** | WDL | **Workflows** tab (or CLI) |
-| **Nextflow** | Nextflow (`.nf`) | **Workflows** tab (or CLI) |
+| **Cromwell** | WDL | **Workflows** tab (or an app) |
+| **Nextflow** | Nextflow (`.nf`) | An app (in *All of Us*, the tab offers WDL only) |
 | **dsub** | Shell commands, one step | An app's **terminal** |
 
 ::: {.fragment}
@@ -2334,8 +2347,8 @@ Source: Verily, "Workflows overview" and "Workflow engines". All three tools use
 ::: {.column .side width="48%"}
 **Step 1: Provide source.** Where's the workflow file?
 
-- **Workspace bucket:** pick the bucket. Workbench lists the workflow files it finds there (search by name).
-- **Git repository:** a repo with the workflow (see *Optional Extras: GitHub*)
+- **Workspace bucket:** pick **your workspace bucket**. Workbench lists the workflow files it finds there, by folder (search by path).
+- **Git repository:** a repo with the workflow (see *Optional Extras: GitHub*). Link your GitHub account first
 
 Select the workflow → **Next**
 
@@ -2348,53 +2361,75 @@ Upload the workflow file (`.wdl` or `.nf`) to your bucket **first**. Until there
 ::::
 
 ::: notes
-The bucket shown (dataproc-staging-aou-rw-…) is the staging bucket created for a Spark (Dataproc) app; your own bucket appears in the same list. Nextflow workflows should include a nextflow.config file next to the .nf file.
+The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say "0 workflows found": choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g. data/workflows/. In our All of Us workspace (November 2026) the tab listed only .wdl files: no .nf files, from a bucket or from GitHub, even main.nf next to a nextflow.config. Run Nextflow from an app. Git sources: the tab first asks you to link your GitHub account (Workbench account settings, GitHub, then install Verily's GitHub app); choose only the repositories you need, not all. You then pick a branch or a tag; a tag keeps a class on a fixed version. The workflow's details save the repository, file, and branch.
 :::
 
 ## Running a Workflow
 
 **Setup** tab → select the workflow → **+ New job**
 
-1. Fill in the **inputs**. Workbench builds the form from the workflow file.
-2. Choose an **output bucket** for the results
-3. Start the job, then follow it on **Job status**: each task's progress, logs, and outputs
+1. **Job details:** a name, and *Run a single job* (or a batch)
+2. **Inputs:** a **form**, one box per input in the workflow. `gs://` paths for files; plain text (no quotation marks) for strings
+3. **Outputs:** **check the bucket** (it can default to `dataproc-staging-…`), and a folder named after the job
+4. **Submit job**, then follow it on **Job status**: *Starting* → *Running* → *Completed*
 
 ::: {.fragment}
 **Batch jobs:** run one WDL workflow **many times in parallel**, e.g., once per sample
 
 - Choose *Run a batch job with inputs defined by an input table*
-- Upload a **CSV** (one row per run), then match its columns to the workflow's inputs
+- Pick a **CSV** in your bucket (one row per run), type which **column** goes with each input, and name a **reference column** that labels each run
+- **Test with a single job first**
 :::
 
 ::: notes
-Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
+Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to `<bucket>/<job name>/<workflow>/<job ID>/call-<task>/`. Single job vs batch job: a single job runs the workflow once, with inputs typed into a form; a batch job runs it once per row of a CSV table in the bucket, all at the same time. In All of Us the tab can't preview the table (perimeter), so you type the column name for each input, exactly as in the CSV header, plus a reference column that labels each run (e.g. chr). Job status shows a batch as one row with its number of jobs; results get one job ID folder per row. Tested November 2026: a single job on chromosome 21 took about 4 minutes; a batch of chromosomes 19 to 22 took about 11 minutes, and its chromosome 21 result matched exactly. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
+:::
+
+## A Workflow Job, Tested
+
+:::: {.columns}
+::: {.column width="50%"}
+![The input form](images/wf-job-inputs.png){fig-alt="Creating new job dialog, step 2 Prepare inputs: an input form with the keys plink_freq.bed, .bim, and .fam (type File) and plink_freq.docker_image (type String), each filled in with a gs:// path or the image address."}
+:::
+::: {.column width="50%"}
+![Job status: finished](images/wf-job-status.png){fig-alt="Workflows tab, Job status sub-tab: one WDL job named plink_freq_job with status Completed, its job ID, and the time it was last updated."}
+:::
+::::
+
+**PLINK on chromosome 21** (a WDL from *Optional Extras: Running Workflows*): about **4 minutes** from **Submit** to *Completed*, with the same results as PLINK in an app. No configuration file, and no app needed.
+
+::: notes
+Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab's Cromwell wasn't affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Also tested: a batch job (chromosomes 19 to 22 from a CSV table, about 11 minutes) and the same WDL from GitHub (3 minutes 55); both matched. One job's outputs went to the dataproc-staging bucket because the output step had picked it, and that bucket's gs:// address (Cloud ID: dataproc-staging-wb-…) differed from its name on the page (dataproc-staging-aou-rw-…). The job's Inputs view showed -- for every value, though the job used them. The job details page shows who started it (an email): paint it out in screenshots.
 :::
 
 ## dsub: Jobs from an App
 
-For **one-step** jobs, e.g., run a command on many files. It comes with apps created after **June 2025**.
+For **one-step** jobs, e.g., run a command on many files. dsub is ready to use in *All of Us* Jupyter apps. In *All of Us*, every job needs the **network** settings, **no public address**, and an image from the ***All of Us* mirror**:
 
 ```{.bash code-line-numbers="false"}
-dsub_activate                        # turn on dsub in the terminal
+export DSUB_CLOUD_SDK_IMAGE=gcr.io/google.com/cloudsdktool/google-cloud-cli:591.0.0-slim
+MIRROR=us-central1-docker.pkg.dev/all-of-us-rw-prod/aou-rw-gar-remote-repo-docker-prod
 
-dsub \
-  --provider google-batch \
-  --project "${GOOGLE_CLOUD_PROJECT}" \
-  --service-account "${PET_SA_EMAIL}" \
+dsub --provider google-batch \
+  --project "${GOOGLE_CLOUD_PROJECT}" --user-project "${GOOGLE_CLOUD_PROJECT}" \
+  --regions us-central1 --use-private-address \
+  --network global/networks/network \
+  --subnetwork regions/us-central1/subnetworks/subnetwork \
+  --service-account "$(gcloud config get-value account)" \
   --logging gs://<your-bucket>/logs/ \
   --input  BAM=gs://<your-bucket>/sample.bam \
   --output BAI=gs://<your-bucket>/sample.bam.bai \
-  --image  <container image with samtools> \
+  --image  "${MIRROR}/biocontainers/samtools:<version>" \
   --command 'samtools index ${BAM} ${BAI}' \
   --wait
 ```
 
 ::: {.fragment}
-👉 More examples: tutorial notebook `05_How_to_use_workflow_tools` (dsub, Cromwell, Nextflow)
+👉 A full class, tested in *All of Us*: **Running Workflows** (Optional Extras on the website). More examples: tutorial notebook `05_How_to_use_workflow_tools` (dsub, Cromwell, Nextflow)
 :::
 
 ::: notes
-Source: Verily, "Run dsub jobs". Verily's example also sets the network and subnetwork; check the tutorial notebook for the exact flags in an All of Us workspace. Each dsub job starts its own cloud machine, billed to your pod.
+Source: Verily, "Run dsub jobs", and the All of Us tutorial notebooks. Tested November 2026 in an All of Us Jupyter app (dsub 0.5.6, CDR v9). Without --use-private-address and the network settings, jobs can't start inside the perimeter; with it, images must come from Google registries, so Docker Hub images go through the All of Us mirror. DSUB_CLOUD_SDK_IMAGE pins dsub's helper image: Cloud SDK version 592 (3 November 2026) made every job fail with exit status 127. PET_SA_EMAIL was empty in our app; gcloud config get-value account gives the account to use. Each dsub job starts its own cloud machine, billed to your pod.
 :::
 
 # Storage & Costs

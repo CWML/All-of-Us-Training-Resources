@@ -26,7 +26,7 @@ Each class is a 120-minute R or Python notebook for the Researcher Workbench 2.0
 
 ## Before you start
 
-1. **Run `0.0 setup`** (in `notebooks/`) once, and set `BUCKET_NAME` in `aou_setup.R`.
+1. **Run `0.0 setup`** (in `notebooks/`) once: it saves your bucket's folder name in `my_settings.R`.
 2. **Keep the folder layout.** These notebooks load `../aou_setup.R` and `../sql/t2d_cohort.sql` from the folder above.
 3. **Use an *All of Us* JupyterLab app.** The default app (4 CPUs, 26 GB memory) is enough for every class; PLINK 2 and Hail are already installed.
 4. **R packages** are installed by the notebooks when needed: `limma` and `edgeR` from Bioconductor (5–10 minutes the first time), and optionally `org.Hs.eg.db` and `GO.db` for pathway enrichment.

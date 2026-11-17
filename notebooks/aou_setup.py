@@ -1,8 +1,9 @@
 """
 aou_setup.py: shared settings and helpers for the Python notebooks.
 
-It reads BUCKET_NAME and CURRENT_DATASET from aou_setup.R, so you only set them
-in one place (run 0.0 setup and edit aou_setup.R). Notebooks in a subfolder
+It reads BUCKET_NAME and CURRENT_DATASET from my_settings.R (your own settings,
+saved by 0.0 setup) or, if they aren't there, from aou_setup.R, so you only set
+them in one place. Notebooks in a subfolder
 load it with:
 
     import sys; sys.path.insert(0, "..")
@@ -13,16 +14,18 @@ import os
 import re
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(_HERE, "aou_setup.R")) as f:
-    _R_SETUP = f.read()
+_SETTINGS_FILES = [os.path.join(_HERE, "my_settings.R"), os.path.join(_HERE, "aou_setup.R")]
 
 
 def _setting(name):
-    """Read a setting such as BUCKET_NAME <- "..." from aou_setup.R."""
-    match = re.search(rf'^{name}\s*<-\s*"([^"]*)"', _R_SETUP, re.MULTILINE)
-    if match is None:
-        raise ValueError(f"Can't find {name} in aou_setup.R")
-    return match.group(1)
+    """Read a setting such as BUCKET_NAME <- "...": from my_settings.R if it's there, else aou_setup.R."""
+    for path in _SETTINGS_FILES:
+        if os.path.exists(path):
+            with open(path) as f:
+                match = re.search(rf'^{name}\s*<-\s*"([^"]*)"', f.read(), re.MULTILINE)
+            if match:
+                return match.group(1)
+    raise ValueError(f"Can't find {name} in my_settings.R or aou_setup.R")
 
 
 BUCKET_NAME = _setting("BUCKET_NAME")
@@ -37,7 +40,7 @@ if not os.path.isdir(BUCKET_DIR):
     raise FileNotFoundError(
         f"Can't find your bucket folder: {BUCKET_DIR}\n"
         f"Folders found in ~/workspace: {', '.join(found) or 'none'}\n"
-        "Update BUCKET_NAME in aou_setup.R (or create a bucket on the Resources tab).")
+        "Save your bucket's folder name with 0.0 setup, Step 2 (or create a bucket on the Resources tab).")
 os.makedirs(DATA_DIR, exist_ok=True)
 
 

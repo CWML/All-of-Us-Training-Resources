@@ -856,8 +856,8 @@ acaf_threshold.chr10.psam   the people: one row each</code></pre>
 <li><p>Get the newest notebooks: in JupyterLab, <strong>File → New → Terminal</strong>, then:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/repos/All-of-Us-Training-Resources</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--</span> notebooks/</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> stash <span class="kw">&amp;&amp;</span> <span class="fu">git</span> pull <span class="kw">&amp;&amp;</span> <span class="fu">git</span> stash pop</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The first line discards any outputs saved in your copy of the notebooks; the stash keeps your bucket name in <code>aou_setup.R</code>.</p></li>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first line discards any outputs saved in your copy of the notebooks. Your bucket name is safe: it’s in <code>my_settings.R</code>, which Git ignores (see <code>0.0 setup</code>, Step 2).</p></li>
 <li><p>In the file browser on the left, open <code>repos</code> → <code>All-of-Us-Training-Resources</code> → <code>notebooks</code> → <code>omics</code> → <strong><code>4.1 dna_intro.ipynb</code></strong>.</p></li>
 <li><p>Check the kernel (top right of the notebook) says <strong>R</strong>. If it doesn’t, click it and choose <strong>R</strong>.</p></li>
 <li><p>Run the first code cell (<strong>Shift + Enter</strong>). It should end with <em>Setup done</em>, followed by your dataset and data folder.</p></li>

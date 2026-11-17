@@ -427,10 +427,8 @@ In your app's terminal:
 ```sh
 cd ~/REPO
 git fetch
-git stash                         # set aside your personal edits (e.g. your bucket name)
-git checkout fix-smoking-code
+git checkout fix-smoking-code     # your bucket name is in my_settings.R, which Git ignores
 git pull
-git stash pop                     # put them back
 ```
 
 Open the notebook and run it. **The results stay here.** Read them in the Workbench.
