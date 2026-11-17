@@ -607,6 +607,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#variants-and-genotypes" id="toc-variants-and-genotypes" class="nav-link" data-scroll-target="#variants-and-genotypes">Variants and genotypes</a></li>
   <li><a href="#how-the-genomic-files-are-organised" id="toc-how-the-genomic-files-are-organised" class="nav-link" data-scroll-target="#how-the-genomic-files-are-organised">How the genomic files are organised</a></li>
   <li><a href="#why-remove-related-people-and-adjust-for-ancestry" id="toc-why-remove-related-people-and-adjust-for-ancestry" class="nav-link" data-scroll-target="#why-remove-related-people-and-adjust-for-ancestry">Why remove related people, and adjust for ancestry?</a></li>
+  <li><a href="#how-sure-are-we-of-each-persons-group" id="toc-how-sure-are-we-of-each-persons-group" class="nav-link" data-scroll-target="#how-sure-are-we-of-each-persons-group">How sure are we of each person’s group?</a></li>
   </ul></li>
   <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a>
   <ul class="collapse">
@@ -771,7 +772,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td>0:35</td>
-<td><strong>3. The cohort, and who has a genome</strong>: the cohort query, matching IDs, removing related people, the sample</td>
+<td><strong>3. The cohort, and who has a genome</strong>: the cohort query, how sure we are of each group, matching IDs, removing related people, the sample</td>
 <td>run the cells; ✋ <strong>Try It Out 2</strong> (5 min)</td>
 </tr>
 <tr class="even">
@@ -847,6 +848,10 @@ acaf_threshold.chr10.psam   the people: one row each</code></pre>
 <li><strong>Relatives</strong> share long stretches of DNA, which makes results look more certain than they are. <em>All of Us</em> provides a list of people to remove so that no two remaining people are closely related.</li>
 <li><strong>Genetic ancestry</strong> affects both allele frequencies and disease rates. Without accounting for it, a variant can look linked to a disease just because both are more common in one group (<strong>confounding</strong>). <em>All of Us</em> provides each person’s ancestry group and <strong>principal components (PCs)</strong>: a few numbers that summarise their genetic ancestry, used as covariates from 4.2 on.</li>
 </ul>
+</section>
+<section id="how-sure-are-we-of-each-persons-group" class="level3">
+<h3 class="anchored" data-anchor-id="how-sure-are-we-of-each-persons-group">How sure are we of each person’s group?</h3>
+<p>Cases and controls come from <strong>diagnosis codes</strong>, which aren’t perfect. A “case” may rest on one code on one day (possibly an error), and a “control” may have only a few months of records (possibly undiagnosed). People who see doctors more often also collect more diagnoses of everything. When the groups are blurred, real differences <strong>shrink toward no effect</strong>. Part 3 counts how much evidence each group rests on, using columns the cohort query already has (<code>t2d_code_days</code>, and the first and last EHR visit dates); 4.2 reruns the GWAS with a stricter definition. See also <a href="../../../pages/courses/omics/omics-for-beginners.html#confounders-in-omics">Confounders in omics</a>.</p>
 </section>
 </section>
 <section id="follow-along-in-the-workbench" class="level2">
@@ -1226,6 +1231,7 @@ acaf_threshold.chr10.psam   the people: one row each</code></pre>
 <li><em>All of Us</em> genomes are huge: <strong>read only the region you need</strong></li>
 <li>The <strong>participant ID</strong> links genomes to health records; IDs must be the <strong>same type</strong> (text) to match</li>
 <li>Use the ready-made <strong>relatedness</strong> and <strong>ancestry</strong> files instead of computing your own</li>
+<li>Check <strong>how sure</strong> you are of each person’s group: codes on how many days, and how much health-record history</li>
 <li>Always check <strong>which allele</strong> a result counts</li>
 </ul>
 </section>

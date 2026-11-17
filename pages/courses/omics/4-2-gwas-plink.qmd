@@ -56,7 +56,7 @@ GWAS is the main tool for finding genetic risk factors, and its results appear i
 | 0:50 | **4. Run the GWAS**: phenotype and covariate files, `plink2 --glm` | run the cells |
 | 1:10 | ☕ **Break** (5 min) | |
 | 1:15 | **5. Read the results**: top variants, rs7903146, the regional plot | ✋ **Try It Out 2** (5 min) |
-| 1:40 | **6. Why adjust?** Adjusted vs unadjusted, the Q-Q plot | ✋ **Try It Out 3** (10 min) |
+| 1:40 | **6. Why adjust?** Adjusted vs unadjusted, the Q-Q plot; optional: a stricter phenotype | ✋ **Try It Out 3** (10 min) |
 | 1:55 | **7. Scaling up; wrap-up** | discuss |
 
 ## Key concepts
@@ -74,6 +74,10 @@ Testing about a million independent variants at p < 0.05 would give about 50,000
 ### Linkage disequilibrium (LD)
 
 Nearby variants are inherited together, so when one is truly linked to diabetes, its neighbours show a signal too. A GWAS finds **regions**; finding the causal variant (**fine-mapping**) is a separate step. The regional plot colours each variant by its **r²** with rs7903146.
+
+### Does the phenotype definition matter?
+
+Our cases need a type 2 diabetes code on **one** day, and our controls only need **no** diabetes code. Some may be in the wrong group, which shrinks real effects toward no effect. Part 6 ends with a **sensitivity analysis**: the same GWAS with **stricter** groups (cases with a code on 2 or more days; controls with at least a year of health records). If rs7903146's odds ratio holds, the finding doesn't depend on that choice. See also [Confounders in omics](omics-for-beginners.qmd#confounders-in-omics).
 
 ### Quality control
 
@@ -189,6 +193,7 @@ Results from our test run in October 2026 (CDR v9), 2,500 cases and 2,500 contro
 - A GWAS runs **one regression per variant**, adjusted for covariates
 - **QC first**: remove rare, poorly measured, and suspicious variants
 - **Adjust for ancestry** with PCs; compare models with a **Q-Q plot**
+- Check that results hold with a **stricter phenotype** (a sensitivity analysis)
 - With millions of tests, the threshold is **p < 5 × 10⁻⁸**; small samples have little power
 - Nearby variants move together (**LD**): a GWAS finds regions
 

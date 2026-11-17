@@ -636,6 +636,7 @@ window.Quarto = {
   <li><a href="#one-regression-per-variant" id="toc-one-regression-per-variant" class="nav-link" data-scroll-target="#one-regression-per-variant">One regression per variant</a></li>
   <li><a href="#many-tests-a-strict-threshold" id="toc-many-tests-a-strict-threshold" class="nav-link" data-scroll-target="#many-tests-a-strict-threshold">Many tests, a strict threshold</a></li>
   <li><a href="#linkage-disequilibrium-ld" id="toc-linkage-disequilibrium-ld" class="nav-link" data-scroll-target="#linkage-disequilibrium-ld">Linkage disequilibrium (LD)</a></li>
+  <li><a href="#does-the-phenotype-definition-matter" id="toc-does-the-phenotype-definition-matter" class="nav-link" data-scroll-target="#does-the-phenotype-definition-matter">Does the phenotype definition matter?</a></li>
   <li><a href="#quality-control" id="toc-quality-control" class="nav-link" data-scroll-target="#quality-control">Quality control</a></li>
   </ul></li>
   <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
@@ -814,7 +815,7 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>1:40</td>
-<td><strong>6. Why adjust?</strong> Adjusted vs unadjusted, the Q-Q plot</td>
+<td><strong>6. Why adjust?</strong> Adjusted vs unadjusted, the Q-Q plot; optional: a stricter phenotype</td>
 <td>✋ <strong>Try It Out 3</strong> (10 min)</td>
 </tr>
 <tr class="even">
@@ -839,6 +840,10 @@ window.Quarto = {
 <section id="linkage-disequilibrium-ld" class="level3">
 <h3 class="anchored" data-anchor-id="linkage-disequilibrium-ld">Linkage disequilibrium (LD)</h3>
 <p>Nearby variants are inherited together, so when one is truly linked to diabetes, its neighbours show a signal too. A GWAS finds <strong>regions</strong>; finding the causal variant (<strong>fine-mapping</strong>) is a separate step. The regional plot colours each variant by its <strong>r²</strong> with rs7903146.</p>
+</section>
+<section id="does-the-phenotype-definition-matter" class="level3">
+<h3 class="anchored" data-anchor-id="does-the-phenotype-definition-matter">Does the phenotype definition matter?</h3>
+<p>Our cases need a type 2 diabetes code on <strong>one</strong> day, and our controls only need <strong>no</strong> diabetes code. Some may be in the wrong group, which shrinks real effects toward no effect. Part 6 ends with a <strong>sensitivity analysis</strong>: the same GWAS with <strong>stricter</strong> groups (cases with a code on 2 or more days; controls with at least a year of health records). If rs7903146’s odds ratio holds, the finding doesn’t depend on that choice. See also <a href="../../../pages/courses/omics/omics-for-beginners.html#confounders-in-omics">Confounders in omics</a>.</p>
 </section>
 <section id="quality-control" class="level3">
 <h3 class="anchored" data-anchor-id="quality-control">Quality control</h3>
@@ -1054,6 +1059,7 @@ window.Quarto = {
 <li>A GWAS runs <strong>one regression per variant</strong>, adjusted for covariates</li>
 <li><strong>QC first</strong>: remove rare, poorly measured, and suspicious variants</li>
 <li><strong>Adjust for ancestry</strong> with PCs; compare models with a <strong>Q-Q plot</strong></li>
+<li>Check that results hold with a <strong>stricter phenotype</strong> (a sensitivity analysis)</li>
 <li>With millions of tests, the threshold is <strong>p &lt; 5 × 10⁻⁸</strong>; small samples have little power</li>
 <li>Nearby variants move together (<strong>LD</strong>): a GWAS finds regions</li>
 </ul>

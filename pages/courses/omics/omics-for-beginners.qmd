@@ -99,6 +99,27 @@ They're all the same idea underneath: **one regression per thing tested** (per v
 | **Power** | the chance of detecting a real effect. Small samples + small effects = low power |
 | **Selection bias** | a misleading link created by **how the sample was chosen** (class 4.4) |
 | **Collider bias** | a misleading link created by **adjusting for a common effect** of two things (class 4.4) |
+| **Misclassification** | people in the wrong group: a "case" from one coding error, or a "control" who was never tested. It usually **shrinks** real differences toward no effect |
+| **Sensitivity analysis** | rerunning an analysis with a different reasonable choice (e.g. a stricter case definition) to see whether the conclusion holds |
+
+## Confounders in omics
+
+A **confounder** is a third factor linked to both the omics measurement (a variant, a gene's activity, a protein's level) and the trait (diabetes). It can make the two look connected when they aren't, or hide a real connection. This is sometimes called **phenotypic confounding**.
+
+**Example:** leptin, a protein, is higher in people with diabetes. But body size raises leptin, **and** the risk of diabetes. Without adjusting for BMI, leptin looks like a "diabetes protein", when much of the link is body size (class 4.6).
+
+| Confounder | Why it misleads | What we do | Class |
+|---|---|---|---|
+| **Genetic ancestry** | Allele frequencies **and** diabetes rates differ between ancestry groups | Adjust for genetic **PCs**; check the **Q-Q plot** | [4.1](4-1-dna-intro.qmd), [4.2](4-2-gwas-plink.qmd) |
+| **Relatedness** | Relatives share variants, and often conditions | Remove people on the relatedness list | [4.1](4-1-dna-intro.qmd) |
+| **Age and sex** | Both affect diabetes risk and many omics measures | Adjust for them in every model | all |
+| **Body size (BMI)** | Linked to diabetes, to many proteins, and to gene activity | Compare models with and without BMI | [4.6](4-6-proteomics.qmd) |
+| **Batch or lab plate** | Samples processed together look alike | Plate in the model | [4.6](4-6-proteomics.qmd) |
+| **Cell-type mix** | Blood samples differ in their mix of cells, and each cell type has its own gene activity | Discussed (not adjusted) | [4.5](4-5-rnaseq.qmd) |
+| **Medications** | Diabetes medicines (e.g. metformin) change genes and proteins: a difference may be the **treatment**, not the disease | Discussed (not adjusted) | [4.5](4-5-rnaseq.qmd), [4.6](4-6-proteomics.qmd) |
+| **How the trait is defined** | Doubtful cases (a code on one day), controls with little history (possibly undiagnosed), and different amounts of health care | Check the evidence for each group; rerun with a **stricter definition** (a sensitivity analysis) | [4.1](4-1-dna-intro.qmd), [4.2](4-2-gwas-plink.qmd) |
+
+**Before adjusting, draw the arrows.** Adjusting for a variable is only right if it's a **confounder** (it affects both). If it's a step on the path (a **mediator**) or a common effect (a **collider**), adjusting can create a misleading result instead of removing one (class [4.4](4-4-phewas.qmd)).
 
 ## Normalization: what's done for you, and what you check
 

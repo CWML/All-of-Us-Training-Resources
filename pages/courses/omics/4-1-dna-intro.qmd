@@ -52,7 +52,7 @@ Every later genetics class (4.2–4.4) depends on what happens here: the **cohor
 |---|---|---|
 | 0:00 | **1. Key concepts**: DNA, variants, genotypes, the *All of Us* genomic data, *TCF7L2* | listen, ask |
 | 0:20 | **2. A tour of the genomic data**: folders, formats, file sizes | ✋ **Try It Out 1** (5 min) |
-| 0:35 | **3. The cohort, and who has a genome**: the cohort query, matching IDs, removing related people, the sample | run the cells; ✋ **Try It Out 2** (5 min) |
+| 0:35 | **3. The cohort, and who has a genome**: the cohort query, how sure we are of each group, matching IDs, removing related people, the sample | run the cells; ✋ **Try It Out 2** (5 min) |
 | 1:00 | ☕ **Break** (5 min) | |
 | 1:05 | **4. Genetic ancestry**: PCs, why ancestry matters, the PC plot | run the cells |
 | 1:20 | **5. Extract one region with PLINK** | ✋ **Try It Out 3** (5 min) |
@@ -93,6 +93,10 @@ One chromosome is **80 GB**, so the class never reads a whole one: PLINK **jumps
 
 - **Relatives** share long stretches of DNA, which makes results look more certain than they are. *All of Us* provides a list of people to remove so that no two remaining people are closely related.
 - **Genetic ancestry** affects both allele frequencies and disease rates. Without accounting for it, a variant can look linked to a disease just because both are more common in one group (**confounding**). *All of Us* provides each person's ancestry group and **principal components (PCs)**: a few numbers that summarise their genetic ancestry, used as covariates from 4.2 on.
+
+### How sure are we of each person's group?
+
+Cases and controls come from **diagnosis codes**, which aren't perfect. A "case" may rest on one code on one day (possibly an error), and a "control" may have only a few months of records (possibly undiagnosed). People who see doctors more often also collect more diagnoses of everything. When the groups are blurred, real differences **shrink toward no effect**. Part 3 counts how much evidence each group rests on, using columns the cohort query already has (`t2d_code_days`, and the first and last EHR visit dates); 4.2 reruns the GWAS with a stricter definition. See also [Confounders in omics](omics-for-beginners.qmd#confounders-in-omics).
 
 ## Follow along in the Workbench
 
@@ -314,6 +318,7 @@ A newer method, **genomic-relatedness-matched association (GRMA)**, compares peo
 - *All of Us* genomes are huge: **read only the region you need**
 - The **participant ID** links genomes to health records; IDs must be the **same type** (text) to match
 - Use the ready-made **relatedness** and **ancestry** files instead of computing your own
+- Check **how sure** you are of each person's group: codes on how many days, and how much health-record history
 - Always check **which allele** a result counts
 
 ## Further reading

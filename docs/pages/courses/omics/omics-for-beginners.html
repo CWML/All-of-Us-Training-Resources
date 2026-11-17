@@ -599,6 +599,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-data-in-all-of-us-v9" id="toc-the-data-in-all-of-us-v9" class="nav-link" data-scroll-target="#the-data-in-all-of-us-v9">The data in <em>All of Us</em> (v9)</a></li>
   <li><a href="#the-analyses" id="toc-the-analyses" class="nav-link" data-scroll-target="#the-analyses">The analyses</a></li>
   <li><a href="#statistics-youll-meet" id="toc-statistics-youll-meet" class="nav-link" data-scroll-target="#statistics-youll-meet">Statistics you’ll meet</a></li>
+  <li><a href="#confounders-in-omics" id="toc-confounders-in-omics" class="nav-link" data-scroll-target="#confounders-in-omics">Confounders in omics</a></li>
   <li><a href="#normalization-whats-done-for-you-and-what-you-check" id="toc-normalization-whats-done-for-you-and-what-you-check" class="nav-link" data-scroll-target="#normalization-whats-done-for-you-and-what-you-check">Normalization: what’s done for you, and what you check</a></li>
   <li><a href="#the-tools" id="toc-the-tools" class="nav-link" data-scroll-target="#the-tools">The tools</a></li>
   <li><a href="#file-formats" id="toc-file-formats" class="nav-link" data-scroll-target="#file-formats">File formats</a></li>
@@ -956,8 +957,82 @@ from birth        time, disease,        time, disease,
 <td><strong>Collider bias</strong></td>
 <td>a misleading link created by <strong>adjusting for a common effect</strong> of two things (class 4.4)</td>
 </tr>
+<tr class="even">
+<td><strong>Misclassification</strong></td>
+<td>people in the wrong group: a “case” from one coding error, or a “control” who was never tested. It usually <strong>shrinks</strong> real differences toward no effect</td>
+</tr>
+<tr class="odd">
+<td><strong>Sensitivity analysis</strong></td>
+<td>rerunning an analysis with a different reasonable choice (e.g.&nbsp;a stricter case definition) to see whether the conclusion holds</td>
+</tr>
 </tbody>
 </table>
+</section>
+<section id="confounders-in-omics" class="level2">
+<h2 class="anchored" data-anchor-id="confounders-in-omics">Confounders in omics</h2>
+<p>A <strong>confounder</strong> is a third factor linked to both the omics measurement (a variant, a gene’s activity, a protein’s level) and the trait (diabetes). It can make the two look connected when they aren’t, or hide a real connection. This is sometimes called <strong>phenotypic confounding</strong>.</p>
+<p><strong>Example:</strong> leptin, a protein, is higher in people with diabetes. But body size raises leptin, <strong>and</strong> the risk of diabetes. Without adjusting for BMI, leptin looks like a “diabetes protein”, when much of the link is body size (class 4.6).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Confounder</th>
+<th>Why it misleads</th>
+<th>What we do</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Genetic ancestry</strong></td>
+<td>Allele frequencies <strong>and</strong> diabetes rates differ between ancestry groups</td>
+<td>Adjust for genetic <strong>PCs</strong>; check the <strong>Q-Q plot</strong></td>
+<td><a href="../../../pages/courses/omics/4-1-dna-intro.html">4.1</a>, <a href="../../../pages/courses/omics/4-2-gwas-plink.html">4.2</a></td>
+</tr>
+<tr class="even">
+<td><strong>Relatedness</strong></td>
+<td>Relatives share variants, and often conditions</td>
+<td>Remove people on the relatedness list</td>
+<td><a href="../../../pages/courses/omics/4-1-dna-intro.html">4.1</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Age and sex</strong></td>
+<td>Both affect diabetes risk and many omics measures</td>
+<td>Adjust for them in every model</td>
+<td>all</td>
+</tr>
+<tr class="even">
+<td><strong>Body size (BMI)</strong></td>
+<td>Linked to diabetes, to many proteins, and to gene activity</td>
+<td>Compare models with and without BMI</td>
+<td><a href="../../../pages/courses/omics/4-6-proteomics.html">4.6</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Batch or lab plate</strong></td>
+<td>Samples processed together look alike</td>
+<td>Plate in the model</td>
+<td><a href="../../../pages/courses/omics/4-6-proteomics.html">4.6</a></td>
+</tr>
+<tr class="even">
+<td><strong>Cell-type mix</strong></td>
+<td>Blood samples differ in their mix of cells, and each cell type has its own gene activity</td>
+<td>Discussed (not adjusted)</td>
+<td><a href="../../../pages/courses/omics/4-5-rnaseq.html">4.5</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Medications</strong></td>
+<td>Diabetes medicines (e.g.&nbsp;metformin) change genes and proteins: a difference may be the <strong>treatment</strong>, not the disease</td>
+<td>Discussed (not adjusted)</td>
+<td><a href="../../../pages/courses/omics/4-5-rnaseq.html">4.5</a>, <a href="../../../pages/courses/omics/4-6-proteomics.html">4.6</a></td>
+</tr>
+<tr class="even">
+<td><strong>How the trait is defined</strong></td>
+<td>Doubtful cases (a code on one day), controls with little history (possibly undiagnosed), and different amounts of health care</td>
+<td>Check the evidence for each group; rerun with a <strong>stricter definition</strong> (a sensitivity analysis)</td>
+<td><a href="../../../pages/courses/omics/4-1-dna-intro.html">4.1</a>, <a href="../../../pages/courses/omics/4-2-gwas-plink.html">4.2</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Before adjusting, draw the arrows.</strong> Adjusting for a variable is only right if it’s a <strong>confounder</strong> (it affects both). If it’s a step on the path (a <strong>mediator</strong>) or a common effect (a <strong>collider</strong>), adjusting can create a misleading result instead of removing one (class <a href="../../../pages/courses/omics/4-4-phewas.html">4.4</a>).</p>
 </section>
 <section id="normalization-whats-done-for-you-and-what-you-check" class="level2">
 <h2 class="anchored" data-anchor-id="normalization-whats-done-for-you-and-what-you-check">Normalization: what’s done for you, and what you check</h2>
