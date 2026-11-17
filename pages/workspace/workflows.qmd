@@ -41,7 +41,7 @@ A **pipeline** that runs analysis steps for you, in order or in parallel, **with
 | Tool | Language | Where you run it |
 |---|---|---|
 | **Cromwell** | WDL | **Workflows** tab (or an app) |
-| **Nextflow** | Nextflow (`.nf`) | **Workflows** tab (or an app) |
+| **Nextflow** | Nextflow (`.nf`) | An app (in *All of Us*, the tab offers WDL only) |
 | **dsub** | Shell commands, one step | An app's **terminal** |
 
 👉 Most class projects **don't need workflows**: an app is enough. Ready-made workflows: [Dockstore](https://dockstore.org)
@@ -71,7 +71,7 @@ Source: Verily, "Workflows overview" and "Workflow engines". All three tools use
 **Step 1: Provide source.** Where's the workflow file?
 
 - **Workspace bucket:** pick **your workspace bucket**. Workbench lists the workflow files it finds there, by folder (search by path).
-- **Git repository:** a repo with the workflow (see the [GitHub guide](../extras/github-guide.qmd))
+- **Git repository:** a repo with the workflow (see the [GitHub guide](../extras/github-guide.qmd)). Link your GitHub account first
 
 Select the workflow → **Next**
 
@@ -82,7 +82,7 @@ Upload the workflow file (`.wdl` or `.nf`) to your bucket **first**. Until there
 ::::
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say "0 workflows found": choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g. data/workflows/. Nextflow workflows should include a nextflow.config file next to the .nf file.
+The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket created for a Spark (Dataproc) app) and say "0 workflows found": choose your workspace bucket (rw-…) in the same list. It then finds .wdl files in all its folders, grouped by folder; search by the start of the path, e.g. data/workflows/. In our All of Us workspace (November 2026) the tab listed only .wdl files: no .nf files, from a bucket or from GitHub, even main.nf next to a nextflow.config. Run Nextflow from an app. Git sources: the tab first asks you to link your GitHub account (Workbench account settings, GitHub, then install Verily's GitHub app); choose only the repositories you need, not all. You then pick a branch or a tag; a tag keeps a class on a fixed version. The workflow's details save the repository, file, and branch.
 :::
 
 ## Running a Workflow
@@ -91,16 +91,17 @@ The list may open on the dataproc-staging-aou-rw-… bucket (the staging bucket 
 
 1. **Job details:** a name, and *Run a single job* (or a batch)
 2. **Inputs:** a **form**, one box per input in the workflow. `gs://` paths for files; plain text (no quotation marks) for strings
-3. **Outputs:** your bucket, and a folder named after the job
+3. **Outputs:** **check the bucket** (it can default to `dataproc-staging-…`), and a folder named after the job
 4. **Submit job**, then follow it on **Job status**: *Starting* → *Running* → *Completed*
 
 **Batch jobs:** run one WDL workflow **many times in parallel**, e.g., once per sample
 
 - Choose *Run a batch job with inputs defined by an input table*
-- Upload a **CSV** (one row per run), then match its columns to the workflow's inputs
+- Pick a **CSV** in your bucket (one row per run), type which **column** goes with each input, and name a **reference column** that labels each run
+- **Test with a single job first**
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to <bucket>/<job name>/<workflow>/<job ID>/call-<task>/. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
+Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch jobs". Cromwell call caching is on by default, so re-running reuses results from steps that already finished; deleting intermediate files is also on by default; keep both. Results go to `<bucket>/<job name>/<workflow>/<job ID>/call-<task>/`. Single job vs batch job: a single job runs the workflow once, with inputs typed into a form; a batch job runs it once per row of a CSV table in the bucket, all at the same time. In All of Us the tab can't preview the table (perimeter), so you type the column name for each input, exactly as in the CSV header, plus a reference column that labels each run (e.g. chr). Job status shows a batch as one row with its number of jobs; results get one job ID folder per row. Tested November 2026: a single job on chromosome 21 took about 4 minutes; a batch of chromosomes 19 to 22 took about 11 minutes, and its chromosome 21 result matched exactly. Limits: 1,000 outstanding jobs per user and 5,000 submitted in 24 hours; for a batch, the limit applies to each job, and a batch that exceeds it is rejected entirely. Genomic Variant Store (GVS) is an example of a large WDL workflow from the Broad Institute; Verily has a guide for it.
 :::
 
 ## A Workflow Job, Tested
@@ -117,7 +118,7 @@ Source: Verily, "Use the Cromwell engine to run WDL workflows" and "Create batch
 **PLINK on chromosome 21** (a WDL from *Optional Extras: Running Workflows*): about **4 minutes** from **Submit** to *Completed*, with the same results as PLINK in an app. No configuration file, and no app needed.
 
 ::: {.callout-tip collapse="true" title="Instructor tip"}
-Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab's Cromwell wasn't affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Not tested yet: batch jobs, Git sources, and Nextflow from the tab.
+Tested November 2026 in an All of Us workspace: a single WDL job from the workspace bucket, with the PLINK image from the All of Us mirror. The Workflows tab's Cromwell wasn't affected by the Cloud SDK 592 break that stops Cromwell in an app (see Running Workflows). Also tested: a batch job (chromosomes 19 to 22 from a CSV table, about 11 minutes) and the same WDL from GitHub (3 minutes 55); both matched. One job's outputs went to the dataproc-staging bucket because the output step had picked it, and that bucket's gs:// address (Cloud ID: dataproc-staging-wb-…) differed from its name on the page (dataproc-staging-aou-rw-…). The job's Inputs view showed -- for every value, though the job used them. The job details page shows who started it (an email): paint it out in screenshots.
 :::
 
 ## dsub: Jobs from an App

@@ -1225,7 +1225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>Run from</strong></td>
 <td>an app’s terminal or notebook</td>
 <td>the <strong><a href="../../pages/workspace/workflows.html">Workflows tab</a></strong>, or <code>java -jar $CROMWELL_JAR run …</code> in an app</td>
-<td>the <strong>Workflows tab</strong>, or <code>nextflow run …</code> in an app</td>
+<td><code>nextflow run …</code> in an app (in <em>All of Us</em>, the Workflows tab doesn’t offer Nextflow: tested November 2026)</td>
 </tr>
 <tr class="even">
 <td><strong>Ready-made workflows</strong></td>
@@ -1267,7 +1267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><strong>Nextflow</strong></td>
 <td><strong>Short</strong> pipeline files, and many tasks at once with very little code (<code>Channel.of(19..22)</code>). <code>-resume</code> restarts where a pipeline stopped. It <strong>streams</strong> bucket files instead of copying them, which helps when a tool reads only part of a file. The large <a href="https://nf-co.re/">nf-core</a> community of pipelines</td>
-<td>Every image must include <code>ps</code>. Google’s job logs are blocked, so you read errors from the task’s work folder. The Seqera web interface doesn’t work. Ready-made nf-core pipelines download code and images from the internet: inside the perimeter, they need extra setup (we haven’t tried one)</td>
+<td>Runs <strong>only from an app</strong> (the Workflows tab doesn’t offer it in <em>All of Us</em>), so the app must stay on. Every image must include <code>ps</code>. Google’s job logs are blocked, so you read errors from the task’s work folder. The Seqera web interface doesn’t work. Ready-made nf-core pipelines download code and images from the internet: inside the perimeter, they need extra setup (we haven’t tried one)</td>
 </tr>
 </tbody>
 </table>
@@ -1275,7 +1275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><strong>One step, many files</strong> (one command per chromosome or sample): <strong>dsub</strong>.</li>
 <li><strong>A published WDL pipeline</strong>, or you’d rather <strong>click than configure</strong>: <strong>Cromwell on the Workflows tab</strong>.</li>
-<li><strong>Your own multi-step pipeline</strong>, or your lab already uses Nextflow: <strong>Nextflow</strong>.</li>
+<li><strong>Your own multi-step pipeline</strong>, or your lab already uses Nextflow: <strong>Nextflow</strong>, from an app.</li>
 <li><strong>Not sure?</strong> Start with dsub. It teaches every idea, and the script you write moves into a WDL <code>command</code> or a Nextflow <code>script</code> almost unchanged.</li>
 </ol>
 <p>Your <strong>collaborators</strong> matter too: a pipeline in the language your lab or field already uses is easier to share and get help with.</p>
@@ -1466,12 +1466,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><strong>Results</strong></td>
 <td><code>&lt;work folder&gt;/cromwell-executions/&lt;workflow&gt;/&lt;id&gt;/call-&lt;task&gt;/</code></td>
-<td><code>&lt;bucket&gt;/&lt;job name&gt;/&lt;workflow&gt;/&lt;id&gt;/call-&lt;task&gt;/</code></td>
+<td><code>&lt;output bucket&gt;/&lt;job name&gt;/&lt;workflow&gt;/&lt;id&gt;/call-&lt;task&gt;/</code>: check which <strong>output bucket</strong> you chose</td>
 <td>the work folder, or a <code>publishDir</code> you choose</td>
+</tr>
+<tr class="even">
+<td><strong>The workflow file comes from</strong></td>
+<td>the app’s disk</td>
+<td>your <strong>bucket</strong>, or a <strong>GitHub</strong> repository (link your GitHub account first)</td>
+<td>the app’s disk</td>
 </tr>
 </tbody>
 </table>
 <p>👉 <strong>For most students, the Workflows tab is the easiest way to run WDL:</strong> no configuration file, no app, and a page to watch the job on. How to use it: <a href="../../pages/workspace/workflows.html">the Workflows tab</a>.</p>
+<section id="on-the-workflows-tab-a-single-job-or-a-batch-job" class="level4">
+<h4 class="anchored" data-anchor-id="on-the-workflows-tab-a-single-job-or-a-batch-job">On the Workflows tab: a single job or a batch job?</h4>
+<p>When you start a <strong>New job</strong>, the tab asks <em>“Run this workflow multiple times?”</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Single job</th>
+<th>Batch job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Runs the workflow</strong></td>
+<td>once</td>
+<td><strong>once per row</strong> of a table, all at the same time</td>
+</tr>
+<tr class="even">
+<td><strong>Inputs</strong></td>
+<td>a form: you type each value</td>
+<td>a <strong>CSV table</strong> in your bucket, one row per run, one column per input. You type which <strong>column</strong> goes with which input (in <em>All of Us</em>, the tab can’t preview the table)</td>
+</tr>
+<tr class="odd">
+<td><strong>Also needs</strong></td>
+<td></td>
+<td>a <strong>reference column</strong> that labels each run (e.g.&nbsp;<code>chr</code> or a sample ID)</td>
+</tr>
+<tr class="even">
+<td><strong>On Job status</strong></td>
+<td>one row</td>
+<td><strong>one row</strong> for the batch, with <em>Number of jobs</em> (e.g.&nbsp;4)</td>
+</tr>
+<tr class="odd">
+<td><strong>Results</strong></td>
+<td><code>&lt;job name&gt;/&lt;workflow&gt;/&lt;id&gt;/call-&lt;task&gt;/</code></td>
+<td>the same, with <strong>one <code>&lt;id&gt;</code> folder per row</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Use it for</strong></td>
+<td>testing, or one file</td>
+<td>the same step on <strong>many</strong> files: chromosomes, samples. The tab’s version of dsub’s <code>--tasks</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Our test</strong></td>
+<td>chromosome 21: about <strong>4 minutes</strong></td>
+<td>chromosomes 19 to 22: about <strong>11 minutes</strong> for all 4, and chromosome 21 matched the single job exactly</td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>Test with a single job first</strong>, then run the batch: a mistake in the WDL then costs one run, not one per row.</p>
+</section>
 </section>
 <section id="tested-cromwell-and-nextflow" class="level3">
 <h3 class="anchored" data-anchor-id="tested-cromwell-and-nextflow">Tested: Cromwell and Nextflow</h3>
@@ -1528,9 +1590,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3.4</td>
 <td>yes (chromosome 21: all variants)</td>
 </tr>
+<tr class="odd">
+<td>Cromwell <strong>batch job</strong> on the Workflows tab: chromosomes 19 to 22 from a table</td>
+<td>✅ worked</td>
+<td>about 11</td>
+<td>yes (chromosome 21: all variants)</td>
+</tr>
+<tr class="even">
+<td>Cromwell on the Workflows tab, with the WDL straight from <strong>GitHub</strong></td>
+<td>✅ worked</td>
+<td>3.9</td>
+<td>yes: all variants, difference 0</td>
+</tr>
+<tr class="odd">
+<td><strong>Nextflow</strong> on the Workflows tab</td>
+<td>❌ not offered: the tab lists only <code>.wdl</code> files, from a bucket or GitHub</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
-<p>Each run took <strong>3 to 4 minutes</strong>, mostly starting machines: PLINK itself took 20 seconds to 2 minutes per chromosome. As for dsub, tiny jobs don’t belong in a workflow.</p>
+<p>Each single run took <strong>3 to 4 minutes</strong>, mostly starting machines: PLINK itself took 20 seconds to 2 minutes per chromosome. As for dsub, tiny jobs don’t belong in a workflow.</p>
 <section id="what-we-learned-testing-cromwell-and-nextflow" class="level4">
 <h4 class="anchored" data-anchor-id="what-we-learned-testing-cromwell-and-nextflow">What we learned testing Cromwell and Nextflow</h4>
 <table class="caption-top table">
@@ -1574,6 +1654,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>choose <strong>your workspace bucket</strong> in the list; the tab then finds <code>.wdl</code> files in all its folders</td>
 </tr>
 <tr class="even">
+<td>One job’s results went to the <code>dataproc-staging-…</code> bucket: the <strong>output</strong> step had picked it</td>
+<td>check the <strong>output bucket</strong> on the last step of every new job</td>
+</tr>
+<tr class="odd">
+<td>The page showed that bucket as <code>dataproc-staging-aou-rw-…</code>, but its <code>gs://</code> address was <code>dataproc-staging-wb-…</code></td>
+<td>a bucket’s <strong>name</strong> on the page isn’t always its address: the <strong>Cloud ID</strong> (Resources tab, or the job’s outputs) is</td>
+</tr>
+<tr class="even">
+<td>For a batch job, the tab said the perimeter <em>“prevents reading the input table”</em></td>
+<td>type each input’s <strong>column name</strong> exactly as in the CSV header, and name a <strong>reference column</strong> (e.g.&nbsp;<code>chr</code>) that labels each run</td>
+</tr>
+<tr class="odd">
+<td>A Git source asked us to <em>“Link your GitHub account”</em></td>
+<td>Workbench account settings → GitHub → install Verily’s GitHub app. Choose <strong>only the repositories</strong> you need, not all of them</td>
+</tr>
+<tr class="even">
+<td>The job’s <strong>Inputs → View</strong> showed <code>--</code> for every value, though the job used them</td>
+<td>a display problem: keep your own record of the inputs (e.g.&nbsp;the CSV, or a JSON file)</td>
+</tr>
+<tr class="odd">
+<td>The tab didn’t list <code>.nf</code> files: not <code>plink_freq.nf</code>, not <code>main.nf</code> next to a <code>nextflow.config</code>, from the bucket or from GitHub</td>
+<td>in <em>All of Us</em>, run Nextflow <strong>from an app</strong></td>
+</tr>
+<tr class="even">
 <td>Halfway through, the notebook’s R session restarted, and every result in memory was gone</td>
 <td>files on disk and in the bucket survive. Rerun the <strong>setup</strong> cells, not <em>Run All</em> (it would rerun every test). In run mode, a workflow also stops if the <strong>app</strong> stops: watch the auto-stop setting</td>
 </tr>
@@ -1591,7 +1695,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Tested November 2026 (<em>All of Us</em> Jupyter app, CDR v9): dsub 0.5.6 (the chromosome 21 job, all 22 tasks, chromosome 1 on standard and SSD disks), Cromwell 92 in run mode and on the Workflows tab, and Nextflow 25.10.2 in an app. Not tested: Nextflow from the Workflows tab, batch jobs (input tables) on the Workflows tab, and the ACAF files. The pinned 591 helper images will be deleted by Google about 12 months after release: <strong>check around November 2027</strong> and move to a newer version that works. The tutorials note that the Nextflow web interface (Seqera) doesn’t work in <em>All of Us</em> workspaces, because they have no internet access, and that Nextflow 26.04 has a stricter syntax than the app’s 25.10. Job machines and bucket storage are billed to the workspace’s pod and don’t appear in the app cost estimate. For a 2-hour class, demo the Workflows tab live (about 10 minutes, including the 4-minute run) rather than run mode.</p>
+<p>Tested November 2026 (<em>All of Us</em> Jupyter app, CDR v9): dsub 0.5.6 (the chromosome 21 job, all 22 tasks, chromosome 1 on standard and SSD disks), Cromwell 92 in run mode and on the Workflows tab, and Nextflow 25.10.2 in an app. Also tested on the Workflows tab: a batch job from an input table (chromosomes 19 to 22), and a WDL from GitHub (branch main). The tab didn’t offer Nextflow. Not tested: the ACAF files, nf-core pipelines, and the tab’s JSON mapper file for batch inputs. With call caching on, an identical rerun should finish in seconds (not yet tried): worth showing in class. The pinned 591 helper images will be deleted by Google about 12 months after release: <strong>check around November 2027</strong> and move to a newer version that works. The tutorials note that the Nextflow web interface (Seqera) doesn’t work in <em>All of Us</em> workspaces, because they have no internet access, and that Nextflow 26.04 has a stricter syntax than the app’s 25.10. Job machines and bucket storage are billed to the workspace’s pod and don’t appear in the app cost estimate. For a 2-hour class, demo the Workflows tab live (about 10 minutes, including the 4-minute run) rather than run mode.</p>
 </div>
 </div>
 </div>
