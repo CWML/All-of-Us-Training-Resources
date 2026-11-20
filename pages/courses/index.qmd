@@ -14,6 +14,18 @@ All the series share **one research question**, type 2 diabetes, and one cohort 
 | [**Surveys**](surveys/index.qmd) | 5.1–5.3: survey structure, family history and lifestyle, social factors | Notebooks and companion pages ready |
 | [**Wearables**](wearables/index.qmd) | 6.1–6.3: Fitbit and Apple HealthKit basics, steps, sleep and heart rate | Notebooks and companion pages ready |
 
+## Skills classes and guides
+
+These aren't tied to one series: they teach skills you'll use in **all** of them. They live under **Optional Extras**.
+
+| Class or guide | What you learn | Time |
+|---|---|---|
+| [**Coding with AI and GitHub**](../extras/ai-coding.qmd) | Write and fix *All of Us* code with an AI assistant on your own computer, carry it to the Workbench with GitHub, and run it there. The AI sees code, never data | 90 min class |
+| [**GitHub Guide**](../extras/github-guide.qmd) | Move notebooks and scripts between the Workbench and GitHub, with safety nets that keep data and outputs out | guide, at your own pace |
+| [**Workflows for Beginners**](../extras/workflows-for-beginners.qmd) and [**Running Workflows**](../extras/workflows-dsub.qmd) | What workflows are and when you need one; then run a GWAS on all 22 chromosomes at once with dsub, and where Cromwell and Nextflow fit | reading, then a 110 min class (after [4.2](omics/4-2-gwas-plink.qmd)) |
+
+**Where to start:** take **Coding with AI and GitHub** early if you'll write your own code; it uses the **GitHub Guide** for the Git steps. **Running Workflows** is only for jobs too big for one app.
+
 ## How a class works
 
 1. **Before class:** set up your workspace and app once (see [Get Started](../get-started/about.qmd) and [Your Workspace](../workspace/workspaces.qmd)), and run **0.0 setup**.

@@ -3623,6 +3623,16 @@
     ]
   },
   {
+    "objectID": "pages/courses/index.html#skills-classes-and-guides",
+    "href": "pages/courses/index.html#skills-classes-and-guides",
+    "title": "Courses",
+    "section": "Skills classes and guides",
+    "text": "Skills classes and guides\nThese aren’t tied to one series: they teach skills you’ll use in all of them. They live under Optional Extras.\n\n\n\nClass or guide\nWhat you learn\nTime\n\n\n\n\nCoding with AI and GitHub\nWrite and fix All of Us code with an AI assistant on your own computer, carry it to the Workbench with GitHub, and run it there. The AI sees code, never data\n90 min class\n\n\nGitHub Guide\nMove notebooks and scripts between the Workbench and GitHub, with safety nets that keep data and outputs out\nguide, at your own pace\n\n\nWorkflows for Beginners and Running Workflows\nWhat workflows are and when you need one; then run a GWAS on all 22 chromosomes at once with dsub, and where Cromwell and Nextflow fit\nreading, then a 110 min class (after 4.2)\n\n\n\nWhere to start: take Coding with AI and GitHub early if you’ll write your own code; it uses the GitHub Guide for the Git steps. Running Workflows is only for jobs too big for one app.",
+    "crumbs": [
+      "Courses"
+    ]
+  },
+  {
     "objectID": "pages/courses/index.html#how-a-class-works",
     "href": "pages/courses/index.html#how-a-class-works",
     "title": "Courses",
