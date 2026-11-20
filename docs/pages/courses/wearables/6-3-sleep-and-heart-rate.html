@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="The prospective design from 6.2, as a function: Fitbit sleep and Apple HealthKit resting heart rate, then new type 2 diabetes; and a first look at HealthKit blood glucose">
+
+<title>6.3 Sleep and Heart Rate – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../pages/courses/wearables/6-2-steps-and-t2d.html" rel="prev">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/workspace/workspaces.html"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/index.html">
+ <span class="dropdown-text">All courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/core/index.html">
+ <span class="dropdown-text">Core series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/omics/index.html">
+ <span class="dropdown-text">Omics series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/surveys/index.html">
+ <span class="dropdown-text">Survey series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/wearables/index.html">
+ <span class="dropdown-text">Wearables series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/extras/extras.html"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../pages/courses/wearables/index.html">Wearables</a></li><li class="breadcrumb-item"><a href="../../../pages/courses/wearables/6-3-sleep-and-heart-rate.html">6.3 Sleep and Heart Rate</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Courses</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Series: Cohorts to Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/1-1-build-cohorts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1 Build the Cohort</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/data-explorer-cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional: Build the Cohort in the Data Explorer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/1-2-survival-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2 Data for the Survival Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/2-1-clean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.1 Clean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/2-2-reshape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2 Reshape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/2-3-join-and-bind.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.3 Join and Bind</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-1-table-one.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Table One</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-2-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-3-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Linear Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-4-survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Survival Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Omics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omics Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/omics-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omics for Beginners</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/omics-data-map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Where the Omics Data Lives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-1-dna-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.1 Introduction to Genomic Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-2-gwas-plink.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.2 A GWAS with PLINK</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-3-gwas-hail.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.3 A GWAS with Hail (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-4-phewas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.4 A Phenome-Wide Association Study (PheWAS)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-5-rnaseq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.5 RNA-seq: Gene Activity in Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-6-proteomics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.6 Proteomics: Blood Proteins in Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-7-rnaseq-proteomics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.7 RNA and Protein Together</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Surveys</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Survey Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/5-1-survey-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.1 Survey Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/5-2-family-history-lifestyle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.2 Family History and Lifestyle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/5-3-social-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.3 Social Factors</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Wearables</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wearables Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-1-wearables-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.1 Wearables Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-2-steps-and-t2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.2 Steps and Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-3-sleep-and-heart-rate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">6.3 Sleep and Heart Rate</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#why-this-class-matters" id="toc-why-this-class-matters" class="nav-link" data-scroll-target="#why-this-class-matters">Why this class matters</a></li>
+  <li><a href="#by-the-end-youll-be-able-to" id="toc-by-the-end-youll-be-able-to" class="nav-link" data-scroll-target="#by-the-end-youll-be-able-to">By the end you’ll be able to</a></li>
+  <li><a href="#analysis-at-a-glance" id="toc-analysis-at-a-glance" class="nav-link" data-scroll-target="#analysis-at-a-glance">Analysis at a glance</a></li>
+  <li><a href="#time-and-cost" id="toc-time-and-cost" class="nav-link" data-scroll-target="#time-and-cost">Time and cost</a></li>
+  </ul></li>
+  <li><a href="#class-plan" id="toc-class-plan" class="nav-link" data-scroll-target="#class-plan">Class plan</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key concepts</a>
+  <ul class="collapse">
+  <li><a href="#the-same-design-a-new-exposure" id="toc-the-same-design-a-new-exposure" class="nav-link" data-scroll-target="#the-same-design-a-new-exposure">The same design, a new exposure</a></li>
+  <li><a href="#not-every-link-is-a-straight-line" id="toc-not-every-link-is-a-straight-line" class="nav-link" data-scroll-target="#not-every-link-is-a-straight-line">Not every link is a straight line</a></li>
+  <li><a href="#what-the-devices-measure" id="toc-what-the-devices-measure" class="nav-link" data-scroll-target="#what-the-devices-measure">What the devices measure</a></li>
+  </ul></li>
+  <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
+  <li><a href="#try-it-out" id="toc-try-it-out" class="nav-link" data-scroll-target="#try-it-out">Try It Out</a></li>
+  <li><a href="#code-walk-through" id="toc-code-walk-through" class="nav-link" data-scroll-target="#code-walk-through">Code walk-through</a>
+  <ul class="collapse">
+  <li><a href="#the-6.2-design-as-a-function" id="toc-the-6.2-design-as-a-function" class="nav-link" data-scroll-target="#the-6.2-design-as-a-function">The 6.2 design, as a function</a></li>
+  <li><a href="#rates-that-refuse-to-reveal-a-hidden-count" id="toc-rates-that-refuse-to-reveal-a-hidden-count" class="nav-link" data-scroll-target="#rates-that-refuse-to-reveal-a-hidden-count">Rates that refuse to reveal a hidden count</a></li>
+  <li><a href="#sleep-the-main-sleep-valid-nights" id="toc-sleep-the-main-sleep-valid-nights" class="nav-link" data-scroll-target="#sleep-the-main-sleep-valid-nights">Sleep: the main sleep, valid nights</a></li>
+  </ul></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a>
+  <ul class="collapse">
+  <li><a href="#sleep-fitbit" id="toc-sleep-fitbit" class="nav-link" data-scroll-target="#sleep-fitbit">Sleep (Fitbit)</a></li>
+  <li><a href="#resting-heart-rate-apple-healthkit" id="toc-resting-heart-rate-apple-healthkit" class="nav-link" data-scroll-target="#resting-heart-rate-apple-healthkit">Resting heart rate (Apple HealthKit)</a></li>
+  <li><a href="#blood-glucose-who-shares-it" id="toc-blood-glucose-who-shares-it" class="nav-link" data-scroll-target="#blood-glucose-who-shares-it">Blood glucose: who shares it?</a></li>
+  </ul></li>
+  <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  <li><a href="#next" id="toc-next" class="nav-link" data-scroll-target="#next">Next</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../pages/courses/wearables/index.html">Wearables</a></li><li class="breadcrumb-item"><a href="../../../pages/courses/wearables/6-3-sleep-and-heart-rate.html">6.3 Sleep and Heart Rate</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">6.3 Sleep and Heart Rate</h1>
+</div>
+
+<div>
+  <div class="description">
+    The prospective design from 6.2, as a function: Fitbit sleep and Apple HealthKit resting heart rate, then new type 2 diabetes; and a first look at HealthKit blood glucose
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Wearables series, class 3 of 3</strong> · R + SQL · 95 minutes</p>
+<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/wearables/6.3%20sleep_and_heart_rate.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="../../../pages/courses/wearables/index.html" class="btn btn-outline-secondary btn-sm">Wearables series overview</a></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In <strong>6.2</strong>, more daily steps went with a much lower rate of new type 2 diabetes. Is the same true for <strong>sleep</strong>, and for <strong>resting heart rate</strong>? This class reuses the 6.2 design, measure first, then follow, written as a <strong>function</strong> so every measure gets exactly the same rules. Sleep comes from <strong>Fitbit</strong>; resting heart rate from <strong>Apple HealthKit</strong>. We finish with a first look at HealthKit <strong>blood glucose</strong>.</p>
+<section id="why-this-class-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-class-matters">Why this class matters</h3>
+<p>Real research rarely asks one question once. Turning a design into a function makes it <strong>reusable</strong> and <strong>consistent</strong>. This class also shows three things wearable studies meet all the time: a link that might <strong>not be a straight line</strong>, a smaller data source with <strong>wider</strong> confidence intervals, and a data type whose users are selected <strong>by the outcome</strong>.</p>
+</section>
+<section id="by-the-end-youll-be-able-to" class="level3">
+<h3 class="anchored" data-anchor-id="by-the-end-youll-be-able-to">By the end you’ll be able to</h3>
+<ol type="1">
+<li>Turn an analysis design into a reusable <strong>function</strong></li>
+<li>Build valid <strong>nights</strong> of sleep from Fitbit, and baseline resting heart rate from HealthKit’s <strong>long</strong> data</li>
+<li>Recognise a <strong>non-linear</strong> (e.g.&nbsp;U-shaped) association, and choose a <strong>reference</strong> group for it</li>
+<li>Compare results from data sources of very different sizes, and read <strong>confidence intervals</strong></li>
+<li><strong>Describe</strong> a new data type (blood glucose) carefully before modelling it</li>
+</ol>
+</section>
+<section id="analysis-at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-at-a-glance">Analysis at a glance</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>❓ <strong>Question</strong></td>
+<td>Among adults without diabetes, are sleep duration and resting heart rate linked to developing type 2 diabetes?</td>
+</tr>
+<tr class="even">
+<td>🧪 <strong>The analysis</strong></td>
+<td>The 6.2 design as a function: baseline sleep (Fitbit) or resting heart rate (HealthKit), then follow-up for new type 2 diabetes; incidence rates and Cox models. A description of HealthKit blood glucose</td>
+</tr>
+<tr class="odd">
+<td>🎯 <strong>Why</strong></td>
+<td>Measured before any diagnosis, these avoid reverse causation, as in 6.2</td>
+</tr>
+<tr class="even">
+<td>✅ <strong>What we conclude</strong></td>
+<td>Whether the links appear in <em>All of Us</em> wearable users, and their shape</td>
+</tr>
+<tr class="odd">
+<td>⚠️ <strong>What it can’t tell us</strong></td>
+<td>Cause. Sleep and heart rate reflect overall health, stress, work, and fitness. Fitbit and Apple users are different, selected groups</td>
+</tr>
+<tr class="even">
+<td>🔗 <strong>Connections</strong></td>
+<td>The design from <strong>6.2</strong>; valid days from <strong>6.1</strong>; HealthKit’s long, text-valued data from <strong>6.1</strong>; functions from <strong>3.1</strong>; survival models from <strong>3.4</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-and-cost" class="level3">
+<h3 class="anchored" data-anchor-id="time-and-cost">Time and cost</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>⏱️ <strong>Class time</strong></td>
+<td>95 minutes</td>
+</tr>
+<tr class="even">
+<td>⏱️ <strong>Run time</strong></td>
+<td>about 5 minutes</td>
+</tr>
+<tr class="odd">
+<td>💰 <strong>Cost</strong></td>
+<td>about <strong>$1</strong> in our test run: sleep $0.15, steps $0.01, resting heart rate $0.39, glucose $0.32, plus the cohort query and the app</td>
+</tr>
+<tr class="even">
+<td>📋 <strong>Before class</strong></td>
+<td><strong>6.2</strong> (the design), and <strong>3.4</strong> (survival analysis)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="class-plan" class="level2">
+<h2 class="anchored" data-anchor-id="class-plan">Class plan</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Part</th>
+<th>You do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0:00</td>
+<td><strong>1. Key concepts</strong>: the same design; not every link is a straight line; what the devices measure</td>
+<td>listen, predict</td>
+</tr>
+<tr class="even">
+<td>0:15</td>
+<td><strong>2. The design as a function</strong></td>
+<td>run the cells</td>
+</tr>
+<tr class="odd">
+<td>0:25</td>
+<td><strong>3. Sleep (Fitbit)</strong>: valid nights, rates, Cox models</td>
+<td>✋ <strong>Try It Out</strong> (5 min)</td>
+</tr>
+<tr class="even">
+<td>0:50</td>
+<td><strong>4. Resting heart rate (HealthKit)</strong></td>
+<td>run the cells, discuss</td>
+</tr>
+<tr class="odd">
+<td>1:10</td>
+<td><strong>5. Blood glucose: a first look</strong></td>
+<td>discuss</td>
+</tr>
+<tr class="even">
+<td>1:25</td>
+<td><strong>Wrap-up</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key concepts</h2>
+<section id="the-same-design-a-new-exposure" class="level3">
+<h3 class="anchored" data-anchor-id="the-same-design-a-new-exposure">The same design, a new exposure</h3>
+<pre><code>first valid           end of baseline                          end of follow-up
+measurement           (6 months later)                         (last EHR visit, death, or 2025)
+    |──── baseline ────|──────────────── follow-up ─────────────────────|
+      median sleep, or      does type 2 diabetes appear? when?
+      resting heart rate
+excluded: anyone with type 2 diabetes before the end of baseline</code></pre>
+<p>As in 6.2, the exposure is measured <strong>before</strong> any diagnosis, so the design avoids reverse causation by construction.</p>
+</section>
+<section id="not-every-link-is-a-straight-line" class="level3">
+<h3 class="anchored" data-anchor-id="not-every-link-is-a-straight-line">Not every link is a straight line</h3>
+<p>Steps (6.2) had a <strong>gradient</strong>. Sleep is often different: in many studies both <strong>short</strong> and <strong>long</strong> sleep go with worse health, a <strong>U shape</strong>. So:</p>
+<ul>
+<li>One “per hour of sleep” number could <strong>average away</strong> a U.</li>
+<li>The <strong>reference</strong> group is the middle (<strong>7 to 8 hours</strong>), so the others are compared with the expected lowest-risk group.</li>
+</ul>
+</section>
+<section id="what-the-devices-measure" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-devices-measure">What the devices measure</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Measure</th>
+<th>Device</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Sleep duration</strong></td>
+<td>Fitbit: movement and heart rate through the night; one <strong>main sleep</strong> per night</td>
+<td>Fitbits usually record <strong>less</strong> sleep than people report; only nights the device was worn</td>
+</tr>
+<tr class="even">
+<td><strong>Sleep stages</strong></td>
+<td>Fitbit (newer models)</td>
+<td>rough estimates; older devices have no stages</td>
+</tr>
+<tr class="odd">
+<td><strong>Resting heart rate</strong></td>
+<td>Apple Watch: its own daily estimate</td>
+<td>lower with <strong>fitness</strong>; higher with stress, illness, some medicines</td>
+</tr>
+<tr class="even">
+<td><strong>Blood glucose</strong></td>
+<td>devices and apps that share through Apple Health (e.g.&nbsp;continuous glucose monitors, <strong>CGMs</strong>)</td>
+<td>who uses one is <strong>not</strong> random</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="follow-along-in-the-workbench" class="level2">
+<h2 class="anchored" data-anchor-id="follow-along-in-the-workbench">Follow along in the Workbench</h2>
+<ol type="1">
+<li>Start your app and pull the newest notebooks, as in <a href="../../../pages/courses/core/1-1-build-cohorts.html#follow-along-in-the-workbench">1.1</a>.</li>
+<li>Open <code>notebooks/wearables/6.3 sleep_and_heart_rate.ipynb</code>, with the <strong>R</strong> kernel.</li>
+</ol>
+</section>
+<section id="try-it-out" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-out">Try It Out</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>✋ Try It Out · 5 minutes · Part 3, “Your turn”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fit sleep as a <strong>number</strong> (per hour) instead of groups: <code>coxph(Surv(years, event) ~ sleep_hours + age10 + sex_at_birth, data = sleep_cox_data)</code>. Does one hazard ratio describe the groups’ results well?</p>
+<p><strong>✅ Check:</strong> a single “per hour” number assumes a straight line. Compare it with the group results: here, the excess is concentrated in the shortest sleepers.</p>
+</div>
+</div>
+</section>
+<section id="code-walk-through" class="level2">
+<h2 class="anchored" data-anchor-id="code-walk-through">Code walk-through</h2>
+<section id="the-6.2-design-as-a-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-6.2-design-as-a-function">The 6.2 design, as a function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>build_followup <span class="ot">&lt;-</span> <span class="cf">function</span>(baseline, cohort, <span class="at">end_of_data =</span> <span class="fu">as.Date</span>(<span class="st">"2025-01-01"</span>)) {</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  baseline <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(cohort, <span class="at">by =</span> <span class="st">"person_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(…) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(cohort <span class="sc">!=</span> <span class="st">"excluded"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-6" class="code-annotation-target"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>(cohort <span class="sc">==</span> <span class="st">"case"</span> <span class="sc">&amp;</span> t2d_date <span class="sc">&lt;=</span> baseline_end),</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>           age_at_baseline <span class="sc">&gt;=</span> <span class="dv">18</span>,</span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>           followup_end <span class="sc">&gt;</span> baseline_end) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">event =</span> …, <span class="at">years =</span> …)</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>sleep_followup <span class="ot">&lt;-</span> <span class="fu">build_followup</span>(sleep_baseline, cohort)</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>rhr_followup   <span class="ot">&lt;-</span> <span class="fu">build_followup</span>(rhr_baseline, cohort)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1">Any baseline table with <code>person_id</code> and <code>baseline_end</code> goes in; the people eligible for follow-up come out.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="6" data-code-annotation="2">The same rules as 6.2’s flow table, written once.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="12" data-code-annotation="3">Sleep and resting heart rate get <strong>exactly</strong> the same rules.</span>
+</dd>
+</dl>
+</section>
+<section id="rates-that-refuse-to-reveal-a-hidden-count" class="level3">
+<h3 class="anchored" data-anchor-id="rates-that-refuse-to-reveal-a-hidden-count">Rates that refuse to reveal a hidden count</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>rates_by <span class="ot">&lt;-</span> <span class="cf">function</span>(data, group) {</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>({{ group }}) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">people =</span> <span class="fu">n</span>(), <span class="at">n =</span> <span class="fu">sum</span>(event), <span class="at">person_years =</span> <span class="fu">sum</span>(years)) <span class="sc">%&gt;%</span></span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    … <span class="sc">%&gt;%</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hide_small_counts</span>()</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-3-7" class="code-annotation-target"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">sum</span>(<span class="fu">is.na</span>(out<span class="sc">$</span>new_cases)) <span class="sc">==</span> <span class="dv">1</span>) <span class="fu">stop</span>(<span class="st">"Only one group is hidden …"</span>)</span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>  out</span>
+<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="1"><code>{ group }</code> passes a column name into the function.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="2">Hide new cases of 1 to 20, and their rates.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="7" data-code-annotation="3">If exactly <strong>one</strong> group is hidden, its count could be worked out from the printed total and the other groups (the <strong>derived counts</strong> rule from <strong>3.1</strong>), so the function stops before printing anything. In our test run this happened with four resting-heart-rate groups, so the notebook uses three.</span>
+</dd>
+</dl>
+</section>
+<section id="sleep-the-main-sleep-valid-nights" class="level3">
+<h3 class="anchored" data-anchor-id="sleep-the-main-sleep-valid-nights">Sleep: the main sleep, valid nights</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode sql code-annotation-code code-with-copy code-annotated"><code class="sourceCode sql"><a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="fu">LOWER</span>(<span class="fu">CAST</span>(is_main_sleep <span class="kw">AS</span> STRING)) <span class="kw">IN</span> (<span class="st">'true'</span>, <span class="st">'1'</span>, <span class="st">'t'</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> minute_asleep <span class="kw">BETWEEN</span> <span class="dv">180</span> <span class="kw">AND</span> <span class="dv">960</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">One main sleep per night (naps are separate). Comparing the <strong>text</strong> form works however the column is stored.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="2">Valid nights: 3 to 16 hours asleep.</span>
+</dd>
+</dl>
+</section>
+</section>
+<section id="what-we-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
+<p>Results from our test run in November 2026 (CDR v9).</p>
+<section id="sleep-fitbit" class="level3">
+<h3 class="anchored" data-anchor-id="sleep-fitbit">Sleep (Fitbit)</h3>
+<ul>
+<li><strong>54,158</strong> Fitbit users had a sleep baseline: a median of <strong>6.7 hours</strong> asleep a night. 79% had sleep stages, with a median of 20% REM and 15% deep sleep, in the usual healthy range.</li>
+<li><strong>24,507</strong> were followed: <strong>1,251</strong> new cases of type 2 diabetes over 91,514 person-years (median 2.9 years).</li>
+</ul>
+<p><img src="images/6-3-sleep-rates.png" class="img-fluid" alt="Bar chart of new type 2 diabetes per 1,000 person-years by hours asleep a night, unadjusted. Under 6 hours: 21.5. 6 to 7 hours: 13.2. 7 to 8 hours: 10.8, the lowest. 8 hours or more: 11.6."></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Compared with 7 to 8 hours</th>
+<th>Age and sex</th>
+<th>+ BMI</th>
+<th>+ BMI + steps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>under 6 hours</td>
+<td><strong>1.97</strong> (1.59 to 2.44)</td>
+<td>1.48 (1.19 to 1.84)</td>
+<td><strong>1.46</strong> (1.18 to 1.81)</td>
+</tr>
+<tr class="even">
+<td>6 to 7 hours</td>
+<td>1.18 (0.96 to 1.44)</td>
+<td>1.09 (0.89 to 1.33)</td>
+<td>1.13 (0.92 to 1.38)</td>
+</tr>
+<tr class="odd">
+<td>8 hours or more</td>
+<td>0.93 (0.65 to 1.34)</td>
+<td>0.98 (0.68 to 1.40)</td>
+<td>0.90 (0.63 to 1.29)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Cox models on the 15,712 people with BMI and steps (591 new cases).</em></p>
+<ul>
+<li><strong>Short sleep</strong> (under 6 hours) went with about <strong>twice</strong> the rate of new type 2 diabetes. BMI explained part of it; daily steps almost none.</li>
+<li><strong>Long sleep</strong> wasn’t linked: <strong>no U shape</strong> here. Many studies of <strong>self-reported</strong> sleep find one; Fitbit measures sleep differently, and few people slept 8+ hours by its measure. We expected a U; the data decided.</li>
+</ul>
+</section>
+<section id="resting-heart-rate-apple-healthkit" class="level3">
+<h3 class="anchored" data-anchor-id="resting-heart-rate-apple-healthkit">Resting heart rate (Apple HealthKit)</h3>
+<ul>
+<li><strong>11,258</strong> HealthKit users had a resting-heart-rate baseline; <strong>5,306</strong> could be followed, with <strong>133</strong> new cases: far fewer than for sleep.</li>
+<li>Every <strong>10 beats per minute</strong> higher: <strong>HR 1.44</strong> (1.19 to 1.75), adjusted for age and sex; <strong>1.25</strong> (1.00 to 1.55) with BMI.</li>
+<li>A higher resting heart rate went with more new diabetes, but the interval is much <strong>wider</strong> than for sleep, and with BMI it barely excludes 1. Fewer people and fewer new cases: <strong>less certainty</strong>.</li>
+</ul>
+</section>
+<section id="blood-glucose-who-shares-it" class="level3">
+<h3 class="anchored" data-anchor-id="blood-glucose-who-shares-it">Blood glucose: who shares it?</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>People</th>
+<th>Likely CGM</th>
+<th>Median days of data</th>
+<th>Median glucose (mg/dL)</th>
+<th>Readings in range (70–180)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cases (type 2 diabetes)</td>
+<td>340</td>
+<td>30%</td>
+<td>45</td>
+<td>129</td>
+<td>92%</td>
+</tr>
+<tr class="even">
+<td>Controls (no diabetes)</td>
+<td>303</td>
+<td>26%</td>
+<td><strong>6</strong></td>
+<td>103</td>
+<td>100%</td>
+</tr>
+<tr class="odd">
+<td>Excluded (type 1 or unclear diabetes)</td>
+<td>114</td>
+<td><strong>83%</strong></td>
+<td>104</td>
+<td>144</td>
+<td><strong>74%</strong></td>
+</tr>
+<tr class="even">
+<td>Not in the cohort query (no EHR)</td>
+<td>263</td>
+<td>33%</td>
+<td>23</td>
+<td>120</td>
+<td>97%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>People with <strong>type 1</strong> (or unclear) diabetes mostly use <strong>CGMs</strong>, record for months, and spend the least time in range.</li>
+<li><strong>Controls</strong> share only a <strong>few days</strong>, perhaps short trials of over-the-counter CGMs.</li>
+<li>Who has glucose data, and how much, depends on diabetes status: <strong>selection by the outcome</strong>. This data suits questions about diabetes <strong>management</strong>, not about who <strong>develops</strong> diabetes.</li>
+</ul>
+<p><strong>💬 Discuss:</strong> resting heart rate is lower in people who are fit. Is its link with diabetes about the heart, about fitness, or about something else (stress, illness, medicines like beta-blockers)?</p>
+</section>
+</section>
+<section id="instructor-notes" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Instructor tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>The function</strong> is the bridge from 6.2: show that it’s the 6.2 flow table, written once.</li>
+<li><strong>Ask for predictions</strong> before showing the sleep results: straight line or U? Many students will predict a U. The result (short sleep only) is a good “the data decides” moment.</li>
+<li><strong>Resting heart rate</strong> is the place to discuss <strong>power</strong>: the same kind of question, with far fewer people, gives a much less certain answer.</li>
+<li><strong>Derived counts:</strong> the four-group resting heart rate table would have revealed a small count through subtraction. Show students why <code>rates_by()</code> stops, rather than warns.</li>
+<li><strong>Glucose</strong> is the course’s clearest example of <strong>selection by the outcome</strong>.</li>
+<li><strong>Privacy:</strong> glucose traces are very personal. Only show group summaries outside the Workbench.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
+<ul>
+<li>A design written as a <strong>function</strong> applies the <strong>same rules</strong> to every exposure</li>
+<li>Look at <strong>groups</strong> before using one number, and let the data decide the shape: here, <strong>short sleep</strong>, not a U</li>
+<li>Smaller data sources give <strong>wider</strong> confidence intervals: “can’t tell” isn’t “no link”</li>
+<li>Check for <strong>derived counts</strong> in every table with a printed total</li>
+<li><strong>Describe</strong> a new data type before modelling it: glucose users are selected <strong>by the outcome</strong></li>
+</ul>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<p>That’s the end of the wearables series. The <strong>machine learning series</strong> (coming soon) uses steps, sleep, surveys, and more to <strong>predict</strong> who develops type 2 diabetes.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../pages/courses/wearables/6-2-steps-and-t2d.html" class="pagination-link" aria-label="6.2 Steps and Type 2 Diabetes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">6.2 Steps and Type 2 Diabetes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

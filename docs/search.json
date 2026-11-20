@@ -1155,6 +1155,248 @@
     ]
   },
   {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "",
+    "text": "Wearables series, class 3 of 3 · R + SQL · 95 minutes\nOpen the notebook on GitHub Wearables series overview",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#overview",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#overview",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Overview",
+    "text": "Overview\nIn 6.2, more daily steps went with a much lower rate of new type 2 diabetes. Is the same true for sleep, and for resting heart rate? This class reuses the 6.2 design, measure first, then follow, written as a function so every measure gets exactly the same rules. Sleep comes from Fitbit; resting heart rate from Apple HealthKit. We finish with a first look at HealthKit blood glucose.\n\nWhy this class matters\nReal research rarely asks one question once. Turning a design into a function makes it reusable and consistent. This class also shows three things wearable studies meet all the time: a link that might not be a straight line, a smaller data source with wider confidence intervals, and a data type whose users are selected by the outcome.\n\n\nBy the end you’ll be able to\n\nTurn an analysis design into a reusable function\nBuild valid nights of sleep from Fitbit, and baseline resting heart rate from HealthKit’s long data\nRecognise a non-linear (e.g. U-shaped) association, and choose a reference group for it\nCompare results from data sources of very different sizes, and read confidence intervals\nDescribe a new data type (blood glucose) carefully before modelling it\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAmong adults without diabetes, are sleep duration and resting heart rate linked to developing type 2 diabetes?\n\n\n🧪 The analysis\nThe 6.2 design as a function: baseline sleep (Fitbit) or resting heart rate (HealthKit), then follow-up for new type 2 diabetes; incidence rates and Cox models. A description of HealthKit blood glucose\n\n\n🎯 Why\nMeasured before any diagnosis, these avoid reverse causation, as in 6.2\n\n\n✅ What we conclude\nWhether the links appear in All of Us wearable users, and their shape\n\n\n⚠️ What it can’t tell us\nCause. Sleep and heart rate reflect overall health, stress, work, and fitness. Fitbit and Apple users are different, selected groups\n\n\n🔗 Connections\nThe design from 6.2; valid days from 6.1; HealthKit’s long, text-valued data from 6.1; functions from 3.1; survival models from 3.4\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n95 minutes\n\n\n⏱️ Run time\nabout 5 minutes\n\n\n💰 Cost\nabout $1 in our test run: sleep $0.15, steps $0.01, resting heart rate $0.39, glucose $0.32, plus the cohort query and the app\n\n\n📋 Before class\n6.2 (the design), and 3.4 (survival analysis)",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#class-plan",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#class-plan",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: the same design; not every link is a straight line; what the devices measure\nlisten, predict\n\n\n0:15\n2. The design as a function\nrun the cells\n\n\n0:25\n3. Sleep (Fitbit): valid nights, rates, Cox models\n✋ Try It Out (5 min)\n\n\n0:50\n4. Resting heart rate (HealthKit)\nrun the cells, discuss\n\n\n1:10\n5. Blood glucose: a first look\ndiscuss\n\n\n1:25\nWrap-up",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#key-concepts",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#key-concepts",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nThe same design, a new exposure\nfirst valid           end of baseline                          end of follow-up\nmeasurement           (6 months later)                         (last EHR visit, death, or 2025)\n    |──── baseline ────|──────────────── follow-up ─────────────────────|\n      median sleep, or      does type 2 diabetes appear? when?\n      resting heart rate\nexcluded: anyone with type 2 diabetes before the end of baseline\nAs in 6.2, the exposure is measured before any diagnosis, so the design avoids reverse causation by construction.\n\n\nNot every link is a straight line\nSteps (6.2) had a gradient. Sleep is often different: in many studies both short and long sleep go with worse health, a U shape. So:\n\nOne “per hour of sleep” number could average away a U.\nThe reference group is the middle (7 to 8 hours), so the others are compared with the expected lowest-risk group.\n\n\n\nWhat the devices measure\n\n\n\n\n\n\n\n\nMeasure\nDevice\nWatch out for\n\n\n\n\nSleep duration\nFitbit: movement and heart rate through the night; one main sleep per night\nFitbits usually record less sleep than people report; only nights the device was worn\n\n\nSleep stages\nFitbit (newer models)\nrough estimates; older devices have no stages\n\n\nResting heart rate\nApple Watch: its own daily estimate\nlower with fitness; higher with stress, illness, some medicines\n\n\nBlood glucose\ndevices and apps that share through Apple Health (e.g. continuous glucose monitors, CGMs)\nwho uses one is not random",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#follow-along-in-the-workbench",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#follow-along-in-the-workbench",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/wearables/6.3 sleep_and_heart_rate.ipynb, with the R kernel.",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#try-it-out",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#try-it-out",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 3, “Your turn”\n\n\n\nFit sleep as a number (per hour) instead of groups: coxph(Surv(years, event) ~ sleep_hours + age10 + sex_at_birth, data = sleep_cox_data). Does one hazard ratio describe the groups’ results well?\n✅ Check: a single “per hour” number assumes a straight line. Compare it with the group results: here, the excess is concentrated in the shortest sleepers.",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#code-walk-through",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#code-walk-through",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nThe 6.2 design, as a function\n1build_followup &lt;- function(baseline, cohort, end_of_data = as.Date(\"2025-01-01\")) {\n  baseline %&gt;%\n    inner_join(cohort, by = \"person_id\") %&gt;%\n    mutate(…) %&gt;%\n    filter(cohort != \"excluded\",\n2           !(cohort == \"case\" & t2d_date &lt;= baseline_end),\n           age_at_baseline &gt;= 18,\n           followup_end &gt; baseline_end) %&gt;%\n    mutate(event = …, years = …)\n}\n\n3sleep_followup &lt;- build_followup(sleep_baseline, cohort)\nrhr_followup   &lt;- build_followup(rhr_baseline, cohort)\n\n1\n\nAny baseline table with person_id and baseline_end goes in; the people eligible for follow-up come out.\n\n2\n\nThe same rules as 6.2’s flow table, written once.\n\n3\n\nSleep and resting heart rate get exactly the same rules.\n\n\n\n\nRates that refuse to reveal a hidden count\nrates_by &lt;- function(data, group) {\n  out &lt;- data %&gt;%\n1    group_by({{ group }}) %&gt;%\n    summarise(people = n(), n = sum(event), person_years = sum(years)) %&gt;%\n    … %&gt;%\n2    hide_small_counts()\n3  if (sum(is.na(out$new_cases)) == 1) stop(\"Only one group is hidden …\")\n  out\n}\n\n1\n\n{ group } passes a column name into the function.\n\n2\n\nHide new cases of 1 to 20, and their rates.\n\n3\n\nIf exactly one group is hidden, its count could be worked out from the printed total and the other groups (the derived counts rule from 3.1), so the function stops before printing anything. In our test run this happened with four resting-heart-rate groups, so the notebook uses three.\n\n\n\n\nSleep: the main sleep, valid nights\n1WHERE LOWER(CAST(is_main_sleep AS STRING)) IN ('true', '1', 't')\n2  AND minute_asleep BETWEEN 180 AND 960\n\n1\n\nOne main sleep per night (naps are separate). Comparing the text form works however the column is stored.\n\n2\n\nValid nights: 3 to 16 hours asleep.",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#what-we-found",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#what-we-found",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in November 2026 (CDR v9).\n\nSleep (Fitbit)\n\n54,158 Fitbit users had a sleep baseline: a median of 6.7 hours asleep a night. 79% had sleep stages, with a median of 20% REM and 15% deep sleep, in the usual healthy range.\n24,507 were followed: 1,251 new cases of type 2 diabetes over 91,514 person-years (median 2.9 years).\n\n\n\n\n\n\n\n\n\n\n\nCompared with 7 to 8 hours\nAge and sex\n+ BMI\n+ BMI + steps\n\n\n\n\nunder 6 hours\n1.97 (1.59 to 2.44)\n1.48 (1.19 to 1.84)\n1.46 (1.18 to 1.81)\n\n\n6 to 7 hours\n1.18 (0.96 to 1.44)\n1.09 (0.89 to 1.33)\n1.13 (0.92 to 1.38)\n\n\n8 hours or more\n0.93 (0.65 to 1.34)\n0.98 (0.68 to 1.40)\n0.90 (0.63 to 1.29)\n\n\n\nCox models on the 15,712 people with BMI and steps (591 new cases).\n\nShort sleep (under 6 hours) went with about twice the rate of new type 2 diabetes. BMI explained part of it; daily steps almost none.\nLong sleep wasn’t linked: no U shape here. Many studies of self-reported sleep find one; Fitbit measures sleep differently, and few people slept 8+ hours by its measure. We expected a U; the data decided.\n\n\n\nResting heart rate (Apple HealthKit)\n\n11,258 HealthKit users had a resting-heart-rate baseline; 5,306 could be followed, with 133 new cases: far fewer than for sleep.\nEvery 10 beats per minute higher: HR 1.44 (1.19 to 1.75), adjusted for age and sex; 1.25 (1.00 to 1.55) with BMI.\nA higher resting heart rate went with more new diabetes, but the interval is much wider than for sleep, and with BMI it barely excludes 1. Fewer people and fewer new cases: less certainty.\n\n\n\nBlood glucose: who shares it?\n\n\n\n\n\n\n\n\n\n\n\n\nPeople\nLikely CGM\nMedian days of data\nMedian glucose (mg/dL)\nReadings in range (70–180)\n\n\n\n\nCases (type 2 diabetes)\n340\n30%\n45\n129\n92%\n\n\nControls (no diabetes)\n303\n26%\n6\n103\n100%\n\n\nExcluded (type 1 or unclear diabetes)\n114\n83%\n104\n144\n74%\n\n\nNot in the cohort query (no EHR)\n263\n33%\n23\n120\n97%\n\n\n\n\nPeople with type 1 (or unclear) diabetes mostly use CGMs, record for months, and spend the least time in range.\nControls share only a few days, perhaps short trials of over-the-counter CGMs.\nWho has glucose data, and how much, depends on diabetes status: selection by the outcome. This data suits questions about diabetes management, not about who develops diabetes.\n\n💬 Discuss: resting heart rate is lower in people who are fit. Is its link with diabetes about the heart, about fitness, or about something else (stress, illness, medicines like beta-blockers)?",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#instructor-notes",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#instructor-notes",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nThe function is the bridge from 6.2: show that it’s the 6.2 flow table, written once.\nAsk for predictions before showing the sleep results: straight line or U? Many students will predict a U. The result (short sleep only) is a good “the data decides” moment.\nResting heart rate is the place to discuss power: the same kind of question, with far fewer people, gives a much less certain answer.\nDerived counts: the four-group resting heart rate table would have revealed a small count through subtraction. Show students why rates_by() stops, rather than warns.\nGlucose is the course’s clearest example of selection by the outcome.\nPrivacy: glucose traces are very personal. Only show group summaries outside the Workbench.",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#key-takeaways",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#key-takeaways",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA design written as a function applies the same rules to every exposure\nLook at groups before using one number, and let the data decide the shape: here, short sleep, not a U\nSmaller data sources give wider confidence intervals: “can’t tell” isn’t “no link”\nCheck for derived counts in every table with a printed total\nDescribe a new data type before modelling it: glucose users are selected by the outcome",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#next",
+    "href": "pages/courses/wearables/6-3-sleep-and-heart-rate.html#next",
+    "title": "6.3 Sleep and Heart Rate",
+    "section": "Next",
+    "text": "Next\nThat’s the end of the wearables series. The machine learning series (coming soon) uses steps, sleep, surveys, and more to predict who develops type 2 diabetes.",
+    "crumbs": [
+      "Wearables",
+      "6.3 Sleep and Heart Rate"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html",
+    "title": "6.1 Wearables Basics",
+    "section": "",
+    "text": "Wearables series, class 1 of 3 · R + SQL · 95 minutes\nOpen the notebook on GitHub Wearables series overview",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#overview",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#overview",
+    "title": "6.1 Wearables Basics",
+    "section": "Overview",
+    "text": "Overview\nTens of thousands of All of Us participants share data from a Fitbit or from Apple Health (iPhone and Apple Watch). In this class we learn where the wearable data is, what it costs to use, and how to turn months of daily records into one clean value per person, ready for the analyses in 6.2 and 6.3.\n\nWhy this class matters\nWearable data is easy to misuse in three ways: a day the device wasn’t worn looks like an inactive day; a phone and a watch count steps differently; and one careless query on a minute-level table can cost tens of dollars. This class builds the habits that prevent all three: price every query, keep only valid days, and never pool different devices.\n\n\nBy the end you’ll be able to\n\nDescribe the Fitbit and Apple HealthKit data: tables, layouts, and who has them\nEstimate and check the cost of a query, and query huge minute-level tables safely\nDefine a valid wear day, and check a wear measure against a better one\nSummarise many days into one value per person\nExplain why Fitbit, iPhone, and Apple Watch steps can’t simply be pooled\nDescribe who has wearable data, and what that means for generalisability\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nWho in our cohort has wearable data, how much, and how do we turn it into usable variables?\n\n\n🧪 The analysis\nTable sizes and costs; valid wear days; median daily steps per person, by device; steps by hour of the day; who has data\n\n\n🎯 Why\nUn-worn days, different devices, and huge tables each lead to wrong or expensive results if ignored\n\n\n✅ What we conclude\nHow many cases and controls have usable data, and a per-person step summary for 6.2\n\n\n⚠️ What it can’t tell us\nAnything about cause. And people with wearables aren’t typical: results describe them\n\n\n🔗 Connections\nCohort from 1.1; units and cleaning from 2.1; long vs wide from 2.2; no survey weights from 5.1\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n95 minutes\n\n\n⏱️ Run time\nabout 5 minutes\n\n\n💰 Cost\nabout $1.40 in queries in our test run ($1.20 of it the Apple HealthKit query), plus the app\n\n\n📋 Before class\n0.0 setup run once. cohort_sample.csv from 1.1 is used if it’s in your bucket; otherwise the notebook makes it",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#class-plan",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#class-plan",
+    "title": "6.1 Wearables Basics",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: two data sources, wear time, one value per person, devices, cost\nlisten, ask\n\n\n0:20\n2–3. Setup; the tables and their cost\nrun the cells\n\n\n0:30\n4. Fitbit daily data and valid days\n✋ Try It Out 1 (5 min)\n\n\n0:50\n5. Minute-level data, safely; is our wear measure any good?\nrun the cells, discuss\n\n\n1:05\n6. Apple HealthKit: phone vs watch\nrun the cells\n\n\n1:20\n7. Who has wearables?\n✋ Try It Out 2 (5 min)\n\n\n1:30\nWrap-up\ndiscuss",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#key-concepts",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#key-concepts",
+    "title": "6.1 Wearables Basics",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nTwo sources of wearable data\n\n\n\n\n\n\n\n\n\nFitbit\nApple HealthKit\n\n\n\n\nWhere\nthe main CDR v9 dataset\na separate CDR v9 dataset (C_V9_R6_offcycle_healthkit, September 2026), joined by person_id; not in the Data Explorer\n\n\nPeople with steps\nabout 68,500\nabout 18,000\n\n\nLayout\nwide: a column per measure (steps, sedentary_minutes, …)\nlong: a row per measurement, with data_type, value (stored as text), and units\n\n\nDetail\ndaily summary tables, and minute-level tables\nindividual measurements, seconds to hours apart; no daily summary\n\n\nAlso has\nheart-rate zones, sleep stages, scales\nresting heart rate, heart rate variability, blood pressure, blood glucose (about 1,000 people), walking speed\n\n\n\n\n\nValid wear days\nA day with 300 steps could be an inactive day, or a device left on the charger. Studies keep only valid days:\n\n\n\n\n\n\n\nRule\nWhy\n\n\n\n\nat least 10 hours of wear, judged from heart-rate minutes\nFitbit only records heart rate on a wrist\n\n\n100 to 45,000 steps\nfewer is barely worn; more is likely an error\n\n\na person needs 10 or more valid days\nfor their average to mean something\n\n\n\nThen each person gets one value: their median daily steps over valid days.\n\n\nCost: big tables, clustering, and dry runs\nThe minute-level Fitbit tables are over 6 TB each (a full read is about $40). They’re clustered by person_id: each person’s rows are stored together, so a query filtered by person reads only those people. A dry run (free) prices a query before it runs, clustering included:\n\n\n\nThe same minute-level query, for…\nReads\nCosts\n\n\n\n\n50 people\nabout 5.7 GB\nabout $0.04\n\n\nour 10,000 people\nabout 3,000 GB\nabout $19\n\n\n\nCost grows with the number of people: keep minute-level queries to small groups.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#follow-along-in-the-workbench",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#follow-along-in-the-workbench",
+    "title": "6.1 Wearables Basics",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/wearables/6.1 wearables_basics.ipynb, with the R kernel.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#try-it-out",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#try-it-out",
+    "title": "6.1 Wearables Basics",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out 1 · 5 minutes · Part 4, “Your turn”\n\n\n\nUse 8 hours of wear (480 minutes) instead of 10. How many more valid days does that give, and does median daily steps change much?\n✅ Check: a few more valid days, and a slightly lower median: partly-worn days have fewer steps.\n\n\n\n\n\n\n\n\nTip✋ Try It Out 2 · 5 minutes · Part 7, “Your turn”\n\n\n\nCompare people with and without HealthKit data: age, sex, and case status. Are they like Fitbit users?\n✅ Check: Apple users are selected in their own way: an iPhone isn’t a Fitbit.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#code-walk-through",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#code-walk-through",
+    "title": "6.1 Wearables Basics",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nTwo cost helpers\n1run_if_cheap(sql, max_dollars = 1)\n2last_query_cost()\n\n1\n\nA free dry run first; the query runs only if it costs less than max_dollars. With max_dollars = 0 it only prints the estimate.\n\n2\n\nWhat the most recent query actually billed.\n\n\n\n\nDaily steps plus wear time, in one query\n1WITH wear AS (\n  SELECT person_id, date, SUM(minute_in_zone) AS wear_minutes\n  FROM heart_rate_summary\n  WHERE person_id IN (…)\n  GROUP BY person_id, date\n)\nSELECT a.person_id, a.date, a.steps, …, w.wear_minutes\nFROM activity_summary AS a\n2LEFT JOIN wear AS w ON a.person_id = w.person_id AND a.date = w.date\nWHERE a.person_id IN (…)\n\n1\n\nFitbit counts minutes in each heart-rate zone; their sum is a cheap measure of wear time.\n\n2\n\nLEFT JOIN keeps every activity day, even days without heart-rate data.\n\n\n\n\nHealthKit: long data, text values, one device at a time\nSELECT a.person_id,\n       DATE(SAFE_CAST(a.start_datetime AS TIMESTAMP)) AS date,\n1       CASE WHEN d.product_type LIKE 'Watch%'  THEN 'Apple Watch'\n            WHEN d.product_type LIKE 'iPhone%' THEN 'iPhone'\n            ELSE 'other' END AS device,\n2       SUM(SAFE_CAST(a.value AS FLOAT64)) AS steps\nFROM activity_measurements AS a\nLEFT JOIN device_and_source AS d ON a.device_source_id = d.device_source_id\n3WHERE a.data_type = 'STEP_COUNT' AND a.person_id IN (…)\n4GROUP BY 1, 2, 3\n\n1\n\nWhich device recorded each measurement.\n\n2\n\nvalue is stored as text; SAFE_CAST turns it into a number (anything that isn’t becomes NULL).\n\n3\n\nIn the long layout, data_type picks the measure.\n\n4\n\nOne total per person, day, and device: adding the phone and watch together would count the same steps twice.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#what-we-found",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#what-we-found",
+    "title": "6.1 Wearables Basics",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in November 2026 (CDR v9), 5,000 cases and 5,000 controls.\n\nFitbit, in our sample\n\n926 people had Fitbit data (about 850,000 person-days, 2009 to 2024); 840 had 10 or more valid days, with a median of 390 valid days each.\n64% of days were valid. Most of the rest had no heart-rate data, so we couldn’t tell whether the device was worn.\nMedian daily steps rose from 5,142 (all days) to 5,897 (valid days): the bias un-worn days create.\n\n\n\nIs our wear measure any good?\nFor 100 people, we compared the cheap measure with the one published All of Us studies use:\n\n\n\n\n\n\n\n\nWear measure\nMedian minutes\nDays with 10+ hours\n\n\n\n\nheart-rate zone total (daily table)\n1,440 (exactly 24 hours on 61% of days)\n98.6%\n\n\nminutes with a heart-rate reading (minute-level table)\n1,392 (about 23 hours)\n95.5%\n\n\n\nThese Fitbit users wear their devices almost around the clock. The zone total overstates wear, but at the 10-hour cutoff the two disagree on only about 3% of days: good enough for class; for a paper, use the minute-level count.\n\n\nWhen people move\n\nControls took more steps through the working day; the groups were similar at night.\n\n\nPhones, watches, and Fitbits\n\n\nThe iPhone records far fewer steps: it misses every step taken without it.\nWithin the same people (151 with both an iPhone and an Apple Watch), the iPhone recorded about 59% of their Watch steps.\nSo Fitbit is the main data for 6.2; Apple steps are a separate measure, never pooled with Fitbit.\n\n\n\nWho has wearable data?\n\n\n\n\nCases\nControls\n\n\n\n\nFitbit, 10+ valid days\n7.3%\n9.5%\n\n\nApple HealthKit steps\n1.8%\n3.3%\n\n\n\nPeople with Fitbit data were a little younger (mean age 58 vs 59), more often female (63% vs 59%), and less often cases (43% vs 51%). Selection: results describe wearable users.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#instructor-notes",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#instructor-notes",
+    "title": "6.1 Wearables Basics",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nStart with the cost table: “what would one careless query cost?” gets everyone’s attention.\nThe wear-measure check is a good habit to model: a cheap measure looked suspicious (a median of exactly 24 hours), so we tested it against a better one, on a small group, for $0.04.\niPhone vs Watch: ask students where their phone is right now. Most aren’t carrying it.\nPlots: a default box plot draws single people (whisker ends, outliers). The notebook draws it from percentiles, and the page shows only boxes and medians.\nPrivacy: never plot one person’s minute-level data outside the Workbench.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#key-takeaways",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#key-takeaways",
+    "title": "6.1 Wearables Basics",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nAll of Us has Fitbit data (main dataset) and Apple HealthKit data (a separate dataset)\nPrice queries before running them, and check what they cost: minute-level costs grow with the number of people\nKeep only valid days, then summarise to one value per person; check your wear measure\niPhone, Apple Watch, and Fitbit steps measure different things: don’t pool them\nWearable users are a selected group",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-1-wearables-basics.html#next",
+    "href": "pages/courses/wearables/6-1-wearables-basics.html#next",
+    "title": "6.1 Wearables Basics",
+    "section": "Next",
+    "text": "Next\n6.2 Steps and type 2 diabetes: daily steps measured before a diagnosis.",
+    "crumbs": [
+      "Wearables",
+      "6.1 Wearables Basics"
+    ]
+  },
+  {
     "objectID": "pages/courses/surveys/5-3-social-factors.html",
     "href": "pages/courses/surveys/5-3-social-factors.html",
     "title": "5.3 Social Factors",
@@ -3381,6 +3623,16 @@
     ]
   },
   {
+    "objectID": "pages/courses/index.html#skills-classes-and-guides",
+    "href": "pages/courses/index.html#skills-classes-and-guides",
+    "title": "Courses",
+    "section": "Skills classes and guides",
+    "text": "Skills classes and guides\nThese aren’t tied to one series: they teach skills you’ll use in all of them. They live under Optional Extras.\n\n\n\nClass or guide\nWhat you learn\nTime\n\n\n\n\nCoding with AI and GitHub\nWrite and fix All of Us code with an AI assistant on your own computer, carry it to the Workbench with GitHub, and run it there. The AI sees code, never data\n90 min class\n\n\nGitHub Guide\nMove notebooks and scripts between the Workbench and GitHub, with safety nets that keep data and outputs out\nguide, at your own pace\n\n\nWorkflows for Beginners and Running Workflows\nWhat workflows are and when you need one; then run a GWAS on all 22 chromosomes at once with dsub, and where Cromwell and Nextflow fit\nreading, then a 110 min class (after 4.2)\n\n\n\nWhere to start: take Coding with AI and GitHub early if you’ll write your own code; it uses the GitHub Guide for the Git steps. Running Workflows is only for jobs too big for one app.",
+    "crumbs": [
+      "Courses"
+    ]
+  },
+  {
     "objectID": "pages/courses/index.html#how-a-class-works",
     "href": "pages/courses/index.html#how-a-class-works",
     "title": "Courses",
@@ -4179,6 +4431,193 @@
     "crumbs": [
       "Surveys",
       "Survey Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "",
+    "text": "Wearables series, class 2 of 3 · R + SQL · 95 minutes\nOpen the notebook on GitHub Wearables series overview",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#overview",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#overview",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Overview",
+    "text": "Overview\nDo people who take more steps a day develop type 2 diabetes less often? In this class we follow every All of Us participant with Fitbit data forward in time: their daily steps are measured first, and then we watch who is diagnosed with type 2 diabetes later, and when. It’s the design of a published All of Us study, and it fixes the biggest problem we met in the survey series: answers given after a diagnosis.\n\nWhy this class matters\nIn 5.2, most people with diabetes answered the Lifestyle survey after their diagnosis, so their answers could reflect the diagnosis (people quit smoking, or cut down on alcohol, because of it). A prospective design, where the exposure is measured before the outcome, is the standard way around that, and wearables make it possible: Fitbit records steps day by day, with exact dates.\n\n\nBy the end you’ll be able to\n\nExplain a prospective cohort design, and why it avoids reverse causation\nBuild baseline steps, eligibility, and follow-up from dates, mostly inside BigQuery\nCalculate incidence rates per 1,000 person-years\nDraw Kaplan–Meier curves and fit a Cox model for a new outcome (from 3.4)\nChoose what to adjust for: confounders vs a possible mediator\nTest the result with a sensitivity analysis (a lag)\n\n\n\nAnalysis at a glance\n\n\n\n\n\n\n\n❓ Question\nAmong adults without diabetes, do those who take more steps a day develop type 2 diabetes less often?\n\n\n🧪 The analysis\nBaseline steps over each person’s first 6 months of Fitbit data; follow-up for a new diagnosis; incidence rates; Kaplan–Meier curves; Cox models (age and sex, then + BMI); a 1-year lag\n\n\n🎯 Why\nSteps measured before any diagnosis can’t be the result of it. Survival methods use everyone’s follow-up, however long\n\n\n✅ What we conclude\nHow the rate of new type 2 diabetes differs by daily steps\n\n\n⚠️ What it can’t tell us\nCause. People who walk more differ in many ways (income, health, diet). And Fitbit users aren’t typical\n\n\n🔗 Connections\nValid days and costs from 6.1; the cohort query from 1.1; survival methods from 3.4; reverse causation from 5.2; confounders and mediators from 5.3\n\n\n\n\n\nTime and cost\n\n\n\n\n\n\n\n⏱️ Class time\n95 minutes\n\n\n⏱️ Run time\nabout 5 minutes\n\n\n💰 Cost\nabout $1 per student: the cohort query, and one query for everyone’s baseline steps and BMI ($0.18 in our test run)\n\n\n📋 Before class\n6.1 is helpful (valid days, costs), and 3.4 (survival analysis)",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#class-plan",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#class-plan",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Class plan",
+    "text": "Class plan\n\n\n\n\n\n\n\n\nTime\nPart\nYou do\n\n\n\n\n0:00\n1. Key concepts: the design, in one timeline\nlisten, discuss\n\n\n0:20\n2–3. The cohort; baseline steps in BigQuery\nrun the cells\n\n\n0:40\n4. Who’s in the analysis: the flow table; follow-up\nrun the cells\n\n\n0:55\n5. Incidence rates and Kaplan–Meier curves\nrun the cells, discuss\n\n\n1:10\n6. Cox models: with and without BMI\n✋ Try It Out (5 min)\n\n\n1:20\n7. A 1-year lag\ndiscuss\n\n\n1:30\nWrap-up",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#key-concepts",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#key-concepts",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Key concepts",
+    "text": "Key concepts\n\nMeasure first, then follow\nfirst valid           end of baseline                          end of follow-up\nFitbit day            (6 months later)                         (last EHR visit, death, or 2025)\n    |──── baseline ────|──────────────── follow-up ─────────────────────|\n      median daily          does type 2 diabetes appear? when?\n      steps\nexcluded: anyone with type 2 diabetes (or another kind of diabetes) before the end of baseline\nThis design avoids reverse causation by construction: steps are measured before any diagnosis, so the diagnosis can’t have changed them. It follows the published All of Us study of step counts and chronic disease (Master et al., Nature Medicine, 2022).\nWhy not use our sample of 5,000 cases and 5,000 controls? The cases were chosen because they already had diabetes, and for most of them Fitbit data starts after the diagnosis. Only a few hundred have Fitbit data at all (6.1). Following all Fitbit users forward is both larger and more honest.\n\n\nWords for this design\n\n\n\n\n\n\n\nTerm\nMeans\n\n\n\n\nBaseline\nwhen the exposure is measured: each person’s first 6 months of valid Fitbit days\n\n\nExposure\nwhat might affect the outcome: median daily steps at baseline\n\n\nIncident case\na new diagnosis during follow-up. A prevalent case already had diabetes at baseline: excluded\n\n\nCensoring\nfollow-up ends without the outcome: the last EHR visit, death, or the end of the data\n\n\nPerson-years\ntotal time followed: 100 people for 2 years = 200 person-years\n\n\nIncidence rate\nnew cases ÷ person-years, often per 1,000 person-years\n\n\nHazard ratio\nthe rate in one group ÷ another, at any moment: HR 0.5 = half the rate\n\n\n\n\n\nWhat to adjust for\n\n\n\n\n\n\n\n\nVariable\nRole\nAdjust?\n\n\n\n\nAge, sex\naffect both steps and diabetes risk: confounders\nyes\n\n\nBMI\na confounder (heavier people may walk less) and a possible mediator (walking → lower weight → less diabetes)\nshow both models\n\n\n\nThe model without BMI is the main result. The model with BMI shows the part of the link not explained by weight.",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#follow-along-in-the-workbench",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#follow-along-in-the-workbench",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Follow along in the Workbench",
+    "text": "Follow along in the Workbench\n\nStart your app and pull the newest notebooks, as in 1.1.\nOpen notebooks/wearables/6.2 steps_and_t2d.ipynb, with the R kernel.",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#try-it-out",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#try-it-out",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Try It Out",
+    "text": "Try It Out\n\n\n\n\n\n\nTip✋ Try It Out · 5 minutes · Part 6, “Your turn”\n\n\n\nCompare people in the analysis with all adults in the cohort query: age, percent female, percent cases. Who uses a Fitbit, and who might the result not apply to?\n✅ Check: Fitbit users are a selected group, with far fewer cases (people with diabetes at baseline were excluded, and fewer of them use Fitbits).",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#code-walk-through",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#code-walk-through",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Code walk-through",
+    "text": "Code walk-through\n\nBaseline steps for everyone, in one query\n1WITH wear AS (…),\nvalid AS (…),\nfirst_day AS (\n2  SELECT person_id, MIN(date) AS first_valid FROM valid GROUP BY person_id\n),\nbaseline AS (\n  SELECT v.person_id,\n         MAX(v.date) AS baseline_end,\n         COUNT(*)    AS baseline_days,\n3         APPROX_QUANTILES(v.steps, 100)[OFFSET(50)] AS baseline_steps\n  FROM valid AS v JOIN first_day AS f ON v.person_id = f.person_id\n4  WHERE v.date &lt; DATE_ADD(f.first_valid, INTERVAL 6 MONTH)\n  GROUP BY v.person_id\n),\n5bmi AS (…)\n6SELECT … FROM baseline … WHERE baseline_days &gt;= 10\n\n1\n\nWear minutes and valid days, as in 6.1.\n\n2\n\nEach person’s first valid Fitbit day.\n\n3\n\nBigQuery’s fast median: the 50th of 100 percentiles.\n\n4\n\nOnly the first 6 months: the baseline.\n\n5\n\nThe latest BMI in the 2 years before the end of baseline.\n\n6\n\nOne row per person with at least 10 valid baseline days. BigQuery does the work; only tens of thousands of rows come back, instead of tens of millions.\n\n\n\n\nFollow-up, from dates\nfollowup &lt;- joined %&gt;%\n  filter(cohort != \"excluded\",\n1         !(cohort == \"case\" & t2d_date &lt;= baseline_end),\n         age_at_baseline &gt;= 18,\n2         followup_end &gt; baseline_end) %&gt;%\n3  mutate(event     = as.integer(cohort == \"case\" & t2d_date &lt;= followup_end),\n         exit_date = if_else(event == 1, t2d_date, followup_end),\n4         years     = as.numeric(exit_date - baseline_end) / 365.25)\n\n1\n\nLeave out prevalent cases: diagnosed before baseline ended.\n\n2\n\nKeep people with some EHR follow-up after baseline.\n\n3\n\nThe event: a type 2 diabetes diagnosis during follow-up.\n\n4\n\nYears from the end of baseline to diagnosis, or to censoring.\n\n\n\n\nCox models, on the same people\n1m_age_sex &lt;- coxph(Surv(years, event) ~ steps_group + age10 + sex_at_birth, data = cox_data)\n2m_bmi     &lt;- coxph(Surv(years, event) ~ steps_group + age10 + sex_at_birth + bmi5, data = cox_data)\n3m_per1000 &lt;- coxph(Surv(years, event) ~ steps_1000 + age10 + sex_at_birth, data = cox_data)\n\n1\n\nThe main model: adjusted for the confounders, age and sex.\n\n2\n\nPlus BMI: what’s left after accounting for weight.\n\n3\n\nSteps as a number: the hazard ratio for each extra 1,000 steps a day.",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#what-we-found",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#what-we-found",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "What we found",
+    "text": "What we found\nResults from our test run in November 2026 (CDR v9).\n\nWho was studied\n\n\n\nRule\nPeople\n\n\n\n\nFitbit baseline, and in the cohort query (adults with EHR)\n39,553\n\n\nnot “excluded” (type 1 or unclear diabetes)\n38,516\n\n\nno type 2 diabetes by the end of baseline\n33,874\n\n\n18 or older\n33,819\n\n\nsome EHR follow-up after baseline\n25,724\n\n\n\n1,185 new cases of type 2 diabetes over 85,879 person-years (a median of 2.6 years each): 13.8 per 1,000 person-years.\n\n\nRates by daily steps\n\n\n\n\n\n\n\n\n\nDaily steps at baseline\nPeople\nNew cases\nRate per 1,000 person-years\n\n\n\n\nunder 5,000\n7,096\n424\n25.5\n\n\n5,000 to 7,499\n7,526\n371\n14.5\n\n\n7,500 to 9,999\n5,619\n205\n9.6\n\n\n10,000 or more\n5,483\n185\n8.3\n\n\n\n\nThe curves separate from the first year (log-rank chi-square 250, p &lt; 0.001). The biggest gap is between under 5,000 and the rest; the two highest groups nearly overlap. The curves stop where any group has fewer than 50 people still followed.\n\n\nHazard ratios\n\n\n\n\n\n\n\n\n\nCompared with under 5,000 steps a day\nAge and sex\n+ BMI\nWith a 1-year lag\n\n\n\n\n5,000 to 7,499\n0.50 (0.41 to 0.61)\n0.62 (0.51 to 0.76)\n0.58 (0.45 to 0.74)\n\n\n7,500 to 9,999\n0.32 (0.25 to 0.41)\n0.46 (0.36 to 0.60)\n0.36 (0.26 to 0.48)\n\n\n10,000 or more\n0.27 (0.21 to 0.34)\n0.42 (0.32 to 0.55)\n0.32 (0.23 to 0.43)\n\n\nPer extra 1,000 steps (age and sex)\n0.86 (0.83 to 0.88)\n\n\n\n\n\n\nMain result: people taking 10,000 or more steps a day had about a quarter of the rate of new type 2 diabetes of those taking under 5,000, adjusted for age and sex. Each extra 1,000 steps a day went with a 14% lower rate.\nBMI explained part of the link (hazard ratios moved toward 1), but most remained.\nThe 1-year lag barely changed the results: early, undiagnosed illness doesn’t explain them.\nThe benefit levels off above about 7,500 steps. “10,000 steps a day” isn’t a threshold.\n\n💬 Discuss: this is still an association, in a selected group. What else differs between people who walk more and less? Could people who walk more see doctors less, and be diagnosed later? What evidence would convince you that walking itself lowers the risk?",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#instructor-notes",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#instructor-notes",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Instructor notes",
+    "text": "Instructor notes\n\n\n\n\n\n\nTipInstructor tip\n\n\n\n\n\n\nDraw the timeline before anything else. Most of the class follows from it.\n“Avoids reverse causation by construction” is the key phrase: compare with 5.2, where most survey answers came after diagnosis.\nBMI: confounder or mediator? Ask students to argue both sides before showing model 2.\nThe flow table is worth slowing down for: each rule is a decision a reader needs to know about.\nKaplan–Meier curves end early on purpose: where few people remain, curves describe very few people and jump around.\nProportional hazards: the check gave p = 0.004 for steps. Discuss what it means for activity measured once, over 6 months, but followed for years.\nLikely question: “Is 10,000 steps magic?” No: the number came from a 1960s Japanese pedometer advertisement. Look at the gradient, which levels off above about 7,500 here.",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#key-takeaways",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#key-takeaways",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Key takeaways",
+    "text": "Key takeaways\n\nA prospective design measures the exposure before the outcome: it avoids reverse causation by construction\nBuild baseline, eligibility, and follow-up from dates, and report a flow table\nIncidence rates, Kaplan–Meier curves, and Cox models answer “how often” and “how soon”\nAdjust for confounders; show models with and without a possible mediator\nA lag tests whether undiagnosed illness explains the result\nIt’s still an association, in a selected group",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/6-2-steps-and-t2d.html#next",
+    "href": "pages/courses/wearables/6-2-steps-and-t2d.html#next",
+    "title": "6.2 Steps and Type 2 Diabetes",
+    "section": "Next",
+    "text": "Next\n6.3 Sleep and heart rate: the same design for sleep and resting heart rate.",
+    "crumbs": [
+      "Wearables",
+      "6.2 Steps and Type 2 Diabetes"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html",
+    "href": "pages/courses/wearables/index.html",
+    "title": "Wearables Series",
+    "section": "",
+    "text": "Three R classes on the All of Us wearable data, with the same cohort as every other series: people with type 2 diabetes compared with people without diabetes.\nWearables show daily life in a way health records and surveys can’t: how much people move, when, how they sleep, and how their heart rate changes, often minute by minute for years. They also bring new problems: tables measured in terabytes, days the device wasn’t worn, devices that measure differently, and users who aren’t typical of anyone else.",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#the-classes",
+    "href": "pages/courses/wearables/index.html#the-classes",
+    "title": "Wearables Series",
+    "section": "The classes",
+    "text": "The classes\n\n\n\nClass\nTime\nWhat you learn\n\n\n\n\n6.1 Wearables basics\n95 min\nFitbit and Apple HealthKit tables and their cost; querying minute-level data safely; valid wear days; one value per person; Fitbit vs iPhone vs Apple Watch steps; who has wearable data\n\n\n6.2 Steps and type 2 diabetes\n95 min\nFollowing all Fitbit users forward: baseline steps, then new type 2 diabetes; a design that avoids reverse causation; incidence rates, Kaplan–Meier curves, Cox models, a lag\n\n\n6.3 Sleep and heart rate\n95 min\nThe 6.2 design as a function: Fitbit sleep and Apple HealthKit resting heart rate, then new type 2 diabetes; non-linear links; a first look at HealthKit blood glucose",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#the-data",
+    "href": "pages/courses/wearables/index.html#the-data",
+    "title": "Wearables Series",
+    "section": "The data",
+    "text": "The data\n\n\n\n\n\n\n\n\n\nFitbit\nApple HealthKit\n\n\n\n\nWhere\nthe main CDR v9 dataset\na separate, “off-cycle” CDR v9 dataset (September 2026), joined by person_id; not in the Data Explorer\n\n\nPeople with steps (all of All of Us)\nabout 68,500\nabout 18,000\n\n\nIn our sample of 5,000 cases and 5,000 controls\n840 with 10+ valid days\nabout 250",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#who-the-results-describe",
+    "href": "pages/courses/wearables/index.html#who-the-results-describe",
+    "title": "Wearables Series",
+    "section": "Who the results describe",
+    "text": "Who the results describe\nOwning a Fitbit or an iPhone and sharing its data isn’t random. In our sample, people with Fitbit data were a little younger, more often female, and less often cases. As with the surveys, there are no weights: results describe people with wearable data, not all participants, and not the US population.",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#what-it-costs",
+    "href": "pages/courses/wearables/index.html#what-it-costs",
+    "title": "Wearables Series",
+    "section": "What it costs",
+    "text": "What it costs\n\n\n\n\n\n\n\n\nCost\n\n\n\n\n6.1\nabout $1.40 in queries (mostly the Apple HealthKit query)\n\n\n6.2\nabout $1: the cohort query, and $0.18 for every Fitbit user’s baseline steps\n\n\n6.3\nabout $1: sleep, resting heart rate, and glucose queries\n\n\nNever\nquery a minute-level table without a person_id filter: a full read is over 6 TB, about $40\n\n\nThe app, while running\nabout $0.27 an hour\n\n\nThe app’s disk\nabout $0.70 a day, even while the app is stopped\n\n\n\nEvery query in the series is priced before it runs, with the run_if_cheap() helper, and checked afterwards with last_query_cost().",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
+    ]
+  },
+  {
+    "objectID": "pages/courses/wearables/index.html#keep-all-of-us-data-in-the-workbench",
+    "href": "pages/courses/wearables/index.html#keep-all-of-us-data-in-the-workbench",
+    "title": "Wearables Series",
+    "section": "Keep All of Us data in the Workbench",
+    "text": "Keep All of Us data in the Workbench\nDon’t download, screenshot, or share participant-level data, or counts of 1 to 20 (including counts that could be worked out from others). A plot of one person’s steps or heart rate is participant-level data: plot groups. The results on these pages are summary statistics from our test runs.\nThe results on these pages come from the All of Us Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge All of Us participants for their contributions. See Acknowledgment and data availability.",
+    "crumbs": [
+      "Wearables",
+      "Wearables Series"
     ]
   },
   {
@@ -5189,16 +5628,6 @@
     "crumbs": [
       "Your Workspace",
       "Workflows"
-    ]
-  },
-  {
-    "objectID": "pages/courses/index.html#skills-classes-and-guides",
-    "href": "pages/courses/index.html#skills-classes-and-guides",
-    "title": "Courses",
-    "section": "Skills classes and guides",
-    "text": "Skills classes and guides\nThese aren’t tied to one series: they teach skills you’ll use in all of them. They live under Optional Extras.\n\n\n\nClass or guide\nWhat you learn\nTime\n\n\n\n\nCoding with AI and GitHub\nWrite and fix All of Us code with an AI assistant on your own computer, carry it to the Workbench with GitHub, and run it there. The AI sees code, never data\n90 min class\n\n\nGitHub Guide\nMove notebooks and scripts between the Workbench and GitHub, with safety nets that keep data and outputs out\nguide, at your own pace\n\n\nWorkflows for Beginners and Running Workflows\nWhat workflows are and when you need one; then run a GWAS on all 22 chromosomes at once with dsub, and where Cromwell and Nextflow fit\nreading, then a 110 min class (after 4.2)\n\n\n\nWhere to start: take Coding with AI and GitHub early if you’ll write your own code; it uses the GitHub Guide for the Git steps. Running Workflows is only for jobs too big for one app.",
-    "crumbs": [
-      "Courses"
     ]
   }
 ]

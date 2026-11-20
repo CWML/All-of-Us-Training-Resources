@@ -117,7 +117,21 @@ Each starts with the short cohort section, so it works on its own.
 | **6.2 steps_and_t2d** | Average daily steps and type 2 diabetes, modelled on the published All of Us study of step counts and chronic disease; steps measured **before** the diagnosis, to avoid reverse causation |
 | **6.3 sleep_and_heart_rate** | The same approach with sleep and resting heart rate |
 
-Apple HealthKit data (fewer participants) can be added later.
+Apple HealthKit data is in a separate off-cycle CDR v9 dataset (`C_V9_R6_offcycle_healthkit`, about 18,000 people with steps). 6.1 compares Fitbit, iPhone, and Apple Watch steps; they're never pooled.
+
+### Series 7: machine learning (planned, in `notebooks/ml/`)
+
+Agreed 2026-11-03. Framing: **predict who will develop type 2 diabetes**, using only data from **before** a diagnosis (not a "diagnostic signature": HbA1c, glucose, and diabetes drugs leak the outcome, and most omics and survey data were collected after diagnosis). Alternative outcome: CKD among people with diabetes (from 1.2 / 3.4).
+
+| Notebook | What it does | Tools |
+|---|---|---|
+| **Machine learning for beginners** (site page) | Prediction vs explanation; training and test data; overfitting; AUC and calibration; leakage | |
+| **7.1 first_prediction_model** | Predict type 2 diabetes from age, BMI, blood pressure, survey answers; logistic regression baseline, then LASSO | R tidymodels |
+| **7.2 trees_and_boosting** | Random forests and gradient boosting; cross-validation and tuning; variable importance and SHAP; the same model in Python scikit-learn | ranger, xgboost, scikit-learn |
+| **7.3 protein_signature** | Thousands of proteins, few people: a LASSO panel; does it add anything beyond age and BMI? | glmnet / tidymodels |
+| **7.4 combining_data_responsibly** | EHR + survey + wearables + proteins; how overlap shrinks the sample; fairness across sex and ancestry; calibration; TRIPOD+AI reporting | tidymodels |
+
+**First step:** a cheap overlap query: how many people have proteomics, EHR, and wearables, and how many developed type 2 diabetes **after** their sample. If too few, 7.3 uses a related outcome (e.g. HbA1c level). No deep learning (a short "when would you use it?" note instead).
 
 ### Every notebook includes
 
@@ -173,6 +187,7 @@ Apple HealthKit data (fewer participants) can be added later.
 3. Core series: 1.1, 1.2, then 2.1–2.3, then recheck 3.1–3.4
 4. Survey series: 5.1 → 5.3
 5. Wearables series: 6.1 → 6.3
+6. Machine learning series: overlap check → beginners page → 7.1 → 7.4
 
 Each step is tested in the Workbench before the next one starts.
 

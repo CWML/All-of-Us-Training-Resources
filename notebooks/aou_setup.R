@@ -194,4 +194,38 @@ t2d_gwas_samples <- function(n_per_group = 2500, seed = 2026,
     ungroup()
 }
 
+# ---- 5. COST HELPERS (used by the wearables notebooks, notebooks/wearables/) ----
+
+# The Apple HealthKit data is a separate, "off-cycle" CDR v9 dataset.
+HEALTHKIT_DATASET <- "wb-silky-artichoke-2408.C_V9_R6_offcycle_healthkit"
+
+# Run a query only if a free dry run says it costs less than max_dollars.
+# For tables clustered by person_id (e.g. the Fitbit minute-level tables), the dry run
+# prices only the people you ask for. A 0-byte estimate usually means the filter matches
+# nothing (e.g. wrong IDs): such queries only run with allow_unknown = TRUE.
+# Check what a query really cost afterwards with last_query_cost().
+run_if_cheap <- function(sql, max_dollars = 1, allow_unknown = FALSE) {
+  bytes <- as.numeric(bq_perform_query_dry_run(sql, billing = BILLING_PROJECT))
+  cost  <- bytes / 1e12 * 6.25            # on-demand price: $6.25 per TB read
+  if (bytes == 0 && !allow_unknown) {
+    message("The dry run says this reads 0 bytes: the filter may match nothing (check the IDs). ",
+            "Not run: use allow_unknown = TRUE to run it anyway, then check last_query_cost().")
+    return(invisible(NULL))
+  }
+  message(sprintf("Dry run: reads %.1f GB, about $%.2f", bytes / 1e9, cost))
+  if (cost >= max_dollars) {
+    message("Not run: over the limit of $", max_dollars)
+    return(invisible(NULL))
+  }
+  run_query(sql)
+}
+
+# What did your most recent query actually cost?
+last_query_cost <- function() {
+  job    <- bq_project_jobs(BILLING_PROJECT, max_pages = 1)[[1]]
+  billed <- as.numeric(bq_job_meta(job)$statistics$query$totalBytesBilled)
+  message(sprintf("Last query billed %.2f GB, about $%.3f", billed / 1e9, billed / 1e12 * 6.25))
+  invisible(billed)
+}
+
 message("Setup done. Dataset: ", CURRENT_DATASET, " | Data folder: ", DATA_DIR)
