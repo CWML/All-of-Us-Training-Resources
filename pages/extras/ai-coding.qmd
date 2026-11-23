@@ -466,7 +466,7 @@ git checkout fix-smoking-code     # your bucket name is in my_settings.R, which 
 git pull
 ```
 
-Open the notebook and run it. **The results stay here.** Read them in the Workbench.
+Open the notebook and run it. **The results stay here.** Read them in the Workbench. New to this? The GitHub Guide walks through it slowly, with real output: [Try someone else's branch in the Workbench](github-guide.qmd#try-someone-elses-branch-in-the-workbench-step-by-step).
 
 ### 3. If something fails: bring back only what's safe
 

@@ -8,6 +8,7 @@ Cohort Notes.pptx
 **/*.quarto_ipynb
 
 # Files JupyterLab creates in the Workbench
+__pycache__/
 .ipynb_checkpoints/
 Untitled*.ipynb
 hail-*.log
