@@ -501,6 +501,61 @@ Already up to date.
 
 In the file browser on the left: `repos` → the repository → the notebook. Check the **kernel** (top right) and run the cells **one at a time** (**Shift + Enter**), reading each output. **First time in this app?** Run `notebooks/0.0 setup.ipynb`, Steps 1 and 2, so the notebooks can find your bucket.
 
+### The branch changed while you were testing? Get the update
+
+The person who asked you pushes a fix or a new section, and asks you to run it. Your notebook is still open, with your results in it. What we saw:
+
+```sh
+git log --oneline -1
+```
+```
+14195b0 (HEAD -> ml-series) ML series: a data check notebook …
+```
+
+They had named `72ac394`, so this copy is **one commit behind**. Get it:
+
+```sh
+git pull
+```
+```
+Updating 14195b0..72ac394
+error: Your local changes to the following files would be overwritten by merge:
+        notebooks/ml/ml_data_check.ipynb
+Please commit your changes or stash them before you merge.
+Aborting
+```
+
+| Line | Means |
+|---|---|
+| `Updating 14195b0..72ac394` | Git found the new commit and tried to move you to it |
+| `would be overwritten` | JupyterLab **autosaved** the notebook with its outputs, so the file differs from the commit |
+| `Aborting` | nothing changed: you're still on the old commit |
+
+Put the notebooks back (step 3), then pull again:
+
+```sh
+git checkout -- notebooks/
+git pull
+git log --oneline -1
+```
+```
+Updating 14195b0..72ac394
+Fast-forward
+ notebooks/ml/ml_data_check.ipynb | 103 +++++++++…-
+ 1 file changed, 102 insertions(+), 1 deletion(-)
+72ac394 (HEAD -> ml-series, origin/ml-series) ML data check: section 6, …
+```
+
+`Fast-forward` means Git simply moved you to the newer commit. `HEAD` and `origin/ml-series` are on the same commit: you have the update.
+
+**The open notebook still shows the old version.** JupyterLab doesn't notice that Git changed the file:
+
+1. **Close the notebook's tab.** If it asks to save, choose **Discard** (or *Don't save*). **Saving** would write the old version over the one you just pulled.
+2. **Open it again** from the file browser. It reconnects to the same **kernel** (the R session), which kept running.
+3. **Check your earlier results are still there**: in a new cell, run `exists("base")` (the name of any table you made earlier), then delete the cell. `TRUE`: carry on with the new cells. `FALSE`: the kernel restarted, so run the notebook from the top.
+
+Your results live in the **kernel**, not in the file. Resetting the file with `git checkout` or closing the tab doesn't lose them; restarting the kernel does.
+
 ### 7. Report back, safely
 
 Share only what's safe (see [What counts as data](#what-counts-as-data-the-less-obvious-leaks)): **summary tables** with no counts of 1 to 20, column **names**, and **error messages** with any value, ID, or date removed. Never rows, never screenshots of data.
