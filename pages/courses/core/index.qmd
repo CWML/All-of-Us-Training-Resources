@@ -7,6 +7,8 @@ Nine R classes that take **one study from start to finish**, with *All of Us* he
 
 Along the way you learn the skills almost every health data project needs: finding people with **SQL**, **cleaning** messy records, **reshaping** and **joining** tables, describing groups in a **Table 1**, and **regression** and **survival** models, with an honest look at what each result can and can't tell you.
 
+**The bigger picture:** how this series connects to *All of Us*'s goal of precision medicine: see [Precision Medicine: where our classes fit](../precision-medicine.qmd).
+
 ## The classes
 
 | Class | Time | What you learn |
