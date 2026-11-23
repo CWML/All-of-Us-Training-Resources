@@ -235,7 +235,7 @@ run_if_cheap <- function(sql, max_dollars = 1, allow_unknown = FALSE) {
 
 # What did your most recent query actually cost?
 last_query_cost <- function() {
-  job    <- bq_project_jobs(BILLING_PROJECT, max_pages = 1)[[1]]
+  job    <- suppressWarnings(bq_project_jobs(BILLING_PROJECT, max_pages = 1))[[1]]   # the latest job only
   billed <- as.numeric(bq_job_meta(job)$statistics$query$totalBytesBilled)
   message(sprintf("Last query billed %.2f GB, about $%.3f", billed / 1e9, billed / 1e12 * 6.25))
   invisible(billed)

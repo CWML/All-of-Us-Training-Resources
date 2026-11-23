@@ -181,7 +181,70 @@ chosen <- select_by_one_std_err(lasso_tuning, desc(penalty), metric = "roc_auc")
 
 ## What we found
 
-*Results will be added after the first test run in the Workbench.*
+From our test run in November 2026 (CDR v9). The query read 31.8 GB, about **$0.20**.
+
+### Who was studied
+
+| Rule | People | Removed |
+|---|---|---|
+| in the cohort query, with an enrollment survey | 426,596 | |
+| not "excluded" (type 1 or unclear diabetes) | 412,831 | 13,765 |
+| no type 2 diabetes by enrollment | 350,404 | 62,427 |
+| 18 or older; sex at birth Female or Male | 346,925 | 3,479 |
+| BMI and blood pressure at enrollment | 295,908 | 51,017 |
+| health records for 2 years, or diagnosed sooner | **152,586** | 143,322 |
+
+**8,487** people (**5.6%**) were diagnosed with type 2 diabetes within 2 years of enrolling (2017 to 2024). The 2-year rule removed the most people: those who enrolled recently, and those whose health records stop. A survival model (**3.4**, **6.2**) could keep them.
+
+The 75/25 split gave 114,439 people for training and 38,147 for testing, each with about 5.5% new cases.
+
+### How well the models predict
+
+| Model | Test AUC |
+|---|---|
+| 1. Age and sex | 0.577 |
+| 2. + BMI | 0.709 |
+| 3. All enrollment data (+ blood pressure, general health, income, education, smoking) | **0.743** |
+| 4. LASSO: splines and interactions | 0.748 |
+
+![](images/7-1-roc.png){fig-alt="ROC curves for three models on the test set. The age-and-sex curve stays close to the dashed diagonal. The model with BMI bows well above it, and the model with all enrollment data sits a little higher again, reaching a sensitivity of about 0.7 at 0.3 false alarms."}
+
+- **Age and sex** barely beat a coin toss: everyone here was free of diabetes at enrollment, at every age.
+- **BMI** added the most.
+- **The survey answers** added a useful amount more, mostly through **general health**.
+- **LASSO** matched logistic regression: with a few strong predictors, bending the lines added little.
+
+### What the model uses
+
+Odds ratios from model 3, with 95% confidence intervals:
+
+| Predictor | OR (95% CI) |
+|---|---|
+| BMI, per unit (kg/m²) | 1.07 (1.07 to 1.07): about 1.40 per 5 units |
+| Male (vs female) | 1.43 (1.35 to 1.51) |
+| Age, per year | 1.02 (1.02 to 1.02) |
+| General health *Good* (vs *Excellent*) | 2.13 (1.86 to 2.43) |
+| General health *Fair* | 3.21 (2.80 to 3.68) |
+| General health *Poor* | 4.74 (4.06 to 5.54) |
+| Income under 25k (vs 100k or more) | 1.39 (1.26 to 1.54) |
+| Less than high school (vs college degree) | 1.56 (1.42 to 1.72) |
+| Current smoker (vs never) | 1.07 (0.99 to 1.16) |
+
+**Self-rated health** was the strongest survey predictor: people who rate their health as poor may already have diabetes, undiagnosed. That helps a prediction, and says nothing about cause.
+
+### Are the risks right?
+
+![](images/7-1-calibration.png){fig-alt="Calibration plot for model 3 on the test set: observed percentage diagnosed against predicted risk, one point per tenth of predicted risk. Seven points lie close to the dashed diagonal, from about 2% to 10%; the highest group is at about 18% predicted and 16% observed, a little below the line. The two lowest-risk groups are hidden."}
+
+Predicted risks ranged from about **0.9%** in the lowest tenth to **18%** in the highest, and the observed rates followed them closely, up to **16.4%** in the top tenth: a little **over**-predicted. The two lowest-risk tenths had 1 to 20 new cases, so they're hidden.
+
+**A screening rule:** the 10% of people with the highest predicted risk included **30%** of all future cases. **16.4%** of them were diagnosed within 2 years, compared with **4.2%** of everyone else.
+
+### Choosing the LASSO penalty
+
+![](images/7-1-lasso-tuning.png){fig-alt="Cross-validated AUC against the LASSO penalty, on a log scale from 0.00001 to 0.1. The AUC is flat at about 0.76 for small penalties, falls slowly from about 0.003, drops steeply after 0.01, and reaches 0.5 at the largest penalties."}
+
+The AUC was flat for small penalties, then fell as the penalty removed useful predictors. At the largest penalties, every coefficient was zero, and the AUC was **0.5**: the same risk for everyone.
 
 ## Instructor notes
 

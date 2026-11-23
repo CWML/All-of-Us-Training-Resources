@@ -693,7 +693,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#three-models-one-function" id="toc-three-models-one-function" class="nav-link" data-scroll-target="#three-models-one-function">Three models, one function</a></li>
   <li><a href="#lasso-tuned-by-cross-validation" id="toc-lasso-tuned-by-cross-validation" class="nav-link" data-scroll-target="#lasso-tuned-by-cross-validation">LASSO, tuned by cross-validation</a></li>
   </ul></li>
-  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a>
+  <ul class="collapse">
+  <li><a href="#who-was-studied" id="toc-who-was-studied" class="nav-link" data-scroll-target="#who-was-studied">Who was studied</a></li>
+  <li><a href="#how-well-the-models-predict" id="toc-how-well-the-models-predict" class="nav-link" data-scroll-target="#how-well-the-models-predict">How well the models predict</a></li>
+  <li><a href="#what-the-model-uses" id="toc-what-the-model-uses" class="nav-link" data-scroll-target="#what-the-model-uses">What the model uses</a></li>
+  <li><a href="#are-the-risks-right" id="toc-are-the-risks-right" class="nav-link" data-scroll-target="#are-the-risks-right">Are the risks right?</a></li>
+  <li><a href="#choosing-the-lasso-penalty" id="toc-choosing-the-lasso-penalty" class="nav-link" data-scroll-target="#choosing-the-lasso-penalty">Choosing the LASSO penalty</a></li>
+  </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
   <li><a href="#next" id="toc-next" class="nav-link" data-scroll-target="#next">Next</a></li>
@@ -1073,7 +1080,160 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="what-we-found" class="level2">
 <h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
-<p><em>Results will be added after the first test run in the Workbench.</em></p>
+<p>From our test run in November 2026 (CDR v9). The query read 31.8 GB, about <strong>$0.20</strong>.</p>
+<section id="who-was-studied" class="level3">
+<h3 class="anchored" data-anchor-id="who-was-studied">Who was studied</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>People</th>
+<th>Removed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>in the cohort query, with an enrollment survey</td>
+<td>426,596</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>not “excluded” (type 1 or unclear diabetes)</td>
+<td>412,831</td>
+<td>13,765</td>
+</tr>
+<tr class="odd">
+<td>no type 2 diabetes by enrollment</td>
+<td>350,404</td>
+<td>62,427</td>
+</tr>
+<tr class="even">
+<td>18 or older; sex at birth Female or Male</td>
+<td>346,925</td>
+<td>3,479</td>
+</tr>
+<tr class="odd">
+<td>BMI and blood pressure at enrollment</td>
+<td>295,908</td>
+<td>51,017</td>
+</tr>
+<tr class="even">
+<td>health records for 2 years, or diagnosed sooner</td>
+<td><strong>152,586</strong></td>
+<td>143,322</td>
+</tr>
+</tbody>
+</table>
+<p><strong>8,487</strong> people (<strong>5.6%</strong>) were diagnosed with type 2 diabetes within 2 years of enrolling (2017 to 2024). The 2-year rule removed the most people: those who enrolled recently, and those whose health records stop. A survival model (<strong>3.4</strong>, <strong>6.2</strong>) could keep them.</p>
+<p>The 75/25 split gave 114,439 people for training and 38,147 for testing, each with about 5.5% new cases.</p>
+</section>
+<section id="how-well-the-models-predict" class="level3">
+<h3 class="anchored" data-anchor-id="how-well-the-models-predict">How well the models predict</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Test AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Age and sex</td>
+<td>0.577</td>
+</tr>
+<tr class="even">
+<td>2. + BMI</td>
+<td>0.709</td>
+</tr>
+<tr class="odd">
+<td>3. All enrollment data (+ blood pressure, general health, income, education, smoking)</td>
+<td><strong>0.743</strong></td>
+</tr>
+<tr class="even">
+<td>4. LASSO: splines and interactions</td>
+<td>0.748</td>
+</tr>
+</tbody>
+</table>
+<p><img src="images/7-1-roc.png" class="img-fluid" alt="ROC curves for three models on the test set. The age-and-sex curve stays close to the dashed diagonal. The model with BMI bows well above it, and the model with all enrollment data sits a little higher again, reaching a sensitivity of about 0.7 at 0.3 false alarms."></p>
+<ul>
+<li><strong>Age and sex</strong> barely beat a coin toss: everyone here was free of diabetes at enrollment, at every age.</li>
+<li><strong>BMI</strong> added the most.</li>
+<li><strong>The survey answers</strong> added a useful amount more, mostly through <strong>general health</strong>.</li>
+<li><strong>LASSO</strong> matched logistic regression: with a few strong predictors, bending the lines added little.</li>
+</ul>
+</section>
+<section id="what-the-model-uses" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-model-uses">What the model uses</h3>
+<p>Odds ratios from model 3, with 95% confidence intervals:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Predictor</th>
+<th>OR (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BMI, per unit (kg/m²)</td>
+<td>1.07 (1.07 to 1.07): about 1.40 per 5 units</td>
+</tr>
+<tr class="even">
+<td>Male (vs female)</td>
+<td>1.43 (1.35 to 1.51)</td>
+</tr>
+<tr class="odd">
+<td>Age, per year</td>
+<td>1.02 (1.02 to 1.02)</td>
+</tr>
+<tr class="even">
+<td>General health <em>Good</em> (vs <em>Excellent</em>)</td>
+<td>2.13 (1.86 to 2.43)</td>
+</tr>
+<tr class="odd">
+<td>General health <em>Fair</em></td>
+<td>3.21 (2.80 to 3.68)</td>
+</tr>
+<tr class="even">
+<td>General health <em>Poor</em></td>
+<td>4.74 (4.06 to 5.54)</td>
+</tr>
+<tr class="odd">
+<td>Income under 25k (vs 100k or more)</td>
+<td>1.39 (1.26 to 1.54)</td>
+</tr>
+<tr class="even">
+<td>Less than high school (vs college degree)</td>
+<td>1.56 (1.42 to 1.72)</td>
+</tr>
+<tr class="odd">
+<td>Current smoker (vs never)</td>
+<td>1.07 (0.99 to 1.16)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Self-rated health</strong> was the strongest survey predictor: people who rate their health as poor may already have diabetes, undiagnosed. That helps a prediction, and says nothing about cause.</p>
+</section>
+<section id="are-the-risks-right" class="level3">
+<h3 class="anchored" data-anchor-id="are-the-risks-right">Are the risks right?</h3>
+<p><img src="images/7-1-calibration.png" class="img-fluid" alt="Calibration plot for model 3 on the test set: observed percentage diagnosed against predicted risk, one point per tenth of predicted risk. Seven points lie close to the dashed diagonal, from about 2% to 10%; the highest group is at about 18% predicted and 16% observed, a little below the line. The two lowest-risk groups are hidden."></p>
+<p>Predicted risks ranged from about <strong>0.9%</strong> in the lowest tenth to <strong>18%</strong> in the highest, and the observed rates followed them closely, up to <strong>16.4%</strong> in the top tenth: a little <strong>over</strong>-predicted. The two lowest-risk tenths had 1 to 20 new cases, so they’re hidden.</p>
+<p><strong>A screening rule:</strong> the 10% of people with the highest predicted risk included <strong>30%</strong> of all future cases. <strong>16.4%</strong> of them were diagnosed within 2 years, compared with <strong>4.2%</strong> of everyone else.</p>
+</section>
+<section id="choosing-the-lasso-penalty" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-lasso-penalty">Choosing the LASSO penalty</h3>
+<p><img src="images/7-1-lasso-tuning.png" class="img-fluid" alt="Cross-validated AUC against the LASSO penalty, on a log scale from 0.00001 to 0.1. The AUC is flat at about 0.76 for small penalties, falls slowly from about 0.003, drops steeply after 0.01, and reaches 0.5 at the largest penalties."></p>
+<p>The AUC was flat for small penalties, then fell as the penalty removed useful predictors. At the largest penalties, every coefficient was zero, and the AUC was <strong>0.5</strong>: the same risk for everyone.</p>
+</section>
 </section>
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
