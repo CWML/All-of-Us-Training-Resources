@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Hands-on exercises for the Coding with AI and GitHub class: what you may share with an AI, explaining and fixing code, spotting an AI’s mistakes, the full round trip, and copy-ready prompts">
+
+<title>Coding with AI: Exercises and Prompt Cards – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../pages/extras/workflows-for-beginners.html" rel="next">
+<link href="../../pages/extras/ai-coding.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/workspace/workspaces.html"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/index.html">
+ <span class="dropdown-text">All courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/core/index.html">
+ <span class="dropdown-text">Core series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/omics/index.html">
+ <span class="dropdown-text">Omics series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/surveys/index.html">
+ <span class="dropdown-text">Survey series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../pages/courses/wearables/index.html">
+ <span class="dropdown-text">Wearables series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../pages/extras/extras.html" aria-current="page"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../pages/extras/ai-coding-exercises.html">Coding with AI: Exercises and Prompt Cards</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/extras.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional Extras</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/github-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/ai-coding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coding with AI and GitHub</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/ai-coding-exercises.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Coding with AI: Exercises and Prompt Cards</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Workflows for Beginners</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/workflows-dsub.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Running Workflows: dsub, Cromwell, and Nextflow</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exercise-1-safe-to-share" id="toc-exercise-1-safe-to-share" class="nav-link active" data-scroll-target="#exercise-1-safe-to-share">Exercise 1: Safe to share?</a></li>
+  <li><a href="#exercise-2-explain-this-code" id="toc-exercise-2-explain-this-code" class="nav-link" data-scroll-target="#exercise-2-explain-this-code">Exercise 2: Explain this code</a></li>
+  <li><a href="#exercise-3-fix-this-error" id="toc-exercise-3-fix-this-error" class="nav-link" data-scroll-target="#exercise-3-fix-this-error">Exercise 3: Fix this error</a></li>
+  <li><a href="#exercise-4-spot-the-mistakes" id="toc-exercise-4-spot-the-mistakes" class="nav-link" data-scroll-target="#exercise-4-spot-the-mistakes">Exercise 4: Spot the mistakes</a></li>
+  <li><a href="#exercise-5-the-full-round-trip" id="toc-exercise-5-the-full-round-trip" class="nav-link" data-scroll-target="#exercise-5-the-full-round-trip">Exercise 5: The full round trip</a></li>
+  <li><a href="#prompt-cards" id="toc-prompt-cards" class="nav-link" data-scroll-target="#prompt-cards">Prompt cards</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Coding with AI: Exercises and Prompt Cards</h1>
+</div>
+
+<div>
+  <div class="description">
+    Hands-on exercises for the Coding with AI and GitHub class: what you may share with an AI, explaining and fixing code, spotting an AI’s mistakes, the full round trip, and copy-ready prompts
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Exercises for <a href="../../pages/extras/ai-coding.html">Coding with AI and GitHub</a></strong> · about 55 minutes in class · use any AI tool: Claude Code, Clarity, ChatGPT, Copilot…</p>
+<p>Each exercise has a <strong>prompt to copy</strong>, what to <strong>do</strong>, and an answer to open <strong>after</strong> you’ve tried. The code in them was tested on made-up data; none of it uses <em>All of Us</em> data.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Exercise</th>
+<th>Minutes</th>
+<th>You practise</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#exercise-1-safe-to-share">1. Safe to share?</a></td>
+<td>5</td>
+<td>the one rule: what an AI may and may never see</td>
+</tr>
+<tr class="even">
+<td><a href="#exercise-2-explain-this-code">2. Explain this code</a></td>
+<td>5</td>
+<td>using an AI to <strong>read</strong> code, and checking its explanation</td>
+</tr>
+<tr class="odd">
+<td><a href="#exercise-3-fix-this-error">3. Fix this error</a></td>
+<td>10</td>
+<td>describing a problem without data; testing the fix</td>
+</tr>
+<tr class="even">
+<td><a href="#exercise-4-spot-the-mistakes">4. Spot the mistakes</a></td>
+<td>10</td>
+<td>reviewing AI code against the <em>All of Us</em> rules</td>
+</tr>
+<tr class="odd">
+<td><a href="#exercise-5-the-full-round-trip">5. The full round trip</a></td>
+<td>25</td>
+<td>computer → GitHub → Workbench, with a real improvement</td>
+</tr>
+</tbody>
+</table>
+<p>Before class, finish the <a href="../../pages/extras/ai-coding.html#before-class"><strong>Before class</strong> checklist</a>: exercises 2 to 4 need only an AI tool, but exercise 5 needs everything on it.</p>
+<section id="exercise-1-safe-to-share" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-safe-to-share">Exercise 1: Safe to share?</h2>
+<p><strong>No AI needed.</strong> For each item, decide: may you paste it into an AI tool (outside the Workbench)?</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Item</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td>The SQL in <code>notebooks/sql/t2d_cohort.sql</code></td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td>The error <em>“Can’t join <code>x$person_id</code> with <code>y$person_id</code> due to incompatible types”</em></td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td>An error that ends <em>“…invalid date ‘1953-07-14’ in row 4521”</em></td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td>The column names of your cohort data frame, from <code>names(cohort_sample)</code></td>
+</tr>
+<tr class="odd">
+<td>e</td>
+<td>The first six rows of your cohort data frame, from <code>head(cohort_sample)</code></td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td><em>“My model returns NA for every coefficient”</em></td>
+</tr>
+<tr class="odd">
+<td>g</td>
+<td>A table of counts by group in which one group shows <strong>14</strong></td>
+</tr>
+<tr class="even">
+<td>h</td>
+<td>A notebook copied from the Workbench, saved with its outputs</td>
+</tr>
+<tr class="odd">
+<td>i</td>
+<td>Concept ID 201826 and its name, <em>Type 2 diabetes mellitus</em>, from Athena</td>
+</tr>
+<tr class="even">
+<td>j</td>
+<td>A Table One where every count is above 20, and none can be worked out from the others</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary>
+<b>Show answer</b>
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Share?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td>✅</td>
+<td>Code, with no data in it</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td>✅</td>
+<td>Names column <strong>types</strong>, not values. Read every error before pasting it</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td>❌</td>
+<td>It quotes a <strong>value</strong>: a date (possibly a birth date) from one person’s row. Paste it with the value removed: <em>“…invalid date ‘…’ in row …”</em></td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td>✅</td>
+<td>Column names are in the public data dictionary</td>
+</tr>
+<tr class="odd">
+<td>e</td>
+<td>❌</td>
+<td>Individual rows: participant IDs, dates, values</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>✅</td>
+<td>A description in words, with no data</td>
+</tr>
+<tr class="odd">
+<td>g</td>
+<td>❌</td>
+<td>A count of 1 to 20</td>
+</tr>
+<tr class="even">
+<td>h</td>
+<td>❌</td>
+<td>Outputs can hold results and rows; downloading from the Workbench is also logged as egress. Clear outputs in the Workbench and push through GitHub</td>
+</tr>
+<tr class="odd">
+<td>i</td>
+<td>✅</td>
+<td>Public vocabulary</td>
+</tr>
+<tr class="even">
+<td>j</td>
+<td>✅, with care</td>
+<td>Summary results that follow the Dissemination Policy may be shared. You don’t need to share them to get help with code, though: describe the problem instead</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The test:</strong> would you be comfortable <strong>publishing</strong> it? If not, don’t paste it.</p>
+</details>
+</section>
+<section id="exercise-2-explain-this-code" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-explain-this-code">Exercise 2: Explain this code</h2>
+<p><strong>Why:</strong> an AI is an excellent tutor for code you didn’t write. But explanations can be confidently wrong, so check them against something you trust.</p>
+<p><strong>Paste this prompt and code</strong> into your AI tool:</p>
+<blockquote class="blockquote">
+<p><em>Explain this BigQuery SQL line by line, for someone new to SQL. What does each part do, and why might it be needed?</em></p>
+</blockquote>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ehr_people <span class="kw">AS</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    v.person_id,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MIN</span>(v.visit_start_date) <span class="kw">AS</span> first_ehr_date,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MAX</span>(v.visit_start_date) <span class="kw">AS</span> last_ehr_date</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> `{CURRENT_DATASET}.visit_occurrence` <span class="kw">AS</span> v</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> `{CURRENT_DATASET}.visit_occurrence_ext` <span class="kw">AS</span> ve</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> v.visit_occurrence_id <span class="op">=</span> ve.visit_occurrence_id</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">WHERE</span> STARTS_WITH(ve.src_id, <span class="st">'EHR site'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     <span class="kw">OR</span> STARTS_WITH(ve.src_id, <span class="st">'Participant Mediated EHR'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> v.person_id</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>),</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Then check:</strong> the same lines in <a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/sql/t2d_cohort.sql"><code>notebooks/sql/t2d_cohort.sql</code></a> have comments written by people who tested them. Does the AI’s explanation agree? Did it know <strong>why</strong> the <code>WHERE</code> line is there?</p>
+<details>
+<summary>
+<b>Show answer</b>
+</summary>
+<ul>
+<li>It makes a small table, <code>ehr_people</code>: <strong>one row per person</strong> with at least one health-record visit, and the dates of their <strong>first</strong> and <strong>last</strong> visit (<code>MIN</code> and <code>MAX</code>, per person because of <code>GROUP BY</code>).</li>
+<li><code>visit_occurrence_ext</code> is an <em>All of Us</em> extension table. Its <code>src_id</code> says <strong>where</strong> each visit came from.</li>
+<li>The <code>WHERE</code> line keeps visits from <strong>EHR sites</strong> (records a hospital or clinic sent) and <strong>participant-mediated EHR</strong> (records participants shared themselves). It leaves out program visits (<code>Staff Portal</code>, <code>Participant Portal</code>: physical measurements and surveys), which <strong>aren’t</strong> health records.</li>
+<li>An AI usually explains <code>MIN</code>, <code>MAX</code>, and <code>GROUP BY</code> well. It may <strong>not</strong> know what <code>src_id</code> holds in <em>All of Us</em>, and may guess. That’s the part to check against the comments, or the data dictionary.</li>
+</ul>
+</details>
+</section>
+<section id="exercise-3-fix-this-error" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3-fix-this-error">Exercise 3: Fix this error</h2>
+<p><strong>Why:</strong> most of the time you’ll use an AI for a specific error. The skill is giving it <strong>enough to help</strong> (the code and the error message) and <strong>nothing it mustn’t see</strong> (the data).</p>
+<p>The code below joins BMI values onto the cohort. In the Workbench it fails. Here it uses a <strong>made-up</strong> data frame with the same columns, so you can run it on your own computer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Made-up data: same column names as the course files, no real people</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cohort_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">person_id =</span> <span class="fu">c</span>(<span class="st">"1001"</span>, <span class="st">"1002"</span>, <span class="st">"1003"</span>, <span class="st">"1004"</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cohort    =</span> <span class="fu">c</span>(<span class="st">"case"</span>, <span class="st">"control"</span>, <span class="st">"case"</span>, <span class="st">"control"</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bmi <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">person_id =</span> <span class="fu">c</span>(<span class="dv">1001</span>, <span class="dv">1003</span>, <span class="dv">1004</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">bmi       =</span> <span class="fu">c</span>(<span class="fl">31.2</span>, <span class="fl">27.5</span>, <span class="fl">24.9</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cohort_bmi <span class="ot">&lt;-</span> cohort_sample <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(bmi, <span class="at">by =</span> <span class="st">"person_id"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The error:</p>
+<pre><code>Error in `left_join()`:
+! Can't join `x$person_id` with `y$person_id` due to incompatible types.
+ℹ `x$person_id` is a &lt;character&gt;.
+ℹ `y$person_id` is a &lt;double&gt;.</code></pre>
+<p><strong>Paste this prompt</strong>, with the code and the error:</p>
+<blockquote class="blockquote">
+<p><em>This R code fails with the error below. Explain the cause in plain language, fix it, and add a check that the join didn’t add or lose rows.</em></p>
+</blockquote>
+<p><strong>Then:</strong> run the fixed code. Does <code>cohort_bmi</code> have the same number of rows as <code>cohort_sample</code>? Does person 1002 (no BMI) still appear, with <code>NA</code>?</p>
+<details>
+<summary>
+<b>Show answer</b>
+</summary>
+<p><code>person_id</code> is <strong>text</strong> in one table and a <strong>number</strong> in the other. A number and the same digits as text don’t match, so R refuses to join them. Make them the same type, then check the rows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cohort_bmi <span class="ot">&lt;-</span> cohort_sample <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bmi <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">person_id =</span> <span class="fu">as.character</span>(person_id)), <span class="at">by =</span> <span class="st">"person_id"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(cohort_bmi) <span class="sc">==</span> <span class="fu">nrow</span>(cohort_sample))   <span class="co"># a left join must not add or lose rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Person 1002 stays, with <code>bmi</code> = <code>NA</code>: that’s what a <strong>left</strong> join does. In the course, every notebook turns <code>person_id</code> into text as soon as data arrives (<code>mutate(person_id = as.character(person_id))</code>, or <code>col_types = cols(person_id = "c")</code> when loading a file), so this can’t happen. See class <strong>2.3</strong> on checking every join.</p>
+<p><strong>Did the AI suggest <code>as.numeric()</code> instead?</strong> It works here, but very large IDs can lose digits as numbers. Text is safer for IDs.</p>
+</details>
+</section>
+<section id="exercise-4-spot-the-mistakes" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4-spot-the-mistakes">Exercise 4: Spot the mistakes</h2>
+<p><strong>Why:</strong> AI code often <strong>runs</strong> and still breaks the rules, or gives the wrong answer. Reviewing it is your job.</p>
+<p>A student asked an AI: <em>“Write R code to compare HbA1c in people with type 2 diabetes, by race, in All of Us.”</em> This is what it wrote. <strong>Don’t run it.</strong> Find as many problems as you can (there are at least seven):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sql <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT *</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">FROM `{Sys.getenv('WORKSPACE_CDR')}.condition_occurrence` AS co</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN `{Sys.getenv('WORKSPACE_CDR')}.measurement` AS m</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">  ON co.person_id = m.person_id</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE co.condition_concept_id = 201820    -- type 2 diabetes</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">  AND m.measurement_concept_id = 3004410  -- HbA1c</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>t2d <span class="ot">&lt;-</span> <span class="fu">run_query</span>(<span class="fu">str_glue</span>(sql))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(t2d)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>t2d <span class="sc">%&gt;%</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(race) <span class="sc">%&gt;%</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n          =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_hba1c =</span> <span class="fu">mean</span>(value_as_number),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_hba1c  =</span> <span class="fu">max</span>(value_as_number))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<details>
+<summary>
+<b>Show answer</b>
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Problem</th>
+<th>Why it matters</th>
+<th>The fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>WORKSPACE_CDR</code></td>
+<td>It <strong>isn’t set</strong> in Workbench 2.0: the query fails</td>
+<td><code>CURRENT_DATASET</code>, from <code>aou_setup.R</code></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>201820</code> labelled “type 2 diabetes”</td>
+<td>201820 is diabetes of <strong>all</strong> types; type 2 is <strong>201826</strong>. The AI wrote an ID from memory</td>
+<td>Look it up (Athena, the Data Browser, or a query on <code>concept</code>)</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>= 201826</code> alone would still miss people</td>
+<td>Most diagnoses use more <strong>specific</strong> codes (e.g.&nbsp;type 2 diabetes <em>with kidney complications</em>)</td>
+<td>Use <code>concept_ancestor</code> to include every code below it, as the cohort query does</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>SELECT *</code> on <code>measurement</code></td>
+<td>One of the largest tables: you pay for every column read</td>
+<td>Select only the columns you need; price it first with <code>run_if_cheap()</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>head(t2d)</code></td>
+<td>Prints <strong>individual rows</strong>: IDs, dates, values</td>
+<td>Never print rows; show summaries</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><code>group_by(race)</code></td>
+<td>There’s no <code>race</code> column in these tables: it’s in <code>person</code> (via <code>concept</code>). The AI <strong>invented</strong> a column</td>
+<td>Join <code>person</code>, or use the cohort query, which already has <code>race</code></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Joining conditions × measurements</td>
+<td>Each diagnosis row is paired with each HbA1c row: someone with 10 diagnosis codes and 5 tests becomes <strong>50 rows</strong>. <code>n</code> counts rows, not people, and the mean is weighted toward people with many records</td>
+<td>Find the people first (one row each), then <strong>one</strong> HbA1c per person (e.g.&nbsp;the latest), as in classes <strong>2.2</strong> and <strong>2.3</strong></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><code>n = n()</code> with no hiding</td>
+<td>Some groups may have 1 to 20 people</td>
+<td><code>hide_small_counts()</code>; combine small groups</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><code>max_hba1c</code></td>
+<td>A maximum is <strong>one person’s</strong> value</td>
+<td>Report means or medians, not maxima or minima</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>No check of units or plausible values</td>
+<td>HbA1c can be stored in % or mmol/mol, and some values are errors</td>
+<td>Count the units first, and keep plausible values (class <strong>2.1</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The pattern:</strong> it looked right and might even have run. Every problem was caught by a rule you already know, not by trusting the answer.</p>
+</details>
+</section>
+<section id="exercise-5-the-full-round-trip" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5-the-full-round-trip">Exercise 5: The full round trip</h2>
+<p><strong>Why:</strong> this is the whole class in one task: the AI improves code on your computer, GitHub carries it, and the Workbench runs it on real data that never leaves.</p>
+<p><strong>The task:</strong> the worked example’s <code>count_by_group()</code> hides counts of 1 to 20. But, as the class page warns, if a cohort has <strong>exactly one</strong> hidden count, it can be worked out by subtraction from the cohort’s total. Fix that.</p>
+<p><strong>On your computer</strong>, in your fork:</p>
+<ol type="1">
+<li><p>Start a branch: <code>git checkout -b count-by-group</code>.</p></li>
+<li><p><strong>Paste this prompt</strong> (with Claude Code, it can create the file itself; with a chat tool, paste the function from the worked example too):</p>
+<blockquote class="blockquote">
+<p><em>Create <code>notebooks/helpers.R</code> with the function <code>count_by_group(data, var)</code> from the worked example on the Coding with AI page. Change it so that, if exactly one count in a cohort is hidden (1 to 20), the next-smallest count in that cohort is hidden too, with its percent, so no hidden count can be worked out by subtraction. Then write a small made-up data frame with columns <code>person_id</code>, <code>cohort</code>, and <code>self_reported_category</code> that triggers this, and a check that no cohort ends up with exactly one hidden count.</em></p>
+</blockquote></li>
+<li><p><strong>Read</strong> the change (<code>git diff</code>), and <strong>run</strong> the test on the made-up data. Does the check pass?</p></li>
+<li><p>Commit (watch the pre-commit check run) and push: <code>git push -u origin count-by-group</code>.</p></li>
+</ol>
+<p><strong>In the Workbench</strong>, in your app’s terminal:</p>
+<ol start="5" type="1">
+<li><p><code>cd</code> into your fork, then <code>git fetch</code> and <code>git checkout count-by-group</code>.</p></li>
+<li><p>Open a <strong>new notebook</strong> in <code>notebooks/core/</code> (leave it named <code>Untitled…</code>: Git ignores those), with the <strong>R</strong> kernel, and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../aou_setup.R"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../helpers.R"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>cohort_sample <span class="ot">&lt;-</span> <span class="fu">load_cohort_sample</span>()   <span class="co"># 1.1's sample, or rebuilt (one query, under $1)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">count_by_group</span>(cohort_sample, <span class="st">"self_reported_category"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Read the result in the Workbench.</strong> Are any counts hidden? In a cohort with hidden counts, are there at least <strong>two</strong>?</p></li>
+</ol>
+<p><strong>Back on GitHub:</strong> open a pull request <strong>in your fork</strong>, read <strong>Files changed</strong>, wait for the safety check, and merge.</p>
+<p><strong>✅ Check:</strong> the function passes the test on made-up data <strong>and</strong> runs on the real data; no cohort shows exactly one hidden count; the real result never left the Workbench.</p>
+<details>
+<summary>
+<b>Show one answer</b>
+</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>count_by_group <span class="ot">&lt;-</span> <span class="cf">function</span>(data, var) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(.data[[var]])) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(cohort, <span class="at">level =</span> .data[[var]]) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(cohort) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">hide    =</span> n <span class="sc">&lt;=</span> <span class="dv">20</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>           <span class="co"># one hidden count can be worked out from the cohort's total:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>           <span class="co"># if exactly one is hidden, hide the next-smallest too</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">hide    =</span> hide <span class="sc">|</span> (<span class="fu">sum</span>(hide) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">rank</span>(n, <span class="at">ties.method =</span> <span class="st">"first"</span>) <span class="sc">==</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">n       =</span> <span class="fu">if_else</span>(hide, <span class="cn">NA_integer_</span>, n),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">percent =</span> <span class="fu">if_else</span>(hide, <span class="cn">NA_real_</span>, percent)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>hide)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The hidden count is always the smallest in its cohort (rank 1), so the next-smallest has rank 2. Your AI’s version may look different: what matters is that <strong>your test</strong> shows no cohort with exactly one hidden count.</p>
+<p><strong>Review questions to ask the AI:</strong> what if a cohort has only <strong>one</strong> level? What if the overall total isn’t shown anywhere? (Hiding is about what <strong>readers</strong> can work out, so think about every table you publish together.)</p>
+</details>
+</section>
+<section id="prompt-cards" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-cards">Prompt cards</h2>
+<p>Copy, then change the parts in <em>italics</em> to your task. Every card works best when your instructions file (<code>AGENTS.md</code> or <code>CLAUDE.md</code>) is in place, or pasted at the start of a chat.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Prompt</th>
+<th>What to check in the answer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Explain</strong></td>
+<td><em>Explain this code line by line, for someone new to R. Which parts are specific to All of Us?</em></td>
+<td>Compare with the code’s comments, or the data dictionary. Ask about anything it skips</td>
+</tr>
+<tr class="even">
+<td><strong>Fix an error</strong></td>
+<td><em>This code fails with the error below. Explain the cause, fix it, and add a check that would have caught it.</em> (paste the code, and the error with any data values removed)</td>
+<td>Run the fix; make sure it fixes the <strong>cause</strong>, not just the message</td>
+</tr>
+<tr class="odd">
+<td><strong>Test on made-up data</strong></td>
+<td><em>Write a small made-up data frame with these columns: …, including the tricky cases (missing values, small groups, duplicates). Then test the function on it.</em></td>
+<td>Did the fake data include the cases that could break it?</td>
+</tr>
+<tr class="even">
+<td><strong>Write a query</strong></td>
+<td><em>Write BigQuery SQL for the All of Us CDR v9 (OMOP) to …. Select only the columns needed. Use concept_ancestor for conditions. Don’t use any concept ID I haven’t given you: tell me what to look up.</em></td>
+<td>Every concept ID, table, and column checked in <code>reference/</code> or Athena; price it with <code>run_if_cheap()</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Cut a query’s cost</strong></td>
+<td><em>Which columns and tables does this query read? Can it read less and give the same result?</em></td>
+<td>Compare the estimated cost before and after with <code>run_if_cheap()</code></td>
+</tr>
+<tr class="even">
+<td><strong>Make a summary safe</strong></td>
+<td><em>Change this so it shows only summaries: no rows, no maxima or minima, counts of 1 to 20 hidden, and no hidden count that can be worked out from the others.</em></td>
+<td>Test with made-up data that <strong>has</strong> small groups</td>
+</tr>
+<tr class="odd">
+<td><strong>Add a check</strong></td>
+<td><em>Add checks after each step: row counts after every join and filter, and the categories after every recode.</em></td>
+<td>Do the checks <strong>stop</strong> when something’s wrong, or just print?</td>
+</tr>
+<tr class="even">
+<td><strong>Review</strong></td>
+<td><em>Review this code as a strict reviewer. List problems with correctness, cost, and privacy (All of Us rules: no rows, no counts of 1 to 20, no single-person values). Don’t rewrite it yet.</em></td>
+<td>Fix the problems one at a time, and test each</td>
+</tr>
+<tr class="odd">
+<td><strong>Learn</strong></td>
+<td><em>Don’t write the code. Give me hints, one at a time, so I can write it myself.</em></td>
+<td>Good for learning: you’ll remember what you wrote</td>
+</tr>
+</tbody>
+</table>
+<p><strong>When the AI isn’t sure, it should say so.</strong> If an answer names a concept ID, table, or column you didn’t give it, assume it’s a guess until you’ve checked it.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../pages/extras/ai-coding.html" class="pagination-link" aria-label="Coding with AI and GitHub">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Coding with AI and GitHub</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../pages/extras/workflows-for-beginners.html" class="pagination-link" aria-label="Workflows for Beginners">
+        <span class="nav-page-text">Workflows for Beginners</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
