@@ -37,7 +37,7 @@ The founding paper lists the program's **scientific goals**. Our series, all on 
 | **Discover disease biomarkers** | [Omics](omics/index.qmd) 4.5–4.7 | Genes and blood proteins that differ in type 2 diabetes, and which of them are genetically controlled |
 | **Connect mobile health, digital health, and sensor data with clinical outcomes** | [Wearables](wearables/index.qmd) 6.1–6.3 | Daily steps, sleep, and heart rate measured **before** a diagnosis, then followed forward to new type 2 diabetes |
 | **Improve understanding of health disparities** | [Surveys](surveys/index.qmd) 5.3; [Core](core/index.qmd) 3.1–3.2; [Omics](omics/index.qmd) 4.1–4.2 | Diabetes by income, education, and insurance; differences between groups in Table One; genetic ancestry |
-| **Enable machine-learning applications** | Machine learning series (7.x, planned) | Predicting **who** will develop type 2 diabetes, from data collected before diagnosis |
+| **Enable machine-learning applications** | [Machine learning](ml/index.qmd) 7.1–7.4 | Predicting **who** will develop type 2 diabetes, from data collected before diagnosis |
 | Develop new disease classifications; improve predictions of therapeutic safety and efficacy; support clinical trials | Not covered yet | Ideas for future classes, e.g. medication response (pharmacogenomics) |
 
 The [Core series](core/index.qmd) underpins all of them: finding the right people (cohorts), cleaning and joining their data, and the models every later class uses.
@@ -62,7 +62,7 @@ The founding paper is candid about these limits too:
 
 Getting from our kind of result to precision medicine takes several steps, and each one is an active research area:
 
-1. **Combine many factors.** One variant, or one survey answer, predicts little. **Polygenic risk scores** add up thousands of variants; **prediction models** combine genes, records, surveys, and wearables (our planned machine learning series).
+1. **Combine many factors.** One variant, or one survey answer, predicts little. **Polygenic risk scores** add up thousands of variants; **prediction models** combine genes, records, surveys, and wearables (our [machine learning series](ml/index.qmd)).
 2. **Check it works for everyone.** Today's polygenic risk scores are several times more accurate in people of European ancestry than in other groups, because most genetic studies so far were in people of European ancestry. Using them in clinics could **widen** health disparities (Martin et al., *Nature Genetics*, 2019, [doi:10.1038/s41588-019-0379-x](https://doi.org/10.1038/s41588-019-0379-x)). This is exactly the gap *All of Us*'s diversity is meant to close.
 3. **Show cause, not just association**, with designs such as Mendelian randomization and, finally, clinical trials.
 4. **Show it helps patients**: that tailoring care on the new information leads to better health than usual care.

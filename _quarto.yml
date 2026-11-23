@@ -42,6 +42,8 @@ website:
             href: pages/courses/surveys/index.qmd
           - text: "Wearables series"
             href: pages/courses/wearables/index.qmd
+          - text: "Machine learning series"
+            href: pages/courses/ml/index.qmd
       - text: "Learn by Example"
         href: pages/examples/tutorial-workspaces.qmd
       - text: "Optional Extras"
@@ -131,6 +133,11 @@ website:
             - pages/courses/wearables/6-1-wearables-basics.qmd
             - pages/courses/wearables/6-2-steps-and-t2d.qmd
             - pages/courses/wearables/6-3-sleep-and-heart-rate.qmd
+        - section: "Machine learning"
+          contents:
+            - pages/courses/ml/index.qmd
+            - pages/courses/ml/ml-for-beginners.qmd
+            - pages/courses/ml/7-1-first-prediction-model.qmd
     - id: extras
       title: "Optional Extras"
       style: docked

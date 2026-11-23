@@ -30,11 +30,11 @@
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/github-guide.html</loc>
-    <lastmod>2026-11-17T19:54:28.686Z</lastmod>
+    <lastmod>2026-11-23T18:38:56.333Z</lastmod>
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/ai-coding.html</loc>
-    <lastmod>2026-11-23T15:13:33.091Z</lastmod>
+    <lastmod>2026-11-23T18:38:56.332Z</lastmod>
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/examples/tutorial-workspaces.html</loc>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/precision-medicine.html</loc>
-    <lastmod>2026-11-23T15:08:40.328Z</lastmod>
+    <lastmod>2026-11-23T20:47:27.678Z</lastmod>
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/omics/omics-data-map.html</loc>
@@ -85,56 +85,68 @@
     <lastmod>2026-11-17T20:50:51.355Z</lastmod>
   </url>
   <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/index.html</loc>
-    <lastmod>2026-11-23T15:08:40.326Z</lastmod>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/ml/index.html</loc>
+    <lastmod>2026-11-23T20:47:15.002Z</lastmod>
   </url>
   <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-4-survival-analysis.html</loc>
-    <lastmod>2026-10-30T19:35:34.625Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-2-logistic-regression.html</loc>
-    <lastmod>2026-10-30T19:35:34.624Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/2-3-join-and-bind.html</loc>
-    <lastmod>2026-10-30T19:35:34.623Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/2-1-clean.html</loc>
-    <lastmod>2026-10-30T19:35:34.622Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/1-1-build-cohorts.html</loc>
-    <lastmod>2026-11-17T19:54:28.685Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/index.html</loc>
-    <lastmod>2026-10-30T19:35:34.616Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/1-2-survival-data.html</loc>
-    <lastmod>2026-10-30T19:35:34.622Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/2-2-reshape.html</loc>
-    <lastmod>2026-10-30T19:35:34.623Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-1-table-one.html</loc>
-    <lastmod>2026-10-30T19:35:34.623Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-3-linear-regression.html</loc>
-    <lastmod>2026-10-30T19:35:34.625Z</lastmod>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/index.html</loc>
+    <lastmod>2026-11-23T20:47:27.678Z</lastmod>
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/data-explorer-cohort.html</loc>
     <lastmod>2026-10-30T19:35:34.626Z</lastmod>
   </url>
   <url>
-    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/index.html</loc>
-    <lastmod>2026-11-23T15:14:10.845Z</lastmod>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-3-linear-regression.html</loc>
+    <lastmod>2026-10-30T19:35:34.625Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-1-table-one.html</loc>
+    <lastmod>2026-10-30T19:35:34.623Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/2-2-reshape.html</loc>
+    <lastmod>2026-10-30T19:35:34.623Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/1-2-survival-data.html</loc>
+    <lastmod>2026-10-30T19:35:34.622Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/index.html</loc>
+    <lastmod>2026-10-30T19:35:34.616Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/1-1-build-cohorts.html</loc>
+    <lastmod>2026-11-17T19:54:28.685Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/2-1-clean.html</loc>
+    <lastmod>2026-10-30T19:35:34.622Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/2-3-join-and-bind.html</loc>
+    <lastmod>2026-10-30T19:35:34.623Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-2-logistic-regression.html</loc>
+    <lastmod>2026-10-30T19:35:34.624Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/3-4-survival-analysis.html</loc>
+    <lastmod>2026-10-30T19:35:34.625Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/core/index.html</loc>
+    <lastmod>2026-11-23T15:08:40.326Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/ml/7-1-first-prediction-model.html</loc>
+    <lastmod>2026-11-23T20:47:15.025Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/ml/ml-for-beginners.html</loc>
+    <lastmod>2026-11-23T20:46:23.924Z</lastmod>
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/courses/omics/4-2-gwas-plink.html</loc>
@@ -182,7 +194,7 @@
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/ai-coding-exercises.html</loc>
-    <lastmod>2026-11-23T15:12:53.493Z</lastmod>
+    <lastmod>2026-11-23T15:33:50.712Z</lastmod>
   </url>
   <url>
     <loc>https://cwml.github.io/All-of-Us-Training-Resources/pages/extras/extras.html</loc>

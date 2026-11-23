@@ -1,0 +1,60 @@
+---
+title: "Machine Learning Series"
+description: "Predicting who will develop type 2 diabetes from data collected before the diagnosis: enrollment data, trees and boosting, proteins, and combining data responsibly"
+---
+
+R classes on **prediction**, with the same cohort as every other series: people **with type 2 diabetes** and people **without diabetes**. The question in every class: from data collected **before** a diagnosis, who will be diagnosed with type 2 diabetes in the next few years?
+
+The earlier series asked **why**: is steps, income, or a genetic variant linked to diabetes? This series asks **who**: for one person, what's the risk? That's one of *All of Us*'s scientific goals, and a step towards [precision medicine](../precision-medicine.qmd) ("precision prevention").
+
+**New to machine learning?** Start with [Machine learning for beginners](ml-for-beginners.qmd): prediction vs explanation, training and test data, overfitting, AUC, calibration, and leakage.
+
+## The classes
+
+| Class | Time | What you learn |
+|---|---|---|
+| [**7.1 A first prediction model**](7-1-first-prediction-model.qmd) | 95 min | A prediction question with a time zero; enrollment data predicting new type 2 diabetes within 2 years; training and test sets; logistic regression with tidymodels; AUC, ROC curve, calibration; LASSO with cross-validation |
+| 7.2 Trees and boosting | planned | Random forests and gradient boosting on the 7.1 data; tuning; variable importance; the same model in Python scikit-learn |
+| 7.3 A protein signature | planned | Thousands of proteins, a few hundred new cases: LASSO; does it add anything beyond age and BMI? |
+| 7.4 Combining data responsibly | planned | Enrollment data, wearables, and proteins together; how overlap shrinks the sample; fairness across groups; TRIPOD+AI reporting |
+
+## The design: time zero
+
+A prediction model may only use data from **before** the outcome. So every class has a **time zero**: predictors are measured before it, and only **new** diagnoses after it count.
+
+```
+                time zero                                    2 years later
+                    |──────────────── follow-up ─────────────────|
+  predictors measured here                    a NEW type 2 diabetes diagnosis? yes / no
+  excluded: anyone already diagnosed
+```
+
+We checked this design before building any class, in a planning notebook ([ML data check](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/ml/ml_data_check.ipynb)):
+
+| Data | Time zero | People at risk | New type 2 diabetes afterwards |
+|---|---|---|---|
+| Surveys and BMI | enrollment (the first survey) | about 264,000 | about 15,500 |
+| Fitbit | the first day of Fitbit data | about 34,000 | about 2,000 |
+| Proteomics | the later of enrollment and the blood draw | about 5,800 | about 380 |
+
+About **77%** of people with type 2 diabetes in *All of Us* were diagnosed **before** they enrolled. They're left out of every model: their data describe life **with** diabetes.
+
+**The proteomics time zero.** The proteomics files have no sample date. The genome files do: a `biosample_collection_date` for each genome sample. For people with proteomics, the median gap between enrollment and that blood draw was **0 days** (80% within 30 days). So 7.3 starts the clock at the later of the two, assuming the proteins and the genome came from the same visit.
+
+## What it costs
+
+| | Cost |
+|---|---|
+| **7.1** | about **$1 to $2**: the cohort query, and one query for everyone's enrollment data, priced first with `run_if_cheap()` |
+| **First run** | up to **15 minutes** to install tidymodels (once per app) |
+| **The app, while running** | about **$0.27 an hour** |
+| **The app's disk** | about **$0.70 a day**, even while the app is stopped |
+
+## Keep All of Us data in the Workbench
+
+Don't download, screenshot, or share **participant-level data**, or counts of **1 to 20** (including counts that could be worked out from others). Two traps in this series:
+
+- **ROC curves** from `roc_curve()` have a point for **every person's** predicted risk. Our classes draw them from 50 cut-offs, each summarising hundreds of people.
+- **Calibration tables** by risk group often have small counts in the lowest-risk groups: they're hidden, with one more if only one would be.
+
+The results on these pages come from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge *All of Us* participants for their contributions. See [Acknowledgment and data availability](../index.qmd#acknowledgment-and-data-availability).

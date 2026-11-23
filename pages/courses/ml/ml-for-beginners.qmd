@@ -1,0 +1,205 @@
+---
+title: "Machine Learning for Beginners"
+description: "The ideas behind the machine learning series, in plain language: prediction vs explanation, training and test data, overfitting, AUC, calibration, and leakage"
+---
+
+New to machine learning? This page explains everything the machine learning series assumes, in plain language, with examples from our type 2 diabetes question. Each class links back to the parts it uses.
+
+## What is machine learning?
+
+**Machine learning** is a set of methods that **learn a rule from examples**, so the rule can be used on **new** cases. Show a method thousands of people, what was known about them, and whether they were later diagnosed with type 2 diabetes. It learns a rule that turns "what's known" into a **predicted risk**. Then we use the rule on people it has never seen.
+
+You've already used one machine learning method: **logistic regression** (class [3.2](../core/3-2-logistic-regression.qmd)). The difference is in **why** we use it.
+
+## Explaining vs predicting
+
+| | Explaining (classes 3.2, 5.3, 6.2) | Predicting (this series) |
+|---|---|---|
+| **The question** | *Is income linked to type 2 diabetes, after accounting for age and sex?* | *For this person, what's the chance of a diagnosis in the next 2 years?* |
+| **What matters** | one effect (an odds ratio or hazard ratio), and its confidence interval | how **accurate** the predicted risks are, for **new** people |
+| **Judged by** | is the effect unbiased (confounders adjusted for)? | **AUC** and **calibration** on a **test set** |
+| **A predictor that causes nothing** | a problem (confounding) | fine, if it's known in time and it helps |
+| **The main worries** | confounding, reverse causation | **overfitting**, **leakage** |
+
+A predictor can be **useful without being a cause**. People who rate their health as *poor* are more often diagnosed with diabetes soon after, perhaps because they already have it, undiagnosed. That answer helps a prediction, but changing someone's answer wouldn't change their risk.
+
+## Four parts of a prediction question
+
+Every class in this series starts by filling in this table:
+
+| Part | Our choice in 7.1 | Why it matters |
+|---|---|---|
+| **Who** is it for? | adults with **no diabetes** at enrollment | you can't predict a diagnosis that has already happened |
+| **From what?** (known **when**?) | age, sex, BMI, blood pressure, and survey answers, from around **enrollment** | a model used on a given day can only use what's known that day |
+| **Predicting what?** | a **new** type 2 diabetes diagnosis | the shared case definition, with its date |
+| **By when?** | within **2 years** | the **prediction window**: longer windows give more cases, but fewer people with long enough follow-up |
+
+The day the prediction is made is **time zero**. Everything used as a predictor must be known by then; the outcome must happen after it.
+
+### Why time zero matters in *All of Us*
+
+Most people with type 2 diabetes in *All of Us* were diagnosed **before they joined**. In our [ML data check](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/ml/ml_data_check.ipynb), about **77%** of cases were diagnosed before enrollment. Their surveys and measurements describe life **with** diabetes, so they can't teach a model the warning signs. They're left out, and the model learns from the people who were diagnosed **afterwards**:
+
+| Data | People at risk at time zero | New type 2 diabetes afterwards |
+|---|---|---|
+| Surveys and BMI at enrollment | about 264,000 | about 15,500 |
+| Fitbit (from the first day of data) | about 34,000 | about 2,000 |
+| Proteomics (from the blood draw) | about 5,800 | about 380 |
+
+That last row is why the protein class (7.3) has to be careful: thousands of proteins, and a few hundred cases.
+
+## Leakage: the most common way to fool yourself
+
+**Leakage** is when a predictor contains information you **wouldn't have** at prediction time, often because it's a **result** of the outcome. A leaky model looks brilliant in the analysis and fails in practice.
+
+| Predictor | Leakage? | Why |
+|---|---|---|
+| BMI measured at enrollment | ✅ no | known at time zero |
+| An HbA1c test result after enrollment | ❌ yes | HbA1c is **how** diabetes is diagnosed |
+| A metformin prescription | ❌ yes | a **treatment** for diabetes |
+| A survey answered after the diagnosis | ❌ yes | the answer may reflect the diagnosis (class [5.2](../surveys/5-2-family-history-lifestyle.qmd)) |
+| The number of doctor visits in the next year | ❌ yes | it's in the **future**, and people being diagnosed see doctors more |
+| Being in the "case" group of our cohort | ❌ yes | that **is** the outcome |
+
+**Rule of thumb:** an AUC above about **0.95** for a common disease, from routine data, is almost always leakage. Check every predictor's **date**.
+
+## Training and test data
+
+A model always looks better on the people it learned from: it has partly memorised them. To know how it would do on **new** people, we hide some people from it.
+
+```
+everyone in the analysis
+├── training set (75%): the model learns from these
+└── test set (25%):     locked away; used ONCE, at the very end
+```
+
+| Word | Means |
+|---|---|
+| **Training set** | the people a model learns from |
+| **Test set** | people held back, to measure how the model does on people it never saw |
+| **Stratified** split | both sets get the same share of cases (important when the outcome is rare) |
+| **Seed** (`set.seed()`) | makes a random split the same every time, and for everyone in the class |
+
+## Overfitting
+
+**Overfitting** is learning the **noise** in the training set, not the pattern. An overfitted model scores very well on training data and worse on new data. It's more likely when there are **many predictors** and **few cases**.
+
+| | Too simple (**underfit**) | About right | Too flexible (**overfit**) |
+|---|---|---|---|
+| Training data | so-so | good | excellent |
+| Test data | so-so | good | worse |
+| Example | age alone | age, sex, BMI, … | a separate rule for every combination of answers |
+
+Methods such as **LASSO** (class 7.1) fight overfitting with a **penalty** that keeps the model simple.
+
+## Cross-validation and tuning
+
+Many methods have **settings** you choose before fitting, called **tuning parameters**: LASSO's penalty, or the number of trees in a forest (7.2). We can't use the test set to choose them: the test set would then be part of the training, and its result no longer honest.
+
+**Cross-validation** chooses them using the training set only:
+
+```
+training set, cut into 5 folds:   [1][2][3][4][5]
+round 1: learn from 2-5, score on 1
+round 2: learn from 1, 3-5, score on 2
+...                                   every person is scored once, by a model that didn't see them
+```
+
+Try each setting this way, keep the best, then fit once on the whole training set, and score once on the test set.
+
+## Measuring a model
+
+### AUC: does it rank people well?
+
+The **AUC** (area under the ROC curve) is the chance that a randomly chosen person **who was** diagnosed got a **higher** predicted risk than a randomly chosen person **who wasn't**.
+
+| AUC | Means |
+|---|---|
+| 0.5 | no better than a coin toss |
+| 0.7 | acceptable; typical of models built from routine data |
+| 0.8 | good |
+| 0.9 | excellent: rare for a common disease |
+| 1.0 | perfect: suspect leakage |
+
+**Why not accuracy?** If 5% of people are diagnosed, a model that says "no" to **everyone** is 95% accurate, and useless. The AUC isn't fooled by a rare outcome.
+
+### The ROC curve: what does a cut-off cost?
+
+To **act** on a risk (offer a test, say), you choose a **cut-off**: everyone above it is flagged. Each cut-off trades one kind of mistake for another:
+
+| Word | Means | In our example |
+|---|---|---|
+| **Sensitivity** | the share of future cases that are flagged | of those diagnosed within 2 years, how many we'd have tested |
+| **Specificity** | the share of everyone else that **isn't** flagged | of those not diagnosed, how many we left alone |
+| **Positive predictive value** | the share of flagged people who **are** diagnosed | of those we tested, how many went on to a diagnosis |
+
+The **ROC curve** draws sensitivity against 1 − specificity for every cut-off. The AUC is the area under it.
+
+### Calibration: are the numbers right?
+
+The AUC only checks the **order** of the risks. A model can rank people perfectly and still say "10%" when the truth is "2%". If a doctor tells a patient "your risk is 8%", the 8% must be **right**.
+
+**Calibration** checks this: group people by predicted risk (for example, into tenths), and compare each group's **average predicted risk** with the share **actually diagnosed**. On a calibration plot, a well-calibrated model's points lie on the diagonal.
+
+| | Good AUC | Poor AUC |
+|---|---|---|
+| **Good calibration** | ranks well, numbers right: useful | numbers right on average, but can't tell people apart |
+| **Poor calibration** | ranks well, numbers wrong: fine for "who's highest?", not for "what's my risk?" | not useful |
+
+Models often lose calibration when used in a **different** population (another hospital, another country), even when their AUC holds up.
+
+## The methods in this series
+
+| Method | Idea | Class |
+|---|---|---|
+| **Logistic regression** | a weighted sum of predictors, turned into a risk | 7.1 (and 3.2) |
+| **LASSO** | logistic regression with a penalty that shrinks weak predictors to exactly zero: it **chooses** predictors | 7.1, 7.3 |
+| **Splines** | let a number's effect **bend** (risk may rise faster at high BMI) | 7.1 |
+| **Random forest** | many decision trees, each on a random sample, voting together | 7.2 |
+| **Gradient boosting** | trees built one after another, each fixing the last one's mistakes | 7.2 |
+
+A **decision tree** is a flowchart of yes/no questions (*BMI over 30? Age over 55?*) ending in a risk. Trees find **interactions** by themselves, but a single tree overfits easily; forests and boosting combine many.
+
+We don't use **deep learning** (neural networks). It shines with images, text, and signals, and needs very large data. On tables of a few dozen predictors, it rarely beats the methods above.
+
+## Tools: tidymodels
+
+The R classes use **tidymodels**, a set of packages that share one way of working, in the style of the tidyverse:
+
+| Package | Does | Example |
+|---|---|---|
+| `rsample` | training/test splits, cross-validation folds | `initial_split()`, `vfold_cv()` |
+| `recipes` | preparing predictors | `step_dummy()`, `step_normalize()` |
+| `parsnip` | one way to specify many models | `logistic_reg()`, `rand_forest()` |
+| `workflows` | a recipe and a model, together | `workflow()` |
+| `tune`, `dials` | trying settings | `tune_grid()`, `penalty()` |
+| `yardstick` | measuring performance | `roc_auc()` |
+
+Python users: the same ideas are in **scikit-learn** (7.2 shows one model in both).
+
+## Prediction, fairness, and precision medicine
+
+Prediction models are one route from group results to **individual** care: [precision medicine](../precision-medicine.qmd), the reason *All of Us* exists. They also bring new risks:
+
+- **A model can work worse for some groups**, especially groups it saw few of. Check its AUC and calibration **by group** (7.4).
+- **Predictors can carry unfairness.** Income predicts diabetes. Should a clinical model use it? Leaving it out doesn't remove the inequality; using it may label people by their circumstances.
+- **The outcome is a diagnosis, not the disease.** People who see doctors more are diagnosed sooner. A model can learn **who gets diagnosed**, not only who gets diabetes.
+- **Reporting:** the **TRIPOD+AI** guideline lists what a prediction model paper should report (7.4).
+
+## Glossary
+
+| Word | Means |
+|---|---|
+| **Feature** | machine learning's word for a predictor |
+| **Label** | machine learning's word for the outcome |
+| **Time zero** | the moment a prediction is made: predictors before it, outcome after it |
+| **Prediction window** (horizon) | how far ahead we predict, e.g. 2 years |
+| **Incident** case | a **new** diagnosis after time zero (vs **prevalent**: already diagnosed) |
+| **Leakage** | a predictor that contains information from after time zero, or from the outcome itself |
+| **Overfitting** | learning the training set's noise; good on training data, worse on new data |
+| **Tuning parameter** | a setting chosen before fitting, e.g. the LASSO penalty |
+| **Cross-validation** | choosing settings by fitting on part of the training set and scoring on the rest, in turn |
+| **Penalty** (regularisation) | a cost on large coefficients that keeps a model simple |
+| **AUC** | the chance a future case is ranked above a non-case; 0.5 = coin toss |
+| **Calibration** | whether predicted risks match what happened |
+| **External validation** | testing a model on a **different** population from the one it was built on |

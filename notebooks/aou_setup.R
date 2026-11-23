@@ -29,11 +29,12 @@ if (file.exists(SETTINGS_FILE)) source(SETTINGS_FILE)
 
 # ---- 2. NOTHING BELOW NEEDS TO CHANGE ----------------------------------------
 
-# Install any packages the notebooks need that aren't in this app yet.
+# Install any packages that aren't in this app yet, into your own R library.
 # This only happens the first time (it can take a few minutes); after that it's skipped.
-NEEDED_PACKAGES <- c("tidyverse", "lubridate", "bigrquery", "broom", "survival")
-missing_packages <- NEEDED_PACKAGES[!vapply(NEEDED_PACKAGES, requireNamespace, logical(1), quietly = TRUE)]
-if (length(missing_packages) > 0) {
+# Notebooks that need more packages call it too, e.g. install_if_missing(c("glmnet")).
+install_if_missing <- function(packages) {
+  missing_packages <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+  if (length(missing_packages) == 0) return(invisible(character(0)))
   message("Installing missing packages: ", paste(missing_packages, collapse = ", "),
           " (first time only, this can take a few minutes)...")
   user_lib <- Sys.getenv("R_LIBS_USER")
@@ -42,7 +43,11 @@ if (length(missing_packages) > 0) {
   repos <- getOption("repos")
   if (is.null(repos) || identical(unname(repos["CRAN"]), "@CRAN@")) repos <- "https://cloud.r-project.org"
   install.packages(missing_packages, lib = user_lib, repos = repos)
+  invisible(missing_packages)
 }
+
+NEEDED_PACKAGES <- c("tidyverse", "lubridate", "bigrquery", "broom", "survival")
+install_if_missing(NEEDED_PACKAGES)
 
 suppressPackageStartupMessages({
   library(tidyverse)  # dplyr, tidyr, readr, stringr, purrr, ggplot2
