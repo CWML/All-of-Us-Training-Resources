@@ -485,6 +485,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#finding-your-repo-in-the-jupyterlab-file-browser" id="toc-finding-your-repo-in-the-jupyterlab-file-browser" class="nav-link" data-scroll-target="#finding-your-repo-in-the-jupyterlab-file-browser">Finding your repo in the JupyterLab file browser</a></li>
   <li><a href="#ongoing-workflow-keeping-in-sync" id="toc-ongoing-workflow-keeping-in-sync" class="nav-link" data-scroll-target="#ongoing-workflow-keeping-in-sync">Ongoing workflow: keeping in sync</a></li>
+  <li><a href="#try-someone-elses-branch-in-the-workbench-step-by-step" id="toc-try-someone-elses-branch-in-the-workbench-step-by-step" class="nav-link" data-scroll-target="#try-someone-elses-branch-in-the-workbench-step-by-step">Try someone else’s branch in the Workbench, step by step</a>
+  <ul class="collapse">
+  <li><a href="#go-into-the-repository-folder" id="toc-go-into-the-repository-folder" class="nav-link" data-scroll-target="#go-into-the-repository-folder">1. Go into the repository folder</a></li>
+  <li><a href="#see-where-you-are-and-what-youve-changed" id="toc-see-where-you-are-and-what-youve-changed" class="nav-link" data-scroll-target="#see-where-you-are-and-what-youve-changed">2. See where you are, and what you’ve changed</a></li>
+  <li><a href="#put-back-the-files-you-dont-need-to-keep" id="toc-put-back-the-files-you-dont-need-to-keep" class="nav-link" data-scroll-target="#put-back-the-files-you-dont-need-to-keep">3. Put back the files you don’t need to keep</a></li>
+  <li><a href="#download-whats-new-on-github" id="toc-download-whats-new-on-github" class="nav-link" data-scroll-target="#download-whats-new-on-github">4. Download what’s new on GitHub</a></li>
+  <li><a href="#switch-to-the-branch-and-check-you-have-its-newest-version" id="toc-switch-to-the-branch-and-check-you-have-its-newest-version" class="nav-link" data-scroll-target="#switch-to-the-branch-and-check-you-have-its-newest-version">5. Switch to the branch, and check you have its newest version</a></li>
+  <li><a href="#open-the-notebook-and-run-it" id="toc-open-the-notebook-and-run-it" class="nav-link" data-scroll-target="#open-the-notebook-and-run-it">6. Open the notebook, and run it</a></li>
+  <li><a href="#the-branch-changed-while-you-were-testing-get-the-update" id="toc-the-branch-changed-while-you-were-testing-get-the-update" class="nav-link" data-scroll-target="#the-branch-changed-while-you-were-testing-get-the-update">The branch changed while you were testing? Get the update</a></li>
+  <li><a href="#report-back-safely" id="toc-report-back-safely" class="nav-link" data-scroll-target="#report-back-safely">7. Report back, safely</a></li>
+  <li><a href="#when-youve-finished" id="toc-when-youve-finished" class="nav-link" data-scroll-target="#when-youve-finished">When you’ve finished</a></li>
+  </ul></li>
   <li><a href="#sharing-with-colleagues" id="toc-sharing-with-colleagues" class="nav-link" data-scroll-target="#sharing-with-colleagues">Sharing with colleagues</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   <li><a href="#if-something-slips-through" id="toc-if-something-slips-through" class="nav-link" data-scroll-target="#if-something-slips-through">If something slips through</a></li>
@@ -907,11 +919,181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>New apps need setup.</strong> In a new app, you may need to repeat <code>git config</code> (Step 2c) and clone the repo again.</li>
 </ul>
 </section>
+<section id="try-someone-elses-branch-in-the-workbench-step-by-step" class="level2">
+<h2 class="anchored" data-anchor-id="try-someone-elses-branch-in-the-workbench-step-by-step">Try someone else’s branch in the Workbench, step by step</h2>
+<p>Someone (a colleague, an instructor, or you on your own computer) pushed a change to a <strong>branch</strong>, and you want to run it in the Workbench before it’s merged. This is the most common thing you’ll do with Git in a course like this one, so here it is slowly, with real output from our own testing (November 2026).</p>
+<p><strong>In the app’s terminal</strong> (<strong>File → New → Terminal</strong>). Your prompt starts in your home folder:</p>
+<pre><code>jupyter@a1b2c3d4e5f6:~$</code></pre>
+<section id="go-into-the-repository-folder" class="level3">
+<h3 class="anchored" data-anchor-id="go-into-the-repository-folder">1. Go into the repository folder</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/repos/All-of-Us-Training-Resources</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>cd</code> means <em>change directory</em>; <code>~</code> is your home folder. Repositories added on the workspace’s <strong>Apps → Git repositories</strong> are cloned into <code>~/repos/</code>. The prompt now ends with the folder’s name. <em>“No such file or directory”</em>? Run <code>ls ~/repos</code> to see what’s there.</p>
+</section>
+<section id="see-where-you-are-and-what-youve-changed" class="level3">
+<h3 class="anchored" data-anchor-id="see-where-you-are-and-what-youve-changed">2. See where you are, and what you’ve changed</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What we saw:</p>
+<pre><code>On branch workflows-cromwell-nextflow
+Changes not staged for commit:
+        modified:   notebooks/aou_setup.R
+        modified:   notebooks/workflows/workflows_cromwell_nextflow.ipynb
+Untracked files:
+        notebooks/__pycache__/</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Line</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>On branch …</code></td>
+<td>the branch your files come from now</td>
+</tr>
+<tr class="even">
+<td><code>modified:</code></td>
+<td>files you changed since. Here: an old personal edit, and a notebook saved <strong>with outputs</strong></td>
+</tr>
+<tr class="odd">
+<td><code>Untracked files:</code></td>
+<td>files Git doesn’t follow. <code>__pycache__</code> is made by Python by itself (now listed in <code>.gitignore</code>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="put-back-the-files-you-dont-need-to-keep" class="level3">
+<h3 class="anchored" data-anchor-id="put-back-the-files-you-dont-need-to-keep">3. Put back the files you don’t need to keep</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--</span> notebooks/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This resets every file in <code>notebooks/</code> to the version Git has: outputs gone, local edits undone. Your <strong>bucket</strong> isn’t touched, and neither is your bucket name (it’s in <code>my_settings.R</code>, which Git ignores). <strong>Want to keep a change?</strong> Commit it first, or ask before running this. Run <code>git status</code> again: only untracked files should be left.</p>
+</section>
+<section id="download-whats-new-on-github" class="level3">
+<h3 class="anchored" data-anchor-id="download-whats-new-on-github">4. Download what’s new on GitHub</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>fetch</code> downloads new branches and commits, <strong>without changing your files</strong>. Lines starting with <code>* [new branch]</code> are branches your copy hadn’t seen yet; a line like <code>e45e034..6c64859  main</code> means <code>main</code> moved forward.</p>
+</section>
+<section id="switch-to-the-branch-and-check-you-have-its-newest-version" class="level3">
+<h3 class="anchored" data-anchor-id="switch-to-the-branch-and-check-you-have-its-newest-version">5. Switch to the branch, and check you have its newest version</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch BRANCH-NAME</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">-1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What we saw, for the branch <code>ml-series</code>:</p>
+<pre><code>branch 'ml-series' set up to track 'origin/ml-series'.
+Switched to a new branch 'ml-series'
+Already up to date.
+14195b0 (HEAD -&gt; ml-series, origin/ml-series) ML series: a data check notebook …</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Line</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>set up to track 'origin/ml-series'</code></td>
+<td>your local branch follows GitHub’s: later <code>git pull</code>s get its updates</td>
+</tr>
+<tr class="even">
+<td><code>Switched to a new branch</code></td>
+<td>your files now match that branch</td>
+</tr>
+<tr class="odd">
+<td><code>Already up to date.</code></td>
+<td><code>fetch</code> had already brought everything</td>
+</tr>
+<tr class="even">
+<td><code>14195b0 (HEAD -&gt; ml-series, origin/ml-series)</code></td>
+<td>the newest commit. <code>HEAD</code> is where <strong>you</strong> are; <code>origin/…</code> is GitHub’s copy. Both on the same commit: you have the latest. Compare the first characters with the commit the person who asked you named</td>
+</tr>
+</tbody>
+</table>
+<p><em>“Your local changes would be overwritten”</em>? A file you changed is also changed on the branch: go back to step 3. <em>“invalid reference”</em>? Check the branch name’s spelling, and that you ran <code>git fetch</code>.</p>
+</section>
+<section id="open-the-notebook-and-run-it" class="level3">
+<h3 class="anchored" data-anchor-id="open-the-notebook-and-run-it">6. Open the notebook, and run it</h3>
+<p>In the file browser on the left: <code>repos</code> → the repository → the notebook. Check the <strong>kernel</strong> (top right) and run the cells <strong>one at a time</strong> (<strong>Shift + Enter</strong>), reading each output. <strong>First time in this app?</strong> Run <code>notebooks/0.0 setup.ipynb</code>, Steps 1 and 2, so the notebooks can find your bucket.</p>
+</section>
+<section id="the-branch-changed-while-you-were-testing-get-the-update" class="level3">
+<h3 class="anchored" data-anchor-id="the-branch-changed-while-you-were-testing-get-the-update">The branch changed while you were testing? Get the update</h3>
+<p>The person who asked you pushes a fix or a new section, and asks you to run it. Your notebook is still open, with your results in it. What we saw:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">-1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>14195b0 (HEAD -&gt; ml-series) ML series: a data check notebook …</code></pre>
+<p>They had named <code>72ac394</code>, so this copy is <strong>one commit behind</strong>. Get it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Updating 14195b0..72ac394
+error: Your local changes to the following files would be overwritten by merge:
+        notebooks/ml/ml_data_check.ipynb
+Please commit your changes or stash them before you merge.
+Aborting</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Line</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Updating 14195b0..72ac394</code></td>
+<td>Git found the new commit and tried to move you to it</td>
+</tr>
+<tr class="even">
+<td><code>would be overwritten</code></td>
+<td>JupyterLab <strong>autosaved</strong> the notebook with its outputs, so the file differs from the commit</td>
+</tr>
+<tr class="odd">
+<td><code>Aborting</code></td>
+<td>nothing changed: you’re still on the old commit</td>
+</tr>
+</tbody>
+</table>
+<p>Put the notebooks back (step 3), then pull again:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--</span> notebooks/</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">-1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Updating 14195b0..72ac394
+Fast-forward
+ notebooks/ml/ml_data_check.ipynb | 103 +++++++++…-
+ 1 file changed, 102 insertions(+), 1 deletion(-)
+72ac394 (HEAD -&gt; ml-series, origin/ml-series) ML data check: section 6, …</code></pre>
+<p><code>Fast-forward</code> means Git simply moved you to the newer commit. <code>HEAD</code> and <code>origin/ml-series</code> are on the same commit: you have the update.</p>
+<p><strong>The open notebook still shows the old version.</strong> JupyterLab doesn’t notice that Git changed the file:</p>
+<ol type="1">
+<li><strong>Close the notebook’s tab.</strong> If it asks to save, choose <strong>Discard</strong> (or <em>Don’t save</em>). <strong>Saving</strong> would write the old version over the one you just pulled.</li>
+<li><strong>Open it again</strong> from the file browser. It reconnects to the same <strong>kernel</strong> (the R session), which kept running.</li>
+<li><strong>Check your earlier results are still there</strong>: in a new cell, run <code>exists("base")</code> (the name of any table you made earlier), then delete the cell. <code>TRUE</code>: carry on with the new cells. <code>FALSE</code>: the kernel restarted, so run the notebook from the top.</li>
+</ol>
+<p>Your results live in the <strong>kernel</strong>, not in the file. Resetting the file with <code>git checkout</code> or closing the tab doesn’t lose them; restarting the kernel does.</p>
+</section>
+<section id="report-back-safely" class="level3">
+<h3 class="anchored" data-anchor-id="report-back-safely">7. Report back, safely</h3>
+<p>Share only what’s safe (see <a href="#what-counts-as-data-the-less-obvious-leaks">What counts as data</a>): <strong>summary tables</strong> with no counts of 1 to 20, column <strong>names</strong>, and <strong>error messages</strong> with any value, ID, or date removed. Never rows, never screenshots of data.</p>
+</section>
+<section id="when-youve-finished" class="level3">
+<h3 class="anchored" data-anchor-id="when-youve-finished">When you’ve finished</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Back on <code>main</code>, with its newest version. Before switching, clear any outputs you saved (step 3), or Git may refuse to switch.</p>
+</section>
+</section>
 <section id="sharing-with-colleagues" class="level2">
 <h2 class="anchored" data-anchor-id="sharing-with-colleagues">Sharing with colleagues</h2>
 <p><strong>To use your code</strong> in their own All of Us workspace, colleagues run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/OWNER/REPO-NAME.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/OWNER/REPO-NAME.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No SSH key is needed to clone a public repo over HTTPS. They need the same data access tier your notebooks use (e.g., Controlled Tier).</p>
 <p><strong>To contribute back</strong>, colleagues need:</p>
 <ol type="1">
@@ -920,13 +1102,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>To clone with the <code>git@github.com:...</code> URL</li>
 </ol>
 <p><strong>Make notebooks portable:</strong> avoid hardcoded workspace paths. Build paths from your home folder, and keep the bucket name and dataset path in <strong>one place</strong> at the top of the notebook, so collaborators only change those lines:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="op">=</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"HOME"</span>), <span class="st">"workspace"</span>, <span class="st">"workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="ot">&lt;-</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>bucket <span class="op">=</span> os.path.expanduser(<span class="st">"~/workspace/workspace-bucket"</span>)  <span class="co"># your bucket's name</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>CURRENT_DATASET <span class="op">=</span> <span class="st">"wb-silky-artichoke-2408.C2025Q4R6"</span>   <span class="co"># CDR v9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>WORKSPACE_BUCKET</code> and <code>WORKSPACE_CDR</code> from the classic Workbench are <strong>not set</strong> in new Workbench 2.0 workspaces (see <a href="../../pages/workspace/storage-costs.html#workspace-variables">Workspace Variables</a>).</p>
 <p>To share <strong>results</strong>, share the workspace itself through Workbench’s sharing settings so data and outputs stay inside All of Us.</p>
 </section>
@@ -1057,23 +1239,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="quick-reference" class="level2">
 <h2 class="anchored" data-anchor-id="quick-reference">Quick reference</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-time setup (per app)</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> security ssh-key get</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your-username"</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your-email"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone, and add the pre-commit check (see Safety nets)</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="kw">&amp;&amp;</span> <span class="fu">git</span> clone git@github.com:OWNER/REPO.git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> REPO</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily cycle</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                                  <span class="co"># your settings in my_settings.R are untouched</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--cached</span> <span class="at">--stat</span>                  <span class="co"># what's about to be committed</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-time setup (per app)</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-T</span> git@github.com</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="ex">wb</span> security ssh-key get</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"your-username"</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your-email"</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone, and add the pre-commit check (see Safety nets)</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~ <span class="kw">&amp;&amp;</span> <span class="fu">git</span> clone git@github.com:OWNER/REPO.git <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> REPO</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily cycle</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull                                  <span class="co"># your settings in my_settings.R are untouched</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> nbconvert <span class="at">--clear-output</span> <span class="at">--inplace</span> notebooks/<span class="pp">*</span>.ipynb</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notebooks</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--cached</span> <span class="at">--stat</span>                  <span class="co"># what's about to be committed</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>References:</strong> - Verily Workbench: <a href="https://support.workbench.verily.com/docs/guides/cloud_apps/git_integrations/">Git integrations with cloud apps</a> - Verily Workbench: <a href="https://support.workbench.verily.com/docs/guides/cli/cli_install_and_run/">Install and run the Workbench CLI</a> - GitHub: <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Adding a new SSH key to your account</a></p>
 
 

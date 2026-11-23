@@ -414,6 +414,162 @@ You can push straight to `main` if it's your own repo, or use a branch and pull 
 - **New apps need setup.** In a new app, you may need to repeat `git config` (Step 2c) and clone the repo again.
 
 
+## Try someone else's branch in the Workbench, step by step
+
+Someone (a colleague, an instructor, or you on your own computer) pushed a change to a **branch**, and you want to run it in the Workbench before it's merged. This is the most common thing you'll do with Git in a course like this one, so here it is slowly, with real output from our own testing (November 2026).
+
+**In the app's terminal** (**File → New → Terminal**). Your prompt starts in your home folder:
+
+```
+jupyter@a1b2c3d4e5f6:~$
+```
+
+### 1. Go into the repository folder
+
+```sh
+cd ~/repos/All-of-Us-Training-Resources
+```
+
+`cd` means *change directory*; `~` is your home folder. Repositories added on the workspace's **Apps → Git repositories** are cloned into `~/repos/`. The prompt now ends with the folder's name. *"No such file or directory"*? Run `ls ~/repos` to see what's there.
+
+### 2. See where you are, and what you've changed
+
+```sh
+git status
+```
+
+What we saw:
+
+```
+On branch workflows-cromwell-nextflow
+Changes not staged for commit:
+        modified:   notebooks/aou_setup.R
+        modified:   notebooks/workflows/workflows_cromwell_nextflow.ipynb
+Untracked files:
+        notebooks/__pycache__/
+```
+
+| Line | Means |
+|---|---|
+| `On branch …` | the branch your files come from now |
+| `modified:` | files you changed since. Here: an old personal edit, and a notebook saved **with outputs** |
+| `Untracked files:` | files Git doesn't follow. `__pycache__` is made by Python by itself (now listed in `.gitignore`) |
+
+### 3. Put back the files you don't need to keep
+
+```sh
+git checkout -- notebooks/
+```
+
+This resets every file in `notebooks/` to the version Git has: outputs gone, local edits undone. Your **bucket** isn't touched, and neither is your bucket name (it's in `my_settings.R`, which Git ignores). **Want to keep a change?** Commit it first, or ask before running this. Run `git status` again: only untracked files should be left.
+
+### 4. Download what's new on GitHub
+
+```sh
+git fetch
+```
+
+`fetch` downloads new branches and commits, **without changing your files**. Lines starting with `* [new branch]` are branches your copy hadn't seen yet; a line like `e45e034..6c64859  main` means `main` moved forward.
+
+### 5. Switch to the branch, and check you have its newest version
+
+```sh
+git switch BRANCH-NAME
+git pull
+git log --oneline -1
+```
+
+What we saw, for the branch `ml-series`:
+
+```
+branch 'ml-series' set up to track 'origin/ml-series'.
+Switched to a new branch 'ml-series'
+Already up to date.
+14195b0 (HEAD -> ml-series, origin/ml-series) ML series: a data check notebook …
+```
+
+| Line | Means |
+|---|---|
+| `set up to track 'origin/ml-series'` | your local branch follows GitHub's: later `git pull`s get its updates |
+| `Switched to a new branch` | your files now match that branch |
+| `Already up to date.` | `fetch` had already brought everything |
+| `14195b0 (HEAD -> ml-series, origin/ml-series)` | the newest commit. `HEAD` is where **you** are; `origin/…` is GitHub's copy. Both on the same commit: you have the latest. Compare the first characters with the commit the person who asked you named |
+
+*"Your local changes would be overwritten"*? A file you changed is also changed on the branch: go back to step 3. *"invalid reference"*? Check the branch name's spelling, and that you ran `git fetch`.
+
+### 6. Open the notebook, and run it
+
+In the file browser on the left: `repos` → the repository → the notebook. Check the **kernel** (top right) and run the cells **one at a time** (**Shift + Enter**), reading each output. **First time in this app?** Run `notebooks/0.0 setup.ipynb`, Steps 1 and 2, so the notebooks can find your bucket.
+
+### The branch changed while you were testing? Get the update
+
+The person who asked you pushes a fix or a new section, and asks you to run it. Your notebook is still open, with your results in it. What we saw:
+
+```sh
+git log --oneline -1
+```
+```
+14195b0 (HEAD -> ml-series) ML series: a data check notebook …
+```
+
+They had named `72ac394`, so this copy is **one commit behind**. Get it:
+
+```sh
+git pull
+```
+```
+Updating 14195b0..72ac394
+error: Your local changes to the following files would be overwritten by merge:
+        notebooks/ml/ml_data_check.ipynb
+Please commit your changes or stash them before you merge.
+Aborting
+```
+
+| Line | Means |
+|---|---|
+| `Updating 14195b0..72ac394` | Git found the new commit and tried to move you to it |
+| `would be overwritten` | JupyterLab **autosaved** the notebook with its outputs, so the file differs from the commit |
+| `Aborting` | nothing changed: you're still on the old commit |
+
+Put the notebooks back (step 3), then pull again:
+
+```sh
+git checkout -- notebooks/
+git pull
+git log --oneline -1
+```
+```
+Updating 14195b0..72ac394
+Fast-forward
+ notebooks/ml/ml_data_check.ipynb | 103 +++++++++…-
+ 1 file changed, 102 insertions(+), 1 deletion(-)
+72ac394 (HEAD -> ml-series, origin/ml-series) ML data check: section 6, …
+```
+
+`Fast-forward` means Git simply moved you to the newer commit. `HEAD` and `origin/ml-series` are on the same commit: you have the update.
+
+**The open notebook still shows the old version.** JupyterLab doesn't notice that Git changed the file:
+
+1. **Close the notebook's tab.** If it asks to save, choose **Discard** (or *Don't save*). **Saving** would write the old version over the one you just pulled.
+2. **Open it again** from the file browser. It reconnects to the same **kernel** (the R session), which kept running.
+3. **Check your earlier results are still there**: in a new cell, run `exists("base")` (the name of any table you made earlier), then delete the cell. `TRUE`: carry on with the new cells. `FALSE`: the kernel restarted, so run the notebook from the top.
+
+Your results live in the **kernel**, not in the file. Resetting the file with `git checkout` or closing the tab doesn't lose them; restarting the kernel does.
+
+### 7. Report back, safely
+
+Share only what's safe (see [What counts as data](#what-counts-as-data-the-less-obvious-leaks)): **summary tables** with no counts of 1 to 20, column **names**, and **error messages** with any value, ID, or date removed. Never rows, never screenshots of data.
+
+### When you've finished
+
+```sh
+git switch main
+git pull
+```
+
+Back on `main`, with its newest version. Before switching, clear any outputs you saved (step 3), or Git may refuse to switch.
+
+
 ## Sharing with colleagues
 
 **To use your code** in their own All of Us workspace, colleagues run:
