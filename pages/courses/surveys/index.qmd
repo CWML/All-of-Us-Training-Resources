@@ -7,6 +7,8 @@ Three R classes on the *All of Us* **survey data**, with the same cohort as ever
 
 Surveys tell us what health records rarely do: smoking, family history, income, food security, access to care. They also have their own traps: non-answers, questions that were never asked, several answers per question, and later surveys answered by only some participants. This series teaches you to read and code survey answers correctly, then to use them in an analysis.
 
+**The bigger picture:** how this series connects to *All of Us*'s goal of precision medicine: see [Precision Medicine: where our classes fit](../precision-medicine.qmd).
+
 ## The classes
 
 | Class | Time | What you learn |

@@ -93,6 +93,7 @@ website:
       style: docked
       contents:
         - pages/courses/index.qmd
+        - pages/courses/precision-medicine.qmd
         - section: "Core"
           contents:
             - pages/courses/core/index.qmd

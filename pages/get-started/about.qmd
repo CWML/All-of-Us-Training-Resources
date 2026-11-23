@@ -20,6 +20,8 @@ description: "The All of Us Research Program, its data sources, the CDR, and dat
 - Make healthcare tailored and equitable
 - Support diverse studies reflecting all populations
 
+What precision medicine means, and how each course series connects to it: [Precision Medicine: where our classes fit](../courses/precision-medicine.qmd).
+
 ## What Makes It Unique
 
 - **Participant-centered:** participants can view and access their own data

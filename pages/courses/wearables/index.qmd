@@ -7,6 +7,8 @@ Three R classes on the *All of Us* **wearable data**, with the same cohort as ev
 
 Wearables show daily life in a way health records and surveys can't: how much people move, **when**, how they sleep, and how their heart rate changes, often minute by minute for years. They also bring new problems: tables measured in **terabytes**, days the device wasn't worn, devices that measure differently, and users who aren't typical of anyone else.
 
+**The bigger picture:** how this series connects to *All of Us*'s goal of precision medicine: see [Precision Medicine: where our classes fit](../precision-medicine.qmd).
+
 ## The classes
 
 | Class | Time | What you learn |
