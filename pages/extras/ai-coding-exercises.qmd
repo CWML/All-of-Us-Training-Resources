@@ -1,0 +1,266 @@
+---
+title: "Coding with AI: Exercises and Prompt Cards"
+description: "Hands-on exercises for the Coding with AI and GitHub class: what you may share with an AI, explaining and fixing code, spotting an AI's mistakes, the full round trip, and copy-ready prompts"
+---
+
+**Exercises for [Coding with AI and GitHub](ai-coding.qmd)** · about 55 minutes in class · use any AI tool: Claude Code, Clarity, ChatGPT, Copilot…
+
+Each exercise has a **prompt to copy**, what to **do**, and an answer to open **after** you've tried. The code in them was tested on made-up data; none of it uses *All of Us* data.
+
+| Exercise | Minutes | You practise |
+|---|---|---|
+| [1. Safe to share?](#exercise-1-safe-to-share) | 5 | the one rule: what an AI may and may never see |
+| [2. Explain this code](#exercise-2-explain-this-code) | 5 | using an AI to **read** code, and checking its explanation |
+| [3. Fix this error](#exercise-3-fix-this-error) | 10 | describing a problem without data; testing the fix |
+| [4. Spot the mistakes](#exercise-4-spot-the-mistakes) | 10 | reviewing AI code against the *All of Us* rules |
+| [5. The full round trip](#exercise-5-the-full-round-trip) | 25 | computer → GitHub → Workbench, with a real improvement |
+
+Before class, finish the [**Before class** checklist](ai-coding.qmd#before-class): exercises 2 to 4 need only an AI tool, but exercise 5 needs everything on it.
+
+## Exercise 1: Safe to share?
+
+**No AI needed.** For each item, decide: may you paste it into an AI tool (outside the Workbench)?
+
+| # | Item |
+|---|---|
+| a | The SQL in `notebooks/sql/t2d_cohort.sql` |
+| b | The error *"Can't join `x$person_id` with `y$person_id` due to incompatible types"* |
+| c | An error that ends *"…invalid date '1953-07-14' in row 4521"* |
+| d | The column names of your cohort data frame, from `names(cohort_sample)` |
+| e | The first six rows of your cohort data frame, from `head(cohort_sample)` |
+| f | *"My model returns NA for every coefficient"* |
+| g | A table of counts by group in which one group shows **14** |
+| h | A notebook copied from the Workbench, saved with its outputs |
+| i | Concept ID 201826 and its name, *Type 2 diabetes mellitus*, from Athena |
+| j | A Table One where every count is above 20, and none can be worked out from the others |
+
+<details>
+<summary><b>Show answer</b></summary>
+
+| # | Share? | Why |
+|---|---|---|
+| a | ✅ | Code, with no data in it |
+| b | ✅ | Names column **types**, not values. Read every error before pasting it |
+| c | ❌ | It quotes a **value**: a date (possibly a birth date) from one person's row. Paste it with the value removed: *"…invalid date '…' in row …"* |
+| d | ✅ | Column names are in the public data dictionary |
+| e | ❌ | Individual rows: participant IDs, dates, values |
+| f | ✅ | A description in words, with no data |
+| g | ❌ | A count of 1 to 20 |
+| h | ❌ | Outputs can hold results and rows; downloading from the Workbench is also logged as egress. Clear outputs in the Workbench and push through GitHub |
+| i | ✅ | Public vocabulary |
+| j | ✅, with care | Summary results that follow the Dissemination Policy may be shared. You don't need to share them to get help with code, though: describe the problem instead |
+
+**The test:** would you be comfortable **publishing** it? If not, don't paste it.
+
+</details>
+
+## Exercise 2: Explain this code
+
+**Why:** an AI is an excellent tutor for code you didn't write. But explanations can be confidently wrong, so check them against something you trust.
+
+**Paste this prompt and code** into your AI tool:
+
+> *Explain this BigQuery SQL line by line, for someone new to SQL. What does each part do, and why might it be needed?*
+
+```sql
+ehr_people AS (
+  SELECT
+    v.person_id,
+    MIN(v.visit_start_date) AS first_ehr_date,
+    MAX(v.visit_start_date) AS last_ehr_date
+  FROM `{CURRENT_DATASET}.visit_occurrence` AS v
+  JOIN `{CURRENT_DATASET}.visit_occurrence_ext` AS ve
+    ON v.visit_occurrence_id = ve.visit_occurrence_id
+  WHERE STARTS_WITH(ve.src_id, 'EHR site')
+     OR STARTS_WITH(ve.src_id, 'Participant Mediated EHR')
+  GROUP BY v.person_id
+),
+```
+
+**Then check:** the same lines in [`notebooks/sql/t2d_cohort.sql`](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/sql/t2d_cohort.sql) have comments written by people who tested them. Does the AI's explanation agree? Did it know **why** the `WHERE` line is there?
+
+<details>
+<summary><b>Show answer</b></summary>
+
+- It makes a small table, `ehr_people`: **one row per person** with at least one health-record visit, and the dates of their **first** and **last** visit (`MIN` and `MAX`, per person because of `GROUP BY`).
+- `visit_occurrence_ext` is an *All of Us* extension table. Its `src_id` says **where** each visit came from.
+- The `WHERE` line keeps visits from **EHR sites** (records a hospital or clinic sent) and **participant-mediated EHR** (records participants shared themselves). It leaves out program visits (`Staff Portal`, `Participant Portal`: physical measurements and surveys), which **aren't** health records.
+- An AI usually explains `MIN`, `MAX`, and `GROUP BY` well. It may **not** know what `src_id` holds in *All of Us*, and may guess. That's the part to check against the comments, or the data dictionary.
+
+</details>
+
+## Exercise 3: Fix this error
+
+**Why:** most of the time you'll use an AI for a specific error. The skill is giving it **enough to help** (the code and the error message) and **nothing it mustn't see** (the data).
+
+The code below joins BMI values onto the cohort. In the Workbench it fails. Here it uses a **made-up** data frame with the same columns, so you can run it on your own computer:
+
+```r
+library(tidyverse)
+
+# Made-up data: same column names as the course files, no real people
+cohort_sample <- tibble(person_id = c("1001", "1002", "1003", "1004"),
+                        cohort    = c("case", "control", "case", "control"))
+bmi <- tibble(person_id = c(1001, 1003, 1004),
+              bmi       = c(31.2, 27.5, 24.9))
+
+cohort_bmi <- cohort_sample %>% left_join(bmi, by = "person_id")
+```
+
+The error:
+
+```
+Error in `left_join()`:
+! Can't join `x$person_id` with `y$person_id` due to incompatible types.
+ℹ `x$person_id` is a <character>.
+ℹ `y$person_id` is a <double>.
+```
+
+**Paste this prompt**, with the code and the error:
+
+> *This R code fails with the error below. Explain the cause in plain language, fix it, and add a check that the join didn't add or lose rows.*
+
+**Then:** run the fixed code. Does `cohort_bmi` have the same number of rows as `cohort_sample`? Does person 1002 (no BMI) still appear, with `NA`?
+
+<details>
+<summary><b>Show answer</b></summary>
+
+`person_id` is **text** in one table and a **number** in the other. A number and the same digits as text don't match, so R refuses to join them. Make them the same type, then check the rows:
+
+```r
+cohort_bmi <- cohort_sample %>%
+  left_join(bmi %>% mutate(person_id = as.character(person_id)), by = "person_id")
+
+stopifnot(nrow(cohort_bmi) == nrow(cohort_sample))   # a left join must not add or lose rows
+```
+
+Person 1002 stays, with `bmi` = `NA`: that's what a **left** join does. In the course, every notebook turns `person_id` into text as soon as data arrives (`mutate(person_id = as.character(person_id))`, or `col_types = cols(person_id = "c")` when loading a file), so this can't happen. See class **2.3** on checking every join.
+
+**Did the AI suggest `as.numeric()` instead?** It works here, but very large IDs can lose digits as numbers. Text is safer for IDs.
+
+</details>
+
+## Exercise 4: Spot the mistakes
+
+**Why:** AI code often **runs** and still breaks the rules, or gives the wrong answer. Reviewing it is your job.
+
+A student asked an AI: *"Write R code to compare HbA1c in people with type 2 diabetes, by race, in All of Us."* This is what it wrote. **Don't run it.** Find as many problems as you can (there are at least seven):
+
+```r
+sql <- "
+SELECT *
+FROM `{Sys.getenv('WORKSPACE_CDR')}.condition_occurrence` AS co
+JOIN `{Sys.getenv('WORKSPACE_CDR')}.measurement` AS m
+  ON co.person_id = m.person_id
+WHERE co.condition_concept_id = 201820    -- type 2 diabetes
+  AND m.measurement_concept_id = 3004410  -- HbA1c
+"
+t2d <- run_query(str_glue(sql))
+
+head(t2d)
+
+t2d %>%
+  group_by(race) %>%
+  summarise(n          = n(),
+            mean_hba1c = mean(value_as_number),
+            max_hba1c  = max(value_as_number))
+```
+
+<details>
+<summary><b>Show answer</b></summary>
+
+| # | Problem | Why it matters | The fix |
+|---|---|---|---|
+| 1 | `WORKSPACE_CDR` | It **isn't set** in Workbench 2.0: the query fails | `CURRENT_DATASET`, from `aou_setup.R` |
+| 2 | `201820` labelled "type 2 diabetes" | 201820 is diabetes of **all** types; type 2 is **201826**. The AI wrote an ID from memory | Look it up (Athena, the Data Browser, or a query on `concept`) |
+| 3 | `= 201826` alone would still miss people | Most diagnoses use more **specific** codes (e.g. type 2 diabetes *with kidney complications*) | Use `concept_ancestor` to include every code below it, as the cohort query does |
+| 4 | `SELECT *` on `measurement` | One of the largest tables: you pay for every column read | Select only the columns you need; price it first with `run_if_cheap()` |
+| 5 | `head(t2d)` | Prints **individual rows**: IDs, dates, values | Never print rows; show summaries |
+| 6 | `group_by(race)` | There's no `race` column in these tables: it's in `person` (via `concept`). The AI **invented** a column | Join `person`, or use the cohort query, which already has `race` |
+| 7 | Joining conditions × measurements | Each diagnosis row is paired with each HbA1c row: someone with 10 diagnosis codes and 5 tests becomes **50 rows**. `n` counts rows, not people, and the mean is weighted toward people with many records | Find the people first (one row each), then **one** HbA1c per person (e.g. the latest), as in classes **2.2** and **2.3** |
+| 8 | `n = n()` with no hiding | Some groups may have 1 to 20 people | `hide_small_counts()`; combine small groups |
+| 9 | `max_hba1c` | A maximum is **one person's** value | Report means or medians, not maxima or minima |
+| 10 | No check of units or plausible values | HbA1c can be stored in % or mmol/mol, and some values are errors | Count the units first, and keep plausible values (class **2.1**) |
+
+**The pattern:** it looked right and might even have run. Every problem was caught by a rule you already know, not by trusting the answer.
+
+</details>
+
+## Exercise 5: The full round trip
+
+**Why:** this is the whole class in one task: the AI improves code on your computer, GitHub carries it, and the Workbench runs it on real data that never leaves.
+
+**The task:** the worked example's `count_by_group()` hides counts of 1 to 20. But, as the class page warns, if a cohort has **exactly one** hidden count, it can be worked out by subtraction from the cohort's total. Fix that.
+
+**On your computer**, in your fork:
+
+1. Start a branch: `git checkout -b count-by-group`.
+2. **Paste this prompt** (with Claude Code, it can create the file itself; with a chat tool, paste the function from the worked example too):
+
+   > *Create `notebooks/helpers.R` with the function `count_by_group(data, var)` from the worked example on the Coding with AI page. Change it so that, if exactly one count in a cohort is hidden (1 to 20), the next-smallest count in that cohort is hidden too, with its percent, so no hidden count can be worked out by subtraction. Then write a small made-up data frame with columns `person_id`, `cohort`, and `self_reported_category` that triggers this, and a check that no cohort ends up with exactly one hidden count.*
+
+3. **Read** the change (`git diff`), and **run** the test on the made-up data. Does the check pass?
+4. Commit (watch the pre-commit check run) and push: `git push -u origin count-by-group`.
+
+**In the Workbench**, in your app's terminal:
+
+5. `cd` into your fork, then `git fetch` and `git checkout count-by-group`.
+6. Open a **new notebook** in `notebooks/core/` (leave it named `Untitled…`: Git ignores those), with the **R** kernel, and run:
+
+   ```r
+   source("../aou_setup.R")
+   source("../helpers.R")
+   cohort_sample <- load_cohort_sample()   # 1.1's sample, or rebuilt (one query, under $1)
+   count_by_group(cohort_sample, "self_reported_category")
+   ```
+
+7. **Read the result in the Workbench.** Are any counts hidden? In a cohort with hidden counts, are there at least **two**?
+
+**Back on GitHub:** open a pull request **in your fork**, read **Files changed**, wait for the safety check, and merge.
+
+**✅ Check:** the function passes the test on made-up data **and** runs on the real data; no cohort shows exactly one hidden count; the real result never left the Workbench.
+
+<details>
+<summary><b>Show one answer</b></summary>
+
+```r
+count_by_group <- function(data, var) {
+  data %>%
+    filter(!is.na(.data[[var]])) %>%
+    count(cohort, level = .data[[var]]) %>%
+    group_by(cohort) %>%
+    mutate(percent = round(100 * n / sum(n), 1),
+           hide    = n <= 20,
+           # one hidden count can be worked out from the cohort's total:
+           # if exactly one is hidden, hide the next-smallest too
+           hide    = hide | (sum(hide) == 1 & rank(n, ties.method = "first") == 2)) %>%
+    ungroup() %>%
+    mutate(n       = if_else(hide, NA_integer_, n),
+           percent = if_else(hide, NA_real_, percent)) %>%
+    select(-hide)
+}
+```
+
+The hidden count is always the smallest in its cohort (rank 1), so the next-smallest has rank 2. Your AI's version may look different: what matters is that **your test** shows no cohort with exactly one hidden count.
+
+**Review questions to ask the AI:** what if a cohort has only **one** level? What if the overall total isn't shown anywhere? (Hiding is about what **readers** can work out, so think about every table you publish together.)
+
+</details>
+
+## Prompt cards
+
+Copy, then change the parts in *italics* to your task. Every card works best when your instructions file (`AGENTS.md` or `CLAUDE.md`) is in place, or pasted at the start of a chat.
+
+| Task | Prompt | What to check in the answer |
+|---|---|---|
+| **Explain** | *Explain this code line by line, for someone new to R. Which parts are specific to All of Us?* | Compare with the code's comments, or the data dictionary. Ask about anything it skips |
+| **Fix an error** | *This code fails with the error below. Explain the cause, fix it, and add a check that would have caught it.* (paste the code, and the error with any data values removed) | Run the fix; make sure it fixes the **cause**, not just the message |
+| **Test on made-up data** | *Write a small made-up data frame with these columns: …, including the tricky cases (missing values, small groups, duplicates). Then test the function on it.* | Did the fake data include the cases that could break it? |
+| **Write a query** | *Write BigQuery SQL for the All of Us CDR v9 (OMOP) to …. Select only the columns needed. Use concept_ancestor for conditions. Don't use any concept ID I haven't given you: tell me what to look up.* | Every concept ID, table, and column checked in `reference/` or Athena; price it with `run_if_cheap()` |
+| **Cut a query's cost** | *Which columns and tables does this query read? Can it read less and give the same result?* | Compare the estimated cost before and after with `run_if_cheap()` |
+| **Make a summary safe** | *Change this so it shows only summaries: no rows, no maxima or minima, counts of 1 to 20 hidden, and no hidden count that can be worked out from the others.* | Test with made-up data that **has** small groups |
+| **Add a check** | *Add checks after each step: row counts after every join and filter, and the categories after every recode.* | Do the checks **stop** when something's wrong, or just print? |
+| **Review** | *Review this code as a strict reviewer. List problems with correctness, cost, and privacy (All of Us rules: no rows, no counts of 1 to 20, no single-person values). Don't rewrite it yet.* | Fix the problems one at a time, and test each |
+| **Learn** | *Don't write the code. Give me hints, one at a time, so I can write it myself.* | Good for learning: you'll remember what you wrote |
+
+**When the AI isn't sure, it should say so.** If an answer names a concept ID, table, or column you didn't give it, assume it's a guess until you've checked it.

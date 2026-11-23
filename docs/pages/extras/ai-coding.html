@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../pages/extras/workflows-for-beginners.html" rel="next">
+<link href="../../pages/extras/ai-coding-exercises.html" rel="next">
 <link href="../../pages/extras/github-guide.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -419,6 +419,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../pages/extras/ai-coding-exercises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coding with AI: Exercises and Prompt Cards</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../pages/extras/workflows-for-beginners.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Workflows for Beginners</span></a>
   </div>
@@ -439,7 +445,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-one-rule-the-ai-sees-code-never-data" id="toc-the-one-rule-the-ai-sees-code-never-data" class="nav-link active" data-scroll-target="#the-one-rule-the-ai-sees-code-never-data">The one rule: the AI sees code, never data</a>
+  <li><a href="#before-class" id="toc-before-class" class="nav-link active" data-scroll-target="#before-class">Before class</a></li>
+  <li><a href="#class-plan" id="toc-class-plan" class="nav-link" data-scroll-target="#class-plan">Class plan</a></li>
+  <li><a href="#the-one-rule-the-ai-sees-code-never-data" id="toc-the-one-rule-the-ai-sees-code-never-data" class="nav-link" data-scroll-target="#the-one-rule-the-ai-sees-code-never-data">The one rule: the AI sees code, never data</a>
   <ul class="collapse">
   <li><a href="#what-about-the-ai-tools-inside-the-workbench" id="toc-what-about-the-ai-tools-inside-the-workbench" class="nav-link" data-scroll-target="#what-about-the-ai-tools-inside-the-workbench">What about the AI tools inside the Workbench?</a></li>
   </ul></li>
@@ -505,6 +513,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>A class for anyone who writes code for <em>All of Us</em></strong> · about 90 minutes · no <em>All of Us</em> data leaves the Workbench</p>
 <p>AI assistants (Claude, ChatGPT, Gemini, GitHub Copilot) are very good at writing, explaining, and fixing code. They can make <em>All of Us</em> research much faster, especially for people new to R, Python, or SQL. But <em>All of Us</em> data <strong>can’t leave the Workbench</strong>, and that includes sending it to an AI service.</p>
 <p>This class shows a workflow that gets the benefits without the risk: <strong>the AI works on code on your own computer, GitHub carries the code, and the Workbench runs it.</strong> It’s the workflow we used to build every notebook in this course.</p>
+<p><strong>Hands-on:</strong> five exercises and copy-ready prompts are on <a href="../../pages/extras/ai-coding-exercises.html">Coding with AI: Exercises and Prompt Cards</a>.</p>
+<section id="before-class" class="level2">
+<h2 class="anchored" data-anchor-id="before-class">Before class</h2>
+<p>The setup takes about <strong>30 to 45 minutes</strong>, mostly installing. Do it <strong>before</strong> class, so class time goes on the exercises. Each item has a quick way to check it worked.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>What</th>
+<th>How</th>
+<th>Check it worked</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>☐</td>
+<td><strong>A GitHub account</strong>, with two-factor authentication on</td>
+<td><a href="https://github.com/signup">github.com/signup</a>; then <strong>Settings → Password and authentication</strong></td>
+<td>GitHub shows <em>Two-factor authentication: Enabled</em></td>
+</tr>
+<tr class="even">
+<td>☐</td>
+<td><strong>Git</strong></td>
+<td><a href="#claude-code-in-positron">Step 2 below</a></td>
+<td><code>git --version</code> prints a version</td>
+</tr>
+<tr class="odd">
+<td>☐</td>
+<td><strong>R</strong>, and the course packages</td>
+<td><a href="#claude-code-in-positron">Step 1 below</a>, then <code>install.packages(c("tidyverse", "lubridate", "broom", "survival"))</code></td>
+<td><code>Rscript -e 'library(tidyverse)'</code> runs without an error</td>
+</tr>
+<tr class="even">
+<td>☐</td>
+<td><strong>An editor</strong>: Positron (recommended), VS Code, or RStudio</td>
+<td><a href="#claude-code-in-positron">Step 3 below</a></td>
+<td>It opens, and shows your R version</td>
+</tr>
+<tr class="odd">
+<td>☐</td>
+<td><strong>An AI tool</strong></td>
+<td><strong>Claude Code</strong> (needs a Claude subscription or API access: <a href="#claude-code-in-positron">step 5</a>), or <strong>Yale’s Clarity</strong> (free for Yale users: <a href="#yales-clarity-platform">below</a>), or another chat tool</td>
+<td>Ask it <em>“What is a left join in R?”</em></td>
+</tr>
+<tr class="even">
+<td>☐</td>
+<td><strong>Your own copy (fork) of the course repository</strong>, on your computer</td>
+<td>On <a href="https://github.com/CWML/All-of-Us-Training-Resources">the course repository</a>, click <strong>Fork</strong>. Then clone <strong>your fork</strong> (step 4) and add the pre-commit check (<a href="#one-time-setup">One-time setup</a>, step 3). In your fork’s <strong>Actions</strong> tab, click the button to <strong>enable workflows</strong>, so the GitHub safety check runs there too</td>
+<td><code>git remote -v</code> shows <strong>your</strong> GitHub username</td>
+</tr>
+<tr class="odd">
+<td>☐</td>
+<td><strong>In the Workbench:</strong> an app connected to GitHub, with your fork cloned</td>
+<td><a href="../../pages/extras/github-guide.html">GitHub Guide</a>, Steps 1 and 2, with <strong>your fork’s</strong> address</td>
+<td><code>git remote -v</code> in the app’s terminal shows your username</td>
+</tr>
+<tr class="even">
+<td>☐</td>
+<td><strong>In the Workbench:</strong> <code>0.0 setup</code> run in your fork’s <code>notebooks/</code> folder</td>
+<td>Step 2 saves your bucket name in <code>my_settings.R</code></td>
+<td><code>source("aou_setup.R")</code> ends with <em>Setup done</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why a fork?</strong> It’s your own copy of the course, with everything already in place: the notebooks, <code>.gitignore</code>, <code>AGENTS.md</code>, the safety check, and <code>aou_setup.R</code>. You can push to it, break it, and fix it without affecting anyone else. <strong>A fork of a public repository is public</strong>: the safety nets keep data and outputs out, as in any repository.</p>
+<p><strong>No Claude subscription?</strong> Every exercise works with a chat tool such as Clarity: you paste the code in, and copy the answer out.</p>
+</section>
+<section id="class-plan" class="level2">
+<h2 class="anchored" data-anchor-id="class-plan">Class plan</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Part</th>
+<th>You do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0:00</td>
+<td><strong>The one rule</strong>, and the AI tools inside the Workbench</td>
+<td>listen, ask</td>
+</tr>
+<tr class="even">
+<td>0:10</td>
+<td><strong>The workflow</strong> and the project setup (checked before class)</td>
+<td>fix any setup problems</td>
+</tr>
+<tr class="odd">
+<td>0:20</td>
+<td><a href="../../pages/extras/ai-coding-exercises.html#exercise-1-safe-to-share"><strong>Exercise 1</strong>: Safe to share?</a></td>
+<td>✋ 5 min</td>
+</tr>
+<tr class="even">
+<td>0:25</td>
+<td><strong>The worked example</strong>: the AI’s first answer has a bug, and the test finds it</td>
+<td>watch</td>
+</tr>
+<tr class="odd">
+<td>0:35</td>
+<td><a href="../../pages/extras/ai-coding-exercises.html#exercise-2-explain-this-code"><strong>Exercise 2</strong>: Explain this code</a></td>
+<td>✋ 5 min</td>
+</tr>
+<tr class="even">
+<td>0:40</td>
+<td><a href="../../pages/extras/ai-coding-exercises.html#exercise-3-fix-this-error"><strong>Exercise 3</strong>: Fix this error</a></td>
+<td>✋ 10 min</td>
+</tr>
+<tr class="odd">
+<td>0:50</td>
+<td><strong>Check everything the AI writes</strong>, then <a href="../../pages/extras/ai-coding-exercises.html#exercise-4-spot-the-mistakes"><strong>Exercise 4</strong>: Spot the mistakes</a></td>
+<td>✋ 10 min</td>
+</tr>
+<tr class="even">
+<td>1:00</td>
+<td><a href="../../pages/extras/ai-coding-exercises.html#exercise-5-the-full-round-trip"><strong>Exercise 5</strong>: The full round trip</a></td>
+<td>✋ 25 min</td>
+</tr>
+<tr class="odd">
+<td>1:25</td>
+<td><strong>Wrap-up</strong>: using AI responsibly</td>
+<td>discuss</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="the-one-rule-the-ai-sees-code-never-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-one-rule-the-ai-sees-code-never-data">The one rule: the AI sees code, never data</h2>
 <p><em>All of Us</em> allows AI tools, as long as you follow its policies. Its User Support Hub FAQ is clear about where they can run:</p>
@@ -697,7 +831,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>On your computer</strong> (once):</p>
 <ol type="1">
 <li><strong>Install Git</strong> (<a href="https://git-scm.com/downloads">git-scm.com</a>), and sign in to GitHub. Turn on <strong>two-factor authentication</strong> (GitHub requires it for contributors).</li>
-<li><strong>Clone the same repo</strong>: <code>git clone https://github.com/OWNER/REPO.git</code>. Cloning code is safe: the repo has no data.</li>
+<li><strong>Clone the same repo</strong>: <code>git clone https://github.com/OWNER/REPO.git</code>. Cloning code is safe: the repo has no data. For this class, clone <strong>your fork</strong> of the course repository (see <a href="#before-class">Before class</a>).</li>
 <li><strong>Add the pre-commit check</strong>, so nothing with outputs, data files, large files, or credentials can be committed, from your computer <strong>or</strong> from the Workbench. Run this once in each copy of the repo (on your computer, and in each Workbench app):</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode sh code-annotation-code code-with-copy code-annotated"><code class="sourceCode bash"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> REPO</span>
@@ -1267,6 +1401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="writing-prompts-for-all-of-us-code" class="level2">
 <h2 class="anchored" data-anchor-id="writing-prompts-for-all-of-us-code">Writing prompts for <em>All of Us</em> code</h2>
+<p>Ready-to-copy prompts, each with what to check in the answer, are on the <a href="../../pages/extras/ai-coding-exercises.html#prompt-cards">prompt cards</a>.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1324,17 +1459,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>✋ Try It Out · 30 minutes · the full round trip
+<span class="screen-reader-only">Tip</span>✋ Try It Out · 55 minutes · five exercises
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>The exercises are on their own page: <a href="../../pages/extras/ai-coding-exercises.html"><strong>Coding with AI: Exercises and Prompt Cards</strong></a>.</p>
 <ol type="1">
-<li>On your computer, ask an AI to write an R function <code>count_by_group(data, var)</code> that counts a variable by <code>cohort</code> and hides counts of 1 to 20 (like <code>hide_small_counts()</code>).</li>
-<li>Ask it for a made-up data frame with columns <code>person_id</code>, <code>cohort</code>, and <code>smoking_status</code>, and test the function on it.</li>
-<li>Commit on a new branch (watch the pre-commit check run), and push.</li>
-<li>In the Workbench, pull the branch, and run the function on <code>survey_basics.csv</code> from <strong>5.1</strong> (it has <code>cohort</code> and <code>smoking_status</code>).</li>
-<li>Look at the result <strong>in the Workbench</strong>. Is any count hidden? Is anything you’d share safe to share?</li>
-<li>Open a pull request, check <strong>Files changed</strong> and the safety check, and merge.</li>
+<li><strong>Safe to share?</strong> (5 min): sort ten items into “may paste” and “never paste”.</li>
+<li><strong>Explain this code</strong> (5 min): an AI explains the cohort query’s first step; you check it against the comments.</li>
+<li><strong>Fix this error</strong> (10 min): a real join error from the course, on made-up data.</li>
+<li><strong>Spot the mistakes</strong> (10 min): an AI’s answer that looks right and breaks at least seven rules.</li>
+<li><strong>The full round trip</strong> (25 min): improve <code>count_by_group()</code> on your computer, push it, and run it on real data in the Workbench.</li>
 </ol>
 <p><strong>✅ Check:</strong> the function works on both the fake and the real data; the real result never left the Workbench.</p>
 </div>
@@ -1359,6 +1494,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Show a real AI mistake</strong> from the table, and how a one-line check caught it. It’s the most persuasive part of the class.</li>
 <li><strong>The pre-installed Claude Code and Gemini CLI</strong> come up every time. The All of Us FAQ’s “no outgoing API” rule is the answer for workspaces with All of Us data.</li>
 <li><strong>Live demo:</strong> steps 1 to 4 of the round trip take about 10 minutes with a prepared branch.</li>
+<li><strong>Check the setup before class.</strong> Send the <a href="#before-class">Before class</a> checklist a week ahead. In class, the most common problems are a missing fork in the Workbench and a Workbench app not yet connected to GitHub: pair those students with a neighbour for exercises 2 to 4, and fix their setup during the break.</li>
+<li><strong>Exercises 2 to 4</strong> work with any AI tool, and give different answers each time. Compare answers across the room: the differences are a lesson in themselves.</li>
 <li>Source for the policy: All of Us User Support Hub, “Frequently Asked Questions” (support.researchallofus.org/hc/en-us/articles/52861503885460).</li>
 </ul>
 </div>
@@ -1378,7 +1515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Review</strong> every change, <strong>test</strong> on made-up data, and <strong>check</strong> results: the AI suggests, the data decides</li>
 <li>The safety nets (pre-commit check, GitHub check, pull request review) catch outputs and data before they leave</li>
 </ul>
-<p><strong>Related:</strong> <a href="../../pages/extras/github-guide.html">GitHub Guide</a> · <a href="../../pages/extras/extras.html#ai-tools-use-them-outside-the-workbench">Optional Extras: AI tools</a></p>
+<p><strong>Related:</strong> <a href="../../pages/extras/ai-coding-exercises.html">Exercises and Prompt Cards</a> · <a href="../../pages/extras/github-guide.html">GitHub Guide</a> · <a href="../../pages/extras/extras.html#ai-tools-use-them-outside-the-workbench">Optional Extras: AI tools</a></p>
 
 
 </section>
@@ -1804,8 +1941,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../pages/extras/workflows-for-beginners.html" class="pagination-link" aria-label="Workflows for Beginners">
-        <span class="nav-page-text">Workflows for Beginners</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../pages/extras/ai-coding-exercises.html" class="pagination-link" aria-label="Coding with AI: Exercises and Prompt Cards">
+        <span class="nav-page-text">Coding with AI: Exercises and Prompt Cards</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

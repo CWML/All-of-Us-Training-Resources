@@ -10,6 +10,41 @@ AI assistants (Claude, ChatGPT, Gemini, GitHub Copilot) are very good at writing
 
 This class shows a workflow that gets the benefits without the risk: **the AI works on code on your own computer, GitHub carries the code, and the Workbench runs it.** It's the workflow we used to build every notebook in this course.
 
+**Hands-on:** five exercises and copy-ready prompts are on [Coding with AI: Exercises and Prompt Cards](ai-coding-exercises.qmd).
+
+## Before class
+
+The setup takes about **30 to 45 minutes**, mostly installing. Do it **before** class, so class time goes on the exercises. Each item has a quick way to check it worked.
+
+| | What | How | Check it worked |
+|---|---|---|---|
+| ☐ | **A GitHub account**, with two-factor authentication on | [github.com/signup](https://github.com/signup); then **Settings → Password and authentication** | GitHub shows *Two-factor authentication: Enabled* |
+| ☐ | **Git** | [Step 2 below](#claude-code-in-positron) | `git --version` prints a version |
+| ☐ | **R**, and the course packages | [Step 1 below](#claude-code-in-positron), then `install.packages(c("tidyverse", "lubridate", "broom", "survival"))` | `Rscript -e 'library(tidyverse)'` runs without an error |
+| ☐ | **An editor**: Positron (recommended), VS Code, or RStudio | [Step 3 below](#claude-code-in-positron) | It opens, and shows your R version |
+| ☐ | **An AI tool** | **Claude Code** (needs a Claude subscription or API access: [step 5](#claude-code-in-positron)), or **Yale's Clarity** (free for Yale users: [below](#yales-clarity-platform)), or another chat tool | Ask it *"What is a left join in R?"* |
+| ☐ | **Your own copy (fork) of the course repository**, on your computer | On [the course repository](https://github.com/CWML/All-of-Us-Training-Resources), click **Fork**. Then clone **your fork** (step 4) and add the pre-commit check ([One-time setup](#one-time-setup), step 3). In your fork's **Actions** tab, click the button to **enable workflows**, so the GitHub safety check runs there too | `git remote -v` shows **your** GitHub username |
+| ☐ | **In the Workbench:** an app connected to GitHub, with your fork cloned | [GitHub Guide](github-guide.qmd), Steps 1 and 2, with **your fork's** address | `git remote -v` in the app's terminal shows your username |
+| ☐ | **In the Workbench:** `0.0 setup` run in your fork's `notebooks/` folder | Step 2 saves your bucket name in `my_settings.R` | `source("aou_setup.R")` ends with *Setup done* |
+
+**Why a fork?** It's your own copy of the course, with everything already in place: the notebooks, `.gitignore`, `AGENTS.md`, the safety check, and `aou_setup.R`. You can push to it, break it, and fix it without affecting anyone else. **A fork of a public repository is public**: the safety nets keep data and outputs out, as in any repository.
+
+**No Claude subscription?** Every exercise works with a chat tool such as Clarity: you paste the code in, and copy the answer out.
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **The one rule**, and the AI tools inside the Workbench | listen, ask |
+| 0:10 | **The workflow** and the project setup (checked before class) | fix any setup problems |
+| 0:20 | [**Exercise 1**: Safe to share?](ai-coding-exercises.qmd#exercise-1-safe-to-share) | ✋ 5 min |
+| 0:25 | **The worked example**: the AI's first answer has a bug, and the test finds it | watch |
+| 0:35 | [**Exercise 2**: Explain this code](ai-coding-exercises.qmd#exercise-2-explain-this-code) | ✋ 5 min |
+| 0:40 | [**Exercise 3**: Fix this error](ai-coding-exercises.qmd#exercise-3-fix-this-error) | ✋ 10 min |
+| 0:50 | **Check everything the AI writes**, then [**Exercise 4**: Spot the mistakes](ai-coding-exercises.qmd#exercise-4-spot-the-mistakes) | ✋ 10 min |
+| 1:00 | [**Exercise 5**: The full round trip](ai-coding-exercises.qmd#exercise-5-the-full-round-trip) | ✋ 25 min |
+| 1:25 | **Wrap-up**: using AI responsibly | discuss |
+
 ## The one rule: the AI sees code, never data
 
 *All of Us* allows AI tools, as long as you follow its policies. Its User Support Hub FAQ is clear about where they can run:
@@ -153,7 +188,7 @@ Instead:
 **On your computer** (once):
 
 1. **Install Git** ([git-scm.com](https://git-scm.com/downloads)), and sign in to GitHub. Turn on **two-factor authentication** (GitHub requires it for contributors).
-2. **Clone the same repo**: `git clone https://github.com/OWNER/REPO.git`. Cloning code is safe: the repo has no data.
+2. **Clone the same repo**: `git clone https://github.com/OWNER/REPO.git`. Cloning code is safe: the repo has no data. For this class, clone **your fork** of the course repository (see [Before class](#before-class)).
 3. **Add the pre-commit check**, so nothing with outputs, data files, large files, or credentials can be committed, from your computer **or** from the Workbench. Run this once in each copy of the repo (on your computer, and in each Workbench app):
 
 ```sh
@@ -547,6 +582,8 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 
 ## Writing prompts for *All of Us* code
 
+Ready-to-copy prompts, each with what to check in the answer, are on the [prompt cards](ai-coding-exercises.qmd#prompt-cards).
+
 | Do | Example |
 |---|---|
 | Give the setting | *"BigQuery Standard SQL, OMOP CDM, All of Us CDR v9"* (or put it in the instructions file) |
@@ -567,14 +604,15 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 ## Try It Out
 
 ::: {.callout-tip}
-## ✋ Try It Out · 30 minutes · the full round trip
+## ✋ Try It Out · 55 minutes · five exercises
 
-1. On your computer, ask an AI to write an R function `count_by_group(data, var)` that counts a variable by `cohort` and hides counts of 1 to 20 (like `hide_small_counts()`).
-2. Ask it for a made-up data frame with columns `person_id`, `cohort`, and `smoking_status`, and test the function on it.
-3. Commit on a new branch (watch the pre-commit check run), and push.
-4. In the Workbench, pull the branch, and run the function on `survey_basics.csv` from **5.1** (it has `cohort` and `smoking_status`).
-5. Look at the result **in the Workbench**. Is any count hidden? Is anything you'd share safe to share?
-6. Open a pull request, check **Files changed** and the safety check, and merge.
+The exercises are on their own page: [**Coding with AI: Exercises and Prompt Cards**](ai-coding-exercises.qmd).
+
+1. **Safe to share?** (5 min): sort ten items into "may paste" and "never paste".
+2. **Explain this code** (5 min): an AI explains the cohort query's first step; you check it against the comments.
+3. **Fix this error** (10 min): a real join error from the course, on made-up data.
+4. **Spot the mistakes** (10 min): an AI's answer that looks right and breaks at least seven rules.
+5. **The full round trip** (25 min): improve `count_by_group()` on your computer, push it, and run it on real data in the Workbench.
 
 **✅ Check:** the function works on both the fake and the real data; the real result never left the Workbench.
 :::
@@ -588,6 +626,8 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 - **Show a real AI mistake** from the table, and how a one-line check caught it. It's the most persuasive part of the class.
 - **The pre-installed Claude Code and Gemini CLI** come up every time. The All of Us FAQ's "no outgoing API" rule is the answer for workspaces with All of Us data.
 - **Live demo:** steps 1 to 4 of the round trip take about 10 minutes with a prepared branch.
+- **Check the setup before class.** Send the [Before class](#before-class) checklist a week ahead. In class, the most common problems are a missing fork in the Workbench and a Workbench app not yet connected to GitHub: pair those students with a neighbour for exercises 2 to 4, and fix their setup during the break.
+- **Exercises 2 to 4** work with any AI tool, and give different answers each time. Compare answers across the room: the differences are a lesson in themselves.
 - Source for the policy: All of Us User Support Hub, "Frequently Asked Questions" (support.researchallofus.org/hc/en-us/articles/52861503885460).
 :::
 
@@ -603,4 +643,4 @@ The pattern: **the AI suggests, the data decides.** Use the checks from the cour
 - **Review** every change, **test** on made-up data, and **check** results: the AI suggests, the data decides
 - The safety nets (pre-commit check, GitHub check, pull request review) catch outputs and data before they leave
 
-**Related:** [GitHub Guide](github-guide.qmd) · [Optional Extras: AI tools](extras.qmd#ai-tools-use-them-outside-the-workbench)
+**Related:** [Exercises and Prompt Cards](ai-coding-exercises.qmd) · [GitHub Guide](github-guide.qmd) · [Optional Extras: AI tools](extras.qmd#ai-tools-use-them-outside-the-workbench)
