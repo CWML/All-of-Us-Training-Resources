@@ -75,7 +75,15 @@ dir.create(DATA_DIR, showWarnings = FALSE)
 # Run a SQL query and return the result as a data frame
 run_query <- function(sql) {
   tb <- bq_project_query(BILLING_PROJECT, sql)
-  bq_table_download(tb)
+  # Results with long rows (e.g. survey answer text for every participant) can fail to
+  # download with "... rows were requested, but only ... rows were received". Then we
+  # download the same results again in smaller pages: the query isn't run or billed again.
+  tryCatch(bq_table_download(tb),
+           error = function(e) {
+             if (!grepl("rows were requested", conditionMessage(e))) stop(e)
+             message("Long rows: downloading again in smaller pages (not billed again)...")
+             bq_table_download(tb, page_size = 5000)
+           })
 }
 
 # Save a data frame as CSV in your bucket's data/ folder
