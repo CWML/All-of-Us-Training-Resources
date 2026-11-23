@@ -133,6 +133,14 @@ Agreed 2026-11-03. Framing: **predict who will develop type 2 diabetes**, using 
 
 **First step:** a cheap overlap query: how many people have proteomics, EHR, and wearables, and how many developed type 2 diabetes **after** their sample. If too few, 7.3 uses a related outcome (e.g. HbA1c level). No deep learning (a short "when would you use it?" note instead).
 
+**Data check results** (`notebooks/ml/ml_data_check.ipynb`, run November 23, 2026; summaries only):
+
+- **Outcome:** new type 2 diabetes within **2 years** of time zero (3 years as an exercise). 77% of cases were diagnosed **before** enrollment, so they're excluded, not predicted.
+- **Time zero for 7.1, 7.2, 7.4:** enrollment (first survey date). Surveys + BMI: about 264,000 at risk, 15,500 new cases. Fitbit: about 34,000 at risk, 2,000 new cases.
+- **Time zero for 7.3:** the **later of enrollment and the blood draw**. The proteomics manifest has no date, so we use `biosample_collection_date` from the genome QC file `aux/qc/genomics_metrics.tsv` (written `YYYY-MM-DD HH:MM:SS`). For people with proteomics, the median gap is 0 days; 80% are within 30 days and 97.4% within a year. With this time zero: 7,882 people, 5,843 at risk, **380 new cases**, median 3.9 years of follow-up. Enough for a LASSO panel with care (few events per protein: use cross-validation, report uncertainty).
+- **Assumption to check:** that the proteomics plasma comes from the same visit as the genome's blood sample. Not stated in the documents we have.
+- **Don't publish both 7.3 time zeros side by side:** their differences (e.g. in new cases) are small counts. Show only the chosen one. Same for the genome total and the dated-genome total.
+
 ### Every notebook includes
 
 - Learning objectives, time, and what it uses and saves
