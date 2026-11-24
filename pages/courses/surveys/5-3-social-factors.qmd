@@ -100,13 +100,13 @@ In the question dictionary, find a **Healthcare Access & Utilization** question 
 
 ```r
 income = case_when(
-  answer %in% c("less 10k", "10k 25k")                 ~ "Under $25k",          # <1>
-  answer %in% c("25k 35k", "35k 50k")                  ~ "$25k to $50k",
-  answer %in% c("50k 75k", "75k 100k")                 ~ "$50k to $100k",
-  answer %in% c("100k 150k", "150k 200k", "more 200k") ~ "$100k or more",
+  answer %in% c("less 10k", "10k 25k")                 ~ "Under 25k",          # <1>
+  answer %in% c("25k 35k", "35k 50k")                  ~ "25k to 50k",
+  answer %in% c("50k 75k", "75k 100k")                 ~ "50k to 100k",
+  answer %in% c("100k 150k", "150k 200k", "more 200k") ~ "100k or more",
   answer == "PMI: Prefer Not To Answer"                ~ "Prefer not to answer", # <2>
   TRUE                                                 ~ NA_character_),
-income = factor(income, levels = c("$100k or more", …))                         # <3>
+income = factor(income, levels = c("100k or more", …))                         # <3>
 ```
 1. Combine neighbouring ranges: nine small groups give unstable odds ratios.
 2. Keep *Prefer not to answer* as its own group: it's common, and more common in cases.
