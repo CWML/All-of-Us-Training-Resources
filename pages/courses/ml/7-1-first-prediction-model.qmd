@@ -269,4 +269,4 @@ Run the setup cell **before class**: installing tidymodels can take 15 minutes t
 
 ## Next
 
-**7.2 Trees and boosting** (planned): random forests and gradient boosting on the same data. Do flexible models find anything logistic regression missed?
+[**7.2 Trees and boosting**](7-2-trees-and-boosting.qmd): random forests and gradient boosting on the same data. Do flexible models find anything logistic regression missed?
