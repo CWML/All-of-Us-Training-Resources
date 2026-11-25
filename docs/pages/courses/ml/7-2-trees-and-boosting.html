@@ -712,6 +712,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#calibration" id="toc-calibration" class="nav-link" data-scroll-target="#calibration">Calibration</a></li>
   <li><a href="#which-predictors-each-model-relies-on" id="toc-which-predictors-each-model-relies-on" class="nav-link" data-scroll-target="#which-predictors-each-model-relies-on">Which predictors each model relies on</a></li>
   <li><a href="#the-shapes-the-models-learned" id="toc-the-shapes-the-models-learned" class="nav-link" data-scroll-target="#the-shapes-the-models-learned">The shapes the models learned</a></li>
+  <li><a href="#the-same-in-python-7.2b" id="toc-the-same-in-python-7.2b" class="nav-link" data-scroll-target="#the-same-in-python-7.2b">The same in Python (7.2b)</a></li>
   </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
@@ -1216,6 +1217,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>BMI:</strong> the trees learned an <strong>S-shape</strong>: flat below about 24, a steep rise from 25 to 35, then slower. Logistic regression is too low between 30 and 40, and too high at 50. This is where boosting’s extra AUC comes from.</li>
 <li><strong>Age:</strong> the trees rise quickly until about 45, then slowly; logistic regression rises steadily.</li>
 <li>The two tree methods, built in very different ways, agree closely: the shapes are likely real.</li>
+</ul>
+</section>
+<section id="the-same-in-python-7.2b" class="level3">
+<h3 class="anchored" data-anchor-id="the-same-in-python-7.2b">The same in Python (7.2b)</h3>
+<p>scikit-learn’s split is a <strong>different</strong> random 75/25, so its numbers differ a little from R’s:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>R (7.2) test AUC</th>
+<th>Python (7.2b) test AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Logistic regression</td>
+<td>0.743</td>
+<td>0.747</td>
+</tr>
+<tr class="even">
+<td>Gradient boosting (tuned)</td>
+<td>0.751</td>
+<td>0.756</td>
+</tr>
+<tr class="odd">
+<td><strong>Gain from boosting</strong></td>
+<td><strong>0.008</strong></td>
+<td><strong>0.009</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The same model moved by <strong>0.004</strong> just from a different split: that’s the noise of one test set.</li>
+<li>Boosting’s gain <strong>held</strong> on a second split with a second package, and the same setting won the tuning (depth 2, rate 0.1). So the gain is likely real, if small.</li>
+<li>Importance came out in the same order: BMI, age, general health, then everything else under 0.01.</li>
 </ul>
 <p><strong>The lesson:</strong> flexible models found real curves that logistic regression missed, but the gain was small. A logistic regression with splines for BMI and age (7.1’s LASSO reached 0.748) gets much of the way there, and stays easy to explain. Which one you’d use depends on whether 0.008 matters more than explaining the model; see <a href="../../../pages/courses/choosing-a-method.html">Choosing a method</a>.</p>
 </section>

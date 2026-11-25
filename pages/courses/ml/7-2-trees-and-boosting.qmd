@@ -212,6 +212,20 @@ All three models are close to the line. All three **overpredict** in the top ten
 - **Age:** the trees rise quickly until about 45, then slowly; logistic regression rises steadily.
 - The two tree methods, built in very different ways, agree closely: the shapes are likely real.
 
+### The same in Python (7.2b)
+
+scikit-learn's split is a **different** random 75/25, so its numbers differ a little from R's:
+
+| Model | R (7.2) test AUC | Python (7.2b) test AUC |
+|---|---|---|
+| Logistic regression | 0.743 | 0.747 |
+| Gradient boosting (tuned) | 0.751 | 0.756 |
+| **Gain from boosting** | **0.008** | **0.009** |
+
+- The same model moved by **0.004** just from a different split: that's the noise of one test set.
+- Boosting's gain **held** on a second split with a second package, and the same setting won the tuning (depth 2, rate 0.1). So the gain is likely real, if small.
+- Importance came out in the same order: BMI, age, general health, then everything else under 0.01.
+
 **The lesson:** flexible models found real curves that logistic regression missed, but the gain was small. A logistic regression with splines for BMI and age (7.1's LASSO reached 0.748) gets much of the way there, and stays easy to explain. Which one you'd use depends on whether 0.008 matters more than explaining the model; see [Choosing a method](../choosing-a-method.qmd).
 
 ## Instructor notes
