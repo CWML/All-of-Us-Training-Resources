@@ -213,4 +213,4 @@ Nested cross-validation ran in 2 minutes. The same method, on four-fifths of the
 
 ## Next
 
-**7.4 Combining data responsibly** (planned): enrollment data, wearables, and proteins together; how overlap shrinks the sample; fairness across groups; reporting with TRIPOD+AI.
+[**7.4 Combining data responsibly**](7-4-combining-data-responsibly.qmd): enrollment data, wearables, and proteins together; how overlap shrinks the sample; fairness across groups; reporting with TRIPOD+AI.

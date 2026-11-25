@@ -141,6 +141,7 @@ website:
             - pages/courses/ml/7-1-first-prediction-model.qmd
             - pages/courses/ml/7-2-trees-and-boosting.qmd
             - pages/courses/ml/7-3-protein-signature.qmd
+            - pages/courses/ml/7-4-combining-data-responsibly.qmd
     - id: extras
       title: "Optional Extras"
       style: docked

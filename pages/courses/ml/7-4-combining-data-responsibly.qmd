@@ -1,0 +1,183 @@
+---
+title: "7.4 Combining Data Responsibly"
+description: "Does the model work for everyone? A fairness check by group, how combining Fitbit and proteomics shrinks the sample, whether steps add to prediction, and reporting with TRIPOD+AI"
+code-annotations: below
+---
+
+**Machine learning series, class 4 of 4** · R · 95 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/ml/7.4%20combining_data_responsibly.ipynb){.btn .btn-outline-primary .btn-sm}
+[Machine learning series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+A model with a good AUC isn't finished. Before anyone uses it, three questions remain:
+
+1. **Does it work equally well for everyone?** An AUC is an average: a model can rank one group well and another poorly, or be right on average and wrong for a group.
+2. **Is more data better?** Each extra kind of data (a Fitbit, a blood sample) adds information, but only some people have it. Combining data **shrinks** the sample, and changes **who** is in it.
+3. **Can someone else check it?** **TRIPOD+AI** is the checklist for reporting a prediction model.
+
+### By the end you'll be able to
+
+1. Check a model's **discrimination** and **calibration** in each group
+2. Ask **who** a model would flag, and whose future cases it would miss
+3. Count how combining data types **shrinks** the sample, and changes who is in it
+4. Test whether **Fitbit steps** add to enrollment data, with cross-validation and the bootstrap
+5. Report a model with the **TRIPOD+AI** checklist
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Does the 7.1 model work equally well across groups? What happens to the sample, and to prediction, when we add Fitbit and proteomics? |
+| 🧪 **The analysis** | 7.1's model on its test set, by sex, age, income, and race and ethnicity: AUC with bootstrap intervals, observed ÷ expected risk, the share of each group's cases in the top 10%. The people with each combination of data. Enrollment data vs + Fitbit steps, by 5-fold cross-validation |
+| 🎯 **Why** | TRIPOD+AI asks for performance in **key subgroups** (item 23a) and how **fairness** was addressed (item 14) |
+| ✅ **What we conclude** | Where the model is weaker, how much each data type costs in people, and whether steps add to enrollment data |
+| ⚠️ **What it can't tell us** | Why a group differs (biology, access to care, how diabetes is diagnosed and recorded); how the model would do outside *All of Us* |
+| 🔗 **Connections** | **7.1** (the model), **7.3** (cross-validation, the bootstrap), **6.2** (Fitbit steps), **3.1** (describing groups) |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 95 minutes |
+| ⏱️ **Run time** | about 10 minutes |
+| 💰 **Cost** | about **$1**: the cohort query and the Fitbit baseline query (as in 6.2) |
+| 📋 **Before class** | run **7.1** to the end in the same workspace |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: fairness checks; the cost of combining data; reporting | listen, discuss |
+| 0:15 | **2. Setup**: the 7.1 model, again | run the cells |
+| 0:25 | **3. Does the model work for everyone?** | run the cells, discuss |
+| 0:50 | **4. Combining data: who's left?** | run the cells, discuss |
+| 1:05 | **5. Do Fitbit steps add anything?** | run the cells |
+| 1:15 | **6. Reporting with TRIPOD+AI** | discuss |
+| 1:25 | **Wrap-up**: the series | ✋ **Your turn** |
+
+## Key concepts
+
+### Three ways a model can be unfair
+
+| Check | Asks | A problem looks like |
+|---|---|---|
+| **Discrimination** in each group | Within this group, does the model rank future cases above others? | AUC 0.78 for one group, 0.65 for another |
+| **Calibration** in each group | Does the average predicted risk match the share diagnosed? | predicted 5%, observed 8%: the group's risk looks lower than it is |
+| **Who gets flagged** | If a program reached the top 10% of risk, what share of each group's **future cases** would it reach? | 35% of one group's cases, 15% of another's |
+
+**Observed ÷ expected** (O/E) sums up calibration: 1 is right; above 1, the model **under**-predicts for that group.
+
+**Why groups can differ:** fewer people to learn from; a predictor that means different things in different groups; and an **outcome that depends on care**: someone who sees a doctor less often is diagnosed later, or not at all.
+
+**Small groups can't be checked.** Groups with fewer than 50 new cases are combined: they're **not audited**, which is a limitation to report, not a reassurance.
+
+### Within an age group, the AUC drops: that's expected
+
+Part of the overall AUC comes from ranking older people above younger ones. Within one age group, that help is gone, so the AUC is lower. It's a property of the AUC, not unfairness. Calibration and "cases reached" are better fairness signals for age.
+
+### The cost of combining data
+
+```
+Enrollment data        ████████████████████████████████████████  everyone in 7.1
++ Fitbit               ████████                                  people who shared a Fitbit
++ proteomics           █                                         people chosen for proteomics
++ Fitbit + proteomics  ▏                                         both: very few
+```
+
+Each combination's **time zero** is the latest of its data dates. The people left may **differ** from everyone else (younger, wealthier, more active), and a model built on them describes a different population.
+
+### Reporting: TRIPOD+AI
+
+**TRIPOD+AI** is a 27-item checklist for reporting prediction models, whether built with regression or machine learning. It supersedes TRIPOD 2015, and puts particular emphasis on **fairness** (Collins and others, *BMJ*, 2024, [doi:10.1136/bmj-2023-078378](https://doi.org/10.1136/bmj-2023-078378)).
+
+| Item | Asks for | In this series |
+|---|---|---|
+| 3c | known health inequalities between groups | 7.4 Part 3; [Precision Medicine](../precision-medicine.qmd) |
+| 5a, 5b | the data source, its representativeness, and the dates | *All of Us* CDR v9; proteomics selection unknown (7.3) |
+| 8a | the outcome, its time horizon, and how it's assessed | a first type 2 diabetes code within 2 years of time zero |
+| 9b | each predictor: how and **when** it was measured | at enrollment (7.1); the blood draw (7.3); Fitbit's first 6 months (7.4) |
+| 10 | why the sample size was enough | the data check; events per predictor (7.3) |
+| 11 | missing data | a "Missing" group for survey answers (7.1) |
+| 12a, 12c | how the data were split; the model and its tuning | 75/25 split and cross-validation (7.1, 7.2); nested cross-validation (7.3) |
+| 12e | the performance measures | AUC, Brier score, calibration |
+| 14 | how **fairness** was addressed | 7.4 Part 3 |
+| 18e, 18f | data and code sharing | data through the Researcher Workbench; code on GitHub |
+| 20a | the flow of participants | the flow tables |
+| 23a | performance **with confidence intervals, including for key subgroups** | 7.3, 7.4 |
+| 26 | limitations | each class's "What it can't tell us" |
+
+**Not yet reported:** external validation; model updating (items 12f, 24); and **patient and public involvement** (item 19): no participants helped design these models.
+
+## Follow along in the Workbench
+
+Open `notebooks/ml/7.4 combining_data_responsibly.ipynb` with the **R** kernel. **Run 7.1 first**.
+
+## ✋ Your turn · 10 minutes
+
+1. **Another grouping.** `audit(scored, "education")`. Which group has the lowest AUC? Is its interval wide?
+2. **A different program.** Flag the top **20%** instead of 10%. Does the gap in cases reached between groups shrink or grow?
+3. **Steps as a curve.** Use `splines::ns(steps_1000, df = 3)`. Does the gain change?
+
+## Code walk-through
+
+### Protecting counts that add up to a total
+
+```r
+hide_with_total <- function(n, also = FALSE) {
+  hidden <- n <= 20 | also                                                    # <1>
+  while (any(hidden) && !all(hidden) && sum(n[hidden]) %in% 1:20) {           # <2>
+    hidden[which.min(replace(n, hidden, Inf))] <- TRUE
+  }
+  replace(n, hidden, NA)
+}
+```
+1. Counts of 1 to 20 are hidden, plus any marked for another reason (`also`).
+2. The groups add up to a known total, so the hidden ones' **sum** can be worked out. If that sum is 1 to 20, hide the next smallest too, until it isn't.
+
+### Who's left, for any combination of data
+
+```r
+eligible <- function(data) {
+  data %>%
+    mutate(horizon_end = time_zero + round(365.25 * HORIZON_YEARS),
+           t2d_by_zero = cohort == "case" & t2d_date <= time_zero,                # <1>
+           new         = cohort == "case" & t2d_date > time_zero & t2d_date <= horizon_end) %>%
+    filter(!t2d_by_zero, new | followup_end >= horizon_end)                       # <2>
+}
+
+eligible(base %>% filter(has_fitbit) %>% mutate(time_zero = pmax(enroll_date, baseline_end)))   # <3>
+```
+1. Already diagnosed by time zero: out.
+2. Followed for 2 years, or diagnosed sooner.
+3. Each combination's time zero is the **latest** of its data dates.
+
+## What we found
+
+*Results will be added after the first test run in the Workbench.*
+
+## Instructor notes
+
+- **Ask for guesses first:** which group will the model work worst for? Then run Part 3.
+- **Explain the age-group AUC drop** before anyone calls it unfair.
+- **"Smaller groups, combined" is a finding:** some groups can't be audited with these numbers.
+- **Race and ethnicity** are social categories: differences can reflect access to care and diagnosis, not biology. Keep the discussion on what the model **does**, and to whom.
+- **Close the series:** time zero, the data type, and the people included mattered more than the method.
+
+## Key takeaways
+
+- An overall AUC can hide **weaker performance in a group**: check discrimination, calibration, and who gets flagged, **by group**.
+- **Small groups can't be audited** reliably: say so.
+- Combining data types **shrinks** the sample and changes **who** is in it.
+- A predictor can be strongly **associated** with the outcome and still add little to **prediction**.
+- Report models with **TRIPOD+AI**.
+
+## The series, in one table
+
+| Class | The lesson |
+|---|---|
+| [7.1](7-1-first-prediction-model.qmd) | Time zero and leakage come first; logistic regression is a strong baseline |
+| [7.2](7-2-trees-and-boosting.qmd) | Flexible models found real curves, but added little (0.008 AUC) |
+| [7.3](7-3-protein-signature.qmd) | New **data** (proteins) added more (0.06), with an unstable panel and a small sample |
+| **7.4** | Check every group, count who's left, and report it all |
