@@ -3276,6 +3276,76 @@
     "text": "Contact\nMaximilian Wegener, MPH, Biomedical Informatics Librarian, Cushing/Whitney Medical Library, Yale School of Medicine\nEmail: maximilian.wegener@yale.edu\nFeedback is welcome. Found something unclear, out of date, or broken? Send us your feedback, or use the Feedback link at the top of every page.\n\n\nNext section: Get Started →"
   },
   {
+    "objectID": "pages/courses/choosing-a-method.html",
+    "href": "pages/courses/choosing-a-method.html",
+    "title": "Choosing a Method",
+    "section": "",
+    "text": "Our classes use more than fifteen methods, from a t-test to gradient boosting. Each one exists because it fits a particular kind of question and a particular kind of outcome. This page puts them side by side, so you can see why a class uses the method it does, and choose one for your own question.",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
+    "objectID": "pages/courses/choosing-a-method.html#two-questions-decide-most-of-it",
+    "href": "pages/courses/choosing-a-method.html#two-questions-decide-most-of-it",
+    "title": "Choosing a Method",
+    "section": "Two questions decide most of it",
+    "text": "Two questions decide most of it\n\n1. Are you explaining, or predicting?\n\n\n\n\n\n\n\n\n\nExplaining\nPredicting\n\n\n\n\nThe question\nIs X linked to the outcome, after accounting for other factors?\nWho will have the outcome?\n\n\nExample\nWhich characteristics go with higher odds of type 2 diabetes, accounting for each other? (3.2)\nWhich participants will be diagnosed in the next 2 years? (7.1)\n\n\nWhat you report\nan effect with its confidence interval: an odds ratio, a hazard ratio, a difference in means\nhow well the predictions work on new people: AUC, calibration\n\n\nHow you choose the variables\nby thinking about causes: adjust for confounders, not for steps on the causal path\nanything known at time zero; no leakage\n\n\nWhere in our courses\nCore 3.1–3.4, Omics, Surveys, Wearables\nMachine learning 7.1–7.4\n\n\n\nThe same method can do either job. Logistic regression explains in 3.2 (odds ratios), tests each genetic variant in 4.2, and predicts in 7.1 (AUC). Judge a model by the job it’s doing: a model with a low AUC can still estimate an effect well, and a model that predicts well may say nothing about causes.\n\n\n2. What kind of outcome do you have?\nThe outcome’s type decides the regression model. Each model is built so its predictions make sense for that kind of outcome.\n\n\n\n\n\n\n\n\n\n\nThe outcome is\nExample in our courses\nModel\nIt reports\nClass\n\n\n\n\na number\nsystolic blood pressure\nlinear regression\nβ: the difference in the average outcome\n3.3\n\n\nyes or no\ntype 2 diabetes\nlogistic regression\nodds ratio\n3.2, 4.2–4.4, 7.1\n\n\nyes or no, but the standard fit fails (a rare variant, a group with no cases)\na GWAS variant\nFirth logistic regression\nodds ratio\n4.2, 4.3\n\n\na count\ndrinks per day\nPoisson regression (negative binomial if the counts vary more than Poisson allows)\nrate ratio\nmentioned in 5.1\n\n\nthe time until an event, with people followed for different lengths\ntime to kidney disease; time to new diabetes after joining Fitbit\nKaplan–Meier curves (describe), the log-rank test (compare), the Cox model (adjust)\nsurvival curves; hazard ratio\n3.4, 6.2, 6.3\n\n\nthousands of outcomes at once\nevery gene’s RNA, every protein\nlimma (with voom for RNA counts)\nlog fold change and an adjusted p-value for each\n4.5, 4.6\n\n\n\nWhy not use linear regression for everything?\n\nYes/no outcomes: a straight line can predict a risk below 0% or above 100%. Logistic regression keeps every risk between 0 and 1.\nTime to an event: some people leave the study or haven’t had the event yet (they’re censored). Dropping them, or treating them as “no event”, gives the wrong answer. Kaplan–Meier and Cox models use each person’s follow-up for as long as it lasts.\nThousands of outcomes: each gene has few people per group, so its variation is estimated poorly. limma borrows information across genes, which makes each test more stable.",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
+    "objectID": "pages/courses/choosing-a-method.html#describing-and-comparing-groups",
+    "href": "pages/courses/choosing-a-method.html#describing-and-comparing-groups",
+    "title": "Choosing a Method",
+    "section": "Describing and comparing groups",
+    "text": "Describing and comparing groups\nBefore any model, a Table 1 (3.1) describes the groups and tests whether they differ.\n\n\n\n\n\n\n\n\n\nThe data\nTest\nUse when\nWatch for\n\n\n\n\na number, in two groups\nt-test\nthe values are roughly symmetric\nwith very large groups, tiny differences become “significant”: look at the size of the difference\n\n\na number, in two groups\nWilcoxon rank-sum test\nthe values are skewed, or have extreme values\nit compares ranks, not means\n\n\ngroups (sex, smoking) in two groups\nchi-square test\ncounts in a table\nneeds enough people in each cell\n\n\ntwo numbers, in the same people\ncorrelation: Pearson (straight-line), Spearman (ranks)\nhow closely two measures move together\nSpearman isn’t thrown off by extreme values (4.7)",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
+    "objectID": "pages/courses/choosing-a-method.html#prediction-methods",
+    "href": "pages/courses/choosing-a-method.html#prediction-methods",
+    "title": "Choosing a Method",
+    "section": "Prediction methods",
+    "text": "Prediction methods\nThese are the methods of the machine learning series. Logistic regression appears here too, doing a different job.\n\n\n\n\n\n\n\n\n\n\n\n\nIdea\nBest when\nExplaining it\nWatch out for\nClass\n\n\n\n\nLogistic regression\na weighted sum of predictors, turned into a risk\na few predictors chosen in advance; the model must be explained\neasy: one odds ratio per predictor\na number’s effect that bends, unless you add a spline\n7.1, 7.2\n\n\nSplines (an add-on)\nlet a number’s effect bend, inside a regression\nrisk rises faster at high BMI, or levels off with age\na curve per predictor\ntoo many bends overfit\n7.1\n\n\nLASSO\nlogistic regression with a penalty that shrinks weak predictors to exactly zero\nmany predictors for the number of cases (thousands of proteins)\neasy: the predictors it kept\nthe chosen predictors can change from one sample to another\n7.1, 7.3\n\n\nRidge and elastic net (relatives of LASSO)\nridge shrinks every predictor but drops none; elastic net mixes the two\nmany predictors that move together\nas above\nridge keeps every predictor, so it doesn’t choose\nnot used\n\n\nDecision tree\na flowchart of yes/no questions, ending in a risk\nshowing how trees work\neasy to draw\none tree overfits: rarely used alone\n7.2\n\n\nRandom forest\nmany deep trees on random samples, averaged\na flexible model with little tuning\nhard: needs importance and partial dependence\nrisks pulled away from 0% and 100% (check calibration); uses a lot of memory\n7.2\n\n\nGradient boosting\nmany small trees, each fixing the last ones’ mistakes\nmany people, curves and interactions, time to tune\nhard: the same\noverfits if the learning rate is too fast or there are too many trees\n7.2, 7.2b\n\n\nDeep learning (neural networks)\nlayers of simple units that learn their own features\nimages, text, signals, very large data\nvery hard\non tables of a few dozen predictors, it rarely beats the methods above\nnot used\n\n\n\nA practical order for prediction: start with logistic regression as the baseline; try LASSO if there are many predictors; then a flexible model. Keep the complex one only if it’s clearly better on the same test set, in AUC and calibration, by enough to matter. More in Machine learning for beginners.",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
+    "objectID": "pages/courses/choosing-a-method.html#tools-that-support-the-methods",
+    "href": "pages/courses/choosing-a-method.html#tools-that-support-the-methods",
+    "title": "Choosing a Method",
+    "section": "Tools that support the methods",
+    "text": "Tools that support the methods\n\n\n\n\n\n\n\n\nTool\nWhat it does\nWhere\n\n\n\n\nPrincipal components (PCA)\nturns many related measures into a few summary numbers: genetic ancestry from thousands of variants, or the main patterns in protein data\nadjusting GWAS for ancestry (4.2, 4.3); spotting batches (4.5, 4.6)\n\n\nMultiple-testing corrections (Bonferroni, false discovery rate)\nthousands of tests give some small p-values by chance; these raise the bar\nGWAS, PheWAS, genes and proteins (4.2–4.6)\n\n\nCross-validation\ntests settings on parts of the training data, never the test set\nchoosing the LASSO penalty and boosting settings (7.1, 7.2)",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
+    "objectID": "pages/courses/choosing-a-method.html#what-every-method-has-in-common",
+    "href": "pages/courses/choosing-a-method.html#what-every-method-has-in-common",
+    "title": "Choosing a Method",
+    "section": "What every method has in common",
+    "text": "What every method has in common\n\nNo method fixes a poorly framed question. Time zero, who is included, and what counts as the outcome matter more than the choice of method.\nNo method shows cause on its own. Odds ratios, hazard ratios, and importance scores describe the data. Whether they’re causal depends on the design.\nEvery result shared from All of Us follows the same rules: no counts of 1 to 20, nothing that lets someone work them out, and no single person’s values.",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
+    "objectID": "pages/courses/choosing-a-method.html#glossary",
+    "href": "pages/courses/choosing-a-method.html#glossary",
+    "title": "Choosing a Method",
+    "section": "Glossary",
+    "text": "Glossary\n\n\n\n\n\n\n\nTerm\nMeaning\n\n\n\n\nOdds ratio\nhow the odds of the outcome change with a predictor. Close to a risk ratio when the outcome is rare; larger than it when the outcome is common\n\n\nHazard ratio\nhow the rate of the event, at any moment, changes with a predictor\n\n\nCensored\nfollowed for a while without the event; we know only that it hadn’t happened yet\n\n\nConfounder\na factor that affects both the predictor and the outcome, and can make a link look stronger or weaker than it is\n\n\nOverfitting\nlearning the noise in the training data, so the model does worse on new people",
+    "crumbs": [
+      "Choosing a Method"
+    ]
+  },
+  {
     "objectID": "pages/courses/core/1-2-survival-data.html",
     "href": "pages/courses/core/1-2-survival-data.html",
     "title": "1.2 Data for the Survival Analysis",
@@ -3841,7 +3911,7 @@
     "href": "pages/courses/index.html",
     "title": "Courses",
     "section": "",
-    "text": "Each course is a series of classes. Every class is a Jupyter notebook you run in your own All of Us workspace, plus a page on this site with the overview, class plan, concepts, step-by-step Workbench instructions, and the results we found when we ran it.\nAll the series share one research question, type 2 diabetes, and one cohort definition, so what you learn in one carries over to the next.\nWhy All of Us? The program was built for precision medicine: care tailored to each person’s genes, environment, and way of life. Precision Medicine: where our classes fit explains what that means, how each series connects to the program’s goals, and what our group-level results can and can’t say about one person.",
+    "text": "Each course is a series of classes. Every class is a Jupyter notebook you run in your own All of Us workspace, plus a page on this site with the overview, class plan, concepts, step-by-step Workbench instructions, and the results we found when we ran it.\nAll the series share one research question, type 2 diabetes, and one cohort definition, so what you learn in one carries over to the next.\nWhy All of Us? The program was built for precision medicine: care tailored to each person’s genes, environment, and way of life. Precision Medicine: where our classes fit explains what that means, how each series connects to the program’s goals, and what our group-level results can and can’t say about one person. Choosing a method puts every method in the courses side by side: the question each answers, and when to use it.",
     "crumbs": [
       "Courses"
     ]
@@ -4102,6 +4172,17 @@
     "title": "Machine Learning for Beginners",
     "section": "The methods in this series",
     "text": "The methods in this series\n\n\n\n\n\n\n\n\nMethod\nIdea\nClass\n\n\n\n\nLogistic regression\na weighted sum of predictors, turned into a risk\n7.1 (and 3.2)\n\n\nLASSO\nlogistic regression with a penalty that shrinks weak predictors to exactly zero: it chooses predictors\n7.1, 7.3\n\n\nSplines\nlet a number’s effect bend (risk may rise faster at high BMI)\n7.1\n\n\nRandom forest\nmany decision trees, each on a random sample, voting together\n7.2\n\n\nGradient boosting\ntrees built one after another, each fixing the last one’s mistakes\n7.2\n\n\n\nA decision tree is a flowchart of yes/no questions (BMI over 30? Age over 55?) ending in a risk. Trees find interactions by themselves, but a single tree overfits easily; forests and boosting combine many.\nWe don’t use deep learning (neural networks). It shines with images, text, and signals, and needs very large data. On tables of a few dozen predictors, it rarely beats the methods above.",
+    "crumbs": [
+      "Machine learning",
+      "Machine Learning for Beginners"
+    ]
+  },
+  {
+    "objectID": "pages/courses/ml/ml-for-beginners.html#which-method-when",
+    "href": "pages/courses/ml/ml-for-beginners.html#which-method-when",
+    "title": "Machine Learning for Beginners",
+    "section": "Which method, when?",
+    "text": "Which method, when?\nFor every method in our courses, not only prediction, see Choosing a method. Each method has a job it does best. No method wins everywhere, so the honest approach is to try a simple one first and keep a complex one only if it earns its place.\n\n\n\n\n\n\n\n\n\n\n\nLogistic regression\nLASSO\nRandom forest\nGradient boosting\n\n\n\n\nBest when\na few predictors, chosen in advance, and the model must be explained\nmany predictors for the number of cases (thousands of proteins in 7.3)\nyou want a flexible model that works well without much tuning\nmany people, curves and interactions, and time to tune\n\n\nFinds curves and interactions\nonly those you add (splines, interaction terms)\nonly those you add\nby itself\nby itself\n\n\nExplaining it\neasy: one odds ratio per predictor\neasy: the predictors it kept, and their weights\nhard: needs importance and partial dependence\nhard: the same\n\n\nTuning\nnone\none setting (the penalty)\nlittle: the defaults usually work\nseveral settings, by cross-validation\n\n\nWatch out for\na number’s effect that bends, if you didn’t add a spline\nthe predictors it picks can change from one sample to another\nrisks pulled away from 0% and 100%: check calibration; uses a lot of memory\noverfitting, if the learning rate is too fast or there are too many trees\n\n\n\nA practical order:\n\nStart with logistic regression. It’s the baseline: quick, and easy to explain.\nMany predictors? Try LASSO.\nThen try a flexible model. Gradient boosting is often the stronger of the two tree methods on tables like ours.\nKeep the complex model only if it’s clearly better on the same test set, in AUC and calibration, by enough to matter to the people who’ll use it. If not, the simple model wins: it’s easier to explain, check, and trust.",
     "crumbs": [
       "Machine learning",
       "Machine Learning for Beginners"
@@ -6237,17 +6318,6 @@
     "crumbs": [
       "Your Workspace",
       "Workflows"
-    ]
-  },
-  {
-    "objectID": "pages/courses/ml/ml-for-beginners.html#which-method-when",
-    "href": "pages/courses/ml/ml-for-beginners.html#which-method-when",
-    "title": "Machine Learning for Beginners",
-    "section": "Which method, when?",
-    "text": "Which method, when?\nEach method has a job it does best. No method wins everywhere, so the honest approach is to try a simple one first and keep a complex one only if it earns its place.\n\n\n\n\n\n\n\n\n\n\n\nLogistic regression\nLASSO\nRandom forest\nGradient boosting\n\n\n\n\nBest when\na few predictors, chosen in advance, and the model must be explained\nmany predictors for the number of cases (thousands of proteins in 7.3)\nyou want a flexible model that works well without much tuning\nmany people, curves and interactions, and time to tune\n\n\nFinds curves and interactions\nonly those you add (splines, interaction terms)\nonly those you add\nby itself\nby itself\n\n\nExplaining it\neasy: one odds ratio per predictor\neasy: the predictors it kept, and their weights\nhard: needs importance and partial dependence\nhard: the same\n\n\nTuning\nnone\none setting (the penalty)\nlittle: the defaults usually work\nseveral settings, by cross-validation\n\n\nWatch out for\na number’s effect that bends, if you didn’t add a spline\nthe predictors it picks can change from one sample to another\nrisks pulled away from 0% and 100%: check calibration; uses a lot of memory\noverfitting, if the learning rate is too fast or there are too many trees\n\n\n\nA practical order:\n\nStart with logistic regression. It’s the baseline: quick, and easy to explain.\nMany predictors? Try LASSO.\nThen try a flexible model. Gradient boosting is often the stronger of the two tree methods on tables like ours.\nKeep the complex model only if it’s clearly better on the same test set, in AUC and calibration, by enough to matter to the people who’ll use it. If not, the simple model wins: it’s easier to explain, check, and trust.",
-    "crumbs": [
-      "Machine learning",
-      "Machine Learning for Beginners"
     ]
   }
 ]

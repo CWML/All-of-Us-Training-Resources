@@ -7,7 +7,7 @@ Each course is a **series of classes**. Every class is a Jupyter notebook you ru
 
 All the series share **one research question**, type 2 diabetes, and one cohort definition, so what you learn in one carries over to the next.
 
-**Why *All of Us*?** The program was built for **precision medicine**: care tailored to each person's genes, environment, and way of life. [Precision Medicine: where our classes fit](precision-medicine.qmd) explains what that means, how each series connects to the program's goals, and what our group-level results can and can't say about one person.
+**Why *All of Us*?** The program was built for **precision medicine**: care tailored to each person's genes, environment, and way of life. [Precision Medicine: where our classes fit](precision-medicine.qmd) explains what that means, how each series connects to the program's goals, and what our group-level results can and can't say about one person. [Choosing a method](choosing-a-method.qmd) puts every method in the courses side by side: the question each answers, and when to use it.
 
 | Series | Classes | Status |
 |---|---|---|

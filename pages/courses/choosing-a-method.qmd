@@ -1,0 +1,91 @@
+---
+title: "Choosing a Method"
+description: "Every method in these courses, side by side: the question each answers, when to use it, what it reports, and what to watch for"
+---
+
+Our classes use more than fifteen methods, from a t-test to gradient boosting. Each one exists because it fits a particular **kind of question** and a particular **kind of outcome**. This page puts them side by side, so you can see why a class uses the method it does, and choose one for your own question.
+
+## Two questions decide most of it
+
+### 1. Are you explaining, or predicting?
+
+| | Explaining | Predicting |
+|---|---|---|
+| **The question** | Is X linked to the outcome, after accounting for other factors? | Who will have the outcome? |
+| **Example** | Which characteristics go with higher odds of type 2 diabetes, accounting for each other? (3.2) | Which participants will be diagnosed in the next 2 years? (7.1) |
+| **What you report** | an effect with its confidence interval: an odds ratio, a hazard ratio, a difference in means | how well the predictions work on **new** people: AUC, calibration |
+| **How you choose the variables** | by thinking about **causes**: adjust for confounders, not for steps on the causal path | anything **known at time zero**; no leakage |
+| **Where in our courses** | Core 3.1–3.4, Omics, Surveys, Wearables | Machine learning 7.1–7.4 |
+
+The same method can do either job. **Logistic regression** explains in 3.2 (odds ratios), tests each genetic variant in 4.2, and predicts in 7.1 (AUC). Judge a model by the job it's doing: a model with a low AUC can still estimate an effect well, and a model that predicts well may say nothing about causes.
+
+### 2. What kind of outcome do you have?
+
+The outcome's type decides the regression model. Each model is built so its predictions make sense for that kind of outcome.
+
+| The outcome is | Example in our courses | Model | It reports | Class |
+|---|---|---|---|---|
+| a **number** | systolic blood pressure | **linear regression** | β: the difference in the average outcome | 3.3 |
+| **yes or no** | type 2 diabetes | **logistic regression** | odds ratio | 3.2, 4.2–4.4, 7.1 |
+| yes or no, but the standard fit fails (a rare variant, a group with no cases) | a GWAS variant | **Firth logistic regression** | odds ratio | 4.2, 4.3 |
+| a **count** | drinks per day | **Poisson regression** (negative binomial if the counts vary more than Poisson allows) | rate ratio | mentioned in 5.1 |
+| the **time** until an event, with people followed for different lengths | time to kidney disease; time to new diabetes after joining Fitbit | **Kaplan–Meier** curves (describe), the **log-rank test** (compare), the **Cox model** (adjust) | survival curves; hazard ratio | 3.4, 6.2, 6.3 |
+| **thousands** of outcomes at once | every gene's RNA, every protein | **limma** (with **voom** for RNA counts) | log fold change and an adjusted p-value for each | 4.5, 4.6 |
+
+**Why not use linear regression for everything?**
+
+- **Yes/no outcomes:** a straight line can predict a risk below 0% or above 100%. Logistic regression keeps every risk between 0 and 1.
+- **Time to an event:** some people leave the study or haven't had the event **yet** (they're **censored**). Dropping them, or treating them as "no event", gives the wrong answer. Kaplan–Meier and Cox models use each person's follow-up for as long as it lasts.
+- **Thousands of outcomes:** each gene has few people per group, so its variation is estimated poorly. limma **borrows** information across genes, which makes each test more stable.
+
+## Describing and comparing groups
+
+Before any model, a **Table 1** (3.1) describes the groups and tests whether they differ.
+
+| The data | Test | Use when | Watch for |
+|---|---|---|---|
+| a number, in two groups | **t-test** | the values are roughly symmetric | with very large groups, tiny differences become "significant": look at the size of the difference |
+| a number, in two groups | **Wilcoxon rank-sum test** | the values are skewed, or have extreme values | it compares ranks, not means |
+| groups (sex, smoking) in two groups | **chi-square test** | counts in a table | needs enough people in each cell |
+| two numbers, in the same people | **correlation**: Pearson (straight-line), **Spearman** (ranks) | how closely two measures move together | Spearman isn't thrown off by extreme values (4.7) |
+
+## Prediction methods
+
+These are the methods of the [machine learning series](ml/index.qmd). Logistic regression appears here too, doing a different job.
+
+| | Idea | Best when | Explaining it | Watch out for | Class |
+|---|---|---|---|---|---|
+| **Logistic regression** | a weighted sum of predictors, turned into a risk | a few predictors chosen in advance; the model must be explained | easy: one odds ratio per predictor | a number's effect that bends, unless you add a spline | 7.1, 7.2 |
+| **Splines** (an add-on) | let a number's effect bend, inside a regression | risk rises faster at high BMI, or levels off with age | a curve per predictor | too many bends overfit | 7.1 |
+| **LASSO** | logistic regression with a penalty that shrinks weak predictors to exactly zero | **many** predictors for the number of cases (thousands of proteins) | easy: the predictors it kept | the chosen predictors can change from one sample to another | 7.1, 7.3 |
+| **Ridge** and **elastic net** (relatives of LASSO) | ridge shrinks every predictor but drops none; elastic net mixes the two | many predictors that move together | as above | ridge keeps every predictor, so it doesn't choose | not used |
+| **Decision tree** | a flowchart of yes/no questions, ending in a risk | showing how trees work | easy to draw | one tree overfits: rarely used alone | 7.2 |
+| **Random forest** | many deep trees on random samples, averaged | a flexible model with little tuning | hard: needs importance and partial dependence | risks pulled away from 0% and 100% (check calibration); uses a lot of memory | 7.2 |
+| **Gradient boosting** | many small trees, each fixing the last ones' mistakes | many people, curves and interactions, time to tune | hard: the same | overfits if the learning rate is too fast or there are too many trees | 7.2, 7.2b |
+| **Deep learning** (neural networks) | layers of simple units that learn their own features | images, text, signals, very large data | very hard | on tables of a few dozen predictors, it rarely beats the methods above | not used |
+
+**A practical order for prediction:** start with logistic regression as the baseline; try LASSO if there are many predictors; then a flexible model. Keep the complex one only if it's clearly better on the **same test set**, in AUC **and** calibration, by enough to matter. More in [Machine learning for beginners](ml/ml-for-beginners.qmd#which-method-when).
+
+## Tools that support the methods
+
+| Tool | What it does | Where |
+|---|---|---|
+| **Principal components (PCA)** | turns many related measures into a few summary numbers: genetic ancestry from thousands of variants, or the main patterns in protein data | adjusting GWAS for ancestry (4.2, 4.3); spotting batches (4.5, 4.6) |
+| **Multiple-testing corrections** (Bonferroni, false discovery rate) | thousands of tests give some small p-values by chance; these raise the bar | GWAS, PheWAS, genes and proteins (4.2–4.6) |
+| **Cross-validation** | tests settings on parts of the training data, never the test set | choosing the LASSO penalty and boosting settings (7.1, 7.2) |
+
+## What every method has in common
+
+- **No method fixes a poorly framed question.** Time zero, who is included, and what counts as the outcome matter more than the choice of method.
+- **No method shows cause on its own.** Odds ratios, hazard ratios, and importance scores describe the data. Whether they're causal depends on the design.
+- **Every result shared from *All of Us* follows the same rules:** no counts of 1 to 20, nothing that lets someone work them out, and no single person's values.
+
+## Glossary
+
+| Term | Meaning |
+|---|---|
+| **Odds ratio** | how the odds of the outcome change with a predictor. Close to a risk ratio when the outcome is rare; larger than it when the outcome is common |
+| **Hazard ratio** | how the rate of the event, at any moment, changes with a predictor |
+| **Censored** | followed for a while without the event; we know only that it hadn't happened **yet** |
+| **Confounder** | a factor that affects both the predictor and the outcome, and can make a link look stronger or weaker than it is |
+| **Overfitting** | learning the noise in the training data, so the model does worse on new people |

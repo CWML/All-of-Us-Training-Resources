@@ -164,7 +164,7 @@ We don't use **deep learning** (neural networks). It shines with images, text, a
 
 ## Which method, when?
 
-Each method has a job it does best. No method wins everywhere, so the honest approach is to try a simple one first and keep a complex one only if it earns its place.
+For every method in our courses, not only prediction, see [Choosing a method](../choosing-a-method.qmd). Each method has a job it does best. No method wins everywhere, so the honest approach is to try a simple one first and keep a complex one only if it earns its place.
 
 | | Logistic regression | LASSO | Random forest | Gradient boosting |
 |---|---|---|---|---|

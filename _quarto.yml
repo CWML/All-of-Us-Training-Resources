@@ -96,6 +96,7 @@ website:
       contents:
         - pages/courses/index.qmd
         - pages/courses/precision-medicine.qmd
+        - pages/courses/choosing-a-method.qmd
         - section: "Core"
           contents:
             - pages/courses/core/index.qmd
