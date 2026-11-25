@@ -711,7 +711,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#one-fold-of-nested-cross-validation" id="toc-one-fold-of-nested-cross-validation" class="nav-link" data-scroll-target="#one-fold-of-nested-cross-validation">One fold of nested cross-validation</a></li>
   <li><a href="#a-confidence-interval-for-a-difference" id="toc-a-confidence-interval-for-a-difference" class="nav-link" data-scroll-target="#a-confidence-interval-for-a-difference">A confidence interval for a difference</a></li>
   </ul></li>
-  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a>
+  <ul class="collapse">
+  <li><a href="#the-people" id="toc-the-people" class="nav-link" data-scroll-target="#the-people">The people</a></li>
+  <li><a href="#proteins-add-real-information" id="toc-proteins-add-real-information" class="nav-link" data-scroll-target="#proteins-add-real-information">Proteins add real information</a></li>
+  <li><a href="#the-panel-is-unstable-as-expected" id="toc-the-panel-is-unstable-as-expected" class="nav-link" data-scroll-target="#the-panel-is-unstable-as-expected">The panel is unstable, as expected</a></li>
+  </ul></li>
   <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
   <li><a href="#next" id="toc-next" class="nav-link" data-scroll-target="#next">Next</a></li>
@@ -1047,7 +1052,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="what-we-found" class="level2">
 <h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
-<p><em>Results will be added after the first test run in the Workbench.</em></p>
+<p>From our test run in the Workbench (November 2026).</p>
+<section id="the-people" class="level3">
+<h3 class="anchored" data-anchor-id="the-people">The people</h3>
+<p>Of 152,586 people in 7.1’s file, <strong>3,886</strong> had proteomics, no type 2 diabetes by time zero, and 2 years of follow-up (or a diagnosis sooner). <strong>150</strong> developed type 2 diabetes within 2 years (3.86%): <strong>0.03 cases per protein</strong>. For 62% of them, time zero was the enrollment day; for the rest, the blood was drawn later. All 5,420 proteins passed the missing-value filter.</p>
+</section>
+<section id="proteins-add-real-information" class="level3">
+<h3 class="anchored" data-anchor-id="proteins-add-real-information">Proteins add real information</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Cross-validated AUC</th>
+<th>95% CI</th>
+<th>Brier score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Clinical: age, sex, BMI</td>
+<td>0.697</td>
+<td>0.656 to 0.740</td>
+<td>0.0366</td>
+</tr>
+<tr class="even">
+<td>Proteins only (LASSO)</td>
+<td>0.750</td>
+<td>0.707 to 0.791</td>
+<td>0.0357</td>
+</tr>
+<tr class="odd">
+<td>Clinical + proteins (LASSO)</td>
+<td><strong>0.759</strong></td>
+<td>0.720 to 0.793</td>
+<td>0.0357</td>
+</tr>
+<tr class="even">
+<td>Everyone gets the average risk</td>
+<td>0.500</td>
+<td></td>
+<td>0.0371</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Proteins on their own</strong> ranked people better than age, sex, and BMI.</li>
+<li><strong>The gain from adding proteins: 0.062</strong> (95% CI 0.032 to 0.089), above 0 in every one of 1,000 bootstrap resamples. That’s about <strong>8 times</strong> the gain boosting gave in 7.2.</li>
+<li><strong>Each AUC is uncertain</strong> (about ±0.04, with 150 cases), but the <strong>difference</strong> is measured more precisely, because the same people are in both models.</li>
+<li><strong>The Brier scores barely move:</strong> with a rare outcome, every model’s risks are small, and so are its errors.</li>
+<li><strong>Calibration:</strong> both models are close where counts can be shown (top fifth with proteins: 9.45% predicted, 9.91% diagnosed). The protein model <strong>spreads</strong> people further apart, from about 1% to 9.5% predicted.</li>
+</ul>
+</section>
+<section id="the-panel-is-unstable-as-expected" class="level3">
+<h3 class="anchored" data-anchor-id="the-panel-is-unstable-as-expected">The panel is unstable, as expected</h3>
+<p>Nested cross-validation ran in 2 minutes. The same method, on four-fifths of the same people, kept <strong>21 to 64</strong> proteins. The final model kept <strong>98</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Chosen in how many of the 5 folds</th>
+<th>Proteins</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>34</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>26</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Only <strong>5</strong> were chosen every time: <strong>ENTPD5</strong>, <strong>UMOD</strong>, <strong>FAM114A1</strong>, <strong>ADGRG1</strong>, and <strong>TFF1</strong>. The model as a whole predicts well; the exact list is not reliable.</li>
+<li><strong>Not BMI in disguise:</strong> the top 20 barely correlate with BMI (the strongest, SELE, at 0.27).</li>
+<li><strong>Small effects, combined:</strong> odds ratios of 0.83 to 1.13 per SD. The panel works by adding up many weak signals.</li>
+<li><strong>Echoes of <a href="../../../pages/courses/omics/4-6-proteomics.html">4.6</a></strong>, which compared people who <strong>already</strong> had diabetes: UMOD (made by the kidney) lower, LGALS4 and ADGRG1 higher. Here they appear <strong>before</strong> diagnosis.</li>
+</ul>
+<p><strong>The lesson:</strong> a new kind of data can add real predictive information (here, more than any modelling trick in 7.2), but with few cases, <strong>which</strong> proteins carry it can’t be pinned down. Before such a panel could be used, it would need testing in <strong>other people</strong>: we don’t know how people were chosen for proteomics, and 150 cases is a small base.</p>
+</section>
 </section>
 <section id="instructor-notes" class="level2">
 <h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
