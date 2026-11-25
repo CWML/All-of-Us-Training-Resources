@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Thousands of blood proteins, a few hundred new cases: a LASSO panel, nested cross-validation, and the real question: do proteins add anything beyond age, sex, and BMI?">
+
+<title>7.3 A Protein Signature – All of Us Workbench 2.0 Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../pages/courses/ml/7-2-trees-and-boosting.html" rel="prev">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-4143a9d5f9d8f9deb4202a6d60211dcc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-e5e84f5a70260acdabf710505354887c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-xl " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">All of Us Workbench 2.0 Training</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/get-started/about.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/workspace/workspaces.html"> 
+<span class="menu-text">Your Workspace</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/data/data-collections.html"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/index.html">
+ <span class="dropdown-text">All courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/core/index.html">
+ <span class="dropdown-text">Core series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/omics/index.html">
+ <span class="dropdown-text">Omics series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/surveys/index.html">
+ <span class="dropdown-text">Survey series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/wearables/index.html">
+ <span class="dropdown-text">Wearables series</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../pages/courses/ml/index.html">
+ <span class="dropdown-text">Machine learning series</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/examples/tutorial-workspaces.html"> 
+<span class="menu-text">Learn by Example</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/extras/extras.html"> 
+<span class="menu-text">Optional Extras</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pages/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text">Feedback</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CWML/All-of-Us-Training-Resources"> <i class="bi bi-github" role="img" aria-label="Source code on GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../pages/courses/ml/index.html">Machine learning</a></li><li class="breadcrumb-item"><a href="../../../pages/courses/ml/7-3-protein-signature.html">7.3 A Protein Signature</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Courses</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/precision-medicine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Precision Medicine: Why All of Us Exists, and Where Our Classes Fit</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/choosing-a-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing a Method</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Series: Cohorts to Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/1-1-build-cohorts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1 Build the Cohort</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/data-explorer-cohort.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional: Build the Cohort in the Data Explorer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/1-2-survival-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2 Data for the Survival Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/2-1-clean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.1 Clean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/2-2-reshape.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2 Reshape</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/2-3-join-and-bind.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.3 Join and Bind</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-1-table-one.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Table One</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-2-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Logistic Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-3-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Linear Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/core/3-4-survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Survival Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Omics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omics Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/omics-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Omics for Beginners</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/omics-data-map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Where the Omics Data Lives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-1-dna-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.1 Introduction to Genomic Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-2-gwas-plink.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.2 A GWAS with PLINK</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-3-gwas-hail.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.3 A GWAS with Hail (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-4-phewas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.4 A Phenome-Wide Association Study (PheWAS)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-5-rnaseq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.5 RNA-seq: Gene Activity in Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-6-proteomics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.6 Proteomics: Blood Proteins in Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/omics/4-7-rnaseq-proteomics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.7 RNA and Protein Together</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Surveys</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Survey Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/5-1-survey-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.1 Survey Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/5-2-family-history-lifestyle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.2 Family History and Lifestyle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/surveys/5-3-social-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.3 Social Factors</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Wearables</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wearables Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-1-wearables-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.1 Wearables Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-2-steps-and-t2d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.2 Steps and Type 2 Diabetes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/wearables/6-3-sleep-and-heart-rate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6.3 Sleep and Heart Rate</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Machine learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/ml/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Machine Learning Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/ml/ml-for-beginners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Machine Learning for Beginners</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/ml/7-1-first-prediction-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.1 A First Prediction Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/ml/7-2-trees-and-boosting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.2 Trees and Boosting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/ml/7-3-protein-signature.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">7.3 A Protein Signature</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#why-this-class-matters" id="toc-why-this-class-matters" class="nav-link" data-scroll-target="#why-this-class-matters">Why this class matters</a></li>
+  <li><a href="#by-the-end-youll-be-able-to" id="toc-by-the-end-youll-be-able-to" class="nav-link" data-scroll-target="#by-the-end-youll-be-able-to">By the end you’ll be able to</a></li>
+  <li><a href="#analysis-at-a-glance" id="toc-analysis-at-a-glance" class="nav-link" data-scroll-target="#analysis-at-a-glance">Analysis at a glance</a></li>
+  <li><a href="#time-and-cost" id="toc-time-and-cost" class="nav-link" data-scroll-target="#time-and-cost">Time and cost</a></li>
+  </ul></li>
+  <li><a href="#class-plan" id="toc-class-plan" class="nav-link" data-scroll-target="#class-plan">Class plan</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key concepts</a>
+  <ul class="collapse">
+  <li><a href="#more-predictors-than-cases" id="toc-more-predictors-than-cases" class="nav-link" data-scroll-target="#more-predictors-than-cases">More predictors than cases</a></li>
+  <li><a href="#time-zero-for-a-blood-sample" id="toc-time-zero-for-a-blood-sample" class="nav-link" data-scroll-target="#time-zero-for-a-blood-sample">Time zero for a blood sample</a></li>
+  <li><a href="#nested-cross-validation" id="toc-nested-cross-validation" class="nav-link" data-scroll-target="#nested-cross-validation">Nested cross-validation</a></li>
+  <li><a href="#does-it-add-anything" id="toc-does-it-add-anything" class="nav-link" data-scroll-target="#does-it-add-anything">Does it add anything?</a></li>
+  </ul></li>
+  <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
+  <li><a href="#your-turn-10-minutes" id="toc-your-turn-10-minutes" class="nav-link" data-scroll-target="#your-turn-10-minutes">✋ Your turn · 10 minutes</a></li>
+  <li><a href="#code-walk-through" id="toc-code-walk-through" class="nav-link" data-scroll-target="#code-walk-through">Code walk-through</a>
+  <ul class="collapse">
+  <li><a href="#one-fold-of-nested-cross-validation" id="toc-one-fold-of-nested-cross-validation" class="nav-link" data-scroll-target="#one-fold-of-nested-cross-validation">One fold of nested cross-validation</a></li>
+  <li><a href="#a-confidence-interval-for-a-difference" id="toc-a-confidence-interval-for-a-difference" class="nav-link" data-scroll-target="#a-confidence-interval-for-a-difference">A confidence interval for a difference</a></li>
+  </ul></li>
+  <li><a href="#what-we-found" id="toc-what-we-found" class="nav-link" data-scroll-target="#what-we-found">What we found</a></li>
+  <li><a href="#instructor-notes" id="toc-instructor-notes" class="nav-link" data-scroll-target="#instructor-notes">Instructor notes</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  <li><a href="#next" id="toc-next" class="nav-link" data-scroll-target="#next">Next</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../pages/courses/ml/index.html">Machine learning</a></li><li class="breadcrumb-item"><a href="../../../pages/courses/ml/7-3-protein-signature.html">7.3 A Protein Signature</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">7.3 A Protein Signature</h1>
+</div>
+
+<div>
+  <div class="description">
+    Thousands of blood proteins, a few hundred new cases: a LASSO panel, nested cross-validation, and the real question: do proteins add anything beyond age, sex, and BMI?
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Machine learning series, class 3 of 4</strong> · R · 95 minutes</p>
+<p><a href="https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/ml/7.3%20protein_signature.ipynb" class="btn btn-outline-primary btn-sm">Open the notebook on GitHub</a> <a href="../../../pages/courses/ml/index.html" class="btn btn-outline-secondary btn-sm">Machine learning series overview</a></p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In <a href="../../../pages/courses/ml/7-1-first-prediction-model.html">7.1</a> and <a href="../../../pages/courses/ml/7-2-trees-and-boosting.html">7.2</a>, a handful of enrollment measures predicted new type 2 diabetes about as well as any model could. Blood proteins are a different kind of data: about <strong>5,000 measurements per person</strong>, for a few thousand people. Can a panel of proteins see diabetes coming <strong>before</strong> the routine measures do?</p>
+<section id="why-this-class-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-class-matters">Why this class matters</h3>
+<p>Omics studies often report a “signature” that predicts disease. Many don’t hold up in new people. This class shows the three things that decide whether a signature is real: a <strong>time zero</strong> before the outcome, an <strong>honest test</strong> (nested cross-validation), and a comparison with what’s <strong>already known</strong>.</p>
+</section>
+<section id="by-the-end-youll-be-able-to" class="level3">
+<h3 class="anchored" data-anchor-id="by-the-end-youll-be-able-to">By the end you’ll be able to</h3>
+<ol type="1">
+<li>Set <strong>time zero</strong> for a blood sample, and keep the outcome strictly after it</li>
+<li>Explain why ordinary logistic regression <strong>fails</strong> with more predictors than cases, and how LASSO copes</li>
+<li>Use <strong>nested cross-validation</strong> when there are too few cases for a separate test set</li>
+<li>Ask whether new data <strong>adds</strong> anything beyond age, sex, and BMI, with a <strong>bootstrap</strong> confidence interval</li>
+<li>Check whether the proteins LASSO picks are <strong>stable</strong></li>
+</ol>
+</section>
+<section id="analysis-at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-at-a-glance">Analysis at a glance</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>❓ <strong>Question</strong></td>
+<td>Do blood proteins predict new type 2 diabetes within 2 years, beyond age, sex, and BMI?</td>
+</tr>
+<tr class="even">
+<td>🧪 <strong>The analysis</strong></td>
+<td>People with Olink proteomics and 7.1’s enrollment data; time zero = the later of enrollment and the blood draw; three models (clinical, proteins, both), compared by nested cross-validation; bootstrap confidence intervals; the protein panel and its stability</td>
+</tr>
+<tr class="odd">
+<td>🎯 <strong>Why</strong></td>
+<td>New data is only useful for prediction if it adds to what’s cheap and already known</td>
+</tr>
+<tr class="even">
+<td>✅ <strong>What we conclude</strong></td>
+<td>How much proteins add (with its uncertainty), and which proteins carry the signal</td>
+</tr>
+<tr class="odd">
+<td>⚠️ <strong>What it can’t tell us</strong></td>
+<td>Cause; or whether the panel works in other people: we don’t know how people were chosen for proteomics</td>
+</tr>
+<tr class="even">
+<td>🔗 <strong>Connections</strong></td>
+<td><strong>7.1</strong> (the data, LASSO), <strong>4.6</strong> (the proteomics file, QC), <strong>7.2</strong> (Brier score)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="time-and-cost" class="level3">
+<h3 class="anchored" data-anchor-id="time-and-cost">Time and cost</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>⏱️ <strong>Class time</strong></td>
+<td>95 minutes</td>
+</tr>
+<tr class="even">
+<td>⏱️ <strong>Run time</strong></td>
+<td>about 20 to 40 minutes: 5 to read the proteins, 3 to reshape them, 5 to 20 for nested cross-validation</td>
+</tr>
+<tr class="odd">
+<td>💰 <strong>Cost</strong></td>
+<td>the cohort query only (cents to under $1). Age, sex, and BMI come from 7.1’s file; the proteins are files, not BigQuery</td>
+</tr>
+<tr class="even">
+<td>💾 <strong>Memory</strong></td>
+<td>about 6 GB at the peak: fine on the default app</td>
+</tr>
+<tr class="odd">
+<td>📋 <strong>Before class</strong></td>
+<td>run <strong>7.1</strong> to the end in the same workspace</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="class-plan" class="level2">
+<h2 class="anchored" data-anchor-id="class-plan">Class plan</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>Part</th>
+<th>You do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0:00</td>
+<td><strong>1. Key concepts</strong>: more predictors than cases; nested cross-validation</td>
+<td>listen, discuss</td>
+</tr>
+<tr class="even">
+<td>0:15</td>
+<td><strong>2. The people and time zero</strong></td>
+<td>run the cells</td>
+</tr>
+<tr class="odd">
+<td>0:25</td>
+<td><strong>3. The proteins</strong> (start it, then discuss while it loads)</td>
+<td>run, discuss</td>
+</tr>
+<tr class="even">
+<td>0:35</td>
+<td><strong>4. Who’s in</strong></td>
+<td>run the cells</td>
+</tr>
+<tr class="odd">
+<td>0:40</td>
+<td><strong>5. Nested cross-validation</strong> (start it, then discuss while it runs)</td>
+<td>run, discuss</td>
+</tr>
+<tr class="even">
+<td>1:00</td>
+<td><strong>6. Do proteins add anything?</strong></td>
+<td>run the cells, discuss</td>
+</tr>
+<tr class="odd">
+<td>1:10</td>
+<td><strong>7. The protein panel</strong></td>
+<td>run the cells, discuss</td>
+</tr>
+<tr class="even">
+<td>1:25</td>
+<td><strong>Wrap-up</strong></td>
+<td>✋ <strong>Your turn</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key concepts</h2>
+<section id="more-predictors-than-cases" class="level3">
+<h3 class="anchored" data-anchor-id="more-predictors-than-cases">More predictors than cases</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>7.1</th>
+<th>7.3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Predictors</strong></td>
+<td>8</td>
+<td>about 5,000 proteins</td>
+</tr>
+<tr class="even">
+<td><strong>New cases</strong></td>
+<td>about 8,500</td>
+<td>a few hundred</td>
+</tr>
+<tr class="odd">
+<td><strong>Cases per predictor</strong></td>
+<td>over 1,000</td>
+<td><strong>less than 1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>With more predictors than cases, ordinary logistic regression can always find a combination that separates the training cases <strong>perfectly</strong>: it memorizes the people, and fails on anyone new. <strong>LASSO</strong> pulls every protein’s coefficient towards zero and sets most to <strong>exactly</strong> zero; the proteins left over are the <strong>panel</strong>.</p>
+</section>
+<section id="time-zero-for-a-blood-sample" class="level3">
+<h3 class="anchored" data-anchor-id="time-zero-for-a-blood-sample">Time zero for a blood sample</h3>
+<pre><code>  enrollment       blood draw = time zero                       2 years later
+      |                    |──────────────── follow-up ─────────────────|
+  age, sex, BMI      proteins measured        a NEW type 2 diabetes diagnosis? yes / no
+                     excluded: anyone diagnosed by now</code></pre>
+<p>Time zero is the <strong>later</strong> of enrollment and the blood draw: the first moment we’d have both. Proteins <strong>change</strong> with diabetes, so a sample taken after diagnosis would make a panel look excellent, and be useless for prediction.</p>
+</section>
+<section id="nested-cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="nested-cross-validation">Nested cross-validation</h3>
+<p>A 25% test set would hold only about 50 new cases: its AUC could be off by 0.05 or more. Instead, every person is tested once:</p>
+<pre><code>Outer loop: split everyone into 5 folds
+  For each fold k:
+    Inner loop: cross-validation on the other 4 folds, to choose the LASSO penalty
+    Fit on the other 4 folds; predict fold k        &lt;- people the model never saw</code></pre>
+<p>Two loops, because two things need unseen data: <strong>choosing</strong> the penalty (inner), and <strong>measuring</strong> the model (outer).</p>
+</section>
+<section id="does-it-add-anything" class="level3">
+<h3 class="anchored" data-anchor-id="does-it-add-anything">Does it add anything?</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Predictors</th>
+<th>Fitted with</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Clinical</strong></td>
+<td>age, sex at birth, BMI</td>
+<td>logistic regression</td>
+</tr>
+<tr class="even">
+<td><strong>Proteins</strong></td>
+<td>every protein</td>
+<td>LASSO</td>
+</tr>
+<tr class="odd">
+<td><strong>Clinical + proteins</strong></td>
+<td>age, sex, BMI, and every protein</td>
+<td>LASSO, with age, sex, and BMI <strong>never penalized</strong>: proteins must earn their place on top</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>bootstrap</strong> (resample the people 1,000 times and recompute) gives a confidence interval for the <strong>difference</strong> in AUC.</p>
+</section>
+</section>
+<section id="follow-along-in-the-workbench" class="level2">
+<h2 class="anchored" data-anchor-id="follow-along-in-the-workbench">Follow along in the Workbench</h2>
+<p>Open <code>notebooks/ml/7.3 protein_signature.ipynb</code> with the <strong>R</strong> kernel. <strong>Run 7.1 first</strong>: 7.3 reads the file 7.1 saves. Shut down other notebooks’ kernels: 7.3 uses about 6 GB of memory.</p>
+</section>
+<section id="your-turn-10-minutes" class="level2">
+<h2 class="anchored" data-anchor-id="your-turn-10-minutes">✋ Your turn · 10 minutes</h2>
+<ol type="1">
+<li><strong>The one-SE rule.</strong> Change <code>s = "lambda.min"</code> to <code>s = "lambda.1se"</code> in <code>run_fold()</code>. How many proteins are kept, and what happens to the gain?</li>
+<li><strong>More clinical data.</strong> Add systolic blood pressure to the clinical model. Does the protein gain shrink?</li>
+<li><strong>A smaller panel.</strong> Fit age, sex, BMI, and the top 10 proteins by cross-validation. Why is this optimistic?</li>
+</ol>
+</section>
+<section id="code-walk-through" class="level2">
+<h2 class="anchored" data-anchor-id="code-walk-through">Code walk-through</h2>
+<section id="one-fold-of-nested-cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="one-fold-of-nested-cross-validation">One fold of nested cross-validation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>run_fold <span class="ot">&lt;-</span> <span class="cf">function</span>(k) {</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>  train <span class="ot">&lt;-</span> outer_fold <span class="sc">!=</span> k</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>  test  <span class="ot">&lt;-</span> outer_fold <span class="sc">==</span> k</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>  prot  <span class="ot">&lt;-</span> <span class="fu">standardize</span>(proteins[train, ], proteins[test, ])</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>  clin  <span class="ot">&lt;-</span> <span class="fu">standardize</span>(clinical[train, ], clinical[test, ])</span>
+<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>  both_fit <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(<span class="fu">cbind</span>(clin<span class="sc">$</span>train, prot<span class="sc">$</span>train), y[train], <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-8" class="code-annotation-target"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">foldid =</span> inner_folds[[k]], <span class="at">standardize =</span> <span class="cn">FALSE</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-3-9" class="code-annotation-target"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">penalty.factor =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">ncol</span>(prot<span class="sc">$</span>train))))</span>
+<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(both_fit, <span class="fu">cbind</span>(clin<span class="sc">$</span>test, prot<span class="sc">$</span>test), <span class="at">s =</span> <span class="st">"lambda.min"</span>, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="annotated-cell-3-11"><a href="#annotated-cell-3-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-3-12"><a href="#annotated-cell-3-12" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-3-13" class="code-annotation-target"><a href="#annotated-cell-3-13" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, run_fold, <span class="at">mc.cores =</span> <span class="fu">min</span>(<span class="dv">5</span>, CORES))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="4" data-code-annotation="1">Means and SDs from the <strong>training</strong> folds only; a missing value becomes the training average. Using everyone’s would leak the test people into the training.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="8" data-code-annotation="2"><code>cv.glmnet()</code> is the inner loop. <code>foldid</code> fixes its folds, so the results are the same every run.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="9" data-code-annotation="3"><code>0</code>: age, sex, and BMI are never penalized; <code>1</code>: every protein is.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="13" data-code-annotation="4"><code>mclapply()</code> is <code>map()</code> on several processors: the 5 folds run at once.</span>
+</dd>
+</dl>
+</section>
+<section id="a-confidence-interval-for-a-difference" class="level3">
+<h3 class="anchored" data-anchor-id="a-confidence-interval-for-a-difference">A confidence interval for a difference</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>boot <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="cf">function</span>(b) {</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(predictions), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> predictions[i, ]</span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">clinical =</span> <span class="fu">auc</span>(d<span class="sc">$</span>y, d<span class="sc">$</span>clinical), <span class="at">both =</span> <span class="fu">auc</span>(d<span class="sc">$</span>y, d<span class="sc">$</span>both))</span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span> <span class="fu">list_rbind</span>()</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(boot<span class="sc">$</span>both <span class="sc">-</span> boot<span class="sc">$</span>clinical, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="1">The same resampled people for both models: the difference is measured more precisely than either AUC.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="2">The middle 95% of 1,000 differences: the 95% confidence interval.</span>
+</dd>
+</dl>
+</section>
+</section>
+<section id="what-we-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
+<p><em>Results will be added after the first test run in the Workbench.</em></p>
+</section>
+<section id="instructor-notes" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-notes">Instructor notes</h2>
+<ul>
+<li><strong>Draw the two loops</strong> of nested cross-validation. Ask: what goes wrong if we choose the penalty on all the data, then cross-validate? (The test folds helped choose it: optimistic.)</li>
+<li><strong>Start the long cells before discussing</strong>: Part 3 (5 to 8 minutes) and Part 5 (5 to 20).</li>
+<li><strong>Expect an unstable panel</strong>: with a few hundred cases, many proteins are chosen in only one or two folds. That’s the honest finding, and one reason published panels often fail to replicate.</li>
+<li><strong>Don’t publish two versions of these counts</strong> (for example, with enrollment and with the blood draw as time zero): their differences would be small counts.</li>
+</ul>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
+<ul>
+<li>With <strong>more predictors than cases</strong>, ordinary regression memorizes; <strong>LASSO</strong> keeps a small panel.</li>
+<li>When cases are few, <strong>nested cross-validation</strong> uses everyone for testing, with an inner loop for tuning.</li>
+<li>Ask what new data <strong>adds</strong> to cheap predictors, on the same people, with a <strong>confidence interval</strong> for the difference.</li>
+<li>Check how <strong>stable</strong> a panel is before trusting it.</li>
+<li><strong>Time zero</strong> must come before the outcome: for blood markers, the day the blood was drawn.</li>
+</ul>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<p><strong>7.4 Combining data responsibly</strong> (planned): enrollment data, wearables, and proteins together; how overlap shrinks the sample; fairness across groups; reporting with TRIPOD+AI.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/cwml\.github\.io\/All-of-Us-Training-Resources\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../pages/courses/ml/7-2-trees-and-boosting.html" class="pagination-link" aria-label="7.2 Trees and Boosting">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">7.2 Trees and Boosting</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Cushing/Whitney Medical Library, Yale School of Medicine</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Questions or feedback? Email <a href="mailto:maximilian.wegener@yale.edu?subject=All%20of%20Us%20training%20site%20feedback">maximilian.wegener@yale.edu</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

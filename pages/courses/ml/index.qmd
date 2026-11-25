@@ -15,7 +15,7 @@ The earlier series asked **why**: is steps, income, or a genetic variant linked 
 |---|---|---|
 | [**7.1 A first prediction model**](7-1-first-prediction-model.qmd) | 95 min | A prediction question with a time zero; enrollment data predicting new type 2 diabetes within 2 years; training and test sets; logistic regression with tidymodels; AUC, ROC curve, calibration; LASSO with cross-validation |
 | [**7.2 Trees and boosting**](7-2-trees-and-boosting.qmd) | 95 min | Random forests and gradient boosting on the 7.1 data; tuning; AUC, Brier score, calibration; permutation importance and partial dependence; the same model in Python scikit-learn |
-| 7.3 A protein signature | planned | Thousands of proteins, a few hundred new cases: LASSO; does it add anything beyond age and BMI? |
+| [**7.3 A protein signature**](7-3-protein-signature.qmd) | 95 min | Thousands of blood proteins, a few hundred new cases: time zero at the blood draw; LASSO; nested cross-validation; does a protein panel add anything beyond age, sex, and BMI?; panel stability |
 | 7.4 Combining data responsibly | planned | Enrollment data, wearables, and proteins together; how overlap shrinks the sample; fairness across groups; TRIPOD+AI reporting |
 
 ## The design: time zero
@@ -47,6 +47,7 @@ About **77%** of people with type 2 diabetes in *All of Us* were diagnosed **bef
 |---|---|
 | **7.1** | about **$1 to $2**: the cohort query, and one query for everyone's enrollment data, priced first with `run_if_cheap()` |
 | **7.2** | **$0**: it reads the file 7.1 saved |
+| **7.3** | the cohort query only (cents to under $1): age, sex, and BMI come from 7.1's file, and the proteins are files |
 | **First run** | up to **15 minutes** to install tidymodels, and 10 more for ranger and xgboost (once per app) |
 | **The app, while running** | about **$0.27 an hour** |
 | **The app's disk** | about **$0.70 a day**, even while the app is stopped |
@@ -56,6 +57,6 @@ About **77%** of people with type 2 diabetes in *All of Us* were diagnosed **bef
 Don't download, screenshot, or share **participant-level data**, or counts of **1 to 20** (including counts that could be worked out from others). Two traps in this series:
 
 - **ROC curves** from `roc_curve()` have a point for **every person's** predicted risk. Our classes draw them from 50 cut-offs, each summarising hundreds of people.
-- **Calibration tables** by risk group often have small counts in the lowest-risk groups: they're hidden, with one more if only one would be.
+- **Calibration tables** by risk group often have small counts in the lowest-risk groups: they're hidden, with the next smallest too if the hidden ones add up to 1 to 20 (their sum could be worked out from the total).
 
 The results on these pages come from the *All of Us* Research Program's Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge *All of Us* participants for their contributions. See [Acknowledgment and data availability](../index.qmd#acknowledgment-and-data-availability).

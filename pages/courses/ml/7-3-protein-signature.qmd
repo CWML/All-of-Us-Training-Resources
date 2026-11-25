@@ -1,0 +1,177 @@
+---
+title: "7.3 A Protein Signature"
+description: "Thousands of blood proteins, a few hundred new cases: a LASSO panel, nested cross-validation, and the real question: do proteins add anything beyond age, sex, and BMI?"
+code-annotations: below
+---
+
+**Machine learning series, class 3 of 4** · R · 95 minutes
+
+[Open the notebook on GitHub](https://github.com/CWML/All-of-Us-Training-Resources/blob/main/notebooks/ml/7.3%20protein_signature.ipynb){.btn .btn-outline-primary .btn-sm}
+[Machine learning series overview](index.qmd){.btn .btn-outline-secondary .btn-sm}
+
+## Overview
+
+In [7.1](7-1-first-prediction-model.qmd) and [7.2](7-2-trees-and-boosting.qmd), a handful of enrollment measures predicted new type 2 diabetes about as well as any model could. Blood proteins are a different kind of data: about **5,000 measurements per person**, for a few thousand people. Can a panel of proteins see diabetes coming **before** the routine measures do?
+
+### Why this class matters
+
+Omics studies often report a "signature" that predicts disease. Many don't hold up in new people. This class shows the three things that decide whether a signature is real: a **time zero** before the outcome, an **honest test** (nested cross-validation), and a comparison with what's **already known**.
+
+### By the end you'll be able to
+
+1. Set **time zero** for a blood sample, and keep the outcome strictly after it
+2. Explain why ordinary logistic regression **fails** with more predictors than cases, and how LASSO copes
+3. Use **nested cross-validation** when there are too few cases for a separate test set
+4. Ask whether new data **adds** anything beyond age, sex, and BMI, with a **bootstrap** confidence interval
+5. Check whether the proteins LASSO picks are **stable**
+
+### Analysis at a glance
+
+| | |
+|---|---|
+| ❓ **Question** | Do blood proteins predict new type 2 diabetes within 2 years, beyond age, sex, and BMI? |
+| 🧪 **The analysis** | People with Olink proteomics and 7.1's enrollment data; time zero = the later of enrollment and the blood draw; three models (clinical, proteins, both), compared by nested cross-validation; bootstrap confidence intervals; the protein panel and its stability |
+| 🎯 **Why** | New data is only useful for prediction if it adds to what's cheap and already known |
+| ✅ **What we conclude** | How much proteins add (with its uncertainty), and which proteins carry the signal |
+| ⚠️ **What it can't tell us** | Cause; or whether the panel works in other people: we don't know how people were chosen for proteomics |
+| 🔗 **Connections** | **7.1** (the data, LASSO), **4.6** (the proteomics file, QC), **7.2** (Brier score) |
+
+### Time and cost
+
+| | |
+|---|---|
+| ⏱️ **Class time** | 95 minutes |
+| ⏱️ **Run time** | about 20 to 40 minutes: 5 to read the proteins, 3 to reshape them, 5 to 20 for nested cross-validation |
+| 💰 **Cost** | the cohort query only (cents to under $1). Age, sex, and BMI come from 7.1's file; the proteins are files, not BigQuery |
+| 💾 **Memory** | about 6 GB at the peak: fine on the default app |
+| 📋 **Before class** | run **7.1** to the end in the same workspace |
+
+## Class plan
+
+| Time | Part | You do |
+|---|---|---|
+| 0:00 | **1. Key concepts**: more predictors than cases; nested cross-validation | listen, discuss |
+| 0:15 | **2. The people and time zero** | run the cells |
+| 0:25 | **3. The proteins** (start it, then discuss while it loads) | run, discuss |
+| 0:35 | **4. Who's in** | run the cells |
+| 0:40 | **5. Nested cross-validation** (start it, then discuss while it runs) | run, discuss |
+| 1:00 | **6. Do proteins add anything?** | run the cells, discuss |
+| 1:10 | **7. The protein panel** | run the cells, discuss |
+| 1:25 | **Wrap-up** | ✋ **Your turn** |
+
+## Key concepts
+
+### More predictors than cases
+
+| | 7.1 | 7.3 |
+|---|---|---|
+| **Predictors** | 8 | about 5,000 proteins |
+| **New cases** | about 8,500 | a few hundred |
+| **Cases per predictor** | over 1,000 | **less than 1** |
+
+With more predictors than cases, ordinary logistic regression can always find a combination that separates the training cases **perfectly**: it memorizes the people, and fails on anyone new. **LASSO** pulls every protein's coefficient towards zero and sets most to **exactly** zero; the proteins left over are the **panel**.
+
+### Time zero for a blood sample
+
+```
+  enrollment       blood draw = time zero                       2 years later
+      |                    |──────────────── follow-up ─────────────────|
+  age, sex, BMI      proteins measured        a NEW type 2 diabetes diagnosis? yes / no
+                     excluded: anyone diagnosed by now
+```
+
+Time zero is the **later** of enrollment and the blood draw: the first moment we'd have both. Proteins **change** with diabetes, so a sample taken after diagnosis would make a panel look excellent, and be useless for prediction.
+
+### Nested cross-validation
+
+A 25% test set would hold only about 50 new cases: its AUC could be off by 0.05 or more. Instead, every person is tested once:
+
+```
+Outer loop: split everyone into 5 folds
+  For each fold k:
+    Inner loop: cross-validation on the other 4 folds, to choose the LASSO penalty
+    Fit on the other 4 folds; predict fold k        <- people the model never saw
+```
+
+Two loops, because two things need unseen data: **choosing** the penalty (inner), and **measuring** the model (outer).
+
+### Does it add anything?
+
+| Model | Predictors | Fitted with |
+|---|---|---|
+| **Clinical** | age, sex at birth, BMI | logistic regression |
+| **Proteins** | every protein | LASSO |
+| **Clinical + proteins** | age, sex, BMI, and every protein | LASSO, with age, sex, and BMI **never penalized**: proteins must earn their place on top |
+
+The **bootstrap** (resample the people 1,000 times and recompute) gives a confidence interval for the **difference** in AUC.
+
+## Follow along in the Workbench
+
+Open `notebooks/ml/7.3 protein_signature.ipynb` with the **R** kernel. **Run 7.1 first**: 7.3 reads the file 7.1 saves. Shut down other notebooks' kernels: 7.3 uses about 6 GB of memory.
+
+## ✋ Your turn · 10 minutes
+
+1. **The one-SE rule.** Change `s = "lambda.min"` to `s = "lambda.1se"` in `run_fold()`. How many proteins are kept, and what happens to the gain?
+2. **More clinical data.** Add systolic blood pressure to the clinical model. Does the protein gain shrink?
+3. **A smaller panel.** Fit age, sex, BMI, and the top 10 proteins by cross-validation. Why is this optimistic?
+
+## Code walk-through
+
+### One fold of nested cross-validation
+
+```r
+run_fold <- function(k) {
+  train <- outer_fold != k
+  test  <- outer_fold == k
+  prot  <- standardize(proteins[train, ], proteins[test, ])                    # <1>
+  clin  <- standardize(clinical[train, ], clinical[test, ])
+
+  both_fit <- cv.glmnet(cbind(clin$train, prot$train), y[train], family = "binomial",
+                        foldid = inner_folds[[k]], standardize = FALSE,           # <2>
+                        penalty.factor = c(0, 0, 0, rep(1, ncol(prot$train))))    # <3>
+  predict(both_fit, cbind(clin$test, prot$test), s = "lambda.min", type = "response")
+}
+
+folds <- parallel::mclapply(1:5, run_fold, mc.cores = min(5, CORES))              # <4>
+```
+1. Means and SDs from the **training** folds only; a missing value becomes the training average. Using everyone's would leak the test people into the training.
+2. `cv.glmnet()` is the inner loop. `foldid` fixes its folds, so the results are the same every run.
+3. `0`: age, sex, and BMI are never penalized; `1`: every protein is.
+4. `mclapply()` is `map()` on several processors: the 5 folds run at once.
+
+### A confidence interval for a difference
+
+```r
+boot <- map(1:1000, function(b) {
+  i <- sample(nrow(predictions), replace = TRUE)                                  # <1>
+  d <- predictions[i, ]
+  tibble(clinical = auc(d$y, d$clinical), both = auc(d$y, d$both))
+}) %>% list_rbind()
+
+quantile(boot$both - boot$clinical, c(0.025, 0.975))                              # <2>
+```
+1. The same resampled people for both models: the difference is measured more precisely than either AUC.
+2. The middle 95% of 1,000 differences: the 95% confidence interval.
+
+## What we found
+
+*Results will be added after the first test run in the Workbench.*
+
+## Instructor notes
+
+- **Draw the two loops** of nested cross-validation. Ask: what goes wrong if we choose the penalty on all the data, then cross-validate? (The test folds helped choose it: optimistic.)
+- **Start the long cells before discussing**: Part 3 (5 to 8 minutes) and Part 5 (5 to 20).
+- **Expect an unstable panel**: with a few hundred cases, many proteins are chosen in only one or two folds. That's the honest finding, and one reason published panels often fail to replicate.
+- **Don't publish two versions of these counts** (for example, with enrollment and with the blood draw as time zero): their differences would be small counts.
+
+## Key takeaways
+
+- With **more predictors than cases**, ordinary regression memorizes; **LASSO** keeps a small panel.
+- When cases are few, **nested cross-validation** uses everyone for testing, with an inner loop for tuning.
+- Ask what new data **adds** to cheap predictors, on the same people, with a **confidence interval** for the difference.
+- Check how **stable** a panel is before trusting it.
+- **Time zero** must come before the outcome: for blood markers, the day the blood was drawn.
+
+## Next
+
+**7.4 Combining data responsibly** (planned): enrollment data, wearables, and proteins together; how overlap shrinks the sample; fairness across groups; reporting with TRIPOD+AI.

@@ -15,7 +15,7 @@ All the series share **one research question**, type 2 diabetes, and one cohort 
 | [**Omics**](omics/index.qmd) | 4.1–4.7: genomes, GWAS with PLINK and Hail, PheWAS, RNA-seq, proteomics | Notebooks and companion pages ready |
 | [**Surveys**](surveys/index.qmd) | 5.1–5.3: survey structure, family history and lifestyle, social factors | Notebooks and companion pages ready |
 | [**Wearables**](wearables/index.qmd) | 6.1–6.3: Fitbit and Apple HealthKit basics, steps, sleep and heart rate | Notebooks and companion pages ready |
-| [**Machine learning**](ml/index.qmd) | 7.1–7.4: predicting new type 2 diabetes from data collected before diagnosis; [Machine learning for beginners](ml/ml-for-beginners.qmd) | 7.1–7.2 ready; 7.3–7.4 planned |
+| [**Machine learning**](ml/index.qmd) | 7.1–7.4: predicting new type 2 diabetes from data collected before diagnosis; [Machine learning for beginners](ml/ml-for-beginners.qmd) | 7.1–7.2 ready; 7.3 in testing; 7.4 planned |
 
 ## Skills classes and guides
 

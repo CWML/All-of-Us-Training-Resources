@@ -637,6 +637,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">7.2 Trees and Boosting</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../pages/courses/ml/7-3-protein-signature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7.3 A Protein Signature</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -709,9 +715,9 @@ ul.task-list li input[type="checkbox"] {
 <td>Random forests and gradient boosting on the 7.1 data; tuning; AUC, Brier score, calibration; permutation importance and partial dependence; the same model in Python scikit-learn</td>
 </tr>
 <tr class="odd">
-<td>7.3 A protein signature</td>
-<td>planned</td>
-<td>Thousands of proteins, a few hundred new cases: LASSO; does it add anything beyond age and BMI?</td>
+<td><a href="../../../pages/courses/ml/7-3-protein-signature.html"><strong>7.3 A protein signature</strong></a></td>
+<td>95 min</td>
+<td>Thousands of blood proteins, a few hundred new cases: time zero at the blood draw; LASSO; nested cross-validation; does a protein panel add anything beyond age, sex, and BMI?; panel stability</td>
 </tr>
 <tr class="even">
 <td>7.4 Combining data responsibly</td>
@@ -791,14 +797,18 @@ ul.task-list li input[type="checkbox"] {
 <td><strong>$0</strong>: it reads the file 7.1 saved</td>
 </tr>
 <tr class="odd">
+<td><strong>7.3</strong></td>
+<td>the cohort query only (cents to under $1): age, sex, and BMI come from 7.1’s file, and the proteins are files</td>
+</tr>
+<tr class="even">
 <td><strong>First run</strong></td>
 <td>up to <strong>15 minutes</strong> to install tidymodels, and 10 more for ranger and xgboost (once per app)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>The app, while running</strong></td>
 <td>about <strong>$0.27 an hour</strong></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>The app’s disk</strong></td>
 <td>about <strong>$0.70 a day</strong>, even while the app is stopped</td>
 </tr>
@@ -810,7 +820,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Don’t download, screenshot, or share <strong>participant-level data</strong>, or counts of <strong>1 to 20</strong> (including counts that could be worked out from others). Two traps in this series:</p>
 <ul>
 <li><strong>ROC curves</strong> from <code>roc_curve()</code> have a point for <strong>every person’s</strong> predicted risk. Our classes draw them from 50 cut-offs, each summarising hundreds of people.</li>
-<li><strong>Calibration tables</strong> by risk group often have small counts in the lowest-risk groups: they’re hidden, with one more if only one would be.</li>
+<li><strong>Calibration tables</strong> by risk group often have small counts in the lowest-risk groups: they’re hidden, with the next smallest too if the hidden ones add up to 1 to 20 (their sum could be worked out from the total).</li>
 </ul>
 <p>The results on these pages come from the <em>All of Us</em> Research Program’s Controlled Tier Dataset v9, available to authorized users on the Researcher Workbench. We gratefully acknowledge <em>All of Us</em> participants for their contributions. See <a href="../../../pages/courses/index.html#acknowledgment-and-data-availability">Acknowledgment and data availability</a>.</p>
 

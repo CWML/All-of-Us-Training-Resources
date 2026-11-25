@@ -245,4 +245,4 @@ scikit-learn's split is a **different** random 75/25, so its numbers differ a li
 
 ## Next
 
-**7.3 A protein signature** (planned): thousands of proteins and a few hundred new cases. Here, LASSO earns its keep.
+[**7.3 A protein signature**](7-3-protein-signature.qmd): thousands of proteins and a few hundred new cases. Here, LASSO earns its keep.

@@ -9,7 +9,7 @@ from data collected **before** a diagnosis, who will be diagnosed with type 2 di
 | **7.1 first_prediction_model** | Enrollment data (age, sex, BMI, blood pressure, survey answers) predicting new type 2 diabetes within 2 years; training and test sets; logistic regression with tidymodels; AUC, ROC curve, calibration; LASSO with cross-validation. Saves `ml_t2d_2yr.csv` |
 | **7.2 trees_and_boosting** | Random forests (ranger) and gradient boosting (xgboost, tuned) on the 7.1 data and split; AUC, Brier score, calibration; permutation importance; partial dependence. Reads `ml_t2d_2yr.csv` |
 | **7.2b trees_in_python** | The same in Python with scikit-learn (Python 3 kernel): logistic regression and `HistGradientBoostingClassifier`, `GridSearchCV`, calibration, permutation importance |
-| 7.3 protein_signature | (planned) Proteomics; time zero = the later of enrollment and the blood draw |
+| **7.3 protein_signature** | Olink proteins for people in 7.1's file; time zero = the later of enrollment and the blood draw; clinical vs proteins vs both, by nested cross-validation (glmnet); bootstrap CI for the AUC gain; the panel and its stability. Reads `ml_t2d_2yr.csv` |
 | 7.4 combining_data_responsibly | (planned) Combining data types; fairness across groups; reporting |
 
 Each notebook loads `../aou_setup.R`. The R modelling packages (tidymodels, glmnet, ranger, xgboost) are installed the first time
