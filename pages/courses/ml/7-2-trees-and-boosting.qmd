@@ -99,6 +99,25 @@ A **decision tree** is a flowchart of yes/no questions; each **leaf** predicts t
 
 Both are **averages over thousands of people**, so they're safe to share. A plot of one person's predictions is not.
 
+### Which method, when?
+
+Each method has a job it does best. No method wins everywhere, so the honest approach is to try a simple one first and keep a complex one only if it earns its place.
+
+| | Logistic regression | LASSO | Random forest | Gradient boosting |
+|---|---|---|---|---|
+| **Best when** | a few predictors, chosen in advance, and the model must be explained | **many** predictors for the number of cases (thousands of proteins in 7.3) | you want a flexible model that works well without much tuning | many people, curves and interactions, and time to tune |
+| **Finds curves and interactions** | only those you add (splines, interaction terms) | only those you add | by itself | by itself |
+| **Explaining it** | easy: one odds ratio per predictor | easy: the predictors it kept, and their weights | hard: needs importance and partial dependence | hard: the same |
+| **Tuning** | none | one setting (the penalty) | little: the defaults usually work | several settings, by cross-validation |
+| **Watch out for** | a number's effect that bends, if you didn't add a spline | the predictors it picks can change from one sample to another | risks pulled away from 0% and 100%: check calibration; uses a lot of memory | overfitting, if the learning rate is too fast or there are too many trees |
+
+**A practical order:**
+
+1. **Start with logistic regression.** It's the baseline: quick, and easy to explain.
+2. **Many predictors?** Try **LASSO**.
+3. **Then try a flexible model.** Gradient boosting is often the stronger of the two tree methods on tables like ours.
+4. **Keep the complex model only if** it's clearly better on the **same test set**, in AUC **and** calibration, by enough to matter to the people who'll use it. If not, the simple model wins: it's easier to explain, check, and trust.
+
 ## Follow along in the Workbench
 
 Open `notebooks/ml/7.2 trees_and_boosting.ipynb` with the **R** kernel. **Run 7.1 first**: 7.2 reads the file 7.1 saves. The Python companion, `7.2b trees_in_python.ipynb`, uses the **Python 3** kernel and the same file.

@@ -690,6 +690,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-decision-tree" id="toc-a-decision-tree" class="nav-link" data-scroll-target="#a-decision-tree">A decision tree</a></li>
   <li><a href="#comparing-models-fairly" id="toc-comparing-models-fairly" class="nav-link" data-scroll-target="#comparing-models-fairly">Comparing models fairly</a></li>
   <li><a href="#looking-inside-any-model" id="toc-looking-inside-any-model" class="nav-link" data-scroll-target="#looking-inside-any-model">Looking inside any model</a></li>
+  <li><a href="#which-method-when" id="toc-which-method-when" class="nav-link" data-scroll-target="#which-method-when">Which method, when?</a></li>
   </ul></li>
   <li><a href="#follow-along-in-the-workbench" id="toc-follow-along-in-the-workbench" class="nav-link" data-scroll-target="#follow-along-in-the-workbench">Follow along in the Workbench</a></li>
   <li><a href="#your-turn-10-minutes" id="toc-your-turn-10-minutes" class="nav-link" data-scroll-target="#your-turn-10-minutes">✋ Your turn · 10 minutes</a></li>
@@ -982,6 +983,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Both are <strong>averages over thousands of people</strong>, so they’re safe to share. A plot of one person’s predictions is not.</p>
+</section>
+<section id="which-method-when" class="level3">
+<h3 class="anchored" data-anchor-id="which-method-when">Which method, when?</h3>
+<p>Each method has a job it does best. No method wins everywhere, so the honest approach is to try a simple one first and keep a complex one only if it earns its place.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Logistic regression</th>
+<th>LASSO</th>
+<th>Random forest</th>
+<th>Gradient boosting</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Best when</strong></td>
+<td>a few predictors, chosen in advance, and the model must be explained</td>
+<td><strong>many</strong> predictors for the number of cases (thousands of proteins in 7.3)</td>
+<td>you want a flexible model that works well without much tuning</td>
+<td>many people, curves and interactions, and time to tune</td>
+</tr>
+<tr class="even">
+<td><strong>Finds curves and interactions</strong></td>
+<td>only those you add (splines, interaction terms)</td>
+<td>only those you add</td>
+<td>by itself</td>
+<td>by itself</td>
+</tr>
+<tr class="odd">
+<td><strong>Explaining it</strong></td>
+<td>easy: one odds ratio per predictor</td>
+<td>easy: the predictors it kept, and their weights</td>
+<td>hard: needs importance and partial dependence</td>
+<td>hard: the same</td>
+</tr>
+<tr class="even">
+<td><strong>Tuning</strong></td>
+<td>none</td>
+<td>one setting (the penalty)</td>
+<td>little: the defaults usually work</td>
+<td>several settings, by cross-validation</td>
+</tr>
+<tr class="odd">
+<td><strong>Watch out for</strong></td>
+<td>a number’s effect that bends, if you didn’t add a spline</td>
+<td>the predictors it picks can change from one sample to another</td>
+<td>risks pulled away from 0% and 100%: check calibration; uses a lot of memory</td>
+<td>overfitting, if the learning rate is too fast or there are too many trees</td>
+</tr>
+</tbody>
+</table>
+<p><strong>A practical order:</strong></p>
+<ol type="1">
+<li><strong>Start with logistic regression.</strong> It’s the baseline: quick, and easy to explain.</li>
+<li><strong>Many predictors?</strong> Try <strong>LASSO</strong>.</li>
+<li><strong>Then try a flexible model.</strong> Gradient boosting is often the stronger of the two tree methods on tables like ours.</li>
+<li><strong>Keep the complex model only if</strong> it’s clearly better on the <strong>same test set</strong>, in AUC <strong>and</strong> calibration, by enough to matter to the people who’ll use it. If not, the simple model wins: it’s easier to explain, check, and trust.</li>
+</ol>
 </section>
 </section>
 <section id="follow-along-in-the-workbench" class="level2">
