@@ -173,7 +173,46 @@ base_auc - roc_auc_vec(shuffled$t2d_future, risk, event_level = "second")  # <2>
 
 ## What we found
 
-*Results will be added after the first test run in the Workbench.*
+From our test run in the Workbench (November 2026): the 7.1 data, with the same split (114,439 people in training, 38,147 in test).
+
+### Boosting won, by a little
+
+| Model | Test AUC | Brier score |
+|---|---|---|
+| Logistic regression (7.1's model 3) | 0.743 | 0.0494 |
+| Random forest | 0.744 | 0.0493 |
+| Gradient boosting (tuned) | **0.751** | **0.0491** |
+| Everyone gets the average risk | 0.500 | 0.0515 |
+
+- The **random forest** matched logistic regression, no more.
+- **Gradient boosting** gained **0.008** in AUC: real, but small, and close to the noise of one test set.
+- The **Brier scores** show the limits of the data: the best model is only about 5% better than giving everyone the same risk. That's normal when the outcome is rare (5.4% here) and the predictors are routine measures.
+
+**Tuning:** the best setting was the **shallowest** trees (depth 2, learning rate 0.1; cross-validated AUC 0.759). All six settings were within 0.009 of each other; the worst was deep trees with a fast rate (depth 6, rate 0.1), which overfit. Shallow trees winning is a clue: the signal is mostly **curves**, not complicated interactions. The test AUC (0.751) came out a little below the cross-validated one: picking the best of six flatters the winner.
+
+### Calibration
+
+![Calibration of the three models on the test set: one point per tenth of predicted risk](images/7-2-calibration.png){fig-alt="Calibration plot: predicted risk on the x-axis against the percentage diagnosed within 2 years, one point per tenth of predicted risk, for gradient boosting, logistic regression, and random forest. All three lie close to the dashed diagonal; all three overpredict in the top tenth (about 18 percent predicted, 16 percent observed), and the random forest also overpredicts in its ninth tenth." width="80%"}
+
+All three models are close to the line. All three **overpredict** in the top tenth (about 18% predicted, 16% diagnosed), as in 7.1; the random forest also overpredicts its ninth tenth (about 11% predicted, 10% diagnosed).
+
+### Which predictors each model relies on
+
+![Permutation importance for the three models](images/7-2-importance.png){fig-alt="Bar chart of the drop in test AUC when each predictor is shuffled, for each model. BMI is first for all three, with drops of about 0.08 to 0.10, followed by age and general health; education, income, sex at birth, blood pressure, and smoking status show small drops, larger for the random forest." width="80%"}
+
+- **BMI** first for all three, then **age** and **general health**. Logistic regression leans more on general health; the trees, more on age.
+- The **random forest spreads** its reliance across more predictors: each question in each tree may use only a random few predictors, so weaker ones get used too.
+- Importance is not cause: it says what the model **uses**.
+
+### The shapes the models learned
+
+![Partial dependence of predicted risk on age and on BMI, for the three models](images/7-2-partial-dependence.png){fig-alt="Two panels of average predicted risk. Age, 20 to 80: logistic regression rises smoothly from about 3 to 9 percent; the tree models rise quickly until about 45 and then more slowly, and boosting dips after 75. BMI, 20 to 50: logistic regression curves upward from about 3 to 16 percent; the tree models show an S-shape, flat below about 24, steep from 25 to 35, and slower above 40." width="80%"}
+
+- **BMI:** the trees learned an **S-shape**: flat below about 24, a steep rise from 25 to 35, then slower. Logistic regression is too low between 30 and 40, and too high at 50. This is where boosting's extra AUC comes from.
+- **Age:** the trees rise quickly until about 45, then slowly; logistic regression rises steadily.
+- The two tree methods, built in very different ways, agree closely: the shapes are likely real.
+
+**The lesson:** flexible models found real curves that logistic regression missed, but the gain was small. A logistic regression with splines for BMI and age (7.1's LASSO reached 0.748) gets much of the way there, and stays easy to explain. Which one you'd use depends on whether 0.008 matters more than explaining the model; see [Choosing a method](../choosing-a-method.qmd).
 
 ## Instructor notes
 
